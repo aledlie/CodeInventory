@@ -83,8 +83,8 @@ class TestCoverageAnalyzer:
         if file_path.suffix == '.py':
             language = 'python'
             patterns = [
-                'def $NAME($$$):',
-                'async def $NAME($$$):'
+                'def $NAME($$$): $$$',
+                'async def $NAME($$$): $$$'
             ]
         elif file_path.suffix in ['.ts', '.tsx']:
             language = 'typescript'
@@ -143,12 +143,11 @@ class TestCoverageAnalyzer:
             return test_functions
 
         # Patterns that indicate test functions
-        test_patterns_search = [
-            'def test_$NAME($$$):',
-            'it("$NAME", $$$)',
-            'test("$NAME", $$$)',
-            'describe("$NAME", $$$)'
-        ]
+        test_patterns_search = {
+            'python': ['def $NAME($$$): $$$'],
+            'javascript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)'],
+            'typescript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)']
+        }
 
         for file_path in test_dir.rglob('*'):
             if not file_path.is_file():
@@ -164,7 +163,8 @@ class TestCoverageAnalyzer:
             else:
                 continue
 
-            for pattern in test_patterns_search:
+            patterns = test_patterns_search.get(language, [])
+            for pattern in patterns:
                 matches = self._run_astgrep(file_path, pattern, language)
 
                 for match in matches:
@@ -179,6 +179,9 @@ class TestCoverageAnalyzer:
                         test_name = test_node.get('text') if isinstance(test_node, dict) else str(test_node)
 
                     if test_name:
+                        # For Python, filter for functions starting with test_
+                        if language == 'python' and not test_name.startswith('test_'):
+                            continue
                         # Extract the actual function name being tested
                         # e.g., "test_calculate_total" -> "calculate_total"
                         # e.g., "should calculate total" -> "calculate"
