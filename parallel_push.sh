@@ -36,7 +36,16 @@ process_repo() {
         echo "  ! Commit may have failed or no changes in $repo_name"
     fi
 
-    # Push
+    # Check and convert HTTPS URLs to SSH
+    remote_url=$(git remote get-url origin 2>/dev/null)
+    if [[ "$remote_url" =~ ^https://github.com/ ]]; then
+        # Convert HTTPS to SSH format
+        ssh_url=$(echo "$remote_url" | sed 's|https://github.com/|git@github.com:|' | sed 's|\.git$||').git
+        echo "  ℹ Converting to SSH: $ssh_url"
+        git remote set-url origin "$ssh_url"
+    fi
+
+    # Push using SSH authentication
     if git push 2>&1 | head -10; then
         echo "  ✓ Pushed $repo_name"
     else
@@ -48,19 +57,23 @@ process_repo() {
 export -f process_repo
 export COMMIT_MSG
 
-# Main repositories to push (avoiding nested repos and vim bundles)
-repos=(
-    "/Users/alyshialedlie/code/PersonalSite"
-    "/Users/alyshialedlie/code/InventoryAI"
-    "/Users/alyshialedlie/code/OldSites"
-)
+# Find all git repositories up to 2 levels deep
+echo "Searching for git repositories up to 2 levels deep..."
+repos=()
+
+# Search for .git directories at level 1 and level 2
+while IFS= read -r -d '' git_dir; do
+    repo_path=$(dirname "$git_dir")
+    repos+=("$repo_path")
+done < <(find /Users/alyshialedlie/code -mindepth 2 -maxdepth 3 -type d -name ".git" -print0)
+
+echo "Found ${#repos[@]} repositories"
+echo ""
 
 # Process each repo
 for repo in "${repos[@]}"; do
-    if [ -d "$repo/.git" ]; then
-        process_repo "$repo"
-        echo "---"
-    fi
+    process_repo "$repo"
+    echo "---"
 done
 
 echo "Done!"
