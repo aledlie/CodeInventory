@@ -1,0 +1,299 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/yourusername/Inventory",
+      "name": "Code Inventory - Automated Schema Generator",
+      "description": "Automated code schema generation and documentation tool that extracts structured data from Python, TypeScript, and JavaScript codebases using AST parsing and regex patterns.",
+      "version": "1.0.0",
+      "dateCreated": "2025-11-01",
+      "dateModified": "2025-11-08",
+      "programmingLanguage": [
+        {
+          "@type": "ComputerLanguage",
+          "name": "Python",
+          "version": "3.x"
+        },
+        {
+          "@type": "ComputerLanguage",
+          "name": "JavaScript"
+        },
+        {
+          "@type": "ComputerLanguage",
+          "name": "TypeScript"
+        }
+      ],
+      "runtimePlatform": "Python 3.x",
+      "codeRepository": "https://github.com/yourusername/Inventory",
+      "author": {
+        "@type": "Person",
+        "name": "Alyshia Ledlie"
+      },
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "keywords": [
+        "code analysis",
+        "schema generation",
+        "AST parsing",
+        "documentation automation",
+        "code inventory",
+        "static analysis"
+      ],
+      "featureList": [
+        "AST-based Python code parsing",
+        "Regex-based TypeScript/JavaScript analysis",
+        "Automated README generation",
+        "Git repository metadata extraction",
+        "Comprehensive JSON schema output",
+        "Multi-repository support"
+      ],
+      "softwareRequirements": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Python",
+          "version": "3.x"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "@anthropic-ai/sdk",
+          "version": "^0.68.0"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "@posthog/ai",
+          "version": "^6.5.0"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "posthog-node",
+          "version": "^5.11.0"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "#schema-generator",
+      "name": "Schema Generator",
+      "description": "Main Python script for extracting schemas from code files using AST parsing and regex patterns.",
+      "applicationSubCategory": "Code Analysis Tool",
+      "fileSize": "16KB",
+      "features": [
+        "AST parsing for Python files",
+        "Regex patterns for TypeScript/JavaScript",
+        "README.md generation for all directories",
+        "Comprehensive schemas.json output"
+      ],
+      "isPartOf": {
+        "@id": "https://github.com/yourusername/Inventory"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "#schemas-json",
+      "name": "Code Schemas Dataset",
+      "description": "Complete structured data for 3,335+ scanned directories containing extracted schemas for all code files.",
+      "encodingFormat": "application/json",
+      "contentSize": "36MB",
+      "numberOfItems": 3335,
+      "dateCreated": "2025-11-01",
+      "dateModified": "2025-11-08",
+      "variableMeasured": [
+        "Class definitions",
+        "Function signatures",
+        "Import dependencies",
+        "Git repository metadata",
+        "Remote URLs",
+        "Line numbers"
+      ],
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "./schemas.json"
+      },
+      "isPartOf": {
+        "@id": "https://github.com/yourusername/Inventory"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "#documentation",
+      "name": "Code Inventory Documentation",
+      "headline": "Automated Code Schema Generation and Documentation",
+      "description": "Comprehensive documentation for the automated code inventory system including usage instructions, test cases, and integration guides.",
+      "datePublished": "2025-11-01",
+      "dateModified": "2025-11-08",
+      "author": {
+        "@type": "Person",
+        "name": "Alyshia Ledlie"
+      },
+      "articleBody": "This system provides automated code schema generation and documentation tools for Python, TypeScript, and JavaScript codebases.",
+      "hasPart": [
+        {
+          "@type": "TechArticle",
+          "name": "Schema Summary",
+          "url": "./SCHEMA_SUMMARY.md"
+        },
+        {
+          "@type": "TechArticle",
+          "name": "Test Cases",
+          "url": "./TEST_CASES.md"
+        },
+        {
+          "@type": "TechArticle",
+          "name": "RSS Feed Test Cases",
+          "url": "./RSS_FEED_TEST_CASES.md"
+        },
+        {
+          "@type": "TechArticle",
+          "name": "Schema.org MCP Integration Guide",
+          "url": "./SCHEMA_ORG_MCP_INTEGRATION.md"
+        },
+        {
+          "@type": "TechArticle",
+          "name": "ast-grep MCP Integration Guide",
+          "url": "./AST_GREP_MCP_INTEGRATION.md"
+        }
+      ],
+      "dependencies": "Node.js, Python 3.x, ast-grep CLI",
+      "proficiencyLevel": "Intermediate"
+    },
+    {
+      "@type": "DataFeed",
+      "@id": "#rss-feed",
+      "name": "Burnt Orange Nation - Sumedh Joshi",
+      "description": "RSS/Atom feed template for Burnt Orange Nation content",
+      "dataFeedElement": [
+        {
+          "@type": "DataFeedItem",
+          "dateCreated": "2025-11-01",
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Latest posts by Sumedh Joshi"
+          }
+        }
+      ],
+      "encodingFormat": "application/atom+xml",
+      "url": "https://www.burntorangenation.com/rss/stream/21046839",
+      "isPartOf": {
+        "@id": "https://github.com/yourusername/Inventory"
+      }
+    },
+    {
+      "@type": "HowTo",
+      "@id": "#usage-guide",
+      "name": "How to Use Code Inventory Tools",
+      "description": "Step-by-step guide for using the code inventory and schema generation tools",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Regenerate Schemas",
+          "text": "Run the schema generator to scan your codebase",
+          "itemListElement": {
+            "@type": "HowToDirection",
+            "text": "cd /Users/alyshialedlie/code/Inventory && python3 schema_generator.py"
+          }
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "View Schema Data",
+          "text": "Load and inspect the generated schemas.json file",
+          "itemListElement": {
+            "@type": "HowToDirection",
+            "text": "import json; schemas = json.load(open('schemas.json', 'r'))"
+          }
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Push Changes to Repositories",
+          "text": "Commit and push documentation updates to GitHub",
+          "itemListElement": {
+            "@type": "HowToDirection",
+            "text": "python3 push_changes.py or bash parallel_push.sh"
+          }
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Use MCP Tools",
+          "text": "Activate Schema.org and ast-grep MCP tools in Claude Desktop",
+          "itemListElement": [
+            {
+              "@type": "HowToDirection",
+              "text": "Quit Claude Desktop (Cmd+Q)"
+            },
+            {
+              "@type": "HowToDirection",
+              "text": "Reopen Claude Desktop and start new conversation"
+            },
+            {
+              "@type": "HowToDirection",
+              "text": "Use MCP tools as described in integration guides"
+            }
+          ]
+        }
+      ],
+      "tool": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "schema_generator.py"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "push_changes.py"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "parallel_push.sh"
+        }
+      ]
+    },
+    {
+      "@type": "AnalysisNewsArticle",
+      "@id": "#session-results",
+      "headline": "Code Inventory Session Results - November 2025",
+      "datePublished": "2025-11-01",
+      "dateModified": "2025-11-08",
+      "author": {
+        "@type": "Person",
+        "name": "Alyshia Ledlie"
+      },
+      "articleBody": "Automated code inventory session processed 3,335 directories, identified 72 git repositories, and generated hundreds of README.md files with comprehensive documentation.",
+      "keywords": "code analysis, automated documentation, schema generation",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Code Analysis",
+          "description": "Automated extraction of code structure and metadata"
+        },
+        {
+          "@type": "Thing",
+          "name": "Documentation Generation",
+          "description": "Automated README file generation for code repositories"
+        },
+        {
+          "@type": "Thing",
+          "name": "Schema Extraction",
+          "description": "AST-based schema extraction from source code"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "PersonalSite"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "InventoryAI"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "CodeInventory"
+        }
+      ]
+    }
+  ]
+}

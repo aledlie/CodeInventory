@@ -1,0 +1,1250 @@
+{
+  "@context": "https://schema.org",
+  "directories": {
+    ".": {
+      "path": "/Users/alyshialedlie/code/Inventory",
+      "has_git": true,
+      "git_remote": "git@github.com:aledlie/CodeInventory.git",
+      "subdirectories": [
+        "ast-grep-rules"
+      ],
+      "files": [
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/test_coverage_analyzer.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "FunctionInfo",
+              "bases": [],
+              "methods": [],
+              "line_number": 14,
+              "is_exported": false
+            },
+            {
+              "name": "CoverageReport",
+              "bases": [],
+              "methods": [],
+              "line_number": 24,
+              "is_exported": false
+            },
+            {
+              "name": "TestCoverageAnalyzer",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "src_dir",
+                    "test_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_is_test_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_run_astgrep",
+                  "args": [
+                    "self",
+                    "file_path",
+                    "pattern",
+                    "language"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "find_functions_in_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "find_test_functions",
+                  "args": [
+                    "self",
+                    "test_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_coverage",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_report_text",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_report_json",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 33,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 347,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "subprocess",
+            "pathlib",
+            "typing",
+            "dataclasses",
+            "collections",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/run_all_analysis.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "AnalysisRunner",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_dir",
+                    "output_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "run_command",
+                  "args": [
+                    "self",
+                    "name",
+                    "command",
+                    "description"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "run_all_analysis",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_summary_report",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 11,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 234,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "subprocess",
+            "pathlib",
+            "datetime",
+            "sys",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/validate_schemas.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "SchemaValidator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "validate_schema",
+                  "args": [
+                    "self",
+                    "schema",
+                    "context"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_validate_software_source_code",
+                  "args": [
+                    "self",
+                    "schema",
+                    "context"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_validate_dataset",
+                  "args": [
+                    "self",
+                    "schema",
+                    "context"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_validate_tech_article",
+                  "args": [
+                    "self",
+                    "schema",
+                    "context"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "validate_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "validate_json_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_report",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 11,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 179,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "pathlib",
+            "typing",
+            "re",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/dependency_analyzer.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "DependencyInfo",
+              "bases": [],
+              "methods": [],
+              "line_number": 15,
+              "is_exported": false
+            },
+            {
+              "name": "DependencyReport",
+              "bases": [],
+              "methods": [],
+              "line_number": 24,
+              "is_exported": false
+            },
+            {
+              "name": "DependencyAnalyzer",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_run_astgrep",
+                  "args": [
+                    "self",
+                    "file_path",
+                    "pattern",
+                    "language"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_is_external_package",
+                  "args": [
+                    "self",
+                    "package"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_python_imports",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_typescript_imports",
+                  "args": [
+                    "self",
+                    "file_path",
+                    "language"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_directory",
+                  "args": [
+                    "self",
+                    "directory",
+                    "skip_dirs"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "find_circular_dependencies",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_report_text",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_report_json",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 34,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 387,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "subprocess",
+            "pathlib",
+            "typing",
+            "dataclasses",
+            "collections",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/schema_generator_enhanced.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "FunctionDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 20,
+              "is_exported": false
+            },
+            {
+              "name": "ClassDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 30,
+              "is_exported": false
+            },
+            {
+              "name": "FileDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 40,
+              "is_exported": false
+            },
+            {
+              "name": "DirectorySchema",
+              "bases": [],
+              "methods": [],
+              "line_number": 49,
+              "is_exported": false
+            },
+            {
+              "name": "AstGrepHelper",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "check_available",
+                  "args": [],
+                  "isAsync": false
+                },
+                {
+                  "name": "find_pattern",
+                  "args": [
+                    "file_path",
+                    "pattern",
+                    "language"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "find_with_rule",
+                  "args": [
+                    "file_path",
+                    "rule",
+                    "language"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 57,
+              "is_exported": false
+            },
+            {
+              "name": "SchemaOrgGenerator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "generate_software_source_code",
+                  "args": [
+                    "dir_schema",
+                    "dir_name"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_jsonld_script",
+                  "args": [
+                    "schema"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 119,
+              "is_exported": false
+            },
+            {
+              "name": "EnhancedSchemaGenerator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_path",
+                    "use_astgrep"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_python_schema",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_extract_function",
+                  "args": [
+                    "self",
+                    "node"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_get_name",
+                  "args": [
+                    "self",
+                    "node"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_typescript_schema_astgrep",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_typescript_schema_regex",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_typescript_schema",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "scan_directory",
+                  "args": [
+                    "self",
+                    "dir_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "scan_all_directories",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_readme",
+                  "args": [
+                    "self",
+                    "dir_rel_path",
+                    "schema",
+                    "include_schema_org"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_schemas_json",
+                  "args": [
+                    "self",
+                    "output_path",
+                    "include_schema_org"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 162,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 683,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "os",
+            "ast",
+            "json",
+            "re",
+            "tempfile",
+            "pathlib",
+            "typing",
+            "dataclasses",
+            "collections",
+            "subprocess",
+            "sys",
+            "argparse",
+            "yaml"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/rss_generator.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "RSSGenerator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "schemas_path",
+                    "git_repo"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "get_recent_commits",
+                  "args": [
+                    "self",
+                    "limit"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_commit_changes",
+                  "args": [
+                    "self",
+                    "commit_hash"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_rss_xml",
+                  "args": [
+                    "self",
+                    "title",
+                    "description",
+                    "link"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_rss",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 14,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 186,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "pathlib",
+            "typing",
+            "datetime",
+            "subprocess",
+            "xml.etree.ElementTree",
+            "xml.dom",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/schema_generator.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "FunctionDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 17,
+              "is_exported": false
+            },
+            {
+              "name": "ClassDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 25,
+              "is_exported": false
+            },
+            {
+              "name": "FileDef",
+              "bases": [],
+              "methods": [],
+              "line_number": 34,
+              "is_exported": false
+            },
+            {
+              "name": "DirectorySchema",
+              "bases": [],
+              "methods": [],
+              "line_number": 42,
+              "is_exported": false
+            },
+            {
+              "name": "SchemaGenerator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_python_schema",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_extract_function",
+                  "args": [
+                    "self",
+                    "node"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_get_name",
+                  "args": [
+                    "self",
+                    "node"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "extract_typescript_schema",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "scan_directory",
+                  "args": [
+                    "self",
+                    "dir_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "scan_all_directories",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_readme",
+                  "args": [
+                    "self",
+                    "dir_rel_path",
+                    "schema"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_schemas_json",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 49,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 374,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "os",
+            "ast",
+            "json",
+            "re",
+            "pathlib",
+            "typing",
+            "dataclasses",
+            "collections",
+            "subprocess"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/code_quality_analyzer.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "QualityIssue",
+              "bases": [],
+              "methods": [],
+              "line_number": 15,
+              "is_exported": false
+            },
+            {
+              "name": "QualityReport",
+              "bases": [],
+              "methods": [],
+              "line_number": 27,
+              "is_exported": false
+            },
+            {
+              "name": "CodeQualityAnalyzer",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_get_python_rules",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_get_typescript_rules",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_run_astgrep_rule",
+                  "args": [
+                    "self",
+                    "file_path",
+                    "pattern",
+                    "language"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_file",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "analyze_directory",
+                  "args": [
+                    "self",
+                    "directory",
+                    "skip_dirs"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_report_text",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_report_json",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 35,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 327,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "subprocess",
+            "tempfile",
+            "pathlib",
+            "typing",
+            "dataclasses",
+            "collections",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/doc_enhancement_pipeline.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "DocumentationEnhancer",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "root_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_schema_for_readme",
+                  "args": [
+                    "self",
+                    "readme_path",
+                    "context"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "create_jsonld_script",
+                  "args": [
+                    "self",
+                    "schema"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "has_schema_markup",
+                  "args": [
+                    "self",
+                    "content"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "inject_schema",
+                  "args": [
+                    "self",
+                    "readme_path",
+                    "schema"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "enhance_directory",
+                  "args": [
+                    "self",
+                    "directory",
+                    "skip_dirs"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_gather_context",
+                  "args": [
+                    "self",
+                    "directory"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_report",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 11,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 179,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "pathlib",
+            "typing",
+            "subprocess",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/dashboard_generator.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "DashboardGenerator",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "schemas_path",
+                    "quality_path",
+                    "coverage_path",
+                    "dependency_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_load_json",
+                  "args": [
+                    "self",
+                    "path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "generate_html",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_generate_metrics_section",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_generate_schemas_section",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_generate_quality_section",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_generate_coverage_section",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_generate_dependency_section",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_dashboard",
+                  "args": [
+                    "self",
+                    "output_path"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 11,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 441,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "pathlib",
+            "typing",
+            "datetime",
+            "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "/Users/alyshialedlie/code/Inventory/push_changes.py",
+          "language": "python",
+          "classes": [],
+          "functions": [
+            {
+              "name": "get_git_repos_with_remotes",
+              "args": [
+                "schemas_file"
+              ],
+              "return_type": "List[...]",
+              "line_number": 11,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "git_status",
+              "args": [
+                "repo_path"
+              ],
+              "return_type": "Tuple[...]",
+              "line_number": 24,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "git_add_all",
+              "args": [
+                "repo_path"
+              ],
+              "return_type": "bool",
+              "line_number": 39,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "git_commit",
+              "args": [
+                "repo_path",
+                "message"
+              ],
+              "return_type": "bool",
+              "line_number": 47,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "git_push",
+              "args": [
+                "repo_path"
+              ],
+              "return_type": "Tuple[...]",
+              "line_number": 60,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 74,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "json",
+            "subprocess",
+            "pathlib",
+            "typing"
+          ]
+        }
+      ],
+      "schema_org": {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Code Repository",
+        "description": "Directory containing 11 code files with 26 classes and 16 functions",
+        "programmingLanguage": [
+          {
+            "@type": "ComputerLanguage",
+            "name": "Python"
+          }
+        ],
+        "codeRepository": "git@github.com:aledlie/CodeInventory.git",
+        "featureList": [
+          "26 class definitions",
+          "16 function definitions"
+        ]
+      }
+    }
+  }
+}

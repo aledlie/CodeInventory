@@ -1,0 +1,19 @@
+# ast-grep Configuration
+# Custom rules for code inventory project
+
+ruleDirs:
+  - ast-grep-rules
+
+# Language-specific configurations
+languageGlobs:
+  javascript:
+    - "**/*.mjs"
+    - "**/*.cjs"
+  tsx:
+    - "**/*.tsx"
+  jsx:
+    - "**/*.jsx"
+
+# Test configuration
+testConfigs:
+  - testDir: tests

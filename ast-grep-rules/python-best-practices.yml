@@ -1,0 +1,44 @@
+id: python-best-practices
+language: python
+rule:
+  any:
+    # Missing docstrings
+    - id: missing-docstring
+      pattern: |
+        def $NAME($$$):
+          $BODY
+      not:
+        has:
+          kind: expression_statement
+          has:
+            kind: string
+      severity: hint
+      message: Function $NAME is missing a docstring
+      note: Add a docstring describing the function's purpose
+
+    # Bare except
+    - id: bare-except
+      pattern: |
+        try:
+          $$$
+        except:
+          $$$
+      severity: warning
+      message: Bare except clause catches all exceptions
+      note: Specify exception types or use 'except Exception:'
+
+    # Print statements
+    - id: print-debug
+      pattern: print($$$)
+      severity: hint
+      message: Using print() for debugging
+      note: Consider using logging module instead
+
+    # Long functions (approximation)
+    - id: too-many-params
+      pattern: |
+        def $NAME($P1, $P2, $P3, $P4, $P5, $P6, $$$):
+          $$$
+      severity: warning
+      message: Function $NAME has too many parameters
+      note: Consider using a dataclass or config object
