@@ -33,108 +33,125 @@ class DashboardGenerator:
 
     def generate_html(self) -> str:
         """Generate complete HTML dashboard"""
-
-        html = f"""<!DOCTYPE html>
+        return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+    {self._generate_head()}
+</head>
+<body>
+    {self._generate_body()}
+</body>
+</html>
+"""
+
+    def _generate_head(self) -> str:
+        """Generate HTML head section with styles"""
+        return f"""
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Inventory Dashboard</title>
     <style>
-        * {{
+        {self._generate_css()}
+    </style>
+"""
+
+    def _generate_css(self) -> str:
+        """Generate CSS styles"""
+        return """
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }}
+        }
 
-        body {{
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: #f5f5f7;
             color: #1d1d1f;
             line-height: 1.6;
-        }}
+        }
 
-        .header {{
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 2rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }}
+        }
 
-        .header h1 {{
+        .header h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-        }}
+        }
 
-        .header p {{
+        .header p {
             opacity: 0.9;
-        }}
+        }
 
-        .container {{
+        .container {
             max-width: 1400px;
             margin: 2rem auto;
             padding: 0 2rem;
-        }}
+        }
 
-        .metrics-grid {{
+        .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
-        }}
+        }
 
-        .metric-card {{
+        .metric-card {
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             transition: transform 0.2s, box-shadow 0.2s;
-        }}
+        }
 
-        .metric-card:hover {{
+        .metric-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        }}
+        }
 
-        .metric-value {{
+        .metric-value {
             font-size: 2.5rem;
             font-weight: bold;
             color: #667eea;
             margin: 0.5rem 0;
-        }}
+        }
 
-        .metric-label {{
+        .metric-label {
             color: #666;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }}
+        }
 
-        .section {{
+        .section {
             background: white;
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             margin-bottom: 2rem;
-        }}
+        }
 
-        .section h2 {{
+        .section h2 {
             margin-bottom: 1rem;
             color: #1d1d1f;
             border-bottom: 2px solid #667eea;
             padding-bottom: 0.5rem;
-        }}
+        }
 
-        .progress-bar {{
+        .progress-bar {
             background: #e0e0e0;
             border-radius: 10px;
             height: 24px;
             overflow: hidden;
             margin: 1rem 0;
-        }}
+        }
 
-        .progress-fill {{
+        .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
             display: flex;
@@ -144,91 +161,93 @@ class DashboardGenerator:
             font-weight: bold;
             font-size: 0.8rem;
             transition: width 0.3s ease;
-        }}
+        }
 
-        .issue-list {{
+        .issue-list {
             list-style: none;
-        }}
+        }
 
-        .issue-item {{
+        .issue-item {
             padding: 0.75rem;
             margin: 0.5rem 0;
             border-left: 4px solid #667eea;
             background: #f8f9fa;
             border-radius: 4px;
-        }}
+        }
 
-        .issue-error {{
+        .issue-error {
             border-left-color: #e74c3c;
-        }}
+        }
 
-        .issue-warning {{
+        .issue-warning {
             border-left-color: #f39c12;
-        }}
+        }
 
-        .issue-info {{
+        .issue-info {
             border-left-color: #3498db;
-        }}
+        }
 
-        .badge {{
+        .badge {
             display: inline-block;
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
-        }}
+        }
 
-        .badge-error {{
+        .badge-error {
             background: #e74c3c;
             color: white;
-        }}
+        }
 
-        .badge-warning {{
+        .badge-warning {
             background: #f39c12;
             color: white;
-        }}
+        }
 
-        .badge-info {{
+        .badge-info {
             background: #3498db;
             color: white;
-        }}
+        }
 
-        .badge-success {{
+        .badge-success {
             background: #27ae60;
             color: white;
-        }}
+        }
 
-        .footer {{
+        .footer {
             text-align: center;
             padding: 2rem;
             color: #666;
             font-size: 0.9rem;
-        }}
+        }
 
-        table {{
+        table {
             width: 100%;
             border-collapse: collapse;
-        }}
+        }
 
-        th, td {{
+        th, td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
-        }}
+        }
 
-        th {{
+        th {
             background: #f8f9fa;
             font-weight: 600;
             color: #1d1d1f;
-        }}
+        }
 
-        tr:hover {{
+        tr:hover {
             background: #f8f9fa;
-        }}
-    </style>
-</head>
-<body>
+        }
+    """
+
+    def _generate_body(self) -> str:
+        """Generate HTML body content"""
+        return f"""
     <div class="header">
         <h1>📊 Code Inventory Dashboard</h1>
         <p>Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
@@ -246,66 +265,92 @@ class DashboardGenerator:
         <p>Generated by Enhanced Schema Generator with schema.org markup</p>
         <p>✨ Powered by ast-grep and Schema.org MCP</p>
     </div>
-</body>
-</html>
 """
-        return html
 
     def _generate_metrics_section(self) -> str:
         """Generate metrics overview section"""
-        # Count statistics from schemas
-        total_dirs = len(self.schemas_data.get('directories', {}))
-        total_files = sum(
+        metrics = self._calculate_metrics()
+        return self._render_metrics_grid(metrics)
+
+    def _calculate_metrics(self) -> Dict[str, Any]:
+        """Calculate all dashboard metrics"""
+        return {
+            'total_dirs': self._count_directories(),
+            'total_files': self._count_files(),
+            'total_classes': self._count_classes(),
+            'total_functions': self._count_functions(),
+            'quality_score': self._get_quality_score(),
+            'coverage': self._get_coverage_percentage()
+        }
+
+    def _count_directories(self) -> int:
+        """Count total directories"""
+        return len(self.schemas_data.get('directories', {}))
+
+    def _count_files(self) -> int:
+        """Count total code files"""
+        return sum(
             len(dir_data.get('files', []))
             for dir_data in self.schemas_data.get('directories', {}).values()
         )
-        total_classes = sum(
+
+    def _count_classes(self) -> int:
+        """Count total classes"""
+        return sum(
             len(file.get('classes', []))
             for dir_data in self.schemas_data.get('directories', {}).values()
             for file in dir_data.get('files', [])
         )
-        total_functions = sum(
+
+    def _count_functions(self) -> int:
+        """Count total functions"""
+        return sum(
             len(file.get('functions', []))
             for dir_data in self.schemas_data.get('directories', {}).values()
             for file in dir_data.get('files', [])
         )
 
-        # Quality metrics
-        quality_score = "N/A"
-        if self.quality_data:
-            total_issues = self.quality_data.get('summary', {}).get('total_issues', 0)
-            quality_score = f"{total_issues} issues"
+    def _get_quality_score(self) -> str:
+        """Get code quality score"""
+        if not self.quality_data:
+            return "N/A"
+        total_issues = self.quality_data.get('summary', {}).get('total_issues', 0)
+        return f"{total_issues} issues"
 
-        # Coverage metrics
-        coverage = "N/A"
-        if self.coverage_data:
-            coverage = f"{self.coverage_data.get('summary', {}).get('coverage_percentage', 0):.1f}%"
+    def _get_coverage_percentage(self) -> str:
+        """Get test coverage percentage"""
+        if not self.coverage_data:
+            return "N/A"
+        coverage = self.coverage_data.get('summary', {}).get('coverage_percentage', 0)
+        return f"{coverage:.1f}%"
 
+    def _render_metrics_grid(self, metrics: Dict[str, Any]) -> str:
+        """Render metrics grid HTML"""
         return f"""
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">Directories Scanned</div>
-                <div class="metric-value">{total_dirs}</div>
+                <div class="metric-value">{metrics['total_dirs']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Code Files</div>
-                <div class="metric-value">{total_files}</div>
+                <div class="metric-value">{metrics['total_files']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Classes</div>
-                <div class="metric-value">{total_classes}</div>
+                <div class="metric-value">{metrics['total_classes']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Functions</div>
-                <div class="metric-value">{total_functions}</div>
+                <div class="metric-value">{metrics['total_functions']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Code Quality</div>
-                <div class="metric-value" style="font-size: 1.5rem;">{quality_score}</div>
+                <div class="metric-value" style="font-size: 1.5rem;">{metrics['quality_score']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Test Coverage</div>
-                <div class="metric-value" style="font-size: 1.5rem;">{coverage}</div>
+                <div class="metric-value" style="font-size: 1.5rem;">{metrics['coverage']}</div>
             </div>
         </div>
         """

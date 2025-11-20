@@ -3,12 +3,13 @@
 Code Quality Analyzer - Uses ast-grep to find code smells, security issues, and best practice violations
 """
 
+import argparse
 import json
 import os
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from collections import defaultdict
 
@@ -47,117 +48,170 @@ class CodeQualityAnalyzer:
     def _get_python_rules(self) -> List[Dict[str, Any]]:
         """Define Python quality rules"""
         return [
-            {
-                'id': 'long-function',
-                'pattern': 'def $NAME($$$):\n  $$$',
-                'severity': 'warning',
-                'category': 'code_smell',
-                'message': 'Function may be too long (consider breaking down)',
-                'suggestion': 'Break down into smaller, focused functions'
-            },
-            {
-                'id': 'missing-docstring',
-                'pattern': 'def $NAME($$$):\n  $BODY',
-                'severity': 'info',
-                'category': 'documentation',
-                'message': 'Function missing docstring',
-                'suggestion': 'Add docstring describing purpose, args, and return value'
-            },
-            {
-                'id': 'bare-except',
-                'pattern': 'try:\n  $$$\nexcept:\n  $$$',
-                'severity': 'warning',
-                'category': 'best_practice',
-                'message': 'Bare except clause catches all exceptions',
-                'suggestion': 'Specify exception types or use "except Exception:"'
-            },
-            {
-                'id': 'print-statement',
-                'pattern': 'print($$$)',
-                'severity': 'info',
-                'category': 'best_practice',
-                'message': 'Using print() instead of logging',
-                'suggestion': 'Consider using logging module for better control'
-            },
-            {
-                'id': 'hardcoded-password',
-                'pattern': '$VAR = "$PASSWORD"',
-                'severity': 'error',
-                'category': 'security',
-                'message': 'Potential hardcoded credential',
-                'suggestion': 'Use environment variables or secure credential storage',
-                'check': lambda code: any(word in code.lower() for word in ['password', 'secret', 'api_key', 'token'])
-            },
-            {
-                'id': 'many-parameters',
-                'pattern': 'def $NAME($P1, $P2, $P3, $P4, $P5, $P6, $$$):',
-                'severity': 'warning',
-                'category': 'code_smell',
-                'message': 'Function has too many parameters (6+)',
-                'suggestion': 'Consider using a config object or dataclass'
-            },
-            {
-                'id': 'todo-comment',
-                'pattern': '# TODO',
-                'severity': 'info',
-                'category': 'documentation',
-                'message': 'TODO comment found',
-                'suggestion': 'Create a tracking issue for this TODO'
-            }
+            self._create_long_function_rule(),
+            self._create_missing_docstring_rule(),
+            self._create_bare_except_rule(),
+            self._create_print_statement_rule(),
+            self._create_hardcoded_password_rule(),
+            self._create_many_parameters_rule(),
+            self._create_todo_comment_rule()
         ]
+
+    def _create_long_function_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting long functions"""
+        return {
+            'id': 'long-function',
+            'pattern': 'def $NAME($$$):\n  $$$',
+            'severity': 'warning',
+            'category': 'code_smell',
+            'message': 'Function may be too long (consider breaking down)',
+            'suggestion': 'Break down into smaller, focused functions'
+        }
+
+    def _create_missing_docstring_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting missing docstrings"""
+        return {
+            'id': 'missing-docstring',
+            'pattern': 'def $NAME($$$):\n  $BODY',
+            'severity': 'info',
+            'category': 'documentation',
+            'message': 'Function missing docstring',
+            'suggestion': 'Add docstring describing purpose, args, and return value'
+        }
+
+    def _create_bare_except_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting bare except clauses"""
+        return {
+            'id': 'bare-except',
+            'pattern': 'try:\n  $$$\nexcept:\n  $$$',
+            'severity': 'warning',
+            'category': 'best_practice',
+            'message': 'Bare except clause catches all exceptions',
+            'suggestion': 'Specify exception types or use "except Exception:"'
+        }
+
+    def _create_print_statement_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting print statements"""
+        return {
+            'id': 'print-statement',
+            'pattern': 'print($$$)',
+            'severity': 'info',
+            'category': 'best_practice',
+            'message': 'Using print() instead of logging',
+            'suggestion': 'Consider using logging module for better control'
+        }
+
+    def _create_hardcoded_password_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting hardcoded credentials"""
+        return {
+            'id': 'hardcoded-password',
+            'pattern': '$VAR = "$PASSWORD"',
+            'severity': 'error',
+            'category': 'security',
+            'message': 'Potential hardcoded credential',
+            'suggestion': 'Use environment variables or secure credential storage',
+            'check': lambda code: any(word in code.lower()
+                                    for word in ['password', 'secret', 'api_key', 'token'])
+        }
+
+    def _create_many_parameters_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting functions with too many parameters"""
+        return {
+            'id': 'many-parameters',
+            'pattern': 'def $NAME($P1, $P2, $P3, $P4, $P5, $P6, $$$):',
+            'severity': 'warning',
+            'category': 'code_smell',
+            'message': 'Function has too many parameters (6+)',
+            'suggestion': 'Consider using a config object or dataclass'
+        }
+
+    def _create_todo_comment_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting TODO comments"""
+        return {
+            'id': 'todo-comment',
+            'pattern': '# TODO',
+            'severity': 'info',
+            'category': 'documentation',
+            'message': 'TODO comment found',
+            'suggestion': 'Create a tracking issue for this TODO'
+        }
 
     def _get_typescript_rules(self) -> List[Dict[str, Any]]:
         """Define TypeScript/JavaScript quality rules"""
         return [
-            {
-                'id': 'console-log',
-                'pattern': 'console.log($$$)',
-                'severity': 'warning',
-                'category': 'best_practice',
-                'message': 'console.log() statement found',
-                'suggestion': 'Remove debug logs or use proper logging library'
-            },
-            {
-                'id': 'any-type',
-                'pattern': '$VAR: any',
-                'severity': 'warning',
-                'category': 'best_practice',
-                'message': 'Using "any" type defeats TypeScript type checking',
-                'suggestion': 'Define proper type or use unknown with type guards'
-            },
-            {
-                'id': 'no-async-await',
-                'pattern': 'async function $NAME($$$) { $$$ }',
-                'severity': 'info',
-                'category': 'best_practice',
-                'message': 'Async function should use await or return Promise',
-                'suggestion': 'Ensure async functions actually use await'
-            },
-            {
-                'id': 'eval-usage',
-                'pattern': 'eval($$$)',
-                'severity': 'error',
-                'category': 'security',
-                'message': 'eval() is dangerous and should be avoided',
-                'suggestion': 'Find alternative approach without eval()'
-            },
-            {
-                'id': 'empty-catch',
-                'pattern': 'catch ($E) {}',
-                'severity': 'warning',
-                'category': 'best_practice',
-                'message': 'Empty catch block silently swallows errors',
-                'suggestion': 'At minimum, log the error'
-            },
-            {
-                'id': 'no-explicit-return-type',
-                'pattern': 'function $NAME($$$) {',
-                'severity': 'info',
-                'category': 'best_practice',
-                'message': 'Function missing explicit return type',
-                'suggestion': 'Add return type annotation for better type safety'
-            }
+            self._create_console_log_rule(),
+            self._create_any_type_rule(),
+            self._create_no_async_await_rule(),
+            self._create_eval_usage_rule(),
+            self._create_empty_catch_rule(),
+            self._create_no_return_type_rule()
         ]
+
+    def _create_console_log_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting console.log statements"""
+        return {
+            'id': 'console-log',
+            'pattern': 'console.log($$$)',
+            'severity': 'warning',
+            'category': 'best_practice',
+            'message': 'console.log() statement found',
+            'suggestion': 'Remove debug logs or use proper logging library'
+        }
+
+    def _create_any_type_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting 'any' type usage"""
+        return {
+            'id': 'any-type',
+            'pattern': '$VAR: any',
+            'severity': 'warning',
+            'category': 'best_practice',
+            'message': 'Using "any" type defeats TypeScript type checking',
+            'suggestion': 'Define proper type or use unknown with type guards'
+        }
+
+    def _create_no_async_await_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting async functions without await"""
+        return {
+            'id': 'no-async-await',
+            'pattern': 'async function $NAME($$$) { $$$ }',
+            'severity': 'info',
+            'category': 'best_practice',
+            'message': 'Async function should use await or return Promise',
+            'suggestion': 'Ensure async functions actually use await'
+        }
+
+    def _create_eval_usage_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting eval() usage"""
+        return {
+            'id': 'eval-usage',
+            'pattern': 'eval($$$)',
+            'severity': 'error',
+            'category': 'security',
+            'message': 'eval() is dangerous and should be avoided',
+            'suggestion': 'Find alternative approach without eval()'
+        }
+
+    def _create_empty_catch_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting empty catch blocks"""
+        return {
+            'id': 'empty-catch',
+            'pattern': 'catch ($E) {}',
+            'severity': 'warning',
+            'category': 'best_practice',
+            'message': 'Empty catch block silently swallows errors',
+            'suggestion': 'At minimum, log the error'
+        }
+
+    def _create_no_return_type_rule(self) -> Dict[str, Any]:
+        """Create rule for detecting missing return types"""
+        return {
+            'id': 'no-explicit-return-type',
+            'pattern': 'function $NAME($$$) {',
+            'severity': 'info',
+            'category': 'best_practice',
+            'message': 'Function missing explicit return type',
+            'suggestion': 'Add return type annotation for better type safety'
+        }
 
     def _run_astgrep_rule(self, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern against a file"""
@@ -177,50 +231,67 @@ class CodeQualityAnalyzer:
 
     def analyze_file(self, file_path: Path):
         """Analyze a single file for quality issues"""
-        # Determine language and rules
-        if file_path.suffix == '.py':
-            language = 'python'
-            rules = self.python_rules
-        elif file_path.suffix in ['.ts', '.tsx']:
-            language = 'typescript'
-            rules = self.typescript_rules
-        elif file_path.suffix in ['.js', '.jsx']:
-            language = 'javascript'
-            rules = self.typescript_rules
-        else:
+        language, rules = self._get_language_and_rules(file_path)
+        if not language:
             return
 
         self.report.total_files_scanned += 1
 
-        # Run each rule
         for rule in rules:
-            matches = self._run_astgrep_rule(file_path, rule['pattern'], language)
+            self._process_rule_matches(file_path, rule, language)
 
-            for match in matches:
-                # Additional check if specified
-                if 'check' in rule:
-                    code_text = match.get('text', '')
-                    if not rule['check'](code_text):
-                        continue
+    def _get_language_and_rules(self, file_path: Path) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
+        """Determine language and applicable rules for a file"""
+        if file_path.suffix == '.py':
+            return 'python', self.python_rules
+        elif file_path.suffix in ['.ts', '.tsx']:
+            return 'typescript', self.typescript_rules
+        elif file_path.suffix in ['.js', '.jsx']:
+            return 'javascript', self.typescript_rules
+        return None, None
 
-                line_num = match.get('range', {}).get('start', {}).get('line', 0)
-                code_snippet = match.get('text', '')[:100]  # First 100 chars
+    def _process_rule_matches(self, file_path: Path, rule: Dict[str, Any], language: str):
+        """Process matches for a single rule"""
+        matches = self._run_astgrep_rule(file_path, rule['pattern'], language)
 
-                issue = QualityIssue(
-                    severity=rule['severity'],
-                    category=rule['category'],
-                    rule_id=rule['id'],
-                    message=rule['message'],
-                    file_path=str(file_path),
-                    line_number=line_num,
-                    code_snippet=code_snippet,
-                    suggestion=rule.get('suggestion')
-                )
+        for match in matches:
+            if self._should_skip_match(match, rule):
+                continue
 
-                self.report.issues.append(issue)
-                self.report.total_issues += 1
-                self.report.issues_by_severity[rule['severity']] += 1
-                self.report.issues_by_category[rule['category']] += 1
+            issue = self._create_issue_from_match(match, rule, file_path)
+            self._record_issue(issue, rule)
+
+    def _should_skip_match(self, match: Dict[str, Any], rule: Dict[str, Any]) -> bool:
+        """Check if a match should be skipped based on additional checks"""
+        if 'check' not in rule:
+            return False
+
+        code_text = match.get('text', '')
+        return not rule['check'](code_text)
+
+    def _create_issue_from_match(self, match: Dict[str, Any], rule: Dict[str, Any],
+                                 file_path: Path) -> QualityIssue:
+        """Create a QualityIssue from a match"""
+        line_num = match.get('range', {}).get('start', {}).get('line', 0)
+        code_snippet = match.get('text', '')[:100]  # First 100 chars
+
+        return QualityIssue(
+            severity=rule['severity'],
+            category=rule['category'],
+            rule_id=rule['id'],
+            message=rule['message'],
+            file_path=str(file_path),
+            line_number=line_num,
+            code_snippet=code_snippet,
+            suggestion=rule.get('suggestion')
+        )
+
+    def _record_issue(self, issue: QualityIssue, rule: Dict[str, Any]):
+        """Record an issue in the report"""
+        self.report.issues.append(issue)
+        self.report.total_issues += 1
+        self.report.issues_by_severity[rule['severity']] += 1
+        self.report.issues_by_category[rule['category']] += 1
 
     def analyze_directory(self, directory: Path, skip_dirs: set = None):
         """Analyze all files in a directory recursively"""
@@ -239,7 +310,17 @@ class CodeQualityAnalyzer:
 
     def generate_report_text(self) -> str:
         """Generate human-readable report"""
-        lines = [
+        lines = []
+        lines.extend(self._generate_report_header())
+        lines.extend(self._generate_severity_summary())
+        lines.extend(self._generate_category_summary())
+        lines.extend(self._generate_detailed_issues())
+        lines.extend(self._generate_report_footer())
+        return '\n'.join(lines)
+
+    def _generate_report_header(self) -> List[str]:
+        """Generate report header section"""
+        return [
             "="*80,
             "CODE QUALITY ANALYSIS REPORT",
             "="*80,
@@ -249,120 +330,189 @@ class CodeQualityAnalyzer:
             ""
         ]
 
-        # Summary by severity
-        lines.append("Issues by Severity:")
+    def _generate_severity_summary(self) -> List[str]:
+        """Generate severity summary section"""
+        lines = ["Issues by Severity:"]
         for severity in ['error', 'warning', 'info']:
             count = self.report.issues_by_severity.get(severity, 0)
             if count > 0:
                 lines.append(f"  {severity.upper()}: {count}")
         lines.append("")
+        return lines
 
-        # Summary by category
-        lines.append("Issues by Category:")
+    def _generate_category_summary(self) -> List[str]:
+        """Generate category summary section"""
+        lines = ["Issues by Category:"]
         for category, count in sorted(self.report.issues_by_category.items()):
             lines.append(f"  {category.replace('_', ' ').title()}: {count}")
         lines.append("")
+        return lines
 
-        # Detailed issues grouped by severity
+    def _generate_detailed_issues(self) -> List[str]:
+        """Generate detailed issues section grouped by severity"""
+        lines = []
         for severity in ['error', 'warning', 'info']:
-            severity_issues = [i for i in self.report.issues if i.severity == severity]
+            severity_lines = self._generate_severity_section(severity)
+            lines.extend(severity_lines)
+        return lines
 
-            if severity_issues:
-                lines.append("="*80)
-                lines.append(f"{severity.upper()} Issues ({len(severity_issues)})")
-                lines.append("="*80)
-                lines.append("")
+    def _generate_severity_section(self, severity: str) -> List[str]:
+        """Generate issues for a specific severity level"""
+        severity_issues = [i for i in self.report.issues if i.severity == severity]
 
-                # Group by file
-                by_file = defaultdict(list)
-                for issue in severity_issues:
-                    by_file[issue.file_path].append(issue)
+        if not severity_issues:
+            return []
 
-                for file_path, issues in sorted(by_file.items()):
-                    lines.append(f"📄 {file_path}")
-                    lines.append("-"*80)
+        lines = [
+            "="*80,
+            f"{severity.upper()} Issues ({len(severity_issues)})",
+            "="*80,
+            ""
+        ]
 
-                    for issue in sorted(issues, key=lambda x: x.line_number):
-                        lines.append(f"  Line {issue.line_number}: [{issue.rule_id}] {issue.message}")
-                        if issue.code_snippet:
-                            lines.append(f"    Code: {issue.code_snippet}")
-                        if issue.suggestion:
-                            lines.append(f"    💡 {issue.suggestion}")
-                        lines.append("")
+        # Group by file
+        by_file = defaultdict(list)
+        for issue in severity_issues:
+            by_file[issue.file_path].append(issue)
 
-        lines.append("="*80)
-        lines.append("END OF REPORT")
-        lines.append("="*80)
+        for file_path, issues in sorted(by_file.items()):
+            lines.extend(self._generate_file_issues(file_path, issues))
 
-        return '\n'.join(lines)
+        return lines
+
+    def _generate_file_issues(self, file_path: str, issues: List[QualityIssue]) -> List[str]:
+        """Generate issues for a specific file"""
+        lines = [
+            f"📄 {file_path}",
+            "-"*80
+        ]
+
+        for issue in sorted(issues, key=lambda x: x.line_number):
+            lines.append(f"  Line {issue.line_number}: [{issue.rule_id}] {issue.message}")
+            if issue.code_snippet:
+                lines.append(f"    Code: {issue.code_snippet}")
+            if issue.suggestion:
+                lines.append(f"    💡 {issue.suggestion}")
+            lines.append("")
+
+        return lines
+
+    def _generate_report_footer(self) -> List[str]:
+        """Generate report footer section"""
+        return [
+            "="*80,
+            "END OF REPORT",
+            "="*80
+        ]
 
     def save_report_json(self, output_path: Path):
         """Save report as JSON"""
-        data = {
-            'summary': {
-                'total_files_scanned': self.report.total_files_scanned,
-                'total_issues': self.report.total_issues,
-                'issues_by_severity': dict(self.report.issues_by_severity),
-                'issues_by_category': dict(self.report.issues_by_category)
-            },
-            'issues': [
-                {
-                    'severity': issue.severity,
-                    'category': issue.category,
-                    'rule_id': issue.rule_id,
-                    'message': issue.message,
-                    'file_path': issue.file_path,
-                    'line_number': issue.line_number,
-                    'code_snippet': issue.code_snippet,
-                    'suggestion': issue.suggestion
-                }
-                for issue in self.report.issues
-            ]
+        data = self._build_report_data()
+        self._write_json_file(output_path, data)
+        print(f"✅ Quality report saved to {output_path}")
+
+    def _build_report_data(self) -> Dict[str, Any]:
+        """Build report data structure for JSON export"""
+        return {
+            'summary': self._build_summary_data(),
+            'issues': self._build_issues_data()
         }
 
-        with open(output_path, 'w') as f:
-            json.dump(data, f, indent=2)
+    def _build_summary_data(self) -> Dict[str, Any]:
+        """Build summary section of report data"""
+        return {
+            'total_files_scanned': self.report.total_files_scanned,
+            'total_issues': self.report.total_issues,
+            'issues_by_severity': dict(self.report.issues_by_severity),
+            'issues_by_category': dict(self.report.issues_by_category)
+        }
 
-        print(f"✅ Quality report saved to {output_path}")
+    def _build_issues_data(self) -> List[Dict[str, Any]]:
+        """Build issues list for report data"""
+        return [self._issue_to_dict(issue) for issue in self.report.issues]
+
+    def _issue_to_dict(self, issue: QualityIssue) -> Dict[str, Any]:
+        """Convert a QualityIssue to a dictionary"""
+        return {
+            'severity': issue.severity,
+            'category': issue.category,
+            'rule_id': issue.rule_id,
+            'message': issue.message,
+            'file_path': issue.file_path,
+            'line_number': issue.line_number,
+            'code_snippet': issue.code_snippet,
+            'suggestion': issue.suggestion
+        }
+
+    def _write_json_file(self, path: Path, data: Dict[str, Any]):
+        """Write data to JSON file"""
+        with open(path, 'w') as f:
+            json.dump(data, f, indent=2)
 
 def main():
     import argparse
+    args = _parse_arguments()
+    _run_analysis(args)
 
+def _parse_arguments():
+    """Parse command line arguments"""
     parser = argparse.ArgumentParser(description='Code Quality Analyzer')
     parser.add_argument('path', help='File or directory to analyze')
     parser.add_argument('--json', help='Output JSON report to file')
     parser.add_argument('--text', help='Output text report to file')
+    return parser.parse_args()
 
-    args = parser.parse_args()
-
+def _run_analysis(args):
+    """Run the code quality analysis"""
     path = Path(args.path)
-    analyzer = CodeQualityAnalyzer(path)
+    analyzer = _initialize_analyzer(path)
 
+    _print_header(path)
+
+    if not _analyze_path(analyzer, path):
+        return
+
+    _generate_and_save_reports(analyzer, args)
+
+def _initialize_analyzer(path: Path) -> 'CodeQualityAnalyzer':
+    """Initialize the analyzer"""
+    return CodeQualityAnalyzer(path)
+
+def _print_header(path: Path):
+    """Print analysis header"""
     print(f"\n{'='*80}")
     print("Code Quality Analyzer")
     print(f"{'='*80}\n")
     print(f"Analyzing: {path}\n")
 
+def _analyze_path(analyzer: 'CodeQualityAnalyzer', path: Path) -> bool:
+    """Analyze the given path"""
     if path.is_file():
         analyzer.analyze_file(path)
+        return True
     elif path.is_dir():
         analyzer.analyze_directory(path)
+        return True
     else:
         print(f"Error: {path} is not a valid file or directory")
-        return
+        return False
 
-    # Generate text report
+def _generate_and_save_reports(analyzer: 'CodeQualityAnalyzer', args):
+    """Generate and save reports"""
     text_report = analyzer.generate_report_text()
     print(text_report)
 
-    # Save reports if requested
     if args.json:
         analyzer.save_report_json(Path(args.json))
 
     if args.text:
-        with open(args.text, 'w') as f:
-            f.write(text_report)
-        print(f"\n✅ Text report saved to {args.text}")
+        _save_text_report(args.text, text_report)
+
+def _save_text_report(filepath: str, content: str):
+    """Save text report to file"""
+    with open(filepath, 'w') as f:
+        f.write(content)
+    print(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

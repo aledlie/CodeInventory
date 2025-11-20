@@ -77,175 +77,256 @@ class TestCoverageAnalyzer:
 
     def find_functions_in_file(self, file_path: Path) -> List[FunctionInfo]:
         """Find all functions in a file"""
+        language, patterns = self._get_language_patterns(file_path)
+        if not language:
+            return []
+
         functions = []
-
-        # Determine language
-        if file_path.suffix == '.py':
-            language = 'python'
-            patterns = [
-                'def $NAME($$$): $$$',
-                'async def $NAME($$$): $$$'
-            ]
-        elif file_path.suffix in ['.ts', '.tsx']:
-            language = 'typescript'
-            patterns = [
-                'function $NAME($$$) { $$$ }',
-                'const $NAME = ($$$) => $$$',
-                'export function $NAME($$$) { $$$ }',
-                'async function $NAME($$$) { $$$ }'
-            ]
-        elif file_path.suffix in ['.js', '.jsx']:
-            language = 'javascript'
-            patterns = [
-                'function $NAME($$$) { $$$ }',
-                'const $NAME = ($$$) => $$$',
-                'export function $NAME($$$) { $$$ }'
-            ]
-        else:
-            return functions
-
-        # Find functions using each pattern
         for pattern in patterns:
-            matches = self._run_astgrep(file_path, pattern, language)
-
-            for match in matches:
-                meta = match.get('metaVariables', {})
-                # Handle both old and new ast-grep formats
-                func_name = None
-                if 'single' in meta and 'NAME' in meta['single']:
-                    func_node = meta['single']['NAME']
-                    func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
-                elif 'NAME' in meta:
-                    func_node = meta['NAME']
-                    func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
-
-                if func_name:
-                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
-                    is_async = 'async' in pattern or 'async' in match.get('text', '')
-
-                    # Skip private/internal functions (starting with _)
-                    if not func_name.startswith('_'):
-                        func_info = FunctionInfo(
-                            name=func_name,
-                            file_path=str(file_path),
-                            line_number=line_num,
-                            is_async=is_async
-                        )
-                        functions.append(func_info)
+            found = self._find_functions_with_pattern(file_path, pattern, language)
+            functions.extend(found)
 
         return functions
 
+    def _get_language_patterns(self, file_path: Path) -> Tuple[Optional[str], Optional[List[str]]]:
+        """Get language and patterns for file type"""
+        if file_path.suffix == '.py':
+            return 'python', self._get_python_patterns()
+        elif file_path.suffix in ['.ts', '.tsx']:
+            return 'typescript', self._get_typescript_patterns()
+        elif file_path.suffix in ['.js', '.jsx']:
+            return 'javascript', self._get_javascript_patterns()
+        return None, None
+
+    def _get_python_patterns(self) -> List[str]:
+        """Get Python function patterns"""
+        return [
+            'def $NAME($$$): $$$',
+            'async def $NAME($$$): $$$'
+        ]
+
+    def _get_typescript_patterns(self) -> List[str]:
+        """Get TypeScript function patterns"""
+        return [
+            'function $NAME($$$) { $$$ }',
+            'const $NAME = ($$$) => $$$',
+            'export function $NAME($$$) { $$$ }',
+            'async function $NAME($$$) { $$$ }'
+        ]
+
+    def _get_javascript_patterns(self) -> List[str]:
+        """Get JavaScript function patterns"""
+        return [
+            'function $NAME($$$) { $$$ }',
+            'const $NAME = ($$$) => $$$',
+            'export function $NAME($$$) { $$$ }'
+        ]
+
+    def _find_functions_with_pattern(self, file_path: Path, pattern: str,
+                                    language: str) -> List[FunctionInfo]:
+        """Find functions using a specific pattern"""
+        functions = []
+        matches = self._run_astgrep(file_path, pattern, language)
+
+        for match in matches:
+            func_info = self._create_function_info(match, file_path, pattern)
+            if func_info and not func_info.name.startswith('_'):
+                functions.append(func_info)
+
+        return functions
+
+    def _create_function_info(self, match: Dict[str, Any], file_path: Path,
+                            pattern: str) -> Optional[FunctionInfo]:
+        """Create FunctionInfo from match"""
+        func_name = self._extract_function_name(match)
+        if not func_name:
+            return None
+
+        line_num = match.get('range', {}).get('start', {}).get('line', 0)
+        is_async = 'async' in pattern or 'async' in match.get('text', '')
+
+        return FunctionInfo(
+            name=func_name,
+            file_path=str(file_path),
+            line_number=line_num,
+            is_async=is_async
+        )
+
+    def _extract_function_name(self, match: Dict[str, Any]) -> Optional[str]:
+        """Extract function name from match metadata"""
+        meta = match.get('metaVariables', {})
+
+        if 'single' in meta and 'NAME' in meta['single']:
+            func_node = meta['single']['NAME']
+            return func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+        elif 'NAME' in meta:
+            func_node = meta['NAME']
+            return func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+
+        return None
+
     def find_test_functions(self, test_dir: Path) -> Set[str]:
         """Find all test function names"""
-        test_functions = set()
-
         if not test_dir.exists():
-            return test_functions
+            return set()
 
-        # Patterns that indicate test functions
-        test_patterns_search = {
+        test_functions = set()
+        for file_path in test_dir.rglob('*'):
+            if file_path.is_file():
+                names = self._find_test_names_in_file(file_path)
+                test_functions.update(names)
+
+        return test_functions
+
+    def _find_test_names_in_file(self, file_path: Path) -> Set[str]:
+        """Find test function names in a single file"""
+        language = self._get_file_language(file_path)
+        if not language:
+            return set()
+
+        patterns = self._get_test_patterns(language)
+        test_names = set()
+
+        for pattern in patterns:
+            names = self._extract_test_names(file_path, pattern, language)
+            test_names.update(names)
+
+        return test_names
+
+    def _get_file_language(self, file_path: Path) -> Optional[str]:
+        """Determine language from file extension"""
+        if file_path.suffix == '.py':
+            return 'python'
+        elif file_path.suffix in ['.ts', '.tsx']:
+            return 'typescript'
+        elif file_path.suffix in ['.js', '.jsx']:
+            return 'javascript'
+        return None
+
+    def _get_test_patterns(self, language: str) -> List[str]:
+        """Get test patterns for language"""
+        patterns = {
             'python': ['def $NAME($$$): $$$'],
             'javascript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)'],
             'typescript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)']
         }
+        return patterns.get(language, [])
 
-        for file_path in test_dir.rglob('*'):
-            if not file_path.is_file():
-                continue
+    def _extract_test_names(self, file_path: Path, pattern: str, language: str) -> Set[str]:
+        """Extract test names using pattern"""
+        test_names = set()
+        matches = self._run_astgrep(file_path, pattern, language)
 
-            # Determine language
-            if file_path.suffix == '.py':
-                language = 'python'
-            elif file_path.suffix in ['.ts', '.tsx']:
-                language = 'typescript'
-            elif file_path.suffix in ['.js', '.jsx']:
-                language = 'javascript'
-            else:
-                continue
+        for match in matches:
+            test_name = self._extract_test_name(match)
+            if test_name:
+                if not self._should_skip_test(test_name, language):
+                    clean_names = self._clean_test_name(test_name)
+                    test_names.update(clean_names)
 
-            patterns = test_patterns_search.get(language, [])
-            for pattern in patterns:
-                matches = self._run_astgrep(file_path, pattern, language)
+        return test_names
 
-                for match in matches:
-                    meta = match.get('metaVariables', {})
-                    # Handle both old and new ast-grep formats
-                    test_name = None
-                    if 'single' in meta and 'NAME' in meta['single']:
-                        test_node = meta['single']['NAME']
-                        test_name = test_node.get('text') if isinstance(test_node, dict) else str(test_node)
-                    elif 'NAME' in meta:
-                        test_node = meta['NAME']
-                        test_name = test_node.get('text') if isinstance(test_node, dict) else str(test_node)
+    def _extract_test_name(self, match: Dict[str, Any]) -> Optional[str]:
+        """Extract test name from match"""
+        meta = match.get('metaVariables', {})
 
-                    if test_name:
-                        # For Python, filter for functions starting with test_
-                        if language == 'python' and not test_name.startswith('test_'):
-                            continue
-                        # Extract the actual function name being tested
-                        # e.g., "test_calculate_total" -> "calculate_total"
-                        # e.g., "should calculate total" -> "calculate"
-                        clean_name = (test_name
-                                     .replace('test_', '')
-                                     .replace('_test', '')
-                                     .replace('should ', '')
-                                     .replace(' ', '_')
-                                     .lower())
+        if 'single' in meta and 'NAME' in meta['single']:
+            test_node = meta['single']['NAME']
+            return test_node.get('text') if isinstance(test_node, dict) else str(test_node)
+        elif 'NAME' in meta:
+            test_node = meta['NAME']
+            return test_node.get('text') if isinstance(test_node, dict) else str(test_node)
 
-                        test_functions.add(clean_name)
-                        test_functions.add(test_name.lower())
+        return None
 
-        return test_functions
+    def _should_skip_test(self, test_name: str, language: str) -> bool:
+        """Check if test should be skipped"""
+        return language == 'python' and not test_name.startswith('test_')
+
+    def _clean_test_name(self, test_name: str) -> Set[str]:
+        """Clean and process test name"""
+        clean_name = (test_name
+                     .replace('test_', '')
+                     .replace('_test', '')
+                     .replace('should ', '')
+                     .replace(' ', '_')
+                     .lower())
+
+        return {clean_name, test_name.lower()}
 
     def analyze_coverage(self):
         """Analyze test coverage for the source directory"""
+        self._print_analysis_header()
+
+        test_functions = self._find_all_test_functions()
+        source_functions = self._find_all_source_functions()
+
+        self._match_functions_with_tests(source_functions, test_functions)
+        self._calculate_coverage_percentage()
+
+    def _print_analysis_header(self):
+        """Print analysis header information"""
         print(f"\nAnalyzing source directory: {self.src_dir}")
         print(f"Looking for tests in: {self.test_dir}\n")
 
-        # Find all test function names
+    def _find_all_test_functions(self) -> Set[str]:
+        """Find all test function names"""
         test_functions = self.find_test_functions(self.test_dir)
         print(f"Found {len(test_functions)} test patterns\n")
+        return test_functions
 
-        # Find all source functions
+    def _find_all_source_functions(self) -> List[FunctionInfo]:
+        """Find all source functions"""
         source_functions = []
 
-        for file_path in self.src_dir.rglob('*'):
-            if not file_path.is_file():
-                continue
-
-            # Skip test files
-            if self._is_test_file(file_path):
-                continue
-
-            # Skip non-code files
-            if file_path.suffix not in ['.py', '.ts', '.tsx', '.js', '.jsx']:
-                continue
-
+        for file_path in self._iterate_source_files():
             functions = self.find_functions_in_file(file_path)
             source_functions.extend(functions)
 
         print(f"Found {len(source_functions)} functions in source code\n")
+        return source_functions
 
-        # Match functions with tests
+    def _iterate_source_files(self):
+        """Iterate through valid source files"""
+        for file_path in self.src_dir.rglob('*'):
+            if self._is_valid_source_file(file_path):
+                yield file_path
+
+    def _is_valid_source_file(self, file_path: Path) -> bool:
+        """Check if file is a valid source file"""
+        if not file_path.is_file():
+            return False
+        if self._is_test_file(file_path):
+            return False
+        return file_path.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']
+
+    def _match_functions_with_tests(self, source_functions: List[FunctionInfo],
+                                   test_functions: Set[str]):
+        """Match source functions with their tests"""
         for func in source_functions:
-            func_name_lower = func.name.lower()
-
-            # Check if function name appears in test names
-            is_tested = any(func_name_lower in test_name for test_name in test_functions)
-            func.is_tested = is_tested
-
-            self.report.functions.append(func)
-
-            if is_tested:
-                self.report.tested_functions += 1
-            else:
-                self.report.untested_functions += 1
-                # Group by file
-                self.report.untested_by_file[func.file_path].append(func)
+            is_tested = self._is_function_tested(func, test_functions)
+            self._record_function_coverage(func, is_tested)
 
         self.report.total_functions = len(source_functions)
 
-        # Calculate coverage percentage
+    def _is_function_tested(self, func: FunctionInfo, test_functions: Set[str]) -> bool:
+        """Check if a function has tests"""
+        func_name_lower = func.name.lower()
+        return any(func_name_lower in test_name for test_name in test_functions)
+
+    def _record_function_coverage(self, func: FunctionInfo, is_tested: bool):
+        """Record coverage for a function"""
+        func.is_tested = is_tested
+        self.report.functions.append(func)
+
+        if is_tested:
+            self.report.tested_functions += 1
+        else:
+            self.report.untested_functions += 1
+            self.report.untested_by_file[func.file_path].append(func)
+
+    def _calculate_coverage_percentage(self):
+        """Calculate coverage percentage"""
         if self.report.total_functions > 0:
             self.report.coverage_percentage = (
                 self.report.tested_functions / self.report.total_functions * 100
@@ -253,14 +334,30 @@ class TestCoverageAnalyzer:
 
     def generate_report_text(self) -> str:
         """Generate human-readable coverage report"""
-        lines = [
+        lines = []
+        lines.extend(self._generate_coverage_header())
+        lines.extend(self._generate_coverage_summary())
+        lines.extend(self._generate_coverage_bar())
+        lines.extend(self._generate_untested_functions())
+        lines.extend(self._generate_recommendations())
+        lines.extend(self._generate_coverage_footer())
+        return '\n'.join(lines)
+
+    def _generate_coverage_header(self) -> List[str]:
+        """Generate report header"""
+        return [
             "="*80,
             "TEST COVERAGE ANALYSIS REPORT",
             "="*80,
             "",
             f"Source Directory: {self.src_dir}",
             f"Test Directory: {self.test_dir}",
-            "",
+            ""
+        ]
+
+    def _generate_coverage_summary(self) -> List[str]:
+        """Generate coverage summary"""
+        return [
             "="*80,
             "SUMMARY",
             "="*80,
@@ -272,135 +369,219 @@ class TestCoverageAnalyzer:
             ""
         ]
 
-        # Coverage bar
+    def _generate_coverage_bar(self) -> List[str]:
+        """Generate visual coverage bar"""
         bar_width = 50
         filled = int(bar_width * self.report.coverage_percentage / 100)
         bar = '█' * filled + '░' * (bar_width - filled)
-        lines.append(f"[{bar}] {self.report.coverage_percentage:.1f}%")
+        return [
+            f"[{bar}] {self.report.coverage_percentage:.1f}%",
+            ""
+        ]
+
+    def _generate_untested_functions(self) -> List[str]:
+        """Generate untested functions section"""
+        if not self.report.untested_by_file:
+            return []
+
+        lines = [
+            "="*80,
+            "UNTESTED FUNCTIONS BY FILE",
+            "="*80,
+            ""
+        ]
+
+        for file_path, functions in sorted(self.report.untested_by_file.items()):
+            lines.extend(self._format_file_functions(file_path, functions))
+
+        return lines
+
+    def _format_file_functions(self, file_path: str, functions: List[FunctionInfo]) -> List[str]:
+        """Format untested functions for a file"""
+        lines = [
+            f"📄 {file_path}",
+            f"   {len(functions)} untested function(s)",
+            "-"*80
+        ]
+
+        for func in sorted(functions, key=lambda x: x.line_number):
+            async_marker = " (async)" if func.is_async else ""
+            lines.append(f"  ❌ Line {func.line_number}: {func.name}(){async_marker}")
+
         lines.append("")
+        return lines
 
-        # Untested functions by file
-        if self.report.untested_by_file:
-            lines.append("="*80)
-            lines.append("UNTESTED FUNCTIONS BY FILE")
-            lines.append("="*80)
-            lines.append("")
+    def _generate_recommendations(self) -> List[str]:
+        """Generate recommendations section"""
+        lines = [
+            "="*80,
+            "RECOMMENDATIONS",
+            "="*80,
+            ""
+        ]
 
-            for file_path, functions in sorted(self.report.untested_by_file.items()):
-                lines.append(f"📄 {file_path}")
-                lines.append(f"   {len(functions)} untested function(s)")
-                lines.append("-"*80)
-
-                for func in sorted(functions, key=lambda x: x.line_number):
-                    async_marker = " (async)" if func.is_async else ""
-                    lines.append(f"  ❌ Line {func.line_number}: {func.name}(){async_marker}")
-
-                lines.append("")
-
-        # Recommendations
-        lines.append("="*80)
-        lines.append("RECOMMENDATIONS")
-        lines.append("="*80)
-        lines.append("")
-
-        if self.report.coverage_percentage < 70:
-            lines.append("🔴 CRITICAL: Test coverage is below 70%")
-            lines.append("   Priority: Add tests for core functionality")
-        elif self.report.coverage_percentage < 80:
-            lines.append("🟡 WARNING: Test coverage is below 80%")
-            lines.append("   Goal: Increase coverage to 80%+")
-        else:
-            lines.append("🟢 GOOD: Test coverage is above 80%")
-            lines.append("   Maintain current coverage level")
-
+        lines.extend(self._get_coverage_status())
         lines.append("")
 
         if self.report.untested_functions > 0:
-            lines.append("Next Steps:")
-            lines.append(f"  1. Add tests for {self.report.untested_functions} untested functions")
-            lines.append("  2. Focus on functions with complex logic first")
-            lines.append("  3. Consider edge cases and error handling")
+            lines.extend(self._get_next_steps())
 
         lines.append("")
-        lines.append("="*80)
-        lines.append("END OF REPORT")
-        lines.append("="*80)
+        return lines
 
-        return '\n'.join(lines)
+    def _get_coverage_status(self) -> List[str]:
+        """Get coverage status message"""
+        if self.report.coverage_percentage < 70:
+            return [
+                "🔴 CRITICAL: Test coverage is below 70%",
+                "   Priority: Add tests for core functionality"
+            ]
+        elif self.report.coverage_percentage < 80:
+            return [
+                "🟡 WARNING: Test coverage is below 80%",
+                "   Goal: Increase coverage to 80%+"
+            ]
+        else:
+            return [
+                "🟢 GOOD: Test coverage is above 80%",
+                "   Maintain current coverage level"
+            ]
+
+    def _get_next_steps(self) -> List[str]:
+        """Get next steps for improving coverage"""
+        return [
+            "Next Steps:",
+            f"  1. Add tests for {self.report.untested_functions} untested functions",
+            "  2. Focus on functions with complex logic first",
+            "  3. Consider edge cases and error handling"
+        ]
+
+    def _generate_coverage_footer(self) -> List[str]:
+        """Generate report footer"""
+        return [
+            "="*80,
+            "END OF REPORT",
+            "="*80
+        ]
 
     def save_report_json(self, output_path: Path):
         """Save coverage report as JSON"""
-        data = {
-            'summary': {
-                'source_directory': str(self.src_dir),
-                'test_directory': str(self.test_dir),
-                'total_functions': self.report.total_functions,
-                'tested_functions': self.report.tested_functions,
-                'untested_functions': self.report.untested_functions,
-                'coverage_percentage': round(self.report.coverage_percentage, 2)
-            },
-            'functions': [
-                {
-                    'name': func.name,
-                    'file_path': func.file_path,
-                    'line_number': func.line_number,
-                    'is_async': func.is_async,
-                    'is_tested': func.is_tested
-                }
-                for func in self.report.functions
-            ],
-            'untested_by_file': {
-                file_path: [
-                    {
-                        'name': func.name,
-                        'line_number': func.line_number,
-                        'is_async': func.is_async
-                    }
-                    for func in functions
-                ]
-                for file_path, functions in self.report.untested_by_file.items()
-            }
+        data = self._build_json_report()
+        self._write_json_to_file(output_path, data)
+        print(f"✅ Coverage report saved to {output_path}")
+
+    def _build_json_report(self) -> Dict[str, Any]:
+        """Build JSON report structure"""
+        return {
+            'summary': self._build_json_summary(),
+            'functions': self._build_functions_list(),
+            'untested_by_file': self._build_untested_by_file()
         }
 
-        with open(output_path, 'w') as f:
-            json.dump(data, f, indent=2)
+    def _build_json_summary(self) -> Dict[str, Any]:
+        """Build summary section for JSON"""
+        return {
+            'source_directory': str(self.src_dir),
+            'test_directory': str(self.test_dir),
+            'total_functions': self.report.total_functions,
+            'tested_functions': self.report.tested_functions,
+            'untested_functions': self.report.untested_functions,
+            'coverage_percentage': round(self.report.coverage_percentage, 2)
+        }
 
-        print(f"✅ Coverage report saved to {output_path}")
+    def _build_functions_list(self) -> List[Dict[str, Any]]:
+        """Build functions list for JSON"""
+        return [self._function_to_dict(func) for func in self.report.functions]
+
+    def _function_to_dict(self, func: FunctionInfo) -> Dict[str, Any]:
+        """Convert FunctionInfo to dictionary"""
+        return {
+            'name': func.name,
+            'file_path': func.file_path,
+            'line_number': func.line_number,
+            'is_async': func.is_async,
+            'is_tested': func.is_tested
+        }
+
+    def _build_untested_by_file(self) -> Dict[str, List[Dict[str, Any]]]:
+        """Build untested functions by file for JSON"""
+        return {
+            file_path: [self._untested_func_to_dict(func) for func in functions]
+            for file_path, functions in self.report.untested_by_file.items()
+        }
+
+    def _untested_func_to_dict(self, func: FunctionInfo) -> Dict[str, Any]:
+        """Convert untested function to dictionary"""
+        return {
+            'name': func.name,
+            'line_number': func.line_number,
+            'is_async': func.is_async
+        }
+
+    def _write_json_to_file(self, path: Path, data: Dict[str, Any]):
+        """Write JSON data to file"""
+        with open(path, 'w') as f:
+            json.dump(data, f, indent=2)
 
 def main():
     import argparse
+    args = _parse_coverage_args()
+    _run_coverage_analysis(args)
 
+def _parse_coverage_args():
+    """Parse command line arguments"""
     parser = argparse.ArgumentParser(description='Test Coverage Analyzer')
     parser.add_argument('src_dir', help='Source code directory')
     parser.add_argument('--test-dir', help='Test directory (default: src_dir/tests)')
     parser.add_argument('--json', help='Output JSON report to file')
     parser.add_argument('--text', help='Output text report to file')
+    return parser.parse_args()
 
-    args = parser.parse_args()
+def _run_coverage_analysis(args):
+    """Run coverage analysis"""
+    src_dir, test_dir = _setup_directories(args)
+    analyzer = _create_coverage_analyzer(src_dir, test_dir)
 
+    _print_coverage_header()
+    _perform_coverage_analysis(analyzer)
+    _save_coverage_reports(analyzer, args)
+
+def _setup_directories(args) -> Tuple[Path, Optional[Path]]:
+    """Setup source and test directories"""
     src_dir = Path(args.src_dir)
     test_dir = Path(args.test_dir) if args.test_dir else None
+    return src_dir, test_dir
 
-    analyzer = TestCoverageAnalyzer(src_dir, test_dir)
+def _create_coverage_analyzer(src_dir: Path, test_dir: Optional[Path]) -> 'TestCoverageAnalyzer':
+    """Create coverage analyzer instance"""
+    return TestCoverageAnalyzer(src_dir, test_dir)
 
+def _print_coverage_header():
+    """Print coverage analysis header"""
     print(f"\n{'='*80}")
     print("Test Coverage Analyzer")
     print(f"{'='*80}")
 
+def _perform_coverage_analysis(analyzer: 'TestCoverageAnalyzer'):
+    """Perform the coverage analysis"""
     analyzer.analyze_coverage()
 
-    # Generate text report
+def _save_coverage_reports(analyzer: 'TestCoverageAnalyzer', args):
+    """Save coverage reports"""
     text_report = analyzer.generate_report_text()
     print(text_report)
 
-    # Save reports if requested
     if args.json:
         analyzer.save_report_json(Path(args.json))
 
     if args.text:
-        with open(args.text, 'w') as f:
-            f.write(text_report)
-        print(f"\n✅ Text report saved to {args.text}")
+        _save_text_coverage_report(args.text, text_report)
+
+def _save_text_coverage_report(filepath: str, content: str):
+    """Save text coverage report to file"""
+    with open(filepath, 'w') as f:
+        f.write(content)
+    print(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

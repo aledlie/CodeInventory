@@ -269,116 +269,120 @@ class EnhancedSchemaGenerator:
     def extract_typescript_schema_astgrep(self, file_path: Path) -> FileDef:
         """Extract schema from TypeScript/JavaScript using ast-grep"""
         file_def = FileDef(path=str(file_path), language='typescript')
-
-        # Determine language for ast-grep
         lang = 'typescript' if file_path.suffix in ['.ts', '.tsx'] else 'javascript'
 
         try:
-            # Extract imports
-            import_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'import $$ from "$PACKAGE"',
-                lang
-            )
-            for match in import_matches:
-                package = AstGrepHelper.get_meta_var(match, 'PACKAGE')
-                if package:
-                    file_def.imports.append(package)
-
-            # Also catch named imports
-            named_import_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'import { $$ } from "$PACKAGE"',
-                lang
-            )
-            for match in named_import_matches:
-                package = AstGrepHelper.get_meta_var(match, 'PACKAGE')
-                if package and package not in file_def.imports:
-                    file_def.imports.append(package)
-
-            # Extract classes
-            class_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'class $NAME { $$$ }',
-                lang
-            )
-            for match in class_matches:
-                class_name = AstGrepHelper.get_meta_var(match, 'NAME')
-                if class_name:
-                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-                    class_def = ClassDef(
-                        name=class_name,
-                        bases=[],
-                        line_number=line_num,
-                        is_exported='export' in match.get('text', '')
-                    )
-                    file_def.classes.append(class_def)
-
-            # Extract interfaces
-            interface_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'interface $NAME { $$$ }',
-                lang
-            )
-            for match in interface_matches:
-                interface_name = AstGrepHelper.get_meta_var(match, 'NAME')
-                if interface_name:
-                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-                    class_def = ClassDef(
-                        name=interface_name,
-                        bases=[],
-                        line_number=line_num,
-                        is_exported='export' in match.get('text', '')
-                    )
-                    file_def.classes.append(class_def)
-
-            # Extract regular functions
-            func_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'function $NAME($$$) { $$$ }',
-                lang
-            )
-            for match in func_matches:
-                func_name = AstGrepHelper.get_meta_var(match, 'NAME')
-                if func_name:
-                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-                    func_def = FunctionDef(
-                        name=func_name,
-                        args=[],  # ast-grep doesn't easily extract args in pattern
-                        line_number=line_num,
-                        is_exported='export' in match.get('text', ''),
-                        is_async='async' in match.get('text', '')
-                    )
-                    file_def.functions.append(func_def)
-
-            # Extract arrow functions assigned to const
-            arrow_matches = AstGrepHelper.find_pattern(
-                file_path,
-                'const $NAME = ($$$) => $$$',
-                lang
-            )
-            for match in arrow_matches:
-                func_name = AstGrepHelper.get_meta_var(match, 'NAME')
-                if func_name:
-                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-                    func_def = FunctionDef(
-                        name=func_name,
-                        args=[],
-                        line_number=line_num,
-                        is_exported='export' in match.get('text', '')
-                    )
-                    file_def.functions.append(func_def)
-
+            self._extract_ts_imports_astgrep(file_path, file_def, lang)
+            self._extract_ts_classes_astgrep(file_path, file_def, lang)
+            self._extract_ts_interfaces_astgrep(file_path, file_def, lang)
+            self._extract_ts_functions_astgrep(file_path, file_def, lang)
+            self._extract_ts_arrow_functions_astgrep(file_path, file_def, lang)
         except Exception as e:
             print(f"  Error with ast-grep parsing {file_path}: {e}")
-            # Fall back to regex if ast-grep fails
             return self.extract_typescript_schema_regex(file_path)
 
         return file_def
+
+    def _extract_ts_imports_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+        """Extract TypeScript imports using ast-grep"""
+        # Extract default imports
+        import_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'import $$ from "$PACKAGE"',
+            lang
+        )
+        for match in import_matches:
+            package = AstGrepHelper.get_meta_var(match, 'PACKAGE')
+            if package:
+                file_def.imports.append(package)
+
+        # Extract named imports
+        named_import_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'import { $$ } from "$PACKAGE"',
+            lang
+        )
+        for match in named_import_matches:
+            package = AstGrepHelper.get_meta_var(match, 'PACKAGE')
+            if package and package not in file_def.imports:
+                file_def.imports.append(package)
+
+    def _extract_ts_classes_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+        """Extract TypeScript classes using ast-grep"""
+        class_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'class $NAME { $$$ }',
+            lang
+        )
+        for match in class_matches:
+            class_name = AstGrepHelper.get_meta_var(match, 'NAME')
+            if class_name:
+                line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                class_def = ClassDef(
+                    name=class_name,
+                    bases=[],
+                    line_number=line_num,
+                    is_exported='export' in match.get('text', '')
+                )
+                file_def.classes.append(class_def)
+
+    def _extract_ts_interfaces_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+        """Extract TypeScript interfaces using ast-grep"""
+        interface_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'interface $NAME { $$$ }',
+            lang
+        )
+        for match in interface_matches:
+            interface_name = AstGrepHelper.get_meta_var(match, 'NAME')
+            if interface_name:
+                line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                class_def = ClassDef(
+                    name=interface_name,
+                    bases=[],
+                    line_number=line_num,
+                    is_exported='export' in match.get('text', '')
+                )
+                file_def.classes.append(class_def)
+
+    def _extract_ts_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+        """Extract TypeScript regular functions using ast-grep"""
+        func_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'function $NAME($$$) { $$$ }',
+            lang
+        )
+        for match in func_matches:
+            func_name = AstGrepHelper.get_meta_var(match, 'NAME')
+            if func_name:
+                line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                func_def = FunctionDef(
+                    name=func_name,
+                    args=[],
+                    line_number=line_num,
+                    is_exported='export' in match.get('text', ''),
+                    is_async='async' in match.get('text', '')
+                )
+                file_def.functions.append(func_def)
+
+    def _extract_ts_arrow_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+        """Extract TypeScript arrow functions using ast-grep"""
+        arrow_matches = AstGrepHelper.find_pattern(
+            file_path,
+            'const $NAME = ($$$) => $$$',
+            lang
+        )
+        for match in arrow_matches:
+            func_name = AstGrepHelper.get_meta_var(match, 'NAME')
+            if func_name:
+                line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                func_def = FunctionDef(
+                    name=func_name,
+                    args=[],
+                    line_number=line_num,
+                    is_exported='export' in match.get('text', '')
+                )
+                file_def.functions.append(func_def)
 
     def extract_typescript_schema_regex(self, file_path: Path) -> FileDef:
         """Extract schema from TypeScript/JavaScript files using regex (fallback)"""
@@ -388,79 +392,89 @@ class EnhancedSchemaGenerator:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Extract imports
-            import_pattern = r'import\s+(?:{[^}]+}|[^;\n]+)\s+from\s+["\']([^"\']+)["\']'
-            for match in re.finditer(import_pattern, content):
-                file_def.imports.append(match.group(1))
-
-            # Extract classes
-            class_pattern = r'(?:export\s+)?(?:abstract\s+)?class\s+(\w+)(?:\s+extends\s+([\w,\s]+))?(?:\s+implements\s+([\w,\s]+))?\s*{'
-            for match in re.finditer(class_pattern, content):
-                class_name = match.group(1)
-                bases = []
-                if match.group(2):
-                    bases.append(match.group(2).strip())
-                if match.group(3):
-                    bases.extend([x.strip() for x in match.group(3).split(',')])
-
-                class_def = ClassDef(
-                    name=class_name,
-                    bases=bases,
-                    line_number=content[:match.start()].count('\n') + 1,
-                    is_exported='export' in match.group(0)
-                )
-                file_def.classes.append(class_def)
-
-            # Extract interfaces
-            interface_pattern = r'(?:export\s+)?interface\s+(\w+)(?:\s+extends\s+([\w,\s]+))?\s*{'
-            for match in re.finditer(interface_pattern, content):
-                interface_name = match.group(1)
-                bases = []
-                if match.group(2):
-                    bases.extend([x.strip() for x in match.group(2).split(',')])
-
-                class_def = ClassDef(
-                    name=interface_name,
-                    bases=bases,
-                    line_number=content[:match.start()].count('\n') + 1,
-                    is_exported='export' in match.group(0)
-                )
-                file_def.classes.append(class_def)
-
-            # Extract functions
-            func_pattern = r'(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)(?:\s*:\s*([^{]+))?'
-            for match in re.finditer(func_pattern, content):
-                func_name = match.group(1)
-                args_str = match.group(2)
-                return_type = match.group(3).strip() if match.group(3) else None
-
-                args = [arg.strip().split(':')[0].strip() for arg in args_str.split(',') if arg.strip()]
-
-                func_def = FunctionDef(
-                    name=func_name,
-                    args=args,
-                    return_type=return_type,
-                    line_number=content[:match.start()].count('\n') + 1,
-                    is_async='async' in match.group(0)
-                )
-                file_def.functions.append(func_def)
-
-            # Extract arrow functions
-            arrow_pattern = r'(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s+)?\([^)]*\)\s*=>'
-            for match in re.finditer(arrow_pattern, content):
-                func_name = match.group(1)
-                func_def = FunctionDef(
-                    name=func_name,
-                    args=[],
-                    line_number=content[:match.start()].count('\n') + 1,
-                    is_async='async' in match.group(0)
-                )
-                file_def.functions.append(func_def)
+            self._extract_ts_imports_regex(content, file_def)
+            self._extract_ts_classes_regex(content, file_def)
+            self._extract_ts_interfaces_regex(content, file_def)
+            self._extract_ts_functions_regex(content, file_def)
+            self._extract_ts_arrow_functions_regex(content, file_def)
 
         except Exception as e:
             print(f"Error parsing {file_path}: {e}")
 
         return file_def
+
+    def _extract_ts_imports_regex(self, content: str, file_def: FileDef):
+        """Extract TypeScript imports using regex"""
+        import_pattern = r'import\s+(?:{[^}]+}|[^;\n]+)\s+from\s+["\']([^"\']+)["\']'
+        for match in re.finditer(import_pattern, content):
+            file_def.imports.append(match.group(1))
+
+    def _extract_ts_classes_regex(self, content: str, file_def: FileDef):
+        """Extract TypeScript classes using regex"""
+        class_pattern = r'(?:export\s+)?(?:abstract\s+)?class\s+(\w+)(?:\s+extends\s+([\w,\s]+))?(?:\s+implements\s+([\w,\s]+))?\s*{'
+        for match in re.finditer(class_pattern, content):
+            class_name = match.group(1)
+            bases = []
+            if match.group(2):
+                bases.append(match.group(2).strip())
+            if match.group(3):
+                bases.extend([x.strip() for x in match.group(3).split(',')])
+
+            class_def = ClassDef(
+                name=class_name,
+                bases=bases,
+                line_number=content[:match.start()].count('\n') + 1,
+                is_exported='export' in match.group(0)
+            )
+            file_def.classes.append(class_def)
+
+    def _extract_ts_interfaces_regex(self, content: str, file_def: FileDef):
+        """Extract TypeScript interfaces using regex"""
+        interface_pattern = r'(?:export\s+)?interface\s+(\w+)(?:\s+extends\s+([\w,\s]+))?\s*{'
+        for match in re.finditer(interface_pattern, content):
+            interface_name = match.group(1)
+            bases = []
+            if match.group(2):
+                bases.extend([x.strip() for x in match.group(2).split(',')])
+
+            class_def = ClassDef(
+                name=interface_name,
+                bases=bases,
+                line_number=content[:match.start()].count('\n') + 1,
+                is_exported='export' in match.group(0)
+            )
+            file_def.classes.append(class_def)
+
+    def _extract_ts_functions_regex(self, content: str, file_def: FileDef):
+        """Extract TypeScript functions using regex"""
+        func_pattern = r'(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)(?:\s*:\s*([^{]+))?'
+        for match in re.finditer(func_pattern, content):
+            func_name = match.group(1)
+            args_str = match.group(2)
+            return_type = match.group(3).strip() if match.group(3) else None
+            args = [arg.strip().split(':')[0].strip() for arg in args_str.split(',') if arg.strip()]
+
+            func_def = FunctionDef(
+                name=func_name,
+                args=args,
+                return_type=return_type,
+                line_number=content[:match.start()].count('\n') + 1,
+                is_async='async' in match.group(0)
+            )
+            file_def.functions.append(func_def)
+
+    def _extract_ts_arrow_functions_regex(self, content: str, file_def: FileDef):
+        """Extract TypeScript arrow functions using regex"""
+        arrow_pattern = r'(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s+)?\([^)]*\)\s*=>'
+        for match in re.finditer(arrow_pattern, content):
+            func_name = match.group(1)
+            func_def = FunctionDef(
+                name=func_name,
+                args=[],
+                line_number=content[:match.start()].count('\n') + 1,
+                is_async='async' in match.group(0)
+            )
+            file_def.functions.append(func_def)
 
     def extract_typescript_schema(self, file_path: Path) -> FileDef:
         """Extract TypeScript/JavaScript schema using best available method"""
@@ -541,10 +555,21 @@ class EnhancedSchemaGenerator:
         """Generate README.md content for a directory with optional schema.org markup"""
         dir_name = Path(dir_rel_path).name if dir_rel_path != '.' else 'Code Repository'
 
-        lines = [
+        lines = []
+        self._add_readme_header(lines, dir_name, schema, include_schema_org)
+        self._add_readme_overview(lines, schema)
+        self._add_readme_subdirectories(lines, schema)
+        self._add_readme_files(lines, schema)
+        self._add_readme_footer(lines)
+
+        return '\n'.join(lines)
+
+    def _add_readme_header(self, lines: List[str], dir_name: str, schema: DirectorySchema, include_schema_org: bool):
+        """Add header section to README"""
+        lines.extend([
             f"# {dir_name}",
             ""
-        ]
+        ])
 
         # Add schema.org JSON-LD if requested
         if include_schema_org and schema.schema_org_markup:
@@ -554,6 +579,8 @@ class EnhancedSchemaGenerator:
                 ""
             ])
 
+    def _add_readme_overview(self, lines: List[str], schema: DirectorySchema):
+        """Add overview section to README"""
         lines.extend([
             "## Overview",
             "",
@@ -567,6 +594,8 @@ class EnhancedSchemaGenerator:
                 ""
             ])
 
+    def _add_readme_subdirectories(self, lines: List[str], schema: DirectorySchema):
+        """Add subdirectories section to README"""
         if schema.subdirectories:
             lines.extend([
                 "## Subdirectories",
@@ -576,133 +605,196 @@ class EnhancedSchemaGenerator:
                 lines.append(f"- `{subdir}/`")
             lines.append("")
 
-        if schema.files:
+    def _add_readme_files(self, lines: List[str], schema: DirectorySchema):
+        """Add files and schemas section to README"""
+        if not schema.files:
+            return
+
+        lines.extend([
+            "## Files and Schemas",
+            ""
+        ])
+
+        for file_def in sorted(schema.files, key=lambda x: x.path):
+            file_name = Path(file_def.path).name
             lines.extend([
-                "## Files and Schemas",
+                f"### `{file_name}` ({file_def.language})",
                 ""
             ])
 
-            for file_def in sorted(schema.files, key=lambda x: x.path):
-                file_name = Path(file_def.path).name
-                lines.extend([
-                    f"### `{file_name}` ({file_def.language})",
-                    ""
-                ])
+            self._add_readme_classes(lines, file_def)
+            self._add_readme_functions(lines, file_def)
+            self._add_readme_imports(lines, file_def)
 
-                if file_def.classes:
-                    lines.append("**Classes:**")
-                    for cls in file_def.classes:
-                        bases_str = f" (extends: {', '.join(cls.bases)})" if cls.bases else ""
-                        export_str = " [exported]" if cls.is_exported else ""
-                        lines.append(f"- `{cls.name}`{bases_str}{export_str} - Line {cls.line_number}")
-                        if cls.docstring:
-                            lines.append(f"  - {cls.docstring.split(chr(10))[0]}")
-                        if cls.methods:
-                            lines.append(f"  - Methods: {', '.join(m.name for m in cls.methods[:5])}")
-                            if len(cls.methods) > 5:
-                                lines[-1] += f" (+{len(cls.methods) - 5} more)"
-                    lines.append("")
+    def _add_readme_classes(self, lines: List[str], file_def: FileDef):
+        """Add classes information to README"""
+        if not file_def.classes:
+            return
 
-                if file_def.functions:
-                    lines.append("**Functions:**")
-                    for func in file_def.functions[:10]:
-                        args_str = f"({', '.join(func.args)})" if func.args else "()"
-                        return_str = f" -> {func.return_type}" if func.return_type else ""
-                        async_str = "async " if func.is_async else ""
-                        export_str = " [exported]" if func.is_exported else ""
-                        lines.append(f"- `{async_str}{func.name}{args_str}{return_str}`{export_str} - Line {func.line_number}")
-                    if len(file_def.functions) > 10:
-                        lines.append(f"- ... and {len(file_def.functions) - 10} more functions")
-                    lines.append("")
+        lines.append("**Classes:**")
+        for cls in file_def.classes:
+            bases_str = f" (extends: {', '.join(cls.bases)})" if cls.bases else ""
+            export_str = " [exported]" if cls.is_exported else ""
+            lines.append(f"- `{cls.name}`{bases_str}{export_str} - Line {cls.line_number}")
 
-                if file_def.imports:
-                    top_imports = sorted(set(file_def.imports))[:5]
-                    lines.append(f"**Key Imports:** {', '.join(f'`{i}`' for i in top_imports)}")
-                    if len(file_def.imports) > 5:
-                        lines[-1] += f" (+{len(set(file_def.imports)) - 5} more)"
-                    lines.append("")
+            if cls.docstring:
+                lines.append(f"  - {cls.docstring.split(chr(10))[0]}")
 
+            if cls.methods:
+                method_names = ', '.join(m.name for m in cls.methods[:5])
+                lines.append(f"  - Methods: {method_names}")
+                if len(cls.methods) > 5:
+                    lines[-1] += f" (+{len(cls.methods) - 5} more)"
+        lines.append("")
+
+    def _add_readme_functions(self, lines: List[str], file_def: FileDef):
+        """Add functions information to README"""
+        if not file_def.functions:
+            return
+
+        lines.append("**Functions:**")
+        for func in file_def.functions[:10]:
+            args_str = f"({', '.join(func.args)})" if func.args else "()"
+            return_str = f" -> {func.return_type}" if func.return_type else ""
+            async_str = "async " if func.is_async else ""
+            export_str = " [exported]" if func.is_exported else ""
+            lines.append(f"- `{async_str}{func.name}{args_str}{return_str}`{export_str} - Line {func.line_number}")
+
+        if len(file_def.functions) > 10:
+            lines.append(f"- ... and {len(file_def.functions) - 10} more functions")
+        lines.append("")
+
+    def _add_readme_imports(self, lines: List[str], file_def: FileDef):
+        """Add imports information to README"""
+        if not file_def.imports:
+            return
+
+        top_imports = sorted(set(file_def.imports))[:5]
+        imports_str = ', '.join(f'`{i}`' for i in top_imports)
+        lines.append(f"**Key Imports:** {imports_str}")
+
+        if len(file_def.imports) > 5:
+            lines[-1] += f" (+{len(set(file_def.imports)) - 5} more)"
+        lines.append("")
+
+    def _add_readme_footer(self, lines: List[str]):
+        """Add footer to README"""
         lines.extend([
             "---",
             "*Generated by Enhanced Schema Generator with schema.org markup*"
         ])
 
-        return '\n'.join(lines)
-
     def save_schemas_json(self, output_path: Path, include_schema_org: bool = True):
         """Save all schemas to a JSON file with schema.org vocabulary"""
+        data = self._build_schemas_json_data(include_schema_org)
+        self._write_json_file(output_path, data)
+        self._print_save_summary(output_path, include_schema_org)
+
+    def _build_schemas_json_data(self, include_schema_org: bool) -> Dict[str, Any]:
+        """Build the JSON data structure for schemas"""
         data = {
             "@context": "https://schema.org" if include_schema_org else None,
             "directories": {}
         }
 
         for path, schema in self.schemas.items():
-            dir_data = {
-                'path': schema.path,
-                'has_git': schema.has_git,
-                'git_remote': schema.git_remote,
-                'subdirectories': schema.subdirectories,
-                'files': [
-                    {
-                        '@type': 'SoftwareSourceCode' if include_schema_org else None,
-                        'path': f.path,
-                        'language': f.language,
-                        'classes': [
-                            {
-                                'name': c.name,
-                                'bases': c.bases,
-                                'methods': [{'name': m.name, 'args': m.args, 'isAsync': m.is_async} for m in c.methods],
-                                'line_number': c.line_number,
-                                'is_exported': c.is_exported
-                            } for c in f.classes
-                        ],
-                        'functions': [
-                            {
-                                'name': fn.name,
-                                'args': fn.args,
-                                'return_type': fn.return_type,
-                                'line_number': fn.line_number,
-                                'is_async': fn.is_async,
-                                'is_exported': fn.is_exported
-                            } for fn in f.functions
-                        ],
-                        'imports': f.imports
-                    } for f in schema.files
-                ]
-            }
-
-            # Add schema.org markup
-            if include_schema_org and schema.schema_org_markup:
-                dir_data['schema_org'] = schema.schema_org_markup
-
-            # Clean None values
-            dir_data = {k: v for k, v in dir_data.items() if v is not None}
+            dir_data = self._build_directory_data(schema, include_schema_org)
             data['directories'][path] = dir_data
 
-        # Clean root None
-        data = {k: v for k, v in data.items() if v is not None}
+        # Clean root None values
+        return {k: v for k, v in data.items() if v is not None}
 
+    def _build_directory_data(self, schema: DirectorySchema, include_schema_org: bool) -> Dict[str, Any]:
+        """Build directory data for JSON export"""
+        dir_data = {
+            'path': schema.path,
+            'has_git': schema.has_git,
+            'git_remote': schema.git_remote,
+            'subdirectories': schema.subdirectories,
+            'files': [self._build_file_data(f, include_schema_org) for f in schema.files]
+        }
+
+        # Add schema.org markup
+        if include_schema_org and schema.schema_org_markup:
+            dir_data['schema_org'] = schema.schema_org_markup
+
+        # Clean None values
+        return {k: v for k, v in dir_data.items() if v is not None}
+
+    def _build_file_data(self, file_def: FileDef, include_schema_org: bool) -> Dict[str, Any]:
+        """Build file data for JSON export"""
+        return {
+            '@type': 'SoftwareSourceCode' if include_schema_org else None,
+            'path': file_def.path,
+            'language': file_def.language,
+            'classes': [self._build_class_data(c) for c in file_def.classes],
+            'functions': [self._build_function_data(fn) for fn in file_def.functions],
+            'imports': file_def.imports
+        }
+
+    def _build_class_data(self, class_def: ClassDef) -> Dict[str, Any]:
+        """Build class data for JSON export"""
+        return {
+            'name': class_def.name,
+            'bases': class_def.bases,
+            'methods': [{'name': m.name, 'args': m.args, 'isAsync': m.is_async} for m in class_def.methods],
+            'line_number': class_def.line_number,
+            'is_exported': class_def.is_exported
+        }
+
+    def _build_function_data(self, func_def: FunctionDef) -> Dict[str, Any]:
+        """Build function data for JSON export"""
+        return {
+            'name': func_def.name,
+            'args': func_def.args,
+            'return_type': func_def.return_type,
+            'line_number': func_def.line_number,
+            'is_async': func_def.is_async,
+            'is_exported': func_def.is_exported
+        }
+
+    def _write_json_file(self, output_path: Path, data: Dict[str, Any]):
+        """Write JSON data to file"""
         with open(output_path, 'w') as f:
             json.dump(data, f, indent=2)
 
+    def _print_save_summary(self, output_path: Path, include_schema_org: bool):
+        """Print summary after saving schemas"""
         print(f"✅ Schemas saved to {output_path}")
         print(f"   Total directories: {len(self.schemas)}")
         print(f"   Schema.org markup: {'Included' if include_schema_org else 'Not included'}")
 
 def main():
-    import argparse
+    args = _parse_arguments()
+    root = Path(args.root)
+    generator = EnhancedSchemaGenerator(str(root), use_astgrep=not args.no_astgrep)
 
+    _print_header(generator, root, args)
+    _run_scanner(generator)
+
+    schema_json_path = _get_output_path(root)
+    generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
+    print()
+
+    readme_files = _generate_readme_files(generator, root, args)
+    _print_git_remotes(generator)
+    _handle_quality_report(args)
+    _print_footer()
+
+    return readme_files, _get_git_directories(generator)
+
+def _parse_arguments():
+    """Parse command line arguments"""
+    import argparse
     parser = argparse.ArgumentParser(description='Enhanced Schema Generator')
     parser.add_argument('--root', default='/Users/alyshialedlie/code', help='Root directory to scan')
     parser.add_argument('--no-astgrep', action='store_true', help='Disable ast-grep (use regex fallback)')
     parser.add_argument('--no-schema-org', action='store_true', help='Disable schema.org markup in READMEs')
     parser.add_argument('--quality-report', action='store_true', help='Generate code quality report')
+    return parser.parse_args()
 
-    args = parser.parse_args()
-
-    root = Path(args.root)
-    generator = EnhancedSchemaGenerator(str(root), use_astgrep=not args.no_astgrep)
-
+def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
+    """Print header information"""
     print(f"\n{'='*60}")
     print("Enhanced Schema Generator")
     print(f"{'='*60}\n")
@@ -711,61 +803,69 @@ def main():
     print(f"Schema.org: {'Enabled' if not args.no_schema_org else 'Disabled'}")
     print()
 
+def _run_scanner(generator: 'EnhancedSchemaGenerator'):
+    """Run directory scanning"""
     print("Scanning directories...")
     generator.scan_all_directories()
-
     print(f"✅ Found {len(generator.schemas)} directories to process\n")
 
-    # Save schemas to JSON
-    # If root is already Inventory directory, save directly; otherwise save to Inventory subdirectory
+def _get_output_path(root: Path) -> Path:
+    """Determine output path for schemas.json"""
     if root.name == 'Inventory':
-        schema_json_path = root / 'schemas_enhanced.json'
+        return root / 'schemas_enhanced.json'
     else:
         inventory_dir = root / 'Inventory'
         inventory_dir.mkdir(exist_ok=True)
-        schema_json_path = inventory_dir / 'schemas_enhanced.json'
+        return inventory_dir / 'schemas_enhanced.json'
 
-    generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
-    print()
-
-    # Generate README files
+def _generate_readme_files(generator: 'EnhancedSchemaGenerator', root: Path, args) -> List[str]:
+    """Generate README files for directories"""
     readme_files = []
     for dir_path, schema in generator.schemas.items():
-        if schema.files:  # Only create README if there are code files
-            full_path = root / dir_path
-            readme_path = full_path / 'README_ENHANCED.md'
+        if not schema.files:
+            continue
 
-            readme_content = generator.generate_readme(
-                dir_path,
-                schema,
-                include_schema_org=not args.no_schema_org
-            )
+        full_path = root / dir_path
+        readme_path = full_path / 'README_ENHANCED.md'
+        readme_content = generator.generate_readme(
+            dir_path,
+            schema,
+            include_schema_org=not args.no_schema_org
+        )
 
-            # Check if README exists and if we should update it
-            should_write = True
-            if readme_path.exists():
-                with open(readme_path, 'r') as f:
-                    existing = f.read()
-                    should_write = existing != readme_content
-
-            if should_write:
-                with open(readme_path, 'w') as f:
-                    f.write(readme_content)
-                readme_files.append(str(readme_path))
+        if _should_write_readme(readme_path, readme_content):
+            with open(readme_path, 'w') as f:
+                f.write(readme_content)
+            readme_files.append(str(readme_path))
 
     print(f"✅ Generated/updated {len(readme_files)} README_ENHANCED.md files\n")
+    return readme_files
 
-    # Output list of directories with git remotes
-    git_dirs = [(path, schema.git_remote) for path, schema in generator.schemas.items()
-                if schema.has_git and schema.git_remote]
+def _should_write_readme(readme_path: Path, content: str) -> bool:
+    """Check if README should be written"""
+    if not readme_path.exists():
+        return True
 
+    with open(readme_path, 'r') as f:
+        existing = f.read()
+    return existing != content
+
+def _print_git_remotes(generator: 'EnhancedSchemaGenerator'):
+    """Print directories with git remotes"""
+    git_dirs = _get_git_directories(generator)
     if git_dirs:
         print("Directories with git remotes:")
         for path, remote in git_dirs:
             print(f"  • {path}: {remote}")
         print()
 
-    # Quality report
+def _get_git_directories(generator: 'EnhancedSchemaGenerator') -> List[Tuple[str, str]]:
+    """Get list of directories with git remotes"""
+    return [(path, schema.git_remote) for path, schema in generator.schemas.items()
+            if schema.has_git and schema.git_remote]
+
+def _handle_quality_report(args):
+    """Handle quality report generation"""
     if args.quality_report:
         print("\n" + "="*60)
         print("Code Quality Report")
@@ -773,11 +873,11 @@ def main():
         print("\nℹ️  Quality report feature requires code_quality_analyzer.py")
         print("   This will be implemented next.")
 
+def _print_footer():
+    """Print footer information"""
     print("\n" + "="*60)
     print("✅ Schema generation complete!")
     print("="*60 + "\n")
-
-    return readme_files, git_dirs
 
 if __name__ == '__main__':
     main()

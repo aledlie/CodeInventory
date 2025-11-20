@@ -8,7 +8,7 @@ import json
 import os
 import subprocess
 from pathlib import Path
-from typing import List, Dict, Any, Set, Tuple
+from typing import List, Dict, Any, Set, Tuple, Optional
 from dataclasses import dataclass, field
 from collections import defaultdict, deque
 
@@ -81,41 +81,53 @@ class DependencyAnalyzer:
         ]
 
         for pattern in patterns:
-            matches = self._run_astgrep(file_path, pattern, 'python')
+            deps = self._process_python_pattern(file_path, pattern)
+            dependencies.extend(deps)
 
-            for match in matches:
-                meta = match.get('metaVariables', {})
-                # Handle both old and new ast-grep formats
-                if 'single' in meta and 'PACKAGE' in meta['single']:
-                    package_node = meta['single']['PACKAGE']
-                    package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-                elif 'PACKAGE' in meta:
-                    package_node = meta['PACKAGE']
-                    package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-                else:
-                    continue
+        return dependencies
 
-                line_num = match.get('range', {}).get('start', {}).get('line', 0)
+    def _process_python_pattern(self, file_path: Path, pattern: str) -> List[DependencyInfo]:
+        """Process a single Python import pattern"""
+        dependencies = []
+        matches = self._run_astgrep(file_path, pattern, 'python')
 
-                # Determine if external
-                is_external = self._is_external_package(package)
-
-                dep = DependencyInfo(
-                    package=package,
-                    import_type='static',
-                    file_path=str(file_path),
-                    line_number=line_num,
-                    is_external=is_external
-                )
+        for match in matches:
+            dep = self._create_python_dependency(match, file_path)
+            if dep:
                 dependencies.append(dep)
 
         return dependencies
+
+    def _create_python_dependency(self, match: Dict[str, Any], file_path: Path) -> Optional[DependencyInfo]:
+        """Create a DependencyInfo from a Python import match"""
+        package = self._extract_package_name(match)
+        if not package:
+            return None
+
+        line_num = match.get('range', {}).get('start', {}).get('line', 0)
+
+        return DependencyInfo(
+            package=package,
+            import_type='static',
+            file_path=str(file_path),
+            line_number=line_num,
+            is_external=self._is_external_package(package)
+        )
 
     def analyze_typescript_imports(self, file_path: Path, language: str = 'typescript') -> List[DependencyInfo]:
         """Analyze TypeScript/JavaScript imports"""
         dependencies = []
 
-        # Static imports
+        # Process different import types
+        dependencies.extend(self._process_static_imports(file_path, language))
+        dependencies.extend(self._process_dynamic_imports(file_path, language))
+        dependencies.extend(self._process_require_statements(file_path, language))
+        dependencies.extend(self._process_type_imports(file_path, language))
+
+        return dependencies
+
+    def _process_static_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
+        """Process static import statements"""
         static_patterns = [
             'import $$ from "$PACKAGE"',
             'import { $$ } from "$PACKAGE"',
@@ -123,110 +135,78 @@ class DependencyAnalyzer:
             'import "$PACKAGE"'
         ]
 
+        dependencies = []
         for pattern in static_patterns:
             matches = self._run_astgrep(file_path, pattern, language)
-
             for match in matches:
-                meta = match.get('metaVariables', {})
-                # Handle both old and new ast-grep formats
-                if 'single' in meta and 'PACKAGE' in meta['single']:
-                    package_node = meta['single']['PACKAGE']
-                    package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-                elif 'PACKAGE' in meta:
-                    package_node = meta['PACKAGE']
-                    package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-                else:
-                    continue
-
-                line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-                is_external = self._is_external_package(package)
-
-                dep = DependencyInfo(
-                    package=package,
-                    import_type='static',
-                    file_path=str(file_path),
-                    line_number=line_num,
-                    is_external=is_external
-                )
-                dependencies.append(dep)
-
-        # Dynamic imports
-        dynamic_matches = self._run_astgrep(file_path, 'import("$PACKAGE")', language)
-        for match in dynamic_matches:
-            meta = match.get('metaVariables', {})
-            # Handle both old and new ast-grep formats
-            if 'single' in meta and 'PACKAGE' in meta['single']:
-                package_node = meta['single']['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            elif 'PACKAGE' in meta:
-                package_node = meta['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            else:
-                continue
-
-            line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-            dep = DependencyInfo(
-                package=package,
-                import_type='dynamic',
-                file_path=str(file_path),
-                line_number=line_num,
-                is_external=self._is_external_package(package)
-            )
-            dependencies.append(dep)
-
-        # Require statements
-        require_matches = self._run_astgrep(file_path, 'require("$PACKAGE")', language)
-        for match in require_matches:
-            meta = match.get('metaVariables', {})
-            # Handle both old and new ast-grep formats
-            if 'single' in meta and 'PACKAGE' in meta['single']:
-                package_node = meta['single']['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            elif 'PACKAGE' in meta:
-                package_node = meta['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            else:
-                continue
-
-            line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-            dep = DependencyInfo(
-                package=package,
-                import_type='require',
-                file_path=str(file_path),
-                line_number=line_num,
-                is_external=self._is_external_package(package)
-            )
-            dependencies.append(dep)
-
-        # Type-only imports
-        type_matches = self._run_astgrep(file_path, 'import type { $$ } from "$PACKAGE"', language)
-        for match in type_matches:
-            meta = match.get('metaVariables', {})
-            # Handle both old and new ast-grep formats
-            if 'single' in meta and 'PACKAGE' in meta['single']:
-                package_node = meta['single']['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            elif 'PACKAGE' in meta:
-                package_node = meta['PACKAGE']
-                package = package_node.get('text') if isinstance(package_node, dict) else str(package_node)
-            else:
-                continue
-
-            line_num = match.get('range', {}).get('start', {}).get('line', 0)
-
-            dep = DependencyInfo(
-                package=package,
-                import_type='type_only',
-                file_path=str(file_path),
-                line_number=line_num,
-                is_external=self._is_external_package(package)
-            )
-            dependencies.append(dep)
-
+                dep = self._create_dependency_from_match(match, file_path, 'static')
+                if dep:
+                    dependencies.append(dep)
         return dependencies
+
+    def _process_dynamic_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
+        """Process dynamic import() statements"""
+        dependencies = []
+        matches = self._run_astgrep(file_path, 'import("$PACKAGE")', language)
+
+        for match in matches:
+            dep = self._create_dependency_from_match(match, file_path, 'dynamic')
+            if dep:
+                dependencies.append(dep)
+        return dependencies
+
+    def _process_require_statements(self, file_path: Path, language: str) -> List[DependencyInfo]:
+        """Process require() statements"""
+        dependencies = []
+        matches = self._run_astgrep(file_path, 'require("$PACKAGE")', language)
+
+        for match in matches:
+            dep = self._create_dependency_from_match(match, file_path, 'require')
+            if dep:
+                dependencies.append(dep)
+        return dependencies
+
+    def _process_type_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
+        """Process TypeScript type-only imports"""
+        dependencies = []
+        matches = self._run_astgrep(file_path, 'import type { $$ } from "$PACKAGE"', language)
+
+        for match in matches:
+            dep = self._create_dependency_from_match(match, file_path, 'type_only')
+            if dep:
+                dependencies.append(dep)
+        return dependencies
+
+    def _create_dependency_from_match(self, match: Dict[str, Any], file_path: Path,
+                                     import_type: str) -> Optional[DependencyInfo]:
+        """Create a DependencyInfo object from an ast-grep match"""
+        package = self._extract_package_name(match)
+        if not package:
+            return None
+
+        line_num = match.get('range', {}).get('start', {}).get('line', 0)
+
+        return DependencyInfo(
+            package=package,
+            import_type=import_type,
+            file_path=str(file_path),
+            line_number=line_num,
+            is_external=self._is_external_package(package)
+        )
+
+    def _extract_package_name(self, match: Dict[str, Any]) -> Optional[str]:
+        """Extract package name from ast-grep match metadata"""
+        meta = match.get('metaVariables', {})
+
+        # Handle both old and new ast-grep formats
+        if 'single' in meta and 'PACKAGE' in meta['single']:
+            package_node = meta['single']['PACKAGE']
+            return package_node.get('text') if isinstance(package_node, dict) else str(package_node)
+        elif 'PACKAGE' in meta:
+            package_node = meta['PACKAGE']
+            return package_node.get('text') if isinstance(package_node, dict) else str(package_node)
+
+        return None
 
     def analyze_file(self, file_path: Path):
         """Analyze dependencies in a single file"""
@@ -298,13 +278,30 @@ class DependencyAnalyzer:
 
     def generate_report_text(self) -> str:
         """Generate human-readable dependency report"""
-        lines = [
+        lines = []
+        lines.extend(self._generate_report_header())
+        lines.extend(self._generate_summary())
+        lines.extend(self._generate_external_packages_section())
+        lines.extend(self._generate_import_type_section())
+        lines.extend(self._generate_circular_deps_section())
+        lines.extend(self._generate_top_files_section())
+        lines.extend(self._generate_report_footer())
+        return '\n'.join(lines)
+
+    def _generate_report_header(self) -> List[str]:
+        """Generate report header"""
+        return [
             "="*80,
             "DEPENDENCY ANALYSIS REPORT",
             "="*80,
             "",
             f"Root Directory: {self.root_dir}",
-            "",
+            ""
+        ]
+
+    def _generate_summary(self) -> List[str]:
+        """Generate summary section"""
+        return [
             "="*80,
             "SUMMARY",
             "="*80,
@@ -316,152 +313,239 @@ class DependencyAnalyzer:
             ""
         ]
 
-        # External dependencies summary
+    def _generate_external_packages_section(self) -> List[str]:
+        """Generate external packages section"""
+        external_packages = self._get_external_packages()
+
+        if not external_packages:
+            return []
+
+        lines = [
+            "="*80,
+            f"EXTERNAL PACKAGES ({len(external_packages)})",
+            "="*80,
+            ""
+        ]
+
+        for package in sorted(external_packages):
+            usage_count = self._count_package_usage(package)
+            lines.append(f"  📦 {package} (used {usage_count}x)")
+
+        lines.append("")
+        return lines
+
+    def _get_external_packages(self) -> Set[str]:
+        """Get all external package names"""
         external_packages = set()
         for deps in self.report.dependencies_by_file.values():
             for dep in deps:
                 if dep.is_external:
                     external_packages.add(dep.package)
+        return external_packages
 
-        if external_packages:
-            lines.append("="*80)
-            lines.append(f"EXTERNAL PACKAGES ({len(external_packages)})")
-            lines.append("="*80)
-            lines.append("")
+    def _count_package_usage(self, package: str) -> int:
+        """Count how many times a package is used"""
+        return sum(
+            1 for deps in self.report.dependencies_by_file.values()
+            for dep in deps
+            if dep.package == package
+        )
 
-            for package in sorted(external_packages):
-                # Count usage
-                usage_count = sum(
-                    1 for deps in self.report.dependencies_by_file.values()
-                    for dep in deps
-                    if dep.package == package
-                )
-                lines.append(f"  📦 {package} (used {usage_count}x)")
+    def _generate_import_type_section(self) -> List[str]:
+        """Generate import type statistics section"""
+        by_type = self._get_dependencies_by_type()
 
-            lines.append("")
+        if not by_type:
+            return []
 
-        # Dependencies by import type
+        lines = [
+            "="*80,
+            "DEPENDENCIES BY IMPORT TYPE",
+            "="*80,
+            ""
+        ]
+
+        for import_type, count in sorted(by_type.items()):
+            lines.append(f"  {import_type}: {count}")
+
+        lines.append("")
+        return lines
+
+    def _get_dependencies_by_type(self) -> Dict[str, int]:
+        """Count dependencies by import type"""
         by_type = defaultdict(int)
         for deps in self.report.dependencies_by_file.values():
             for dep in deps:
                 by_type[dep.import_type] += 1
+        return by_type
 
-        if by_type:
-            lines.append("="*80)
-            lines.append("DEPENDENCIES BY IMPORT TYPE")
-            lines.append("="*80)
+    def _generate_circular_deps_section(self) -> List[str]:
+        """Generate circular dependencies section"""
+        if not self.report.circular_dependencies:
+            return []
+
+        lines = [
+            "="*80,
+            f"⚠️  CIRCULAR DEPENDENCIES DETECTED ({len(self.report.circular_dependencies)})",
+            "="*80,
+            ""
+        ]
+
+        for idx, cycle in enumerate(self.report.circular_dependencies, 1):
+            lines.extend(self._format_cycle(idx, cycle))
+
+        return lines
+
+    def _format_cycle(self, idx: int, cycle: List[str]) -> List[str]:
+        """Format a single circular dependency cycle"""
+        lines = [f"  Cycle {idx}:"]
+        for file in cycle:
+            lines.append(f"    → {file}")
+        lines.append("")
+        return lines
+
+    def _generate_top_files_section(self) -> List[str]:
+        """Generate top files by dependency count section"""
+        top_files = self._get_top_files(10)
+
+        if not top_files:
+            return []
+
+        lines = [
+            "="*80,
+            "TOP FILES BY DEPENDENCY COUNT",
+            "="*80,
+            ""
+        ]
+
+        for file_path, deps in top_files:
+            lines.append(f"  📄 {file_path}")
+            lines.append(f"     {len(deps)} dependencies")
             lines.append("")
 
-            for import_type, count in sorted(by_type.items()):
-                lines.append(f"  {import_type}: {count}")
+        return lines
 
-            lines.append("")
-
-        # Circular dependencies
-        if self.report.circular_dependencies:
-            lines.append("="*80)
-            lines.append(f"⚠️  CIRCULAR DEPENDENCIES DETECTED ({len(self.report.circular_dependencies)})")
-            lines.append("="*80)
-            lines.append("")
-
-            for idx, cycle in enumerate(self.report.circular_dependencies, 1):
-                lines.append(f"  Cycle {idx}:")
-                for file in cycle:
-                    lines.append(f"    → {file}")
-                lines.append("")
-
-        # Top files by dependency count
-        top_files = sorted(
+    def _get_top_files(self, limit: int) -> List[Tuple[str, List[DependencyInfo]]]:
+        """Get top files by dependency count"""
+        return sorted(
             self.report.dependencies_by_file.items(),
             key=lambda x: len(x[1]),
             reverse=True
-        )[:10]
+        )[:limit]
 
-        if top_files:
-            lines.append("="*80)
-            lines.append("TOP FILES BY DEPENDENCY COUNT")
-            lines.append("="*80)
-            lines.append("")
-
-            for file_path, deps in top_files:
-                lines.append(f"  📄 {file_path}")
-                lines.append(f"     {len(deps)} dependencies")
-                lines.append("")
-
-        lines.append("="*80)
-        lines.append("END OF REPORT")
-        lines.append("="*80)
-
-        return '\n'.join(lines)
+    def _generate_report_footer(self) -> List[str]:
+        """Generate report footer"""
+        return [
+            "="*80,
+            "END OF REPORT",
+            "="*80
+        ]
 
     def save_report_json(self, output_path: Path):
         """Save dependency report as JSON"""
-        data = {
-            'summary': {
-                'root_directory': str(self.root_dir),
-                'total_dependencies': self.report.total_dependencies,
-                'external_dependencies': self.report.external_dependencies,
-                'internal_dependencies': self.report.internal_dependencies,
-                'files_analyzed': len(self.report.dependencies_by_file),
-                'circular_dependencies_count': len(self.report.circular_dependencies)
-            },
-            'dependencies_by_file': {
-                file_path: [
-                    {
-                        'package': dep.package,
-                        'import_type': dep.import_type,
-                        'line_number': dep.line_number,
-                        'is_external': dep.is_external
-                    }
-                    for dep in deps
-                ]
-                for file_path, deps in self.report.dependencies_by_file.items()
-            },
+        data = self._build_report_json()
+        self._write_json_file(output_path, data)
+        print(f"✅ Dependency report saved to {output_path}")
+
+    def _build_report_json(self) -> Dict[str, Any]:
+        """Build JSON data structure for report"""
+        return {
+            'summary': self._build_summary_json(),
+            'dependencies_by_file': self._build_dependencies_json(),
             'circular_dependencies': self.report.circular_dependencies
         }
 
-        with open(output_path, 'w') as f:
-            json.dump(data, f, indent=2)
+    def _build_summary_json(self) -> Dict[str, Any]:
+        """Build summary section for JSON"""
+        return {
+            'root_directory': str(self.root_dir),
+            'total_dependencies': self.report.total_dependencies,
+            'external_dependencies': self.report.external_dependencies,
+            'internal_dependencies': self.report.internal_dependencies,
+            'files_analyzed': len(self.report.dependencies_by_file),
+            'circular_dependencies_count': len(self.report.circular_dependencies)
+        }
 
-        print(f"✅ Dependency report saved to {output_path}")
+    def _build_dependencies_json(self) -> Dict[str, List[Dict[str, Any]]]:
+        """Build dependencies by file for JSON"""
+        return {
+            file_path: [self._dep_to_dict(dep) for dep in deps]
+            for file_path, deps in self.report.dependencies_by_file.items()
+        }
+
+    def _dep_to_dict(self, dep: DependencyInfo) -> Dict[str, Any]:
+        """Convert DependencyInfo to dictionary"""
+        return {
+            'package': dep.package,
+            'import_type': dep.import_type,
+            'line_number': dep.line_number,
+            'is_external': dep.is_external
+        }
+
+    def _write_json_file(self, path: Path, data: Dict[str, Any]):
+        """Write JSON data to file"""
+        with open(path, 'w') as f:
+            json.dump(data, f, indent=2)
 
 def main():
     import argparse
+    args = _parse_args()
+    _run_dependency_analysis(args)
 
+def _parse_args():
+    """Parse command line arguments"""
     parser = argparse.ArgumentParser(description='Dependency Analyzer')
     parser.add_argument('directory', help='Directory to analyze')
     parser.add_argument('--json', help='Output JSON report to file')
     parser.add_argument('--text', help='Output text report to file')
-    parser.add_argument('--detect-circular', action='store_true', help='Detect circular dependencies')
+    parser.add_argument('--detect-circular', action='store_true',
+                       help='Detect circular dependencies')
+    return parser.parse_args()
 
-    args = parser.parse_args()
-
+def _run_dependency_analysis(args):
+    """Run the dependency analysis"""
     directory = Path(args.directory)
-    analyzer = DependencyAnalyzer(directory)
+    analyzer = _init_dependency_analyzer(directory)
 
+    _print_analysis_header(directory)
+    _perform_analysis(analyzer, args)
+    _output_reports(analyzer, args)
+
+def _init_dependency_analyzer(directory: Path) -> 'DependencyAnalyzer':
+    """Initialize dependency analyzer"""
+    return DependencyAnalyzer(directory)
+
+def _print_analysis_header(directory: Path):
+    """Print analysis header"""
     print(f"\n{'='*80}")
     print("Dependency Analyzer")
     print(f"{'='*80}\n")
     print(f"Analyzing: {directory}\n")
 
+def _perform_analysis(analyzer: 'DependencyAnalyzer', args):
+    """Perform the dependency analysis"""
     analyzer.analyze_directory()
 
     if args.detect_circular:
         print("Detecting circular dependencies...\n")
         analyzer.find_circular_dependencies()
 
-    # Generate text report
+def _output_reports(analyzer: 'DependencyAnalyzer', args):
+    """Generate and save reports"""
     text_report = analyzer.generate_report_text()
     print(text_report)
 
-    # Save reports if requested
     if args.json:
         analyzer.save_report_json(Path(args.json))
 
     if args.text:
-        with open(args.text, 'w') as f:
-            f.write(text_report)
-        print(f"\n✅ Text report saved to {args.text}")
+        _save_text_file(args.text, text_report)
+
+def _save_text_file(filepath: str, content: str):
+    """Save text content to file"""
+    with open(filepath, 'w') as f:
+        f.write(content)
+    print(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

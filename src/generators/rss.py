@@ -24,114 +24,176 @@ class RSSGenerator:
 
     def get_recent_commits(self, limit: int = 10) -> List[Dict[str, Any]]:
         """Get recent git commits"""
-        if not self.git_repo or not (self.git_repo / '.git').exists():
+        if not self._is_git_repo():
             return []
 
         try:
-            result = subprocess.run(
-                ['git', 'log', f'--max-count={limit}', '--pretty=format:%H|%an|%ae|%ai|%s'],
-                cwd=self.git_repo,
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-
-            commits = []
-            for line in result.stdout.strip().split('\n'):
-                if line:
-                    hash, author, email, date, message = line.split('|', 4)
-                    commits.append({
-                        'hash': hash,
-                        'author': author,
-                        'email': email,
-                        'date': date,
-                        'message': message
-                    })
-
-            return commits
+            result = self._run_git_log(limit)
+            return self._parse_commits(result.stdout)
         except Exception as e:
             print(f"Error fetching commits: {e}")
             return []
 
+    def _is_git_repo(self) -> bool:
+        """Check if the directory is a git repository"""
+        return self.git_repo and (self.git_repo / '.git').exists()
+
+    def _run_git_log(self, limit: int) -> subprocess.CompletedProcess:
+        """Run git log command"""
+        return subprocess.run(
+            ['git', 'log', f'--max-count={limit}', '--pretty=format:%H|%an|%ae|%ai|%s'],
+            cwd=self.git_repo,
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+    def _parse_commits(self, output: str) -> List[Dict[str, Any]]:
+        """Parse commit data from git log output"""
+        commits = []
+        for line in output.strip().split('\n'):
+            if line:
+                commit = self._parse_commit_line(line)
+                if commit:
+                    commits.append(commit)
+        return commits
+
+    def _parse_commit_line(self, line: str) -> Dict[str, Any]:
+        """Parse a single commit line"""
+        try:
+            hash, author, email, date, message = line.split('|', 4)
+            return {
+                'hash': hash,
+                'author': author,
+                'email': email,
+                'date': date,
+                'message': message
+            }
+        except ValueError:
+            return None
+
     def analyze_commit_changes(self, commit_hash: str) -> Dict[str, Any]:
         """Analyze what changed in a commit"""
         try:
-            result = subprocess.run(
-                ['git', 'show', '--stat', '--pretty=format:', commit_hash],
-                cwd=self.git_repo,
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-
-            stats = {
-                'files_changed': 0,
-                'insertions': 0,
-                'deletions': 0,
-                'new_classes': [],
-                'new_functions': []
-            }
-
-            # Parse stats
-            for line in result.stdout.split('\n'):
-                if 'files changed' in line or 'file changed' in line:
-                    parts = line.split(',')
-                    for part in parts:
-                        if 'file' in part:
-                            stats['files_changed'] = int(part.split()[0])
-                        elif 'insertion' in part:
-                            stats['insertions'] = int(part.split()[0])
-                        elif 'deletion' in part:
-                            stats['deletions'] = int(part.split()[0])
-
-            return stats
+            result = self._run_git_show(commit_hash)
+            return self._parse_git_stats(result.stdout)
         except Exception:
-            return {}
+            return self._get_empty_stats()
+
+    def _run_git_show(self, commit_hash: str) -> subprocess.CompletedProcess:
+        """Run git show command for a commit"""
+        return subprocess.run(
+            ['git', 'show', '--stat', '--pretty=format:', commit_hash],
+            cwd=self.git_repo,
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+    def _parse_git_stats(self, output: str) -> Dict[str, Any]:
+        """Parse git statistics from output"""
+        stats = self._get_empty_stats()
+
+        for line in output.split('\n'):
+            if 'files changed' in line or 'file changed' in line:
+                self._parse_stats_line(line, stats)
+
+        return stats
+
+    def _parse_stats_line(self, line: str, stats: Dict[str, Any]):
+        """Parse a single statistics line"""
+        parts = line.split(',')
+        for part in parts:
+            if 'file' in part:
+                stats['files_changed'] = int(part.split()[0])
+            elif 'insertion' in part:
+                stats['insertions'] = int(part.split()[0])
+            elif 'deletion' in part:
+                stats['deletions'] = int(part.split()[0])
+
+    def _get_empty_stats(self) -> Dict[str, Any]:
+        """Get empty stats dictionary"""
+        return {
+            'files_changed': 0,
+            'insertions': 0,
+            'deletions': 0,
+            'new_classes': [],
+            'new_functions': []
+        }
 
     def generate_rss_xml(self, title: str = "Code Inventory Updates",
                         description: str = "Latest code changes and updates",
                         link: str = "https://github.com/yourusername/repository") -> str:
         """Generate RSS 2.0 feed with schema.org markup"""
+        rss = self._create_rss_root()
+        channel = self._create_channel(rss, title, description, link)
+        self._add_channel_items(channel, link)
+        return self._format_xml(rss)
 
-        # Create RSS feed
+    def _create_rss_root(self) -> ET.Element:
+        """Create RSS root element with namespaces"""
         rss = ET.Element('rss', version='2.0')
         rss.set('xmlns:atom', 'http://www.w3.org/2005/Atom')
         rss.set('xmlns:content', 'http://purl.org/rss/1.0/modules/content/')
+        return rss
 
+    def _create_channel(self, rss: ET.Element, title: str, description: str, link: str) -> ET.Element:
+        """Create and configure RSS channel"""
         channel = ET.SubElement(rss, 'channel')
+        self._add_channel_metadata(channel, title, description, link)
+        self._add_atom_link(channel, link)
+        return channel
 
-        # Channel metadata
+    def _add_channel_metadata(self, channel: ET.Element, title: str, description: str, link: str):
+        """Add channel metadata elements"""
         ET.SubElement(channel, 'title').text = title
         ET.SubElement(channel, 'description').text = description
         ET.SubElement(channel, 'link').text = link
         ET.SubElement(channel, 'language').text = 'en-us'
         ET.SubElement(channel, 'lastBuildDate').text = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        # Atom self link
+    def _add_atom_link(self, channel: ET.Element, link: str):
+        """Add Atom self link to channel"""
         atom_link = ET.SubElement(channel, 'atom:link')
         atom_link.set('href', f'{link}/rss.xml')
         atom_link.set('rel', 'self')
         atom_link.set('type', 'application/rss+xml')
 
-        # Get recent commits
+    def _add_channel_items(self, channel: ET.Element, link: str):
+        """Add commit items to channel"""
         commits = self.get_recent_commits(limit=20)
-
-        # Create items from commits
         for commit in commits:
-            item = ET.SubElement(channel, 'item')
+            self._create_item(channel, commit, link)
 
-            # Basic item info
-            ET.SubElement(item, 'title').text = commit['message']
-            ET.SubElement(item, 'link').text = f"{link}/commit/{commit['hash']}"
-            ET.SubElement(item, 'guid', isPermaLink='true').text = f"{link}/commit/{commit['hash']}"
-            ET.SubElement(item, 'pubDate').text = datetime.fromisoformat(commit['date']).strftime('%a, %d %b %Y %H:%M:%S %z')
-            ET.SubElement(item, 'author').text = f"{commit['email']} ({commit['author']})"
+    def _create_item(self, channel: ET.Element, commit: Dict[str, Any], link: str):
+        """Create RSS item for a commit"""
+        item = ET.SubElement(channel, 'item')
+        self._add_item_metadata(item, commit, link)
+        self._add_item_content(item, commit, link)
 
-            # Get commit stats
-            stats = self.analyze_commit_changes(commit['hash'])
+    def _add_item_metadata(self, item: ET.Element, commit: Dict[str, Any], link: str):
+        """Add basic item metadata"""
+        ET.SubElement(item, 'title').text = commit['message']
+        ET.SubElement(item, 'link').text = f"{link}/commit/{commit['hash']}"
+        ET.SubElement(item, 'guid', isPermaLink='true').text = f"{link}/commit/{commit['hash']}"
+        ET.SubElement(item, 'pubDate').text = datetime.fromisoformat(commit['date']).strftime('%a, %d %b %Y %H:%M:%S %z')
+        ET.SubElement(item, 'author').text = f"{commit['email']} ({commit['author']})"
 
-            # Description with stats
-            description = f"""
+    def _add_item_content(self, item: ET.Element, commit: Dict[str, Any], link: str):
+        """Add content to item with stats and schema.org markup"""
+        stats = self.analyze_commit_changes(commit['hash'])
+        description = self._build_description(commit, stats)
+        schema_markup = self._build_schema_markup(commit, stats)
+
+        full_content = description + self._render_schema_markup(schema_markup)
+
+        content_encoded = ET.SubElement(item, 'content:encoded')
+        content_encoded.text = full_content
+        ET.SubElement(item, 'description').text = commit['message']
+
+    def _build_description(self, commit: Dict[str, Any], stats: Dict[str, Any]) -> str:
+        """Build HTML description for commit"""
+        return f"""
             <p><strong>Commit:</strong> {commit['hash'][:7]}</p>
             <p><strong>Author:</strong> {commit['author']}</p>
             <p><strong>Changes:</strong></p>
@@ -142,33 +204,31 @@ class RSSGenerator:
             </ul>
             """
 
-            # Add schema.org markup
-            schema_markup = {
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                "headline": commit['message'],
-                "datePublished": commit['date'],
-                "author": {
-                    "@type": "Person",
-                    "name": commit['author'],
-                    "email": commit['email']
-                },
-                "articleBody": f"Code changes: {stats.get('files_changed', 0)} files modified"
-            }
+    def _build_schema_markup(self, commit: Dict[str, Any], stats: Dict[str, Any]) -> Dict[str, Any]:
+        """Build schema.org markup for commit"""
+        return {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": commit['message'],
+            "datePublished": commit['date'],
+            "author": {
+                "@type": "Person",
+                "name": commit['author'],
+                "email": commit['email']
+            },
+            "articleBody": f"Code changes: {stats.get('files_changed', 0)} files modified"
+        }
 
-            description += f"""
+    def _render_schema_markup(self, schema_markup: Dict[str, Any]) -> str:
+        """Render schema.org markup as JSON-LD script"""
+        return f"""
             <script type="application/ld+json">
             {json.dumps(schema_markup, indent=2)}
             </script>
             """
 
-            # Use content:encoded for full HTML
-            content_encoded = ET.SubElement(item, 'content:encoded')
-            content_encoded.text = description
-
-            ET.SubElement(item, 'description').text = commit['message']
-
-        # Convert to pretty XML string
+    def _format_xml(self, rss: ET.Element) -> str:
+        """Format RSS XML with pretty printing"""
         xml_str = ET.tostring(rss, encoding='unicode')
         dom = minidom.parseString(xml_str)
         return dom.toprettyxml(indent='  ')

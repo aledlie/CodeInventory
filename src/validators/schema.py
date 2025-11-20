@@ -24,48 +24,71 @@ class SchemaValidator:
         """Validate a schema.org object"""
         is_valid = True
 
-        # Check @context
+        self._validate_context(schema, context)
+        is_valid &= self._validate_type(schema, context)
+
+        if is_valid:
+            is_valid &= self._validate_by_type(schema, context)
+
+        return is_valid
+
+    def _validate_context(self, schema: Dict[str, Any], context: str) -> None:
+        """Validate @context field"""
         if '@context' in schema:
             if schema['@context'] != 'https://schema.org':
                 self.warnings.append(f"{context}: @context should be 'https://schema.org'")
 
-        # Check @type
+    def _validate_type(self, schema: Dict[str, Any], context: str) -> bool:
+        """Validate @type field"""
         if '@type' not in schema:
             self.errors.append(f"{context}: Missing @type")
-            is_valid = False
+            return False
         elif schema['@type'] not in self.valid_types:
             self.warnings.append(f"{context}: Uncommon @type '{schema['@type']}'")
+        return True
 
-        # Type-specific validation
+    def _validate_by_type(self, schema: Dict[str, Any], context: str) -> bool:
+        """Route validation by schema type"""
         schema_type = schema.get('@type')
 
         if schema_type == 'SoftwareSourceCode':
-            is_valid &= self._validate_software_source_code(schema, context)
+            return self._validate_software_source_code(schema, context)
         elif schema_type == 'Dataset':
-            is_valid &= self._validate_dataset(schema, context)
+            return self._validate_dataset(schema, context)
         elif schema_type == 'TechArticle':
-            is_valid &= self._validate_tech_article(schema, context)
+            return self._validate_tech_article(schema, context)
 
-        return is_valid
+        return True
 
     def _validate_software_source_code(self, schema: Dict[str, Any], context: str) -> bool:
         """Validate SoftwareSourceCode schema"""
         is_valid = True
 
-        # Recommended properties
-        recommended = ['name', 'description', 'programmingLanguage']
-        for prop in recommended:
+        self._check_recommended_properties(
+            schema, context,
+            ['name', 'description', 'programmingLanguage']
+        )
+
+        if 'codeRepository' in schema:
+            is_valid &= self._validate_url_format(
+                schema['codeRepository'], context, 'codeRepository'
+            )
+
+        return is_valid
+
+    def _check_recommended_properties(self, schema: Dict[str, Any],
+                                     context: str, properties: List[str]) -> None:
+        """Check for recommended properties"""
+        for prop in properties:
             if prop not in schema:
                 self.warnings.append(f"{context}: Recommended property '{prop}' missing")
 
-        # Validate URL format
-        if 'codeRepository' in schema:
-            url = schema['codeRepository']
-            if not url or not (url.startswith('http://') or url.startswith('https://')):
-                self.errors.append(f"{context}: codeRepository should be a valid URL")
-                is_valid = False
-
-        return is_valid
+    def _validate_url_format(self, url: str, context: str, field_name: str) -> bool:
+        """Validate URL format"""
+        if not url or not (url.startswith('http://') or url.startswith('https://')):
+            self.errors.append(f"{context}: {field_name} should be a valid URL")
+            return False
+        return True
 
     def _validate_dataset(self, schema: Dict[str, Any], context: str) -> bool:
         """Validate Dataset schema"""
@@ -81,130 +104,179 @@ class SchemaValidator:
 
     def _validate_tech_article(self, schema: Dict[str, Any], context: str) -> bool:
         """Validate TechArticle schema"""
-        is_valid = True
-
-        recommended = ['name', 'description', 'datePublished']
-        for prop in recommended:
-            if prop not in schema:
-                self.warnings.append(f"{context}: Recommended property '{prop}' missing from TechArticle")
-
-        return is_valid
+        self._check_recommended_properties(
+            schema, context + " from TechArticle",
+            ['name', 'description', 'datePublished']
+        )
+        return True
 
     def validate_file(self, file_path: Path) -> bool:
         """Validate schema.org markup in a file"""
         print(f"\nValidating: {file_path}")
 
+        content = self._read_file_content(file_path)
+        if content is None:
+            return False
+
+        matches = self._extract_jsonld_scripts(content)
+        if not matches:
+            self.warnings.append(f"{file_path}: No schema.org markup found")
+            return True
+
+        return self._validate_json_schemas(matches, file_path)
+
+    def _read_file_content(self, file_path: Path) -> str:
+        """Read file content safely"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-
-            # Find JSON-LD script tags
-            pattern = r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>'
-            matches = re.findall(pattern, content, re.DOTALL)
-
-            if not matches:
-                self.warnings.append(f"{file_path}: No schema.org markup found")
-                return True
-
-            all_valid = True
-            for idx, match in enumerate(matches, 1):
-                try:
-                    schema = json.loads(match)
-                    is_valid = self.validate_schema(schema, f"{file_path}[{idx}]")
-                    all_valid &= is_valid
-                except json.JSONDecodeError as e:
-                    self.errors.append(f"{file_path}[{idx}]: Invalid JSON - {e}")
-                    all_valid = False
-
-            return all_valid
-
+                return f.read()
         except Exception as e:
             self.errors.append(f"{file_path}: Error reading file - {e}")
-            return False
+            return None
+
+    def _extract_jsonld_scripts(self, content: str) -> List[str]:
+        """Extract JSON-LD script tags from content"""
+        pattern = r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>'
+        return re.findall(pattern, content, re.DOTALL)
+
+    def _validate_json_schemas(self, matches: List[str], file_path: Path) -> bool:
+        """Validate extracted JSON schemas"""
+        all_valid = True
+        for idx, match in enumerate(matches, 1):
+            try:
+                schema = json.loads(match)
+                is_valid = self.validate_schema(schema, f"{file_path}[{idx}]")
+                all_valid &= is_valid
+            except json.JSONDecodeError as e:
+                self.errors.append(f"{file_path}[{idx}]: Invalid JSON - {e}")
+                all_valid = False
+        return all_valid
 
     def validate_json_file(self, file_path: Path) -> bool:
         """Validate pure JSON-LD file"""
         print(f"\nValidating JSON file: {file_path}")
 
+        data = self._load_json_file(file_path)
+        if data is None:
+            return False
+
+        if '@graph' in data:
+            return self._validate_graph_schemas(data['@graph'], file_path)
+        else:
+            return self.validate_schema(data, str(file_path))
+
+    def _load_json_file(self, file_path: Path) -> Dict[str, Any]:
+        """Load JSON file safely"""
         try:
             with open(file_path, 'r') as f:
-                data = json.load(f)
-
-            # Handle @graph
-            if '@graph' in data:
-                all_valid = True
-                for idx, schema in enumerate(data['@graph'], 1):
-                    is_valid = self.validate_schema(schema, f"{file_path}[@graph[{idx}]]")
-                    all_valid &= is_valid
-                return all_valid
-            else:
-                return self.validate_schema(data, str(file_path))
-
+                return json.load(f)
         except json.JSONDecodeError as e:
             self.errors.append(f"{file_path}: Invalid JSON - {e}")
-            return False
+            return None
         except Exception as e:
             self.errors.append(f"{file_path}: Error - {e}")
-            return False
+            return None
+
+    def _validate_graph_schemas(self, graph: List[Dict[str, Any]],
+                               file_path: Path) -> bool:
+        """Validate schemas in @graph"""
+        all_valid = True
+        for idx, schema in enumerate(graph, 1):
+            is_valid = self.validate_schema(schema, f"{file_path}[@graph[{idx}]]")
+            all_valid &= is_valid
+        return all_valid
 
     def generate_report(self) -> str:
         """Generate validation report"""
-        lines = [
+        lines = self._format_header()
+
+        if not self.errors and not self.warnings:
+            lines.append("✅ All schemas are valid!")
+        else:
+            if self.errors:
+                lines.extend(self._format_errors())
+            if self.warnings:
+                lines.extend(self._format_warnings())
+
+        lines.append("="*80)
+        return '\n'.join(lines)
+
+    def _format_header(self) -> List[str]:
+        """Format report header"""
+        return [
             "="*80,
             "SCHEMA.ORG VALIDATION REPORT",
             "="*80,
             ""
         ]
 
-        if not self.errors and not self.warnings:
-            lines.append("✅ All schemas are valid!")
-        else:
-            if self.errors:
-                lines.append(f"❌ ERRORS ({len(self.errors)}):")
-                lines.append("-"*80)
-                for error in self.errors:
-                    lines.append(f"  • {error}")
-                lines.append("")
+    def _format_errors(self) -> List[str]:
+        """Format error section"""
+        lines = [
+            f"❌ ERRORS ({len(self.errors)}):",
+            "-"*80
+        ]
+        for error in self.errors:
+            lines.append(f"  • {error}")
+        lines.append("")
+        return lines
 
-            if self.warnings:
-                lines.append(f"⚠️  WARNINGS ({len(self.warnings)}):")
-                lines.append("-"*80)
-                for warning in self.warnings:
-                    lines.append(f"  • {warning}")
-                lines.append("")
-
-        lines.append("="*80)
-        return '\n'.join(lines)
+    def _format_warnings(self) -> List[str]:
+        """Format warning section"""
+        lines = [
+            f"⚠️  WARNINGS ({len(self.warnings)}):",
+            "-"*80
+        ]
+        for warning in self.warnings:
+            lines.append(f"  • {warning}")
+        lines.append("")
+        return lines
 
 def main():
+    args = _parse_arguments()
+    validator = SchemaValidator()
+
+    _print_header()
+    all_valid = _process_files(validator, args)
+
+    print("\n" + validator.generate_report())
+    return 0 if all_valid else 1
+
+def _parse_arguments():
+    """Parse command line arguments"""
     import argparse
 
     parser = argparse.ArgumentParser(description='Schema.org Validator')
     parser.add_argument('files', nargs='+', help='Files to validate')
-    parser.add_argument('--json', action='store_true', help='Validate pure JSON-LD files')
+    parser.add_argument('--json', action='store_true',
+                       help='Validate pure JSON-LD files')
+    return parser.parse_args()
 
-    args = parser.parse_args()
-
-    validator = SchemaValidator()
-
+def _print_header() -> None:
+    """Print program header"""
     print("="*80)
     print("Schema.org Markup Validator")
     print("="*80)
 
+def _process_files(validator: SchemaValidator, args) -> bool:
+    """Process all input files"""
     all_valid = True
+
     for file_path in args.files:
         path = Path(file_path)
 
-        if args.json or path.suffix == '.jsonld' or path.suffix == '.json':
+        if _should_process_as_json(path, args):
             is_valid = validator.validate_json_file(path)
         else:
             is_valid = validator.validate_file(path)
 
         all_valid &= is_valid
 
-    print("\n" + validator.generate_report())
+    return all_valid
 
-    return 0 if all_valid else 1
+def _should_process_as_json(path: Path, args) -> bool:
+    """Check if file should be processed as JSON"""
+    return args.json or path.suffix in ['.jsonld', '.json']
 
 if __name__ == '__main__':
     exit(main())
