@@ -29,9 +29,11 @@ class AnalysisRunner:
         print(f"{'='*80}\n")
 
         try:
+            # Change to Inventory directory for module imports
+            inventory_dir = Path(__file__).parent.parent
             result = subprocess.run(
                 command,
-                cwd=self.root_dir,
+                cwd=inventory_dir,
                 capture_output=True,
                 text=True,
                 timeout=300  # 5 minute timeout
@@ -71,11 +73,14 @@ class AnalysisRunner:
         print(f"Timestamp: {self.timestamp}")
         print(f"{'='*80}\n")
 
+        # Get the Inventory directory path
+        inventory_dir = Path(__file__).parent.parent
+
         # 1. Enhanced Schema Generation
         self.run_command(
             'schema_generation',
             [
-                'python3', 'schema_generator_enhanced.py',
+                'python3', '-m', 'src.generators.schema',
                 '--root', str(self.root_dir)
             ],
             'Enhanced Schema Generation'
@@ -90,7 +95,7 @@ class AnalysisRunner:
         self.run_command(
             'quality_analysis',
             [
-                'python3', 'code_quality_analyzer.py',
+                'python3', '-m', 'src.analyzers.code_quality',
                 str(self.root_dir),
                 '--json', str(quality_output),
                 '--text', str(quality_text)
@@ -105,7 +110,7 @@ class AnalysisRunner:
         self.run_command(
             'coverage_analysis',
             [
-                'python3', 'test_coverage_analyzer.py',
+                'python3', '-m', 'src.analyzers.test_coverage',
                 str(self.root_dir),
                 '--json', str(coverage_output),
                 '--text', str(coverage_text)
@@ -120,7 +125,7 @@ class AnalysisRunner:
         self.run_command(
             'dependency_analysis',
             [
-                'python3', 'dependency_analyzer.py',
+                'python3', '-m', 'src.analyzers.dependencies',
                 str(self.root_dir),
                 '--detect-circular',
                 '--json', str(dependency_output),
@@ -135,7 +140,7 @@ class AnalysisRunner:
         self.run_command(
             'dashboard_generation',
             [
-                'python3', 'dashboard_generator.py',
+                'python3', '-m', 'src.generators.dashboard',
                 '--schemas', str(schemas_file),
                 '--quality', str(quality_output),
                 '--coverage', str(coverage_output),
@@ -151,7 +156,7 @@ class AnalysisRunner:
         self.run_command(
             'rss_generation',
             [
-                'python3', 'rss_generator.py',
+                'python3', '-m', 'src.generators.rss',
                 '--schemas', str(schemas_file),
                 '--git-repo', str(self.root_dir),
                 '--output', str(rss_output),
@@ -165,7 +170,7 @@ class AnalysisRunner:
         self.run_command(
             'schema_validation',
             [
-                'python3', 'validate_schemas.py',
+                'python3', '-m', 'src.validators.schema',
                 '--json',
                 str(self.root_dir / 'Inventory' / 'schema.org.jsonld')
             ],
