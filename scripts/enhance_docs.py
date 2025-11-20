@@ -60,12 +60,36 @@ class DocumentationEnhancer:
         """Check if README already has schema.org markup"""
         return '<script type="application/ld+json">' in content
 
+    def _read_file_content(self, file_path: Path) -> str:
+        """Read file content"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+
+    def _find_insertion_point(self, lines: List[str]) -> int:
+        """Find the insertion point after the first heading"""
+        for i, line in enumerate(lines):
+            if line.startswith('#'):
+                return i + 1
+        return 0
+
+    def _insert_schema_markup(self, lines: List[str], schema: Dict[str, Any], insert_index: int) -> List[str]:
+        """Insert schema markup at the specified index"""
+        jsonld = self.create_jsonld_script(schema)
+        lines.insert(insert_index, '')
+        lines.insert(insert_index + 1, jsonld)
+        lines.insert(insert_index + 2, '')
+        return lines
+
+    def _write_file_content(self, file_path: Path, content: str) -> None:
+        """Write content back to file"""
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+
     def inject_schema(self, readme_path: Path, schema: Dict[str, Any]) -> bool:
         """Inject schema.org markup into README"""
         try:
             # Read existing content
-            with open(readme_path, 'r', encoding='utf-8') as f:
-                content = f.read()
+            content = self._read_file_content(readme_path)
 
             # Check if already has schema
             if self.has_schema_markup(content):
@@ -73,27 +97,16 @@ class DocumentationEnhancer:
                 self.skipped_count += 1
                 return False
 
-            # Find the first heading
+            # Process lines
             lines = content.split('\n')
-            insert_index = 0
+            insert_index = self._find_insertion_point(lines)
 
-            for i, line in enumerate(lines):
-                if line.startswith('#'):
-                    insert_index = i + 1
-                    break
-
-            # Create JSON-LD script
-            jsonld = self.create_jsonld_script(schema)
-
-            # Insert after first heading
-            lines.insert(insert_index, '')
-            lines.insert(insert_index + 1, jsonld)
-            lines.insert(insert_index + 2, '')
+            # Insert schema markup
+            lines = self._insert_schema_markup(lines, schema, insert_index)
 
             # Write back
             enhanced_content = '\n'.join(lines)
-            with open(readme_path, 'w', encoding='utf-8') as f:
-                f.write(enhanced_content)
+            self._write_file_content(readme_path, enhanced_content)
 
             print(f"  ✅ Enhanced: {readme_path}")
             self.enhanced_count += 1
@@ -103,66 +116,92 @@ class DocumentationEnhancer:
             print(f"  ❌ Error enhancing {readme_path}: {e}")
             return False
 
-    def enhance_directory(self, directory: Path = None, skip_dirs: set = None):
-        """Enhance all README files in directory"""
-        if directory is None:
-            directory = self.root_dir
+    def _get_default_skip_dirs(self) -> set:
+        """Get default directories to skip"""
+        return {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+                '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
 
-        if skip_dirs is None:
-            skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
-                        '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
-
+    def _get_readme_files(self, directory: Path, skip_dirs: set) -> List[Path]:
+        """Get all README files in directory tree"""
+        readme_files = []
         for root, dirs, files in directory.walk():
             # Skip excluded directories
             dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
 
             for file_name in files:
                 if file_name.lower() in ['readme.md', 'readme_enhanced.md']:
-                    readme_path = Path(root) / file_name
+                    readme_files.append(Path(root) / file_name)
 
-                    # Gather context
-                    context = self._gather_context(readme_path.parent)
+        return readme_files
 
-                    # Generate schema
-                    schema = self.generate_schema_for_readme(readme_path, context)
+    def enhance_directory(self, directory: Path = None, skip_dirs: set = None):
+        """Enhance all README files in directory"""
+        if directory is None:
+            directory = self.root_dir
 
-                    # Inject
-                    self.inject_schema(readme_path, schema)
+        if skip_dirs is None:
+            skip_dirs = self._get_default_skip_dirs()
+
+        # Get all README files
+        readme_files = self._get_readme_files(directory, skip_dirs)
+
+        # Process each README
+        for readme_path in readme_files:
+            # Gather context
+            context = self._gather_context(readme_path.parent)
+
+            # Generate schema
+            schema = self.generate_schema_for_readme(readme_path, context)
+
+            # Inject
+            self.inject_schema(readme_path, schema)
+
+    def _get_git_remote(self, directory: Path) -> str:
+        """Get git remote URL if available"""
+        git_dir = directory / '.git'
+        if not git_dir.exists():
+            return None
+
+        try:
+            result = subprocess.run(
+                ['git', 'remote', 'get-url', 'origin'],
+                cwd=directory,
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            if result.returncode == 0:
+                return result.stdout.strip()
+        except Exception:
+            pass
+
+        return None
+
+    def _detect_languages(self, directory: Path) -> List[str]:
+        """Detect programming languages in directory"""
+        language_extensions = {
+            '.py': 'Python',
+            '.ts': 'TypeScript',
+            '.tsx': 'TypeScript',
+            '.js': 'JavaScript',
+            '.jsx': 'JavaScript'
+        }
+
+        languages = set()
+        for file_path in directory.glob('*'):
+            if file_path.is_file():
+                language = language_extensions.get(file_path.suffix)
+                if language:
+                    languages.add(language)
+
+        return list(languages)
 
     def _gather_context(self, directory: Path) -> Dict[str, Any]:
         """Gather context about a directory"""
         context = {
-            'languages': set(),
-            'git_remote': None
+            'languages': self._detect_languages(directory),
+            'git_remote': self._get_git_remote(directory)
         }
-
-        # Check for git
-        git_dir = directory / '.git'
-        if git_dir.exists():
-            try:
-                result = subprocess.run(
-                    ['git', 'remote', 'get-url', 'origin'],
-                    cwd=directory,
-                    capture_output=True,
-                    text=True,
-                    timeout=5
-                )
-                if result.returncode == 0:
-                    context['git_remote'] = result.stdout.strip()
-            except Exception:
-                pass
-
-        # Detect languages
-        for file_path in directory.glob('*'):
-            if file_path.is_file():
-                if file_path.suffix == '.py':
-                    context['languages'].add('Python')
-                elif file_path.suffix in ['.ts', '.tsx']:
-                    context['languages'].add('TypeScript')
-                elif file_path.suffix in ['.js', '.jsx']:
-                    context['languages'].add('JavaScript')
-
-        context['languages'] = list(context['languages'])
         return context
 
     def generate_report(self) -> str:

@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import json
 from datetime import datetime
+from typing import List
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -28,25 +29,26 @@ class TestRunner:
         suite = loader.discover(str(self.test_dir), pattern='test_*.py')
         return suite
 
-    def run_tests(self):
-        """Run all tests and collect results"""
+    def _print_test_header(self):
+        """Print test suite header"""
         print("="*80)
         print("CODE INVENTORY - TEST SUITE")
         print("="*80)
         print(f"\nDiscovering tests in: {self.test_dir}")
         print(f"Coverage enabled: {self.coverage_enabled}\n")
 
-        suite = self.discover_tests()
-
-        # Count tests
+    def _execute_test_suite(self, suite):
+        """Execute the test suite"""
         test_count = suite.countTestCases()
         print(f"Found {test_count} tests\n")
 
-        # Run tests
         runner = unittest.TextTestRunner(verbosity=2)
         result = runner.run(suite)
 
-        # Store results
+        return result, test_count
+
+    def _calculate_results(self, result, test_count):
+        """Calculate test results statistics"""
         self.results = {
             'total': test_count,
             'passed': test_count - len(result.failures) - len(result.errors),
@@ -56,38 +58,44 @@ class TestRunner:
             'success_rate': ((test_count - len(result.failures) - len(result.errors)) / test_count * 100) if test_count > 0 else 0
         }
 
+    def run_tests(self):
+        """Run all tests and collect results"""
+        self._print_test_header()
+
+        suite = self.discover_tests()
+        result, test_count = self._execute_test_suite(suite)
+        self._calculate_results(result, test_count)
+
         return result.wasSuccessful()
 
-    def run_coverage_analysis(self):
-        """Run tests with coverage if available"""
-        if not self.coverage_enabled:
-            return None
-
+    def _check_coverage_available(self):
+        """Check if coverage module is available"""
         try:
-            # Try to import coverage
             import coverage
+            return True
         except ImportError:
             print("\n⚠️  coverage.py not installed. Install with: pip install coverage")
-            return None
+            return False
 
-        print("\n" + "="*80)
-        print("RUNNING TESTS WITH COVERAGE")
-        print("="*80 + "\n")
-
-        # Create coverage object - cover src directory
+    def _setup_coverage(self):
+        """Setup coverage object"""
+        import coverage
         cov = coverage.Coverage(source=[str(Path(__file__).parent.parent / 'src')])
         cov.start()
+        return cov
 
-        # Run tests
+    def _run_tests_with_coverage(self, cov):
+        """Run tests with coverage tracking"""
         suite = self.discover_tests()
         runner = unittest.TextTestRunner(verbosity=1)
         result = runner.run(suite)
 
-        # Stop coverage
         cov.stop()
         cov.save()
+        return result
 
-        # Generate reports
+    def _generate_coverage_reports(self, cov):
+        """Generate coverage reports"""
         print("\n" + "="*80)
         print("COVERAGE REPORT")
         print("="*80 + "\n")
@@ -103,11 +111,27 @@ class TestRunner:
         json_file = Path(__file__).parent.parent / 'coverage.json'
         cov.json_report(outfile=str(json_file))
 
+    def run_coverage_analysis(self):
+        """Run tests with coverage if available"""
+        if not self.coverage_enabled:
+            return None
+
+        if not self._check_coverage_available():
+            return None
+
+        print("\n" + "="*80)
+        print("RUNNING TESTS WITH COVERAGE")
+        print("="*80 + "\n")
+
+        cov = self._setup_coverage()
+        self._run_tests_with_coverage(cov)
+        self._generate_coverage_reports(cov)
+
         return cov
 
-    def generate_summary_report(self):
-        """Generate summary report"""
-        lines = [
+    def _build_summary_lines(self) -> List[str]:
+        """Build summary report lines"""
+        return [
             "",
             "="*80,
             "TEST SUMMARY REPORT",
@@ -123,7 +147,8 @@ class TestRunner:
             ""
         ]
 
-        # Visual progress bar
+    def _add_progress_bar(self, lines: List[str]):
+        """Add visual progress bar to report"""
         if self.results['total'] > 0:
             bar_width = 50
             filled = int(bar_width * self.results['success_rate'] / 100)
@@ -131,7 +156,8 @@ class TestRunner:
             lines.append(f"[{bar}] {self.results['success_rate']:.1f}%")
             lines.append("")
 
-        # Status
+    def _add_status_message(self, lines: List[str]):
+        """Add status message based on results"""
         if self.results['success_rate'] == 100:
             lines.extend([
                 "🎉 ALL TESTS PASSED!",
@@ -152,14 +178,22 @@ class TestRunner:
 
         lines.append("="*80)
 
-        report = '\n'.join(lines)
-        print(report)
-
-        # Save to file
+    def _save_summary_report(self, report: str):
+        """Save summary report to file"""
         report_file = Path(__file__).parent.parent / 'test_results.txt'
         with open(report_file, 'w') as f:
             f.write(report)
 
+    def generate_summary_report(self):
+        """Generate summary report"""
+        lines = self._build_summary_lines()
+        self._add_progress_bar(lines)
+        self._add_status_message(lines)
+
+        report = '\n'.join(lines)
+        print(report)
+
+        self._save_summary_report(report)
         return report
 
     def generate_json_report(self):
@@ -179,7 +213,8 @@ class TestRunner:
 
         return report_file
 
-def main():
+def _parse_arguments():
+    """Parse command line arguments"""
     import argparse
 
     parser = argparse.ArgumentParser(description='Run Code Inventory Tests')
@@ -187,11 +222,10 @@ def main():
     parser.add_argument('--unit-only', action='store_true', help='Run only unit tests')
     parser.add_argument('--integration-only', action='store_true', help='Run only integration tests')
 
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    runner = TestRunner(coverage_enabled=not args.no_coverage)
-
-    # Run tests based on arguments
+def _configure_test_directory(runner, args):
+    """Configure test directory based on arguments"""
     if args.unit_only:
         print("Running unit tests only...")
         runner.test_dir = runner.test_dir / 'unit'
@@ -199,6 +233,8 @@ def main():
         print("Running integration tests only...")
         runner.test_dir = runner.test_dir / 'integration'
 
+def _run_test_pipeline(runner, args):
+    """Run the complete test pipeline"""
     # Run tests
     success = runner.run_tests()
 
@@ -213,6 +249,15 @@ def main():
     print("\n" + "="*80)
     print("TEST RUN COMPLETE")
     print("="*80 + "\n")
+
+    return success
+
+def main():
+    args = _parse_arguments()
+
+    runner = TestRunner(coverage_enabled=not args.no_coverage)
+    _configure_test_directory(runner, args)
+    success = _run_test_pipeline(runner, args)
 
     # Exit with appropriate code
     sys.exit(0 if success else 1)

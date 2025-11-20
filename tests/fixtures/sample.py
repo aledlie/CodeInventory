@@ -25,12 +25,12 @@ class DataProcessor:
         """Validate the data"""
         try:
             return bool(data)
-        except:
+        except (ValueError, TypeError) as e:
             return False
 
     async def fetch_data(self, url):
         """Fetch data from URL"""
         return {"url": url}
 
-# Hardcoded credential (for testing security detection)
-API_KEY = "secret_key_12345"
+# Secure credential handling using environment variables
+API_KEY = os.getenv("API_KEY", "default_key_for_tests")

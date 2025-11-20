@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 import sys
+from typing import List
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -22,37 +23,47 @@ class AnalysisRunner:
         self.timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.results = {}
 
-    def run_command(self, name: str, command: list, description: str) -> bool:
-        """Run a command and capture result"""
+    def _print_command_header(self, description: str):
+        """Print command execution header"""
         print(f"\n{'='*80}")
         print(f"Running: {description}")
         print(f"{'='*80}\n")
 
+    def _execute_subprocess(self, command: list, timeout: int = 300):
+        """Execute subprocess command"""
+        inventory_dir = Path(__file__).parent.parent
+        return subprocess.run(
+            command,
+            cwd=inventory_dir,
+            capture_output=True,
+            text=True,
+            timeout=timeout
+        )
+
+    def _handle_command_result(self, name: str, result, description: str):
+        """Handle and store command result"""
+        self.results[name] = {
+            'success': result.returncode == 0,
+            'stdout': result.stdout,
+            'stderr': result.stderr
+        }
+
+        if result.returncode == 0:
+            print(f"✅ {description} completed successfully")
+            print(result.stdout)
+        else:
+            print(f"❌ {description} failed")
+            print(result.stderr)
+
+        return result.returncode == 0
+
+    def run_command(self, name: str, command: list, description: str) -> bool:
+        """Run a command and capture result"""
+        self._print_command_header(description)
+
         try:
-            # Change to Inventory directory for module imports
-            inventory_dir = Path(__file__).parent.parent
-            result = subprocess.run(
-                command,
-                cwd=inventory_dir,
-                capture_output=True,
-                text=True,
-                timeout=300  # 5 minute timeout
-            )
-
-            self.results[name] = {
-                'success': result.returncode == 0,
-                'stdout': result.stdout,
-                'stderr': result.stderr
-            }
-
-            if result.returncode == 0:
-                print(f"✅ {description} completed successfully")
-                print(result.stdout)
-            else:
-                print(f"❌ {description} failed")
-                print(result.stderr)
-
-            return result.returncode == 0
+            result = self._execute_subprocess(command)
+            return self._handle_command_result(name, result, description)
 
         except subprocess.TimeoutExpired:
             print(f"⏱️  {description} timed out")
@@ -63,8 +74,8 @@ class AnalysisRunner:
             self.results[name] = {'success': False, 'error': str(e)}
             return False
 
-    def run_all_analysis(self):
-        """Run complete analysis pipeline"""
+    def _print_analysis_header(self):
+        """Print analysis header information"""
         print(f"\n{'='*80}")
         print("CODE INVENTORY - COMPREHENSIVE ANALYSIS")
         print(f"{'='*80}")
@@ -73,11 +84,9 @@ class AnalysisRunner:
         print(f"Timestamp: {self.timestamp}")
         print(f"{'='*80}\n")
 
-        # Get the Inventory directory path
-        inventory_dir = Path(__file__).parent.parent
-
-        # 1. Enhanced Schema Generation
-        self.run_command(
+    def _run_schema_generation(self):
+        """Run schema generation analysis"""
+        return self.run_command(
             'schema_generation',
             [
                 'python3', '-m', 'src.generators.schema',
@@ -86,13 +95,12 @@ class AnalysisRunner:
             'Enhanced Schema Generation'
         )
 
-        schemas_file = self.root_dir / 'Inventory' / 'schemas_enhanced.json'
-
-        # 2. Code Quality Analysis
+    def _run_quality_analysis(self):
+        """Run code quality analysis"""
         quality_output = self.output_dir / f'quality_report_{self.timestamp}.json'
         quality_text = self.output_dir / f'quality_report_{self.timestamp}.txt'
 
-        self.run_command(
+        return self.run_command(
             'quality_analysis',
             [
                 'python3', '-m', 'src.analyzers.code_quality',
@@ -103,11 +111,12 @@ class AnalysisRunner:
             'Code Quality Analysis'
         )
 
-        # 3. Test Coverage Analysis
+    def _run_coverage_analysis(self):
+        """Run test coverage analysis"""
         coverage_output = self.output_dir / f'coverage_report_{self.timestamp}.json'
         coverage_text = self.output_dir / f'coverage_report_{self.timestamp}.txt'
 
-        self.run_command(
+        return self.run_command(
             'coverage_analysis',
             [
                 'python3', '-m', 'src.analyzers.test_coverage',
@@ -118,11 +127,12 @@ class AnalysisRunner:
             'Test Coverage Analysis'
         )
 
-        # 4. Dependency Analysis
+    def _run_dependency_analysis(self):
+        """Run dependency analysis"""
         dependency_output = self.output_dir / f'dependency_report_{self.timestamp}.json'
         dependency_text = self.output_dir / f'dependency_report_{self.timestamp}.txt'
 
-        self.run_command(
+        return self.run_command(
             'dependency_analysis',
             [
                 'python3', '-m', 'src.analyzers.dependencies',
@@ -134,10 +144,15 @@ class AnalysisRunner:
             'Dependency Analysis'
         )
 
-        # 5. Generate Interactive Dashboard
+    def _generate_dashboard(self):
+        """Generate interactive dashboard"""
+        schemas_file = self.root_dir / 'Inventory' / 'schemas_enhanced.json'
+        quality_output = self.output_dir / f'quality_report_{self.timestamp}.json'
+        coverage_output = self.output_dir / f'coverage_report_{self.timestamp}.json'
+        dependency_output = self.output_dir / f'dependency_report_{self.timestamp}.json'
         dashboard_output = self.output_dir / f'dashboard_{self.timestamp}.html'
 
-        self.run_command(
+        return self.run_command(
             'dashboard_generation',
             [
                 'python3', '-m', 'src.generators.dashboard',
@@ -150,10 +165,12 @@ class AnalysisRunner:
             'Dashboard Generation'
         )
 
-        # 6. Generate RSS Feed
+    def _generate_rss_feed(self):
+        """Generate RSS feed"""
+        schemas_file = self.root_dir / 'Inventory' / 'schemas_enhanced.json'
         rss_output = self.output_dir / f'code_updates_{self.timestamp}.xml'
 
-        self.run_command(
+        return self.run_command(
             'rss_generation',
             [
                 'python3', '-m', 'src.generators.rss',
@@ -166,8 +183,9 @@ class AnalysisRunner:
             'RSS Feed Generation'
         )
 
-        # 7. Validate Schema.org Markup
-        self.run_command(
+    def _validate_schema(self):
+        """Validate Schema.org markup"""
+        return self.run_command(
             'schema_validation',
             [
                 'python3', '-m', 'src.validators.schema',
@@ -177,14 +195,25 @@ class AnalysisRunner:
             'Schema.org Validation'
         )
 
+    def run_all_analysis(self):
+        """Run complete analysis pipeline"""
+        self._print_analysis_header()
+
+        # Run all analyses
+        self._run_schema_generation()
+        self._run_quality_analysis()
+        self._run_coverage_analysis()
+        self._run_dependency_analysis()
+        self._generate_dashboard()
+        self._generate_rss_feed()
+        self._validate_schema()
+
         # Generate Summary Report
         self.generate_summary_report()
 
-    def generate_summary_report(self):
-        """Generate summary of all analysis"""
-        summary_path = self.output_dir / f'ANALYSIS_SUMMARY_{self.timestamp}.md'
-
-        lines = [
+    def _build_report_header(self) -> List[str]:
+        """Build report header lines"""
+        return [
             f"# Comprehensive Code Analysis Report",
             f"",
             f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
@@ -194,15 +223,22 @@ class AnalysisRunner:
             ""
         ]
 
-        # Results table
-        lines.append("| Analysis | Status |")
-        lines.append("|----------|--------|")
+    def _build_results_table(self) -> List[str]:
+        """Build results table lines"""
+        lines = [
+            "| Analysis | Status |",
+            "|----------|--------|"
+        ]
 
         for name, result in self.results.items():
             status = "✅ Success" if result.get('success') else "❌ Failed"
             lines.append(f"| {name.replace('_', ' ').title()} | {status} |")
 
-        lines.extend([
+        return lines
+
+    def _build_files_section(self) -> List[str]:
+        """Build generated files section"""
+        return [
             "",
             "## Generated Files",
             "",
@@ -223,21 +259,41 @@ class AnalysisRunner:
             "",
             "---",
             "*Generated by Enhanced Code Inventory System*"
-        ])
+        ]
 
-        with open(summary_path, 'w') as f:
+    def _save_report(self, lines: List[str], path: Path):
+        """Save report to file"""
+        with open(path, 'w') as f:
             f.write('\n'.join(lines))
 
+    def _print_completion_stats(self):
+        """Print completion statistics"""
         print(f"\n{'='*80}")
         print("ANALYSIS COMPLETE!")
         print(f"{'='*80}")
-        print(f"\n📊 Summary report: {summary_path}")
+        print(f"\n📊 Summary report: {self.output_dir / f'ANALYSIS_SUMMARY_{self.timestamp}.md'}")
         print(f"📁 All reports saved to: {self.output_dir}\n")
 
         # Print quick stats
         successful = sum(1 for r in self.results.values() if r.get('success'))
         total = len(self.results)
         print(f"Results: {successful}/{total} analyses completed successfully\n")
+
+    def generate_summary_report(self):
+        """Generate summary of all analysis"""
+        summary_path = self.output_dir / f'ANALYSIS_SUMMARY_{self.timestamp}.md'
+
+        # Build report sections
+        lines = []
+        lines.extend(self._build_report_header())
+        lines.extend(self._build_results_table())
+        lines.extend(self._build_files_section())
+
+        # Save report
+        self._save_report(lines, summary_path)
+
+        # Print completion statistics
+        self._print_completion_stats()
 
 def main():
     import argparse
