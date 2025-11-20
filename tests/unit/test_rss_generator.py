@@ -11,7 +11,7 @@ import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from rss_generator import RSSGenerator
+from src.generators.rss import RSSGenerator
 
 class TestRSSGenerator(unittest.TestCase):
     """Test RSSGenerator class"""

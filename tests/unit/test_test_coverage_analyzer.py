@@ -11,7 +11,7 @@ import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from test_coverage_analyzer import (
+from src.analyzers.test_coverage import (
     TestCoverageAnalyzer,
     FunctionInfo,
     CoverageReport

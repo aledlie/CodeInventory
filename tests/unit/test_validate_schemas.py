@@ -11,7 +11,7 @@ import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from validate_schemas import SchemaValidator
+from src.validators.schema import SchemaValidator
 
 class TestSchemaValidator(unittest.TestCase):
     """Test SchemaValidator class"""

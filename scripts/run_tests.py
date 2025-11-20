@@ -10,12 +10,16 @@ import subprocess
 import json
 from datetime import datetime
 
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 class TestRunner:
     """Runs all tests and generates comprehensive coverage report"""
 
     def __init__(self, coverage_enabled=True):
         self.coverage_enabled = coverage_enabled
-        self.test_dir = Path(__file__).parent / 'tests'
+        # Script is now in scripts/, so go up one level to find tests
+        self.test_dir = Path(__file__).parent.parent / 'tests'
         self.results = {}
 
     def discover_tests(self):
@@ -70,8 +74,8 @@ class TestRunner:
         print("RUNNING TESTS WITH COVERAGE")
         print("="*80 + "\n")
 
-        # Create coverage object
-        cov = coverage.Coverage(source=[str(Path(__file__).parent)])
+        # Create coverage object - cover src directory
+        cov = coverage.Coverage(source=[str(Path(__file__).parent.parent / 'src')])
         cov.start()
 
         # Run tests
@@ -91,12 +95,12 @@ class TestRunner:
         cov.report()
 
         # Generate HTML report
-        html_dir = Path(__file__).parent / 'coverage_html'
+        html_dir = Path(__file__).parent.parent / 'htmlcov'
         cov.html_report(directory=str(html_dir))
         print(f"\n✅ HTML coverage report: {html_dir}/index.html")
 
         # Generate JSON report
-        json_file = Path(__file__).parent / 'coverage.json'
+        json_file = Path(__file__).parent.parent / 'coverage.json'
         cov.json_report(outfile=str(json_file))
 
         return cov
@@ -152,7 +156,7 @@ class TestRunner:
         print(report)
 
         # Save to file
-        report_file = Path(__file__).parent / 'test_results.txt'
+        report_file = Path(__file__).parent.parent / 'test_results.txt'
         with open(report_file, 'w') as f:
             f.write(report)
 
@@ -167,7 +171,7 @@ class TestRunner:
             'coverage_enabled': self.coverage_enabled
         }
 
-        report_file = Path(__file__).parent / 'test_results.json'
+        report_file = Path(__file__).parent.parent / 'test_results.json'
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
 

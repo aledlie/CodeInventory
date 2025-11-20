@@ -88,3 +88,8 @@ ENV/
 test_results.json
 test_results.txt
 analysis_reports/
+outputs/
+coverage.json
+
+# Repomix output files
+repomix-output.xml

@@ -11,7 +11,7 @@ import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from code_quality_analyzer import (
+from src.analyzers.code_quality import (
     CodeQualityAnalyzer,
     QualityIssue,
     QualityReport

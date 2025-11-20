@@ -11,7 +11,7 @@ import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from dependency_analyzer import (
+from src.analyzers.dependencies import (
     DependencyAnalyzer,
     DependencyInfo,
     DependencyReport

@@ -12,7 +12,7 @@ import json
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from schema_generator_enhanced import (
+from src.generators.schema import (
     EnhancedSchemaGenerator,
     AstGrepHelper,
     SchemaOrgGenerator,

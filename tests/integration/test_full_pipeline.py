@@ -12,12 +12,12 @@ import shutil
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from schema_generator_enhanced import EnhancedSchemaGenerator
-from code_quality_analyzer import CodeQualityAnalyzer
-from test_coverage_analyzer import TestCoverageAnalyzer
-from dependency_analyzer import DependencyAnalyzer
-from dashboard_generator import DashboardGenerator
-from validate_schemas import SchemaValidator
+from src.generators.schema import EnhancedSchemaGenerator
+from src.analyzers.code_quality import CodeQualityAnalyzer
+from src.analyzers.test_coverage import TestCoverageAnalyzer
+from src.analyzers.dependencies import DependencyAnalyzer
+from src.generators.dashboard import DashboardGenerator
+from src.validators.schema import SchemaValidator
 
 class TestFullPipeline(unittest.TestCase):
     """Test complete analysis pipeline integration"""

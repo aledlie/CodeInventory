@@ -8,6 +8,9 @@ from pathlib import Path
 from datetime import datetime
 import sys
 
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 class AnalysisRunner:
     """Runs all analysis tools and generates reports"""
 
