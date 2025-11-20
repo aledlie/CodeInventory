@@ -4,6 +4,7 @@ Run All Analysis - Master script to run all code analysis tools
 """
 
 import subprocess
+import logging
 from pathlib import Path
 from datetime import datetime
 import sys
@@ -11,6 +12,9 @@ from typing import List
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 class AnalysisRunner:
     """Runs all analysis tools and generates reports"""
@@ -25,9 +29,9 @@ class AnalysisRunner:
 
     def _print_command_header(self, description: str):
         """Print command execution header"""
-        print(f"\n{'='*80}")
-        print(f"Running: {description}")
-        print(f"{'='*80}\n")
+        logger.info(f"\n{'='*80}")
+        logger.info(f"Running: {description}")
+        logger.info(f"{'='*80}\n")
 
     def _execute_subprocess(self, command: list, timeout: int = 300):
         """Execute subprocess command"""
@@ -49,11 +53,11 @@ class AnalysisRunner:
         }
 
         if result.returncode == 0:
-            print(f"✅ {description} completed successfully")
-            print(result.stdout)
+            logger.info(f"✅ {description} completed successfully")
+            logger.info(result.stdout)
         else:
-            print(f"❌ {description} failed")
-            print(result.stderr)
+            logger.error(f"❌ {description} failed")
+            logger.error(result.stderr)
 
         return result.returncode == 0
 
@@ -66,23 +70,23 @@ class AnalysisRunner:
             return self._handle_command_result(name, result, description)
 
         except subprocess.TimeoutExpired:
-            print(f"⏱️  {description} timed out")
+            logger.warning(f"⏱️  {description} timed out")
             self.results[name] = {'success': False, 'error': 'Timeout'}
             return False
         except Exception as e:
-            print(f"❌ {description} error: {e}")
+            logger.error(f"❌ {description} error: {e}")
             self.results[name] = {'success': False, 'error': str(e)}
             return False
 
     def _print_analysis_header(self):
         """Print analysis header information"""
-        print(f"\n{'='*80}")
-        print("CODE INVENTORY - COMPREHENSIVE ANALYSIS")
-        print(f"{'='*80}")
-        print(f"Root Directory: {self.root_dir}")
-        print(f"Output Directory: {self.output_dir}")
-        print(f"Timestamp: {self.timestamp}")
-        print(f"{'='*80}\n")
+        logger.info(f"\n{'='*80}")
+        logger.info("CODE INVENTORY - COMPREHENSIVE ANALYSIS")
+        logger.info(f"{'='*80}")
+        logger.info(f"Root Directory: {self.root_dir}")
+        logger.info(f"Output Directory: {self.output_dir}")
+        logger.info(f"Timestamp: {self.timestamp}")
+        logger.info(f"{'='*80}\n")
 
     def _run_schema_generation(self):
         """Run schema generation analysis"""
@@ -268,16 +272,16 @@ class AnalysisRunner:
 
     def _print_completion_stats(self):
         """Print completion statistics"""
-        print(f"\n{'='*80}")
-        print("ANALYSIS COMPLETE!")
-        print(f"{'='*80}")
-        print(f"\n📊 Summary report: {self.output_dir / f'ANALYSIS_SUMMARY_{self.timestamp}.md'}")
-        print(f"📁 All reports saved to: {self.output_dir}\n")
+        logger.info(f"\n{'='*80}")
+        logger.info("ANALYSIS COMPLETE!")
+        logger.info(f"{'='*80}")
+        logger.info(f"\n📊 Summary report: {self.output_dir / f'ANALYSIS_SUMMARY_{self.timestamp}.md'}")
+        logger.info(f"📁 All reports saved to: {self.output_dir}\n")
 
         # Print quick stats
         successful = sum(1 for r in self.results.values() if r.get('success'))
         total = len(self.results)
-        print(f"Results: {successful}/{total} analyses completed successfully\n")
+        logger.info(f"Results: {successful}/{total} analyses completed successfully\n")
 
     def generate_summary_report(self):
         """Generate summary of all analysis"""
@@ -296,6 +300,12 @@ class AnalysisRunner:
         self._print_completion_stats()
 
 def main():
+    # Configure logging for CLI output
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(message)s'  # Keep simple format for CLI tools
+    )
+
     import argparse
 
     parser = argparse.ArgumentParser(description='Run All Code Analysis')
@@ -310,7 +320,7 @@ def main():
     # Change to Inventory directory to run scripts
     inventory_dir = root_dir / 'Inventory'
     if not inventory_dir.exists():
-        print(f"Error: Inventory directory not found at {inventory_dir}")
+        logger.error(f"Error: Inventory directory not found at {inventory_dir}")
         sys.exit(1)
 
     runner = AnalysisRunner(root_dir, output_dir)

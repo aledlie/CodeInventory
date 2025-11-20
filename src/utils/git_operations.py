@@ -5,8 +5,12 @@ Push changes to all git repositories with remotes
 
 import json
 import subprocess
+import logging
 from pathlib import Path
 from typing import List, Tuple
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 def get_git_repos_with_remotes(schemas_file: str) -> List[Tuple[str, str]]:
     """Extract directories with git remotes from schemas.json"""
@@ -72,12 +76,18 @@ def git_push(repo_path: str) -> Tuple[bool, str]:
         return False, e.stderr
 
 def main():
+    # Configure logging for CLI output
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(message)s'  # Keep simple format for CLI tools
+    )
+
     schemas_file = '/Users/alyshialedlie/code/schemas.json'
 
-    print("Finding git repositories with remotes...")
+    logger.info("Finding git repositories with remotes...")
     repos = get_git_repos_with_remotes(schemas_file)
 
-    print(f"Found {len(repos)} repositories with remotes\n")
+    logger.info(f"Found {len(repos)} repositories with remotes\n")
 
     commit_message = """Update README.md files with schema documentation
 
@@ -97,71 +107,71 @@ Generated schema documentation for all code files including:
 
     for repo_path, remote in repos:
         repo_name = Path(repo_path).name
-        print(f"\n{'='*60}")
-        print(f"Processing: {repo_name}")
-        print(f"Path: {repo_path}")
-        print(f"Remote: {remote}")
-        print('='*60)
+        logger.info(f"\n{'='*60}")
+        logger.info(f"Processing: {repo_name}")
+        logger.info(f"Path: {repo_path}")
+        logger.info(f"Remote: {remote}")
+        logger.info('='*60)
 
         # Check for changes
         has_changes, status = git_status(repo_path)
 
         if not has_changes:
-            print(f"✓ No changes to commit")
+            logger.info(f"✓ No changes to commit")
             results['no_changes'].append(repo_name)
             continue
 
-        print(f"Changes detected:")
-        print(status[:500])  # Show first 500 chars
+        logger.info(f"Changes detected:")
+        logger.info(status[:500])  # Show first 500 chars
 
         # Add all changes
         if not git_add_all(repo_path):
-            print(f"✗ Failed to add changes")
+            logger.warning(f"✗ Failed to add changes")
             results['errors'].append((repo_name, "Failed to add changes"))
             continue
 
-        print(f"✓ Added changes")
+        logger.info(f"✓ Added changes")
 
         # Commit
         if not git_commit(repo_path, commit_message):
-            print(f"✗ Failed to commit (may already be committed)")
+            logger.warning(f"✗ Failed to commit (may already be committed)")
             # Check if there are still changes
             has_changes, _ = git_status(repo_path)
             if not has_changes:
-                print(f"  (No uncommitted changes, skipping)")
+                logger.info(f"  (No uncommitted changes, skipping)")
                 results['no_changes'].append(repo_name)
                 continue
             results['errors'].append((repo_name, "Failed to commit"))
             continue
 
-        print(f"✓ Committed changes")
+        logger.info(f"✓ Committed changes")
 
         # Push
         success, output = git_push(repo_path)
         if success:
-            print(f"✓ Pushed to remote")
-            print(output[:200])
+            logger.info(f"✓ Pushed to remote")
+            logger.info(output[:200])
             results['pushed'].append(repo_name)
         else:
-            print(f"✗ Failed to push")
-            print(output[:200])
+            logger.error(f"✗ Failed to push")
+            logger.error(output[:200])
             results['errors'].append((repo_name, f"Failed to push: {output[:100]}"))
 
     # Summary
-    print(f"\n\n{'='*60}")
-    print("SUMMARY")
-    print('='*60)
-    print(f"Successfully pushed: {len(results['pushed'])}")
+    logger.info(f"\n\n{'='*60}")
+    logger.info("SUMMARY")
+    logger.info('='*60)
+    logger.info(f"Successfully pushed: {len(results['pushed'])}")
     for repo in results['pushed']:
-        print(f"  ✓ {repo}")
+        logger.info(f"  ✓ {repo}")
 
-    print(f"\nNo changes: {len(results['no_changes'])}")
+    logger.info(f"\nNo changes: {len(results['no_changes'])}")
     for repo in results['no_changes']:
-        print(f"  - {repo}")
+        logger.info(f"  - {repo}")
 
-    print(f"\nErrors: {len(results['errors'])}")
+    logger.info(f"\nErrors: {len(results['errors'])}")
     for repo, error in results['errors']:
-        print(f"  ✗ {repo}: {error}")
+        logger.info(f"  ✗ {repo}: {error}")
 
 if __name__ == '__main__':
     main()

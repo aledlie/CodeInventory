@@ -5,6 +5,7 @@ Test Runner - Runs all tests and generates coverage report
 
 import unittest
 import sys
+import logging
 from pathlib import Path
 import subprocess
 import json
@@ -13,6 +14,9 @@ from typing import List
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 class TestRunner:
     """Runs all tests and generates comprehensive coverage report"""
@@ -31,16 +35,16 @@ class TestRunner:
 
     def _print_test_header(self):
         """Print test suite header"""
-        print("="*80)
-        print("CODE INVENTORY - TEST SUITE")
-        print("="*80)
-        print(f"\nDiscovering tests in: {self.test_dir}")
-        print(f"Coverage enabled: {self.coverage_enabled}\n")
+        logger.info("="*80)
+        logger.info("CODE INVENTORY - TEST SUITE")
+        logger.info("="*80)
+        logger.info(f"\nDiscovering tests in: {self.test_dir}")
+        logger.info(f"Coverage enabled: {self.coverage_enabled}\n")
 
     def _execute_test_suite(self, suite):
         """Execute the test suite"""
         test_count = suite.countTestCases()
-        print(f"Found {test_count} tests\n")
+        logger.info(f"Found {test_count} tests\n")
 
         runner = unittest.TextTestRunner(verbosity=2)
         result = runner.run(suite)
@@ -74,7 +78,7 @@ class TestRunner:
             import coverage
             return True
         except ImportError:
-            print("\n⚠️  coverage.py not installed. Install with: pip install coverage")
+            logger.warning("\n⚠️  coverage.py not installed. Install with: pip install coverage")
             return False
 
     def _setup_coverage(self):
@@ -96,16 +100,16 @@ class TestRunner:
 
     def _generate_coverage_reports(self, cov):
         """Generate coverage reports"""
-        print("\n" + "="*80)
-        print("COVERAGE REPORT")
-        print("="*80 + "\n")
+        logger.info("\n" + "="*80)
+        logger.info("COVERAGE REPORT")
+        logger.info("="*80 + "\n")
 
         cov.report()
 
         # Generate HTML report
         html_dir = Path(__file__).parent.parent / 'htmlcov'
         cov.html_report(directory=str(html_dir))
-        print(f"\n✅ HTML coverage report: {html_dir}/index.html")
+        logger.info(f"\n✅ HTML coverage report: {html_dir}/index.html")
 
         # Generate JSON report
         json_file = Path(__file__).parent.parent / 'coverage.json'
@@ -119,9 +123,9 @@ class TestRunner:
         if not self._check_coverage_available():
             return None
 
-        print("\n" + "="*80)
-        print("RUNNING TESTS WITH COVERAGE")
-        print("="*80 + "\n")
+        logger.info("\n" + "="*80)
+        logger.info("RUNNING TESTS WITH COVERAGE")
+        logger.info("="*80 + "\n")
 
         cov = self._setup_coverage()
         self._run_tests_with_coverage(cov)
@@ -191,7 +195,7 @@ class TestRunner:
         self._add_status_message(lines)
 
         report = '\n'.join(lines)
-        print(report)
+        logger.info(report)
 
         self._save_summary_report(report)
         return report
@@ -209,7 +213,7 @@ class TestRunner:
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
 
-        print(f"✅ JSON report saved to: {report_file}")
+        logger.info(f"✅ JSON report saved to: {report_file}")
 
         return report_file
 
@@ -227,10 +231,10 @@ def _parse_arguments():
 def _configure_test_directory(runner, args):
     """Configure test directory based on arguments"""
     if args.unit_only:
-        print("Running unit tests only...")
+        logger.info("Running unit tests only...")
         runner.test_dir = runner.test_dir / 'unit'
     elif args.integration_only:
-        print("Running integration tests only...")
+        logger.info("Running integration tests only...")
         runner.test_dir = runner.test_dir / 'integration'
 
 def _run_test_pipeline(runner, args):
@@ -246,13 +250,19 @@ def _run_test_pipeline(runner, args):
     if not args.no_coverage:
         runner.run_coverage_analysis()
 
-    print("\n" + "="*80)
-    print("TEST RUN COMPLETE")
-    print("="*80 + "\n")
+    logger.info("\n" + "="*80)
+    logger.info("TEST RUN COMPLETE")
+    logger.info("="*80 + "\n")
 
     return success
 
 def main():
+    # Configure logging for CLI output
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(message)s'  # Keep simple format for CLI tools
+    )
+
     args = _parse_arguments()
 
     runner = TestRunner(coverage_enabled=not args.no_coverage)

@@ -9,12 +9,16 @@ import ast
 import json
 import re
 import tempfile
+import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field, asdict
 from collections import defaultdict
 import subprocess
 import sys
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 @dataclass
 class FunctionDef:
@@ -86,7 +90,7 @@ class AstGrepHelper:
                 return json.loads(result.stdout)
             return []
         except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
-            print(f"  ast-grep warning for {file_path}: {e}")
+            logger.warning(f"  ast-grep warning for {file_path}: {e}")
             return []
 
     @staticmethod
@@ -127,7 +131,7 @@ class AstGrepHelper:
             finally:
                 os.unlink(rule_file)
         except Exception as e:
-            print(f"  ast-grep rule warning for {file_path}: {e}")
+            logger.warning(f"  ast-grep rule warning for {file_path}: {e}")
             return []
 
 class SchemaOrgGenerator:
@@ -182,10 +186,10 @@ class EnhancedSchemaGenerator:
         self.use_astgrep = use_astgrep and AstGrepHelper.check_available()
 
         if not self.use_astgrep:
-            print("⚠️  ast-grep not available - falling back to regex for TypeScript/JavaScript")
-            print("   Install with: brew install ast-grep")
+            logger.warning("⚠️  ast-grep not available - falling back to regex for TypeScript/JavaScript")
+            logger.warning("   Install with: brew install ast-grep")
         else:
-            print("✅ ast-grep available - using AST-based parsing")
+            logger.info("✅ ast-grep available - using AST-based parsing")
 
     def extract_python_schema(self, file_path: Path) -> FileDef:
         """Extract schema from Python files using AST"""
@@ -233,7 +237,7 @@ class EnhancedSchemaGenerator:
                     file_def.functions.append(self._extract_function(node))
 
         except Exception as e:
-            print(f"Error parsing {file_path}: {e}")
+            logger.error(f"Error parsing {file_path}: {e}")
 
         return file_def
 
@@ -278,7 +282,7 @@ class EnhancedSchemaGenerator:
             self._extract_ts_functions_astgrep(file_path, file_def, lang)
             self._extract_ts_arrow_functions_astgrep(file_path, file_def, lang)
         except Exception as e:
-            print(f"  Error with ast-grep parsing {file_path}: {e}")
+            logger.error(f"  Error with ast-grep parsing {file_path}: {e}")
             return self.extract_typescript_schema_regex(file_path)
 
         return file_def
@@ -399,7 +403,7 @@ class EnhancedSchemaGenerator:
             self._extract_ts_arrow_functions_regex(content, file_def)
 
         except Exception as e:
-            print(f"Error parsing {file_path}: {e}")
+            logger.error(f"Error parsing {file_path}: {e}")
 
         return file_def
 
@@ -527,7 +531,7 @@ class EnhancedSchemaGenerator:
                         if file_schema.classes or file_schema.functions:
                             schema.files.append(file_schema)
         except PermissionError:
-            print(f"Permission denied: {dir_path}")
+            logger.warning(f"Permission denied: {dir_path}")
 
         return schema
 
@@ -760,11 +764,17 @@ class EnhancedSchemaGenerator:
 
     def _print_save_summary(self, output_path: Path, include_schema_org: bool):
         """Print summary after saving schemas"""
-        print(f"✅ Schemas saved to {output_path}")
-        print(f"   Total directories: {len(self.schemas)}")
-        print(f"   Schema.org markup: {'Included' if include_schema_org else 'Not included'}")
+        logger.info(f"✅ Schemas saved to {output_path}")
+        logger.info(f"   Total directories: {len(self.schemas)}")
+        logger.info(f"   Schema.org markup: {'Included' if include_schema_org else 'Not included'}")
 
 def main():
+    # Configure logging for CLI output
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(message)s'  # Keep simple format for CLI tools
+    )
+
     args = _parse_arguments()
     root = Path(args.root)
     generator = EnhancedSchemaGenerator(str(root), use_astgrep=not args.no_astgrep)
@@ -774,7 +784,7 @@ def main():
 
     schema_json_path = _get_output_path(root)
     generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
-    print()
+    logger.info("")
 
     readme_files = _generate_readme_files(generator, root, args)
     _print_git_remotes(generator)
@@ -795,19 +805,19 @@ def _parse_arguments():
 
 def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
     """Print header information"""
-    print(f"\n{'='*60}")
-    print("Enhanced Schema Generator")
-    print(f"{'='*60}\n")
-    print(f"Root path: {root}")
-    print(f"AST-grep: {'Enabled' if generator.use_astgrep else 'Disabled (regex fallback)'}")
-    print(f"Schema.org: {'Enabled' if not args.no_schema_org else 'Disabled'}")
-    print()
+    logger.info(f"\n{'='*60}")
+    logger.info("Enhanced Schema Generator")
+    logger.info(f"{'='*60}\n")
+    logger.info(f"Root path: {root}")
+    logger.info(f"AST-grep: {'Enabled' if generator.use_astgrep else 'Disabled (regex fallback)'}")
+    logger.info(f"Schema.org: {'Enabled' if not args.no_schema_org else 'Disabled'}")
+    logger.info("")
 
 def _run_scanner(generator: 'EnhancedSchemaGenerator'):
     """Run directory scanning"""
-    print("Scanning directories...")
+    logger.info("Scanning directories...")
     generator.scan_all_directories()
-    print(f"✅ Found {len(generator.schemas)} directories to process\n")
+    logger.info(f"✅ Found {len(generator.schemas)} directories to process\n")
 
 def _get_output_path(root: Path) -> Path:
     """Determine output path for schemas.json"""
@@ -838,7 +848,7 @@ def _generate_readme_files(generator: 'EnhancedSchemaGenerator', root: Path, arg
                 f.write(readme_content)
             readme_files.append(str(readme_path))
 
-    print(f"✅ Generated/updated {len(readme_files)} README_ENHANCED.md files\n")
+    logger.info(f"✅ Generated/updated {len(readme_files)} README_ENHANCED.md files\n")
     return readme_files
 
 def _should_write_readme(readme_path: Path, content: str) -> bool:
@@ -854,10 +864,10 @@ def _print_git_remotes(generator: 'EnhancedSchemaGenerator'):
     """Print directories with git remotes"""
     git_dirs = _get_git_directories(generator)
     if git_dirs:
-        print("Directories with git remotes:")
+        logger.info("Directories with git remotes:")
         for path, remote in git_dirs:
-            print(f"  • {path}: {remote}")
-        print()
+            logger.info(f"  • {path}: {remote}")
+        logger.info("")
 
 def _get_git_directories(generator: 'EnhancedSchemaGenerator') -> List[Tuple[str, str]]:
     """Get list of directories with git remotes"""
@@ -867,17 +877,17 @@ def _get_git_directories(generator: 'EnhancedSchemaGenerator') -> List[Tuple[str
 def _handle_quality_report(args):
     """Handle quality report generation"""
     if args.quality_report:
-        print("\n" + "="*60)
-        print("Code Quality Report")
-        print("="*60)
-        print("\nℹ️  Quality report feature requires code_quality_analyzer.py")
-        print("   This will be implemented next.")
+        logger.info("\n" + "="*60)
+        logger.info("Code Quality Report")
+        logger.info("="*60)
+        logger.info("\nℹ️  Quality report feature requires code_quality_analyzer.py")
+        logger.info("   This will be implemented next.")
 
 def _print_footer():
     """Print footer information"""
-    print("\n" + "="*60)
-    print("✅ Schema generation complete!")
-    print("="*60 + "\n")
+    logger.info("\n" + "="*60)
+    logger.info("✅ Schema generation complete!")
+    logger.info("="*60 + "\n")
 
 if __name__ == '__main__':
     main()
