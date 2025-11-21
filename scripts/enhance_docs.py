@@ -4,6 +4,7 @@ Documentation Enhancement Pipeline - Automatically adds schema.org markup to doc
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, List
 import subprocess
@@ -11,6 +12,14 @@ import sys
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 class DocumentationEnhancer:
     """Enhances documentation with schema.org markup"""
@@ -93,7 +102,7 @@ class DocumentationEnhancer:
 
             # Check if already has schema
             if self.has_schema_markup(content):
-                print(f"  ℹ️  Skipped (already has schema): {readme_path}")
+                logger.info(f"  ℹ️  Skipped (already has schema): {readme_path}")
                 self.skipped_count += 1
                 return False
 
@@ -108,12 +117,12 @@ class DocumentationEnhancer:
             enhanced_content = '\n'.join(lines)
             self._write_file_content(readme_path, enhanced_content)
 
-            print(f"  ✅ Enhanced: {readme_path}")
+            logger.info(f"  ✅ Enhanced: {readme_path}")
             self.enhanced_count += 1
             return True
 
         except Exception as e:
-            print(f"  ❌ Error enhancing {readme_path}: {e}")
+            logger.error(f"  ❌ Error enhancing {readme_path}: {e}")
             return False
 
     def _get_default_skip_dirs(self) -> set:
@@ -231,17 +240,17 @@ def main():
     directory = Path(args.directory)
     enhancer = DocumentationEnhancer(directory)
 
-    print(f"\n{'='*80}")
-    print("Documentation Enhancement Pipeline")
-    print(f"{'='*80}\n")
-    print(f"Root Directory: {directory}")
-    print(f"Dry Run: {args.dry_run}\n")
+    logger.info(f"\n{'='*80}")
+    logger.info("Documentation Enhancement Pipeline")
+    logger.info(f"{'='*80}\n")
+    logger.info(f"Root Directory: {directory}")
+    logger.info(f"Dry Run: {args.dry_run}\n")
 
     if not args.dry_run:
         enhancer.enhance_directory()
-        print("\n" + enhancer.generate_report())
+        logger.info("\n" + enhancer.generate_report())
     else:
-        print("ℹ️  Dry run mode - no files will be modified\n")
+        logger.info("ℹ️  Dry run mode - no files will be modified\n")
 
 if __name__ == '__main__':
     main()

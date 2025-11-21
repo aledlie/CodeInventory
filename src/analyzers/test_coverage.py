@@ -3,12 +3,22 @@
 Test Coverage Analyzer - Identifies untested code using ast-grep
 """
 
+import argparse
 import json
+import logging
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Set, Tuple, Optional
 from dataclasses import dataclass, field
 from collections import defaultdict
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 @dataclass
 class FunctionInfo:
@@ -69,10 +79,16 @@ class TestCoverageAnalyzer:
                 return json.loads(result.stdout)
             # Optionally log stderr for debugging
             if result.returncode != 0 and result.stderr:
-                print(f"  ast-grep error: {result.stderr[:200]}")
+                logger.error(f"ast-grep error: {result.stderr[:200]}")
             return []
-        except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
-            print(f"  ast-grep exception: {e}")
+        except subprocess.TimeoutExpired as e:
+            logger.error(f"ast-grep timeout: {e}")
+            return []
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON response from ast-grep: {e}")
+            return []
+        except Exception as e:
+            logger.exception(f"Unexpected error running ast-grep: {e}")
             return []
 
     def find_functions_in_file(self, file_path: Path) -> List[FunctionInfo]:
@@ -266,13 +282,13 @@ class TestCoverageAnalyzer:
 
     def _print_analysis_header(self):
         """Print analysis header information"""
-        print(f"\nAnalyzing source directory: {self.src_dir}")
-        print(f"Looking for tests in: {self.test_dir}\n")
+        logger.info(f"\nAnalyzing source directory: {self.src_dir}")
+        logger.info(f"Looking for tests in: {self.test_dir}\n")
 
     def _find_all_test_functions(self) -> Set[str]:
         """Find all test function names"""
         test_functions = self.find_test_functions(self.test_dir)
-        print(f"Found {len(test_functions)} test patterns\n")
+        logger.info(f"Found {len(test_functions)} test patterns\n")
         return test_functions
 
     def _find_all_source_functions(self) -> List[FunctionInfo]:
@@ -283,7 +299,7 @@ class TestCoverageAnalyzer:
             functions = self.find_functions_in_file(file_path)
             source_functions.extend(functions)
 
-        print(f"Found {len(source_functions)} functions in source code\n")
+        logger.info(f"Found {len(source_functions)} functions in source code\n")
         return source_functions
 
     def _iterate_source_files(self):
@@ -468,7 +484,7 @@ class TestCoverageAnalyzer:
         """Save coverage report as JSON"""
         data = self._build_json_report()
         self._write_json_to_file(output_path, data)
-        print(f"✅ Coverage report saved to {output_path}")
+        logger.info(f"✅ Coverage report saved to {output_path}")
 
     def _build_json_report(self) -> Dict[str, Any]:
         """Build JSON report structure"""
@@ -558,9 +574,9 @@ def _create_coverage_analyzer(src_dir: Path, test_dir: Optional[Path]) -> 'TestC
 
 def _print_coverage_header():
     """Print coverage analysis header"""
-    print(f"\n{'='*80}")
-    print("Test Coverage Analyzer")
-    print(f"{'='*80}")
+    logger.info(f"\n{'='*80}")
+    logger.info("Test Coverage Analyzer")
+    logger.info(f"{'='*80}")
 
 def _perform_coverage_analysis(analyzer: 'TestCoverageAnalyzer'):
     """Perform the coverage analysis"""
@@ -569,7 +585,7 @@ def _perform_coverage_analysis(analyzer: 'TestCoverageAnalyzer'):
 def _save_coverage_reports(analyzer: 'TestCoverageAnalyzer', args):
     """Save coverage reports"""
     text_report = analyzer.generate_report_text()
-    print(text_report)
+    logger.info(text_report)
 
     if args.json:
         analyzer.save_report_json(Path(args.json))
@@ -581,7 +597,7 @@ def _save_text_coverage_report(filepath: str, content: str):
     """Save text coverage report to file"""
     with open(filepath, 'w') as f:
         f.write(content)
-    print(f"\n✅ Text report saved to {filepath}")
+    logger.info(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

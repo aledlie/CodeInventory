@@ -4,9 +4,18 @@ Dashboard Generator - Creates interactive HTML dashboard for code analysis
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, List
 from datetime import datetime
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
@@ -480,8 +489,8 @@ class DashboardGenerator:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html)
 
-        print(f"✅ Dashboard saved to {output_path}")
-        print(f"   Open in browser: file://{output_path.absolute()}")
+        logger.info(f"✅ Dashboard saved to {output_path}")
+        logger.info(f"   Open in browser: file://{output_path.absolute()}")
 
 def main():
     import argparse

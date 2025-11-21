@@ -5,6 +5,7 @@ Code Quality Analyzer - Uses ast-grep to find code smells, security issues, and 
 
 import argparse
 import json
+import logging
 import os
 import subprocess
 import tempfile
@@ -12,6 +13,14 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from collections import defaultdict
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 @dataclass
 class QualityIssue:
@@ -409,7 +418,7 @@ class CodeQualityAnalyzer:
         """Save report as JSON"""
         data = self._build_report_data()
         self._write_json_file(output_path, data)
-        print(f"✅ Quality report saved to {output_path}")
+        logger.info(f"✅ Quality report saved to {output_path}")
 
     def _build_report_data(self) -> Dict[str, Any]:
         """Build report data structure for JSON export"""
@@ -480,10 +489,10 @@ def _initialize_analyzer(path: Path) -> 'CodeQualityAnalyzer':
 
 def _print_header(path: Path):
     """Print analysis header"""
-    print(f"\n{'='*80}")
-    print("Code Quality Analyzer")
-    print(f"{'='*80}\n")
-    print(f"Analyzing: {path}\n")
+    logger.info(f"\n{'='*80}")
+    logger.info("Code Quality Analyzer")
+    logger.info(f"{'='*80}\n")
+    logger.info(f"Analyzing: {path}\n")
 
 def _analyze_path(analyzer: 'CodeQualityAnalyzer', path: Path) -> bool:
     """Analyze the given path"""
@@ -494,13 +503,13 @@ def _analyze_path(analyzer: 'CodeQualityAnalyzer', path: Path) -> bool:
         analyzer.analyze_directory(path)
         return True
     else:
-        print(f"Error: {path} is not a valid file or directory")
+        logger.error(f"Error: {path} is not a valid file or directory")
         return False
 
 def _generate_and_save_reports(analyzer: 'CodeQualityAnalyzer', args):
     """Generate and save reports"""
     text_report = analyzer.generate_report_text()
-    print(text_report)
+    logger.info(text_report)
 
     if args.json:
         analyzer.save_report_json(Path(args.json))
@@ -512,7 +521,7 @@ def _save_text_report(filepath: str, content: str):
     """Save text report to file"""
     with open(filepath, 'w') as f:
         f.write(content)
-    print(f"\n✅ Text report saved to {filepath}")
+    logger.info(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

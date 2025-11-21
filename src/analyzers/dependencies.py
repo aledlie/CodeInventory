@@ -4,13 +4,23 @@ Dependency Analyzer - Analyzes project dependencies using ast-grep
 Finds imports, detects circular dependencies, and creates dependency graphs
 """
 
+import argparse
 import json
+import logging
 import os
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Set, Tuple, Optional
 from dataclasses import dataclass, field
 from collections import defaultdict, deque
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 @dataclass
 class DependencyInfo:
@@ -445,7 +455,7 @@ class DependencyAnalyzer:
         """Save dependency report as JSON"""
         data = self._build_report_json()
         self._write_json_file(output_path, data)
-        print(f"✅ Dependency report saved to {output_path}")
+        logger.info(f"✅ Dependency report saved to {output_path}")
 
     def _build_report_json(self) -> Dict[str, Any]:
         """Build JSON data structure for report"""
@@ -517,23 +527,23 @@ def _init_dependency_analyzer(directory: Path) -> 'DependencyAnalyzer':
 
 def _print_analysis_header(directory: Path):
     """Print analysis header"""
-    print(f"\n{'='*80}")
-    print("Dependency Analyzer")
-    print(f"{'='*80}\n")
-    print(f"Analyzing: {directory}\n")
+    logger.info(f"\n{'='*80}")
+    logger.info("Dependency Analyzer")
+    logger.info(f"{'='*80}\n")
+    logger.info(f"Analyzing: {directory}\n")
 
 def _perform_analysis(analyzer: 'DependencyAnalyzer', args):
     """Perform the dependency analysis"""
     analyzer.analyze_directory()
 
     if args.detect_circular:
-        print("Detecting circular dependencies...\n")
+        logger.info("Detecting circular dependencies...\n")
         analyzer.find_circular_dependencies()
 
 def _output_reports(analyzer: 'DependencyAnalyzer', args):
     """Generate and save reports"""
     text_report = analyzer.generate_report_text()
-    print(text_report)
+    logger.info(text_report)
 
     if args.json:
         analyzer.save_report_json(Path(args.json))
@@ -545,7 +555,7 @@ def _save_text_file(filepath: str, content: str):
     """Save text content to file"""
     with open(filepath, 'w') as f:
         f.write(content)
-    print(f"\n✅ Text report saved to {filepath}")
+    logger.info(f"\n✅ Text report saved to {filepath}")
 
 if __name__ == '__main__':
     main()

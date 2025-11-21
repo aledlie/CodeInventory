@@ -4,12 +4,21 @@ RSS Generator - Creates dynamic RSS feeds from code changes with schema.org mark
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, List
 from datetime import datetime
 import subprocess
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 class RSSGenerator:
     """Generates RSS feeds from code changes"""
@@ -31,7 +40,7 @@ class RSSGenerator:
             result = self._run_git_log(limit)
             return self._parse_commits(result.stdout)
         except Exception as e:
-            print(f"Error fetching commits: {e}")
+            logger.error(f"Error fetching commits: {e}")
             return []
 
     def _is_git_repo(self) -> bool:
@@ -240,8 +249,8 @@ class RSSGenerator:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(rss_xml)
 
-        print(f"✅ RSS feed saved to {output_path}")
-        print(f"   {len(self.get_recent_commits())} commits included")
+        logger.info(f"✅ RSS feed saved to {output_path}")
+        logger.info(f"   {len(self.get_recent_commits())} commits included")
 
 def main():
     import argparse

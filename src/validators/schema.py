@@ -4,9 +4,18 @@ Schema Validator - Validates schema.org JSON-LD markup
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, List
 import re
+
+# Configure logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 class SchemaValidator:
     """Validates schema.org markup"""
@@ -112,7 +121,7 @@ class SchemaValidator:
 
     def validate_file(self, file_path: Path) -> bool:
         """Validate schema.org markup in a file"""
-        print(f"\nValidating: {file_path}")
+        logger.info(f"\nValidating: {file_path}")
 
         content = self._read_file_content(file_path)
         if content is None:
@@ -154,7 +163,7 @@ class SchemaValidator:
 
     def validate_json_file(self, file_path: Path) -> bool:
         """Validate pure JSON-LD file"""
-        print(f"\nValidating JSON file: {file_path}")
+        logger.info(f"\nValidating JSON file: {file_path}")
 
         data = self._load_json_file(file_path)
         if data is None:
@@ -239,7 +248,7 @@ def main():
     _print_header()
     all_valid = _process_files(validator, args)
 
-    print("\n" + validator.generate_report())
+    logger.info("\n" + validator.generate_report())
     return 0 if all_valid else 1
 
 def _parse_arguments():
@@ -254,9 +263,9 @@ def _parse_arguments():
 
 def _print_header() -> None:
     """Print program header"""
-    print("="*80)
-    print("Schema.org Markup Validator")
-    print("="*80)
+    logger.info("="*80)
+    logger.info("Schema.org Markup Validator")
+    logger.info("="*80)
 
 def _process_files(validator: SchemaValidator, args) -> bool:
     """Process all input files"""
