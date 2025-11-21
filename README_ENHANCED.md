@@ -1,11 +1,11 @@
-# Code Repository
+# Inventory
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
-  "name": "Code Repository",
-  "description": "Directory containing 11 code files with 26 classes and 16 functions",
+  "name": "Inventory",
+  "description": "Directory containing 12 code files with 27 classes and 17 functions",
   "programmingLanguage": [
     {
       "@type": "ComputerLanguage",
@@ -14,39 +14,41 @@
   ],
   "codeRepository": "git@github.com:aledlie/CodeInventory.git",
   "featureList": [
-    "26 class definitions",
-    "16 function definitions"
+    "27 class definitions",
+    "17 function definitions"
   ]
 }
 </script>
 
 ## Overview
 
-This directory contains 11 code file(s) with extracted schemas.
+This directory contains 12 code file(s) with extracted schemas.
 
 **Git Remote:** git@github.com:aledlie/CodeInventory.git
 
 ## Subdirectories
 
 - `ast-grep-rules/`
+- `htmlcov/`
+- `tests/`
 
 ## Files and Schemas
 
 ### `code_quality_analyzer.py` (python)
 
 **Classes:**
-- `QualityIssue` - Line 15
+- `QualityIssue` - Line 16
   - Represents a code quality issue
-- `QualityReport` - Line 27
+- `QualityReport` - Line 28
   - Complete quality analysis report
-- `CodeQualityAnalyzer` - Line 35
+- `CodeQualityAnalyzer` - Line 36
   - Analyzes code quality using ast-grep patterns
   - Methods: __init__, _get_python_rules, _get_typescript_rules, _run_astgrep_rule, analyze_file (+3 more)
 
 **Functions:**
-- `main()` - Line 327
+- `main()` - Line 328
 
-**Key Imports:** `argparse`, `collections`, `dataclasses`, `json`, `pathlib` (+3 more)
+**Key Imports:** `argparse`, `collections`, `dataclasses`, `json`, `os` (+4 more)
 
 ### `dashboard_generator.py` (python)
 
@@ -63,18 +65,18 @@ This directory contains 11 code file(s) with extracted schemas.
 ### `dependency_analyzer.py` (python)
 
 **Classes:**
-- `DependencyInfo` - Line 15
+- `DependencyInfo` - Line 16
   - Information about a dependency
-- `DependencyReport` - Line 24
+- `DependencyReport` - Line 25
   - Complete dependency analysis report
-- `DependencyAnalyzer` - Line 34
+- `DependencyAnalyzer` - Line 35
   - Analyzes project dependencies
   - Methods: __init__, _run_astgrep, _is_external_package, analyze_python_imports, analyze_typescript_imports (+5 more)
 
 **Functions:**
-- `main()` - Line 387
+- `main()` - Line 428
 
-**Key Imports:** `argparse`, `collections`, `dataclasses`, `json`, `pathlib` (+2 more)
+**Key Imports:** `argparse`, `collections`, `dataclasses`, `json`, `os` (+3 more)
 
 ### `doc_enhancement_pipeline.py` (python)
 
@@ -124,6 +126,18 @@ This directory contains 11 code file(s) with extracted schemas.
 
 **Key Imports:** `argparse`, `datetime`, `pathlib`, `subprocess`, `sys`
 
+### `run_tests.py` (python)
+
+**Classes:**
+- `TestRunner` - Line 13
+  - Runs all tests and generates comprehensive coverage report
+  - Methods: __init__, discover_tests, run_tests, run_coverage_analysis, generate_summary_report (+1 more)
+
+**Functions:**
+- `main()` - Line 178
+
+**Key Imports:** `argparse`, `coverage`, `datetime`, `json`, `pathlib` (+3 more)
+
 ### `schema_generator.py` (python)
 
 **Classes:**
@@ -148,15 +162,15 @@ This directory contains 11 code file(s) with extracted schemas.
 - `DirectorySchema` - Line 49
 - `AstGrepHelper` - Line 57
   - Helper class for ast-grep operations
-  - Methods: check_available, find_pattern, find_with_rule
-- `SchemaOrgGenerator` - Line 119
+  - Methods: check_available, find_pattern, get_meta_var, find_with_rule
+- `SchemaOrgGenerator` - Line 133
   - Generate schema.org JSON-LD markup
   - Methods: generate_software_source_code, generate_jsonld_script
-- `EnhancedSchemaGenerator` - Line 162
+- `EnhancedSchemaGenerator` - Line 176
   - Methods: __init__, extract_python_schema, _extract_function, _get_name, extract_typescript_schema_astgrep (+6 more)
 
 **Functions:**
-- `main()` - Line 683
+- `main()` - Line 692
 
 **Key Imports:** `argparse`, `ast`, `collections`, `dataclasses`, `json` (+8 more)
 
@@ -172,7 +186,7 @@ This directory contains 11 code file(s) with extracted schemas.
   - Methods: __init__, _is_test_file, _run_astgrep, find_functions_in_file, find_test_functions (+3 more)
 
 **Functions:**
-- `main()` - Line 347
+- `main()` - Line 370
 
 **Key Imports:** `argparse`, `collections`, `dataclasses`, `json`, `pathlib` (+2 more)
 
