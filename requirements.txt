@@ -13,10 +13,10 @@ certifi<2025
 # ============================================
 
 # Progress bars for long-running operations (recommended)
-# Uncomment to enable progress indicators:
-# tqdm>=4.60.0
+# Enables visual progress indicators during schema generation
+tqdm>=4.60.0
 
-# Git operations for incremental analysis (recommended)
+# Git operations for incremental analysis (for future Phase 3)
 # Uncomment to enable git-aware analysis:
 # gitpython>=3.1.0
 
