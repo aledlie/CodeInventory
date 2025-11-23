@@ -93,3 +93,4 @@ coverage.json
 
 # Repomix output files
 repomix-output.xml
+.schema_cache/
