@@ -10,6 +10,7 @@ import json
 import re
 import tempfile
 import logging
+import time
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field, asdict
@@ -17,8 +18,49 @@ from collections import defaultdict
 import subprocess
 import sys
 
-# Set up logger
-logger = logging.getLogger(__name__)
+# Import centralized logging with Sentry support
+try:
+    from src.utils.logging_config import get_logger, log_exception, log_performance_metric
+    logger = get_logger(__name__)
+except ImportError:
+    # Fallback to standard logging if logging_config not available
+    logger = logging.getLogger(__name__)
+
+
+# Top-level worker function for parallel processing (must be picklable)
+def process_single_file(file_path: Path, use_astgrep: bool = True) -> Optional[Dict[str, Any]]:
+    """
+    Process a single file for parallel schema extraction
+
+    This must be a top-level function for multiprocessing pickle support
+    """
+    try:
+        # Create a minimal generator instance just for this file
+        generator = EnhancedSchemaGenerator(
+            root_path=str(file_path.parent.parent),  # Go up to get root context
+            use_astgrep=use_astgrep,
+            use_parallel=False,  # Don't nest parallel processing
+            use_cache=False  # Cache handled at coordinator level
+        )
+
+        if file_path.suffix == '.py':
+            file_def = generator.extract_python_schema(file_path)
+        else:
+            file_def = generator.extract_typescript_schema(file_path)
+
+        # Convert to dict for serialization
+        if file_def.classes or file_def.functions:
+            return {
+                'path': file_def.path,
+                'language': file_def.language,
+                'classes': [asdict(c) for c in file_def.classes],
+                'functions': [asdict(f) for f in file_def.functions],
+                'imports': file_def.imports
+            }
+    except Exception as e:
+        logger.error(f"Error processing {file_path}: {e}")
+
+    return None
 
 @dataclass
 class FunctionDef:
@@ -89,8 +131,29 @@ class AstGrepHelper:
             if result.returncode == 0 and result.stdout.strip():
                 return json.loads(result.stdout)
             return []
-        except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
-            logger.warning(f"  ast-grep warning for {file_path}: {e}")
+        except subprocess.TimeoutExpired as e:
+            log_exception(logger, e, context={
+                'operation': 'ast-grep pattern search',
+                'file_path': str(file_path),
+                'pattern': pattern,
+                'language': language,
+                'timeout': '30s'
+            })
+            return []
+        except json.JSONDecodeError as e:
+            log_exception(logger, e, context={
+                'operation': 'ast-grep JSON parsing',
+                'file_path': str(file_path),
+                'pattern': pattern
+            })
+            return []
+        except Exception as e:
+            log_exception(logger, e, context={
+                'operation': 'ast-grep pattern search',
+                'file_path': str(file_path),
+                'pattern': pattern,
+                'language': language
+            })
             return []
 
     @staticmethod
@@ -131,7 +194,12 @@ class AstGrepHelper:
             finally:
                 os.unlink(rule_file)
         except Exception as e:
-            logger.warning(f"  ast-grep rule warning for {file_path}: {e}")
+            log_exception(logger, e, context={
+                'operation': 'ast-grep rule scan',
+                'file_path': str(file_path),
+                'rule': str(rule),
+                'language': language
+            })
             return []
 
 class SchemaOrgGenerator:
@@ -178,18 +246,41 @@ class SchemaOrgGenerator:
         return f'<script type="application/ld+json">\n{json_str}\n</script>'
 
 class EnhancedSchemaGenerator:
-    def __init__(self, root_path: str, use_astgrep: bool = True):
+    def __init__(self, root_path: str, use_astgrep: bool = True, use_parallel: bool = False, use_cache: bool = False, max_workers: Optional[int] = None):
         self.root_path = Path(root_path)
         self.schemas: Dict[str, DirectorySchema] = {}
         self.skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
                          '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
         self.use_astgrep = use_astgrep and AstGrepHelper.check_available()
+        self.use_parallel = use_parallel
+        self.use_cache = use_cache
+
+        # Initialize parallel processor if enabled
+        self.parallel_processor = None
+        if use_parallel or use_cache:
+            try:
+                from src.generators.schema_optimizer import ParallelSchemaProcessor
+                cache_dir = self.root_path / '.schema_cache'
+                self.parallel_processor = ParallelSchemaProcessor(
+                    max_workers=max_workers,
+                    use_cache=use_cache,
+                    cache_dir=cache_dir
+                )
+            except ImportError as e:
+                logger.warning(f"⚠️  Could not load schema optimizer: {e}")
+                self.use_parallel = False
+                self.use_cache = False
 
         if not self.use_astgrep:
             logger.warning("⚠️  ast-grep not available - falling back to regex for TypeScript/JavaScript")
             logger.warning("   Install with: brew install ast-grep")
         else:
             logger.info("✅ ast-grep available - using AST-based parsing")
+
+        if self.use_parallel:
+            logger.info("✅ Parallel processing enabled")
+        if self.use_cache:
+            logger.info("✅ Caching enabled")
 
     def extract_python_schema(self, file_path: Path) -> FileDef:
         """Extract schema from Python files using AST"""
@@ -237,7 +328,11 @@ class EnhancedSchemaGenerator:
                     file_def.functions.append(self._extract_function(node))
 
         except Exception as e:
-            logger.error(f"Error parsing {file_path}: {e}")
+            log_exception(logger, e, context={
+                'operation': 'Python AST parsing',
+                'file_path': str(file_path),
+                'file_language': 'python'
+            })
 
         return file_def
 
@@ -282,7 +377,12 @@ class EnhancedSchemaGenerator:
             self._extract_ts_functions_astgrep(file_path, file_def, lang)
             self._extract_ts_arrow_functions_astgrep(file_path, file_def, lang)
         except Exception as e:
-            logger.error(f"  Error with ast-grep parsing {file_path}: {e}")
+            log_exception(logger, e, context={
+                'operation': 'TypeScript ast-grep parsing',
+                'file_path': str(file_path),
+                'file_language': lang,
+                'fallback': 'regex parsing'
+            })
             return self.extract_typescript_schema_regex(file_path)
 
         return file_def
@@ -403,7 +503,11 @@ class EnhancedSchemaGenerator:
             self._extract_ts_arrow_functions_regex(content, file_def)
 
         except Exception as e:
-            logger.error(f"Error parsing {file_path}: {e}")
+            log_exception(logger, e, context={
+                'operation': 'TypeScript regex parsing',
+                'file_path': str(file_path),
+                'file_language': 'typescript'
+            })
 
         return file_def
 
@@ -530,13 +634,21 @@ class EnhancedSchemaGenerator:
                         file_schema = self.extract_typescript_schema(item)
                         if file_schema.classes or file_schema.functions:
                             schema.files.append(file_schema)
-        except PermissionError:
-            logger.warning(f"Permission denied: {dir_path}")
+        except PermissionError as e:
+            log_exception(logger, e, context={
+                'operation': 'directory scan',
+                'dir_path': str(dir_path),
+                'error_type': 'PermissionError'
+            })
 
         return schema
 
     def scan_all_directories(self):
         """Recursively scan all directories"""
+        start_time = time.time()
+        total_files = 0
+        total_dirs = 0
+
         for root, dirs, files in os.walk(self.root_path):
             root_path = Path(root)
 
@@ -554,6 +666,147 @@ class EnhancedSchemaGenerator:
                 )
 
                 self.schemas[str(rel_path)] = schema
+                total_files += len(schema.files)
+                total_dirs += 1
+
+        # Log performance metrics
+        duration_ms = (time.time() - start_time) * 1000
+        log_performance_metric(
+            logger,
+            'scan_all_directories',
+            duration_ms,
+            metadata={
+                'total_directories': total_dirs,
+                'total_files': total_files,
+                'root_path': str(self.root_path),
+                'astgrep_enabled': self.use_astgrep
+            }
+        )
+
+    def scan_all_directories_optimized(self):
+        """Recursively scan all directories with parallel processing and caching"""
+        if not self.use_parallel and not self.use_cache:
+            # Fall back to normal scanning
+            return self.scan_all_directories()
+
+        start_time = time.time()
+        logger.info("🚀 Using optimized parallel scanning with caching...")
+
+        # Collect all files to process
+        all_files = []
+        for root, dirs, files in os.walk(self.root_path):
+            root_path = Path(root)
+
+            # Skip excluded directories
+            dirs[:] = [d for d in dirs if d not in self.skip_dirs and not d.startswith('.')]
+
+            for file_name in files:
+                file_path = root_path / file_name
+                if file_path.suffix == '.py' or file_path.suffix in ['.ts', '.tsx', '.js', '.jsx']:
+                    all_files.append(file_path)
+
+        logger.info(f"📁 Found {len(all_files)} code files to process")
+
+        # Process files with parallel processor if available
+        if self.parallel_processor and self.use_parallel:
+            # Use top-level worker function for parallel processing
+            from functools import partial
+            worker_func = partial(process_single_file, use_astgrep=self.use_astgrep)
+
+            # Process files in parallel
+            results = self.parallel_processor.process_files_parallel(
+                all_files,
+                worker_func,
+                skip_cached=self.use_cache
+            )
+
+            # Group results by directory
+            files_by_dir: Dict[Path, List[Dict[str, Any]]] = {}
+            for file_path, schema_dict in results:
+                if schema_dict:
+                    dir_path = file_path.parent
+                    if dir_path not in files_by_dir:
+                        files_by_dir[dir_path] = []
+                    files_by_dir[dir_path].append(schema_dict)
+
+            # Create directory schemas
+            for dir_path, file_schemas in files_by_dir.items():
+                schema = DirectorySchema(path=str(dir_path))
+                schema.files = []
+
+                # Convert dict schemas back to FileDef objects
+                for schema_dict in file_schemas:
+                    file_def = FileDef(
+                        path=schema_dict['path'],
+                        language=schema_dict['language'],
+                        imports=schema_dict['imports']
+                    )
+                    # Reconstruct classes and functions
+                    for cls_dict in schema_dict['classes']:
+                        methods = [FunctionDef(**m) for m in cls_dict.get('methods', [])]
+                        cls_dict['methods'] = methods
+                        file_def.classes.append(ClassDef(**cls_dict))
+
+                    for func_dict in schema_dict['functions']:
+                        file_def.functions.append(FunctionDef(**func_dict))
+
+                    schema.files.append(file_def)
+
+                # Check for git
+                git_dir = dir_path / '.git'
+                if git_dir.exists():
+                    schema.has_git = True
+                    try:
+                        result = subprocess.run(
+                            ['git', 'remote', 'get-url', 'origin'],
+                            cwd=dir_path,
+                            capture_output=True,
+                            text=True,
+                            timeout=5
+                        )
+                        if result.returncode == 0:
+                            schema.git_remote = result.stdout.strip()
+                    except Exception:
+                        pass
+
+                # Generate schema.org markup
+                rel_path = dir_path.relative_to(self.root_path)
+                dir_name = dir_path.name if dir_path != self.root_path else 'Code Repository'
+                schema.schema_org_markup = SchemaOrgGenerator.generate_software_source_code(
+                    schema, dir_name
+                )
+
+                self.schemas[str(rel_path)] = schema
+
+        else:
+            # Fallback to sequential processing with cache
+            for file_path in all_files:
+                if self.use_cache and self.parallel_processor:
+                    cached_schema = self.parallel_processor.cache.get_cached_schema(file_path)
+                    if cached_schema:
+                        continue
+
+                # Process file normally
+                dir_path = file_path.parent
+                rel_path = dir_path.relative_to(self.root_path)
+
+                if str(rel_path) not in self.schemas:
+                    self.schemas[str(rel_path)] = self.scan_directory(dir_path)
+
+        # Log performance metrics
+        duration_ms = (time.time() - start_time) * 1000
+        log_performance_metric(
+            logger,
+            'scan_all_directories_optimized',
+            duration_ms,
+            metadata={
+                'total_files': len(all_files),
+                'total_directories': len(self.schemas),
+                'parallel_enabled': self.use_parallel,
+                'cache_enabled': self.use_cache,
+                'root_path': str(self.root_path)
+            }
+        )
 
     def generate_readme(self, dir_rel_path: str, schema: DirectorySchema, include_schema_org: bool = True) -> str:
         """Generate README.md content for a directory with optional schema.org markup"""
@@ -777,10 +1030,29 @@ def main():
 
     args = _parse_arguments()
     root = Path(args.root)
-    generator = EnhancedSchemaGenerator(str(root), use_astgrep=not args.no_astgrep)
+
+    # Create generator with optimization options
+    generator = EnhancedSchemaGenerator(
+        str(root),
+        use_astgrep=not args.no_astgrep,
+        use_parallel=args.parallel,
+        use_cache=args.cache,
+        max_workers=args.workers
+    )
+
+    # Clear cache if requested
+    if args.clear_cache and generator.parallel_processor:
+        logger.info("🗑️  Clearing cache...")
+        generator.parallel_processor.clear_cache()
 
     _print_header(generator, root, args)
-    _run_scanner(generator)
+
+    # Use optimized scanner if parallel or cache enabled
+    if args.parallel or args.cache:
+        logger.info("📊 Using optimized parallel scanner...")
+        generator.scan_all_directories_optimized()
+    else:
+        _run_scanner(generator)
 
     schema_json_path = _get_output_path(root)
     generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
@@ -796,11 +1068,17 @@ def main():
 def _parse_arguments():
     """Parse command line arguments"""
     import argparse
-    parser = argparse.ArgumentParser(description='Enhanced Schema Generator')
+    import os
+    parser = argparse.ArgumentParser(description='Enhanced Schema Generator with optimization features')
     parser.add_argument('--root', default='/Users/alyshialedlie/code', help='Root directory to scan')
     parser.add_argument('--no-astgrep', action='store_true', help='Disable ast-grep (use regex fallback)')
     parser.add_argument('--no-schema-org', action='store_true', help='Disable schema.org markup in READMEs')
     parser.add_argument('--quality-report', action='store_true', help='Generate code quality report')
+    parser.add_argument('--parallel', action='store_true', help='Enable parallel file processing (faster)')
+    parser.add_argument('--cache', action='store_true', help='Enable caching (skip unchanged files)')
+    parser.add_argument('--clear-cache', action='store_true', help='Clear cache before running')
+    parser.add_argument('--workers', type=int, default=None,
+                       help=f'Number of parallel workers (default: CPU count - 1 = {max(1, os.cpu_count() - 1)})')
     return parser.parse_args()
 
 def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
@@ -811,6 +1089,14 @@ def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
     logger.info(f"Root path: {root}")
     logger.info(f"AST-grep: {'Enabled' if generator.use_astgrep else 'Disabled (regex fallback)'}")
     logger.info(f"Schema.org: {'Enabled' if not args.no_schema_org else 'Disabled'}")
+
+    if generator.use_parallel:
+        workers = generator.parallel_processor.max_workers if generator.parallel_processor else 'N/A'
+        logger.info(f"Parallel processing: Enabled ({workers} workers)")
+    else:
+        logger.info(f"Parallel processing: Disabled")
+
+    logger.info(f"Caching: {'Enabled' if generator.use_cache else 'Disabled'}")
     logger.info("")
 
 def _run_scanner(generator: 'EnhancedSchemaGenerator'):
