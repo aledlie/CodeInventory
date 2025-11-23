@@ -5,20 +5,20 @@
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "fixtures",
-  "description": "Directory containing 3 code files with 3 classes and 7 functions",
+  "description": "Directory containing 3 code files with 3 classes and 5 functions",
   "programmingLanguage": [
     {
       "@type": "ComputerLanguage",
-      "name": "Typescript"
+      "name": "Python"
     },
     {
       "@type": "ComputerLanguage",
-      "name": "Python"
+      "name": "Typescript"
     }
   ],
   "featureList": [
     "3 class definitions",
-    "7 function definitions"
+    "5 function definitions"
   ]
 }
 </script>
@@ -45,15 +45,11 @@ This directory contains 3 code file(s) with extracted schemas.
 ### `sample.ts` (typescript)
 
 **Classes:**
-- `ShoppingCart` [exported] - Line 14
-- `Product` [exported] - Line 8
+- `ShoppingCart` - Line 13
+- `Product` - Line 7
 
 **Functions:**
-- `async fetchProducts() -> Promise<Product[]>` - Line 26
-- `processData(data) -> any` - Line 39
-- `calculateDiscount()` - Line 31
-
-**Key Imports:** `./config`, `./types`
+- `calculateDiscount()` - Line 30
 
 ### `sample_test.py` (python)
 

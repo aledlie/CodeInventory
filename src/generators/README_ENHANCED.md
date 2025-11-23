@@ -28,26 +28,26 @@ This directory contains 3 code file(s) with extracted schemas.
 ### `dashboard.py` (python)
 
 **Classes:**
-- `DashboardGenerator` - Line 11
+- `DashboardGenerator` - Line 20
   - Generates interactive code analysis dashboard
   - Methods: __init__, _load_json, generate_html, _generate_head, _generate_css (+15 more)
 
 **Functions:**
-- `main()` - Line 486
+- `main()` - Line 495
 
-**Key Imports:** `argparse`, `datetime`, `json`, `pathlib`, `typing`
+**Key Imports:** `argparse`, `datetime`, `json`, `logging`, `pathlib` (+1 more)
 
 ### `rss.py` (python)
 
 **Classes:**
-- `RSSGenerator` - Line 14
+- `RSSGenerator` - Line 23
   - Generates RSS feeds from code changes
   - Methods: __init__, get_recent_commits, _is_git_repo, _run_git_log, _parse_commits (+20 more)
 
 **Functions:**
-- `main()` - Line 246
+- `main()` - Line 255
 
-**Key Imports:** `argparse`, `datetime`, `json`, `pathlib`, `subprocess` (+3 more)
+**Key Imports:** `argparse`, `datetime`, `json`, `logging`, `pathlib` (+4 more)
 
 ### `schema.py` (python)
 
