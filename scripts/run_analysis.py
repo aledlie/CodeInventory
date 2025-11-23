@@ -14,6 +14,9 @@ from typing import List, Dict, Optional
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+# Import cache and checkpoint managers
+from src.cache import AnalysisCache, CheckpointManager
+
 # Set up logger
 logger = logging.getLogger(__name__)
 
@@ -106,7 +109,11 @@ class AnalysisRunner:
         root_dir: Path,
         output_dir: Path = None,
         timeouts: Dict[str, int] = None,
-        repositories: Optional[List[str]] = None
+        repositories: Optional[List[str]] = None,
+        incremental: bool = False,
+        full: bool = False,
+        since: Optional[str] = None,
+        resume: bool = False
     ):
         self.root_dir = root_dir
         self.output_dir = output_dir or root_dir / 'analysis_reports'
@@ -126,6 +133,29 @@ class AnalysisRunner:
 
         # Store repository filter
         self.repositories = repositories
+
+        # Initialize cache and checkpoint managers
+        self.incremental = incremental
+        self.full = full
+        self.since = since
+        self.resume = resume
+
+        # Initialize cache for incremental analysis
+        self.cache = AnalysisCache(root_dir) if (incremental or since) and not full else None
+
+        # Initialize checkpoint manager for resume capability
+        self.checkpoint = CheckpointManager(root_dir) if resume or not full else None
+
+        # Track analysis steps for checkpointing
+        self.analysis_steps = [
+            'schema_generation',
+            'quality_analysis',
+            'coverage_analysis',
+            'dependency_analysis',
+            'dashboard_generation',
+            'rss_generation',
+            'schema_validation'
+        ]
 
     def _print_command_header(self, description: str, timeout: int):
         """Print command execution header"""
@@ -245,6 +275,28 @@ class AnalysisRunner:
         logger.info(f"Timestamp: {self.timestamp}")
         if self.repositories:
             logger.info(f"Repository Filter: {', '.join(self.repositories)}")
+
+        # Show incremental/resume status
+        if self.full:
+            logger.info("Mode: Full analysis (ignoring cache)")
+        elif self.since:
+            logger.info(f"Mode: Incremental (since {self.since})")
+        elif self.incremental:
+            logger.info("Mode: Incremental (since last run)")
+        else:
+            logger.info("Mode: Full analysis")
+
+        if self.resume:
+            logger.info("Resume: Enabled")
+            if self.checkpoint and self.checkpoint.has_checkpoint():
+                stats = self.checkpoint.get_checkpoint_stats()
+                logger.info(f"         Resuming from {stats['completed_steps']}/{stats['total_steps']} completed steps")
+
+        # Show cache stats if available
+        if self.cache:
+            stats = self.cache.get_cache_stats()
+            logger.info(f"Cache: Enabled ({stats['total_cached_files']} files cached)")
+
         logger.info(f"{'='*80}\n")
 
     def _run_schema_generation(self):
@@ -363,20 +415,56 @@ class AnalysisRunner:
         )
 
     def run_all_analysis(self):
-        """Run complete analysis pipeline"""
+        """Run complete analysis pipeline with checkpoint support"""
         self._print_analysis_header()
 
-        # Run all analyses
-        self._run_schema_generation()
-        self._run_quality_analysis()
-        self._run_coverage_analysis()
-        self._run_dependency_analysis()
-        self._generate_dashboard()
-        self._generate_rss_feed()
-        self._validate_schema()
+        # Initialize checkpoint manager if enabled
+        if self.checkpoint:
+            self.checkpoint.initialize_steps(self.analysis_steps)
+
+        # Define analysis methods mapping
+        analysis_methods = {
+            'schema_generation': self._run_schema_generation,
+            'quality_analysis': self._run_quality_analysis,
+            'coverage_analysis': self._run_coverage_analysis,
+            'dependency_analysis': self._run_dependency_analysis,
+            'dashboard_generation': self._generate_dashboard,
+            'rss_generation': self._generate_rss_feed,
+            'schema_validation': self._validate_schema
+        }
+
+        # Run analyses with checkpoint support
+        for step_name in self.analysis_steps:
+            # Skip if already completed (resume mode)
+            if self.checkpoint and self.checkpoint.is_step_completed(step_name):
+                logger.info(f"⏩ Skipping {step_name} (already completed)")
+                # Restore result from checkpoint
+                self.results[step_name] = self.checkpoint.get_step_result(step_name)
+                continue
+
+            # Mark step as in progress
+            if self.checkpoint:
+                self.checkpoint.mark_step_in_progress(step_name)
+
+            # Run the analysis
+            analysis_method = analysis_methods[step_name]
+            success = analysis_method()
+
+            # Mark step as completed and save checkpoint
+            if self.checkpoint:
+                self.checkpoint.mark_step_completed(step_name, self.results.get(step_name, {}))
 
         # Generate Summary Report
         self.generate_summary_report()
+
+        # Clear checkpoint on successful completion
+        if self.checkpoint:
+            self.checkpoint.clear_checkpoint()
+            logger.info("✅ Analysis pipeline completed successfully")
+
+        # Save cache if incremental analysis was used
+        if self.cache:
+            self.cache.save_cache()
 
     def _build_report_header(self) -> List[str]:
         """Build report header lines"""
@@ -516,12 +604,24 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Run All Code Analysis',
+        description='Run All Code Analysis with incremental and resume capabilities',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Analyze single repository
+  # Full analysis (default)
   %(prog)s --root /path/to/Inventory
+
+  # Incremental analysis (only changed files since last run)
+  %(prog)s --root /path/to/Inventory --incremental
+
+  # Analyze changes since specific commit
+  %(prog)s --root /path/to/Inventory --since HEAD~5
+
+  # Resume interrupted analysis
+  %(prog)s --root /path/to/Inventory --resume
+
+  # Clear cache and run fresh analysis
+  %(prog)s --root /path/to/Inventory --clear-cache
 
   # Analyze with custom timeout
   %(prog)s --root /path/to/code --timeout 1800
@@ -529,8 +629,12 @@ Examples:
   # Analyze specific repositories only
   %(prog)s --root /path/to/code --repositories Inventory,financial-hub-system
 
-  # Skip dependency verification (not recommended)
-  %(prog)s --root /path/to/code --skip-dependency-check
+Advanced:
+  # Full analysis with custom timeout and specific repositories
+  %(prog)s --root /path/to/code --full --timeout 3600 --repositories Inventory
+
+  # Clear checkpoint and start fresh
+  %(prog)s --root /path/to/code --clear-checkpoint --clear-cache
         """
     )
     parser.add_argument(
@@ -555,6 +659,37 @@ Examples:
         '--skip-dependency-check',
         action='store_true',
         help='Skip dependency verification (not recommended)'
+    )
+    parser.add_argument(
+        '--incremental',
+        action='store_true',
+        help='Run incremental analysis (only analyze changed files since last run)'
+    )
+    parser.add_argument(
+        '--full',
+        action='store_true',
+        help='Force full analysis (ignore cache, default behavior)'
+    )
+    parser.add_argument(
+        '--since',
+        type=str,
+        metavar='COMMIT',
+        help='Analyze changes since specific git commit (e.g., HEAD~5, abc123)'
+    )
+    parser.add_argument(
+        '--resume',
+        action='store_true',
+        help='Resume from last checkpoint if analysis was interrupted'
+    )
+    parser.add_argument(
+        '--clear-cache',
+        action='store_true',
+        help='Clear analysis cache before running'
+    )
+    parser.add_argument(
+        '--clear-checkpoint',
+        action='store_true',
+        help='Clear checkpoint before running (start fresh)'
     )
 
     args = parser.parse_args()
@@ -585,11 +720,38 @@ Examples:
         logger.error(f"The analysis tools must be run from within the Inventory project.")
         sys.exit(1)
 
+    # Handle cache clearing
+    if args.clear_cache:
+        cache_file = root_dir / '.analysis-cache.json'
+        if cache_file.exists():
+            cache_file.unlink()
+            logger.info("🗑️  Cache cleared")
+
+    # Handle checkpoint clearing
+    if args.clear_checkpoint:
+        checkpoint_file = root_dir / '.analysis-checkpoint.json'
+        if checkpoint_file.exists():
+            checkpoint_file.unlink()
+            logger.info("🗑️  Checkpoint cleared")
+
+    # Validate conflicting arguments
+    if args.full and args.incremental:
+        logger.error("❌ Error: --full and --incremental cannot be used together")
+        sys.exit(1)
+
+    if args.full and args.since:
+        logger.error("❌ Error: --full and --since cannot be used together")
+        sys.exit(1)
+
     runner = AnalysisRunner(
         root_dir,
         output_dir,
         timeouts=timeouts,
-        repositories=repositories
+        repositories=repositories,
+        incremental=args.incremental,
+        full=args.full,
+        since=args.since,
+        resume=args.resume
     )
     runner.run_all_analysis()
 
