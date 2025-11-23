@@ -1,0 +1,111 @@
+# Code Analysis Pipeline Configuration
+# This file contains settings for automated code analysis in CI/CD
+
+# Analysis Settings
+analysis:
+  # Enable parallel processing for faster analysis
+  parallel_processing: true
+
+  # Number of worker processes (null = auto-detect CPU count)
+  max_workers: null
+
+  # Enable intelligent caching
+  enable_cache: true
+
+  # Cache directory (relative to project root)
+  cache_dir: ".analyzer_cache"
+
+  # Directories to analyze
+  source_dirs:
+    - "src/"
+
+  # Directories to skip
+  skip_dirs:
+    - "node_modules"
+    - "__pycache__"
+    - ".git"
+    - "venv"
+    - "dist"
+    - "build"
+
+# Test Coverage Settings
+test_coverage:
+  # Test directory
+  test_dir: "tests/"
+
+  # Minimum coverage threshold (%)
+  min_coverage: 70
+
+  # Fail build if coverage below threshold
+  fail_on_low_coverage: false
+
+# Code Quality Settings
+code_quality:
+  # Maximum allowed issues by severity
+  max_errors: 0
+  max_warnings: 50
+  max_info: 100
+
+  # Fail build on quality issues
+  fail_on_errors: false
+  fail_on_warnings: false
+
+# Dependency Analysis Settings
+dependencies:
+  # Detect circular dependencies
+  detect_circular: true
+
+  # Fail build on circular dependencies
+  fail_on_circular: false
+
+  # Maximum allowed circular dependencies
+  max_circular: 0
+
+# Performance Benchmarking Settings
+benchmarks:
+  # Enable performance benchmarks
+  enabled: true
+
+  # Number of workers to test
+  worker_counts: [1, 2, 4, 8]
+
+  # Minimum speedup threshold for parallel processing
+  min_speedup_ratio: 1.2
+
+# Dashboard Settings
+dashboard:
+  # Generate HTML dashboard
+  generate: true
+
+  # Output filename
+  output_file: "dashboard.html"
+
+  # Deploy to GitHub Pages
+  deploy_to_pages: false
+
+# Notification Settings
+notifications:
+  # Enable notifications
+  enabled: false
+
+  # Notify on failure only
+  on_failure_only: true
+
+  # Notification channels
+  channels:
+    - type: email
+      recipients: []
+    - type: slack
+      webhook_url: ""
+
+# Artifact Retention
+artifacts:
+  # Days to retain artifacts
+  retention_days: 30
+
+  # Artifacts to retain
+  keep:
+    - coverage-report
+    - analysis-reports
+    - performance-report
+    - dashboard
