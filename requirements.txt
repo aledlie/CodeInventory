@@ -1,0 +1,39 @@
+# Core Dependencies
+# ==================
+
+# Sentry for error tracking and performance monitoring
+# Install with: pip install --user sentry-sdk
+# Or run scripts with Doppler: ./scripts/run_with_doppler.sh python3 your_script.py
+sentry-sdk>=2.0.0
+
+# Certifi version constraint (2025.x has breaking changes)
+certifi<2025
+
+# Optional Dependencies for Enhanced Features
+# ============================================
+
+# Progress bars for long-running operations (recommended)
+# Uncomment to enable progress indicators:
+# tqdm>=4.60.0
+
+# Git operations for incremental analysis (recommended)
+# Uncomment to enable git-aware analysis:
+# gitpython>=3.1.0
+
+# Installation Instructions
+# =========================
+
+# On macOS with externally-managed Python, install with:
+# pip3 install --user --break-system-packages -r requirements.txt
+
+# Or use a virtual environment (recommended):
+# python3 -m venv venv
+# source venv/bin/activate
+# pip install -r requirements.txt
+
+# Required System Tools
+# =====================
+# These must be installed separately via Homebrew or package manager:
+# - ast-grep (brew install ast-grep)
+# - git (brew install git)
+# - python3 (brew install python3)
