@@ -57,6 +57,40 @@ A centralized logging configuration is available in `src/utils/logging_config.py
 
 **Error Handling Pattern**: Subprocess calls to ast-grep include timeout (30s) and graceful fallback. If ast-grep fails, the system logs a warning and continues with partial results rather than failing completely.
 
+**Optimization Pattern (Phase 3)**: Analyzers use shared optimization utilities for parallel processing and intelligent caching:
+```python
+from src.analyzers.analyzer_optimizer import ParallelAnalyzer, AnalyzerCache
+
+# Worker function at module level (must be picklable)
+def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
+    """Worker function for parallel processing"""
+    # Analysis logic
+    return json_serializable_results
+
+# Use in analyzer
+optimizer = ParallelAnalyzer(
+    analyzer_name='my_analyzer',
+    max_workers=4,
+    use_cache=True,
+    cache_dir=Path.cwd() / '.analyzer_cache'
+)
+
+results = optimizer.process_items_parallel(
+    items=files,
+    processor_func=_analyze_file_worker,
+    key_func=lambda x: str(x),
+    hash_func=get_file_content_hash,
+    skip_cached=True,
+    description="Analyzing files"
+)
+```
+
+Key principles:
+- Worker functions must be module-level (picklable for multiprocessing)
+- Return only JSON-serializable data (no Path objects, file handles, etc.)
+- SHA-256 content hashing for cache invalidation
+- Graceful fallback to sequential processing if optimization unavailable
+
 ## Secret Management with Doppler
 
 This project uses **Doppler** for secret management. All sensitive credentials are stored in:
@@ -112,7 +146,7 @@ Generates: schemas, quality reports, coverage analysis, dependency analysis, das
 - `--workers N`: Specify number of parallel workers (default: CPU count - 1)
 - `--clear-cache`: Clear cache before running
 
-See `docs/OPTIMIZATION_GUIDE.md` for detailed performance benchmarks and best practices.
+See `docs/PERFORMANCE_TUNING.md` for detailed performance benchmarks and best practices.
 
 ### Run Individual Analysis Tools
 
@@ -134,16 +168,34 @@ python3 -m src.analyzers.code_quality /path/to/code \
 
 **Test Coverage**:
 ```bash
+# Basic
 python3 -m src.analyzers.test_coverage src/ \
   --test-dir tests/ \
   --json coverage_report.json
+
+# Optimized (recommended - 5-10x faster)
+python3 -m src.analyzers.test_coverage src/ \
+  --test-dir tests/ \
+  --json coverage_report.json \
+  --parallel \
+  --cache \
+  --workers 4
 ```
 
 **Dependency Analysis with Circular Detection**:
 ```bash
+# Basic
 python3 -m src.analyzers.dependencies /path/to/code \
   --detect-circular \
   --json dependency_report.json
+
+# Optimized (recommended - 5-10x faster)
+python3 -m src.analyzers.dependencies /path/to/code \
+  --detect-circular \
+  --json dependency_report.json \
+  --parallel \
+  --cache \
+  --workers 4
 ```
 
 **Interactive Dashboard**:
@@ -203,6 +255,60 @@ Configuration is in `sgconfig.yml`. To use custom rules:
 ```bash
 ast-grep scan --config sgconfig.yml
 ```
+
+### Performance Optimization
+
+**Performance Benchmarking**:
+```bash
+# Run complete benchmark suite
+python tests/performance/benchmark_suite.py
+
+# Generates performance_report.json with speedup metrics
+```
+
+**Performance Monitoring**:
+```bash
+# Generate performance monitoring report
+python -m src.utils.performance_monitor
+
+# With benchmark data
+python -m src.utils.performance_monitor \
+  --benchmark performance_report.json \
+  --output monitor_report.json
+```
+
+**Cache Management**:
+```bash
+# View cache statistics
+ls -lh .analyzer_cache/
+
+# Clear cache for fresh analysis
+python -m src.analyzers.test_coverage src/ --clear-cache
+python -m src.analyzers.dependencies src/ --clear-cache
+
+# Cache files
+.analyzer_cache/
+├── test_coverage_cache.json
+└── dependencies_cache.json
+```
+
+**Expected Performance Gains**:
+- **Parallel Processing**: 2-3x speedup with 4 workers
+- **Intelligent Caching**: 5-10x speedup on subsequent runs
+- **Combined**: 10-20x speedup on cached files
+
+**Optimization Architecture**:
+- `src/analyzers/analyzer_optimizer.py` - Shared optimization utilities
+  - `ParallelAnalyzer` - Multi-core file processing
+  - `AnalyzerCache` - SHA-256 content-based caching
+  - Worker function patterns for pickle compatibility
+- `tests/performance/benchmark_suite.py` - Automated benchmarking
+- `tests/integration/` - Integration tests for optimized pipeline
+- `src/utils/performance_monitor.py` - Performance monitoring and reporting
+
+**Documentation**:
+- `docs/PERFORMANCE_TUNING.md` - Comprehensive performance tuning guide
+- `docs/CI_CD_INTEGRATION.md` - CI/CD integration with optimizations
 
 ## Critical Implementation Details
 
