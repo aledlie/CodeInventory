@@ -2,6 +2,8 @@
 """
 Dependency Analyzer - Analyzes project dependencies using ast-grep
 Finds imports, detects circular dependencies, and creates dependency graphs
+
+Supports parallel processing and caching for improved performance.
 """
 
 import argparse
@@ -14,13 +16,30 @@ from typing import List, Dict, Any, Set, Tuple, Optional
 from dataclasses import dataclass, field
 from collections import defaultdict, deque
 
-# Configure logging
-logger = logging.getLogger(__name__)
-if not logger.handlers:
-    handler = logging.StreamHandler()
-    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+# Import centralized logging
+try:
+    from src.utils.logging_config import get_logger, log_exception, log_performance_metric
+    logger = get_logger(__name__)
+except ImportError:
+    # Fallback to basic logging
+    logger = logging.getLogger(__name__)
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+        logger.addHandler(handler)
+        logger.setLevel(logging.INFO)
+
+# Import optimization utilities
+try:
+    from src.analyzers.analyzer_optimizer import (
+        ParallelAnalyzer,
+        get_file_content_hash,
+        get_file_key
+    )
+    OPTIMIZER_AVAILABLE = True
+except ImportError:
+    logger.warning("⚠️  Optimizer module not available - parallel processing disabled")
+    OPTIMIZER_AVAILABLE = False
 
 @dataclass
 class DependencyInfo:
@@ -41,6 +60,116 @@ class DependencyReport:
     dependency_graph: Dict[str, Set[str]] = field(default_factory=lambda: defaultdict(set))
     circular_dependencies: List[List[str]] = field(default_factory=list)
     unused_dependencies: Set[str] = field(default_factory=set)
+
+
+# Top-level worker function for parallel processing (must be picklable)
+def _analyze_file_dependencies_worker(file_path: Path) -> List[Dict[str, Any]]:
+    """
+    Worker function to analyze dependencies in a single file.
+
+    This function must be at module level to be picklable for ProcessPoolExecutor.
+
+    Args:
+        file_path: Path to file to analyze
+
+    Returns:
+        List of dependency data dicts (JSON-serializable)
+    """
+    external_indicators = [
+        '@', 'react', 'vue', 'angular', 'express', 'next',
+        'lodash', 'axios', 'moment', 'dayjs'
+    ]
+
+    def is_external(package: str) -> bool:
+        """Determine if package is external"""
+        if package.startswith('.'):
+            return False
+        return any(package.startswith(ind) for ind in external_indicators)
+
+    def run_astgrep(pattern: str, language: str) -> List[Dict]:
+        """Run ast-grep pattern"""
+        try:
+            result = subprocess.run(
+                ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                return json.loads(result.stdout)
+            return []
+        except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception):
+            return []
+
+    def extract_package(match: Dict) -> Optional[str]:
+        """Extract package name from match"""
+        meta = match.get('metaVariables', {})
+        if 'single' in meta and 'PACKAGE' in meta['single']:
+            pkg_node = meta['single']['PACKAGE']
+            return pkg_node.get('text') if isinstance(pkg_node, dict) else str(pkg_node)
+        elif 'PACKAGE' in meta:
+            pkg_node = meta['PACKAGE']
+            return pkg_node.get('text') if isinstance(pkg_node, dict) else str(pkg_node)
+        return None
+
+    try:
+        dependencies_data = []
+
+        # Determine file type and patterns
+        if file_path.suffix == '.py':
+            patterns = [
+                ('import $PACKAGE', 'static'),
+                ('from $PACKAGE import $$$', 'static'),
+                ('import $PACKAGE as $ALIAS', 'static')
+            ]
+            language = 'python'
+
+        elif file_path.suffix in ['.ts', '.tsx']:
+            patterns = [
+                ('import $$ from "$PACKAGE"', 'static'),
+                ('import { $$ } from "$PACKAGE"', 'static'),
+                ('import * as $$ from "$PACKAGE"', 'static'),
+                ('import "$PACKAGE"', 'static'),
+                ('import("$PACKAGE")', 'dynamic'),
+                ('require("$PACKAGE")', 'require'),
+                ('import type { $$ } from "$PACKAGE"', 'type_only')
+            ]
+            language = 'typescript'
+
+        elif file_path.suffix in ['.js', '.jsx']:
+            patterns = [
+                ('import $$ from "$PACKAGE"', 'static'),
+                ('import { $$ } from "$PACKAGE"', 'static'),
+                ('import * as $$ from "$PACKAGE"', 'static'),
+                ('import "$PACKAGE"', 'static'),
+                ('import("$PACKAGE")', 'dynamic'),
+                ('require("$PACKAGE")', 'require')
+            ]
+            language = 'javascript'
+        else:
+            return []
+
+        # Process all patterns
+        for pattern, import_type in patterns:
+            matches = run_astgrep(pattern, language)
+            for match in matches:
+                package = extract_package(match)
+                if package:
+                    line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                    dependencies_data.append({
+                        'package': package,
+                        'import_type': import_type,
+                        'file_path': str(file_path),
+                        'line_number': line_num,
+                        'is_external': is_external(package)
+                    })
+
+        return dependencies_data
+
+    except Exception as e:
+        logger.error(f"Worker error processing {file_path}: {e}")
+        return []
+
 
 class DependencyAnalyzer:
     """Analyzes project dependencies"""
@@ -261,6 +390,127 @@ class DependencyAnalyzer:
                 file_path = Path(root) / file_name
                 if file_path.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']:
                     self.analyze_file(file_path)
+
+    def analyze_directory_optimized(self, directory: Path = None, skip_dirs: set = None,
+                                   use_parallel: bool = True, use_cache: bool = True,
+                                   max_workers: Optional[int] = None):
+        """
+        Analyze all files in a directory with parallel processing and caching
+
+        Args:
+            directory: Directory to analyze (default: root_dir)
+            skip_dirs: Set of directory names to skip
+            use_parallel: Enable parallel file processing
+            use_cache: Enable caching of analysis results
+            max_workers: Number of worker processes (default: CPU count - 1)
+        """
+        import time
+        start_time = time.time()
+
+        if directory is None:
+            directory = self.root_dir
+
+        if skip_dirs is None:
+            skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+                        '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
+
+        # Check if optimizer is available
+        if not OPTIMIZER_AVAILABLE:
+            logger.warning("⚠️  Optimizer not available, falling back to sequential processing")
+            return self.analyze_directory(directory, skip_dirs)
+
+        if not use_parallel and not use_cache:
+            logger.info("ℹ️  Optimizations disabled, using sequential processing")
+            return self.analyze_directory(directory, skip_dirs)
+
+        # Initialize parallel analyzer
+        optimizer = ParallelAnalyzer(
+            analyzer_name='dependencies',
+            max_workers=max_workers,
+            use_cache=use_cache
+        )
+
+        logger.info(f"\n🚀 Parallel dependency analysis enabled")
+        logger.info(f"   Workers: {optimizer.max_workers}")
+        logger.info(f"   Cache enabled: {use_cache}\n")
+
+        # Collect all source files
+        source_files = []
+        for root, dirs, files in os.walk(directory):
+            # Skip excluded directories
+            dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
+
+            for file_name in files:
+                file_path = Path(root) / file_name
+                if file_path.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']:
+                    source_files.append(file_path)
+
+        logger.info(f"📂 Found {len(source_files)} source files to analyze\n")
+
+        # Process files in parallel
+        if use_parallel and source_files:
+            results = optimizer.process_items_parallel(
+                items=source_files,
+                processor_func=_analyze_file_dependencies_worker,
+                key_func=get_file_key,
+                hash_func=get_file_content_hash if use_cache else None,
+                skip_cached=use_cache,
+                description="Analyzing dependencies"
+            )
+
+            # Convert results to DependencyInfo objects and update report
+            for file_path, dependencies_data in results:
+                if dependencies_data:  # Only process if we got results
+                    for dep_data in dependencies_data:
+                        dep_info = DependencyInfo(
+                            package=dep_data['package'],
+                            import_type=dep_data['import_type'],
+                            file_path=dep_data['file_path'],
+                            line_number=dep_data['line_number'],
+                            is_external=dep_data['is_external']
+                        )
+
+                        # Add to report
+                        self.report.dependencies_by_file[dep_info.file_path].append(dep_info)
+                        self.report.total_dependencies += 1
+
+                        if dep_info.is_external:
+                            self.report.external_dependencies += 1
+                        else:
+                            self.report.internal_dependencies += 1
+
+                        # Build dependency graph (for internal deps)
+                        if not dep_info.is_external:
+                            src_file = str(file_path)
+                            self.report.dependency_graph[src_file].add(dep_info.package)
+
+            logger.info(f"\n✅ Found {self.report.total_dependencies} dependencies\n")
+        else:
+            # Fallback to sequential if no files or parallel disabled
+            self.analyze_directory(directory, skip_dirs)
+
+        # Log performance metrics
+        duration_ms = (time.time() - start_time) * 1000
+        try:
+            log_performance_metric(
+                logger,
+                'dependencies_optimized',
+                duration_ms,
+                metadata={
+                    'total_files': len(source_files),
+                    'total_dependencies': self.report.total_dependencies,
+                    'external_dependencies': self.report.external_dependencies,
+                    'internal_dependencies': self.report.internal_dependencies,
+                    'parallel_enabled': use_parallel,
+                    'cache_enabled': use_cache,
+                    'workers': optimizer.max_workers if use_parallel else 1
+                }
+            )
+        except NameError:
+            # log_performance_metric not available, skip
+            pass
+
+        logger.info(f"⏱️  Analysis completed in {duration_ms:.0f}ms")
 
     def find_circular_dependencies(self):
         """Detect circular dependencies using DFS"""
@@ -504,18 +754,41 @@ def main():
 
 def _parse_args():
     """Parse command line arguments"""
-    parser = argparse.ArgumentParser(description='Dependency Analyzer')
+    parser = argparse.ArgumentParser(
+        description='Dependency Analyzer with parallel processing and caching'
+    )
     parser.add_argument('directory', help='Directory to analyze')
     parser.add_argument('--json', help='Output JSON report to file')
     parser.add_argument('--text', help='Output text report to file')
     parser.add_argument('--detect-circular', action='store_true',
                        help='Detect circular dependencies')
+
+    # Optimization options
+    parser.add_argument('--parallel', action='store_true',
+                       help='Enable parallel file processing (default: enabled)')
+    parser.add_argument('--no-parallel', action='store_true',
+                       help='Disable parallel file processing')
+    parser.add_argument('--cache', action='store_true',
+                       help='Enable caching of analysis results (default: enabled)')
+    parser.add_argument('--no-cache', action='store_true',
+                       help='Disable caching')
+    parser.add_argument('--workers', type=int,
+                       help='Number of worker processes (default: CPU count - 1)')
+    parser.add_argument('--clear-cache', action='store_true',
+                       help='Clear cache before running')
+
     return parser.parse_args()
 
 def _run_dependency_analysis(args):
     """Run the dependency analysis"""
     directory = Path(args.directory)
     analyzer = _init_dependency_analyzer(directory)
+
+    # Handle cache clearing
+    if args.clear_cache and OPTIMIZER_AVAILABLE:
+        from src.analyzers.analyzer_optimizer import AnalyzerCache
+        cache = AnalyzerCache('dependencies', Path.cwd() / '.analyzer_cache')
+        cache.clear_cache()
 
     _print_analysis_header(directory)
     _perform_analysis(analyzer, args)
@@ -534,10 +807,23 @@ def _print_analysis_header(directory: Path):
 
 def _perform_analysis(analyzer: 'DependencyAnalyzer', args):
     """Perform the dependency analysis"""
-    analyzer.analyze_directory()
+    # Determine optimization settings (enabled by default)
+    use_parallel = not args.no_parallel if hasattr(args, 'no_parallel') else True
+    use_cache = not args.no_cache if hasattr(args, 'no_cache') else True
+    max_workers = args.workers if hasattr(args, 'workers') else None
+
+    # Use optimized analysis if available and enabled
+    if OPTIMIZER_AVAILABLE and (use_parallel or use_cache):
+        analyzer.analyze_directory_optimized(
+            use_parallel=use_parallel,
+            use_cache=use_cache,
+            max_workers=max_workers
+        )
+    else:
+        analyzer.analyze_directory()
 
     if args.detect_circular:
-        logger.info("Detecting circular dependencies...\n")
+        logger.info("\nDetecting circular dependencies...\n")
         analyzer.find_circular_dependencies()
 
 def _output_reports(analyzer: 'DependencyAnalyzer', args):
