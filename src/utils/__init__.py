@@ -1,4 +1,6 @@
 """Utility modules"""
-from .git_operations import GitOperations
+# Git operations functions available via module
+from . import git_operations
+from . import logging_config
 
-__all__ = ['GitOperations']
+__all__ = ['git_operations', 'logging_config']
