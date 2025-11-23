@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Test Coverage Analyzer - Identifies untested code using ast-grep
+
+Supports parallel processing and caching for improved performance.
 """
 
 import argparse
@@ -12,13 +14,30 @@ from typing import List, Dict, Any, Set, Tuple, Optional
 from dataclasses import dataclass, field
 from collections import defaultdict
 
-# Configure logging
-logger = logging.getLogger(__name__)
-if not logger.handlers:
-    handler = logging.StreamHandler()
-    handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+# Import centralized logging
+try:
+    from src.utils.logging_config import get_logger, log_exception, log_performance_metric
+    logger = get_logger(__name__)
+except ImportError:
+    # Fallback to basic logging
+    logger = logging.getLogger(__name__)
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+        logger.addHandler(handler)
+        logger.setLevel(logging.INFO)
+
+# Import optimization utilities
+try:
+    from src.analyzers.analyzer_optimizer import (
+        ParallelAnalyzer,
+        get_file_content_hash,
+        get_file_key
+    )
+    OPTIMIZER_AVAILABLE = True
+except ImportError:
+    logger.warning("⚠️  Optimizer module not available - parallel processing disabled")
+    OPTIMIZER_AVAILABLE = False
 
 @dataclass
 class FunctionInfo:
@@ -39,6 +58,99 @@ class CoverageReport:
     coverage_percentage: float = 0.0
     functions: List[FunctionInfo] = field(default_factory=list)
     untested_by_file: Dict[str, List[FunctionInfo]] = field(default_factory=lambda: defaultdict(list))
+
+
+# Top-level worker function for parallel processing (must be picklable)
+def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
+    """
+    Worker function to analyze a single file for functions.
+
+    This function must be at module level to be picklable for ProcessPoolExecutor.
+
+    Args:
+        file_path: Path to file to analyze
+
+    Returns:
+        List of function data dicts (JSON-serializable)
+    """
+    try:
+        # Determine language and patterns
+        language = None
+        patterns = []
+
+        if file_path.suffix == '.py':
+            language = 'python'
+            patterns = [
+                'def $NAME($$$): $$$',
+                'async def $NAME($$$): $$$'
+            ]
+        elif file_path.suffix in ['.ts', '.tsx']:
+            language = 'typescript'
+            patterns = [
+                'function $NAME($$$) { $$$ }',
+                'const $NAME = ($$$) => $$$',
+                'export function $NAME($$$) { $$$ }',
+                'async function $NAME($$$) { $$$ }'
+            ]
+        elif file_path.suffix in ['.js', '.jsx']:
+            language = 'javascript'
+            patterns = [
+                'function $NAME($$$) { $$$ }',
+                'const $NAME = ($$$) => $$$',
+                'export function $NAME($$$) { $$$ }'
+            ]
+
+        if not language:
+            return []
+
+        # Find functions with each pattern
+        functions_data = []
+        for pattern in patterns:
+            try:
+                result = subprocess.run(
+                    ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+
+                if result.returncode == 0 and result.stdout.strip():
+                    matches = json.loads(result.stdout)
+                    for match in matches:
+                        # Extract function name
+                        meta = match.get('metaVariables', {})
+                        func_name = None
+
+                        if 'single' in meta and 'NAME' in meta['single']:
+                            func_node = meta['single']['NAME']
+                            func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+                        elif 'NAME' in meta:
+                            func_node = meta['NAME']
+                            func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+
+                        # Skip private functions
+                        if func_name and not func_name.startswith('_'):
+                            line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                            is_async = 'async' in pattern or 'async' in match.get('text', '')
+
+                            functions_data.append({
+                                'name': func_name,
+                                'file_path': str(file_path),
+                                'line_number': line_num,
+                                'is_async': is_async
+                            })
+
+            except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
+                # Log error but continue processing
+                logger.debug(f"Error processing {file_path} with pattern {pattern}: {e}")
+                continue
+
+        return functions_data
+
+    except Exception as e:
+        logger.error(f"Worker error processing {file_path}: {e}")
+        return []
+
 
 class TestCoverageAnalyzer:
     """Analyzes test coverage by matching functions with test cases"""
@@ -348,6 +460,103 @@ class TestCoverageAnalyzer:
                 self.report.tested_functions / self.report.total_functions * 100
             )
 
+    def analyze_coverage_optimized(self, use_parallel: bool = True, use_cache: bool = True,
+                                   max_workers: Optional[int] = None):
+        """
+        Analyze test coverage with parallel processing and caching
+
+        Args:
+            use_parallel: Enable parallel file processing
+            use_cache: Enable caching of analysis results
+            max_workers: Number of worker processes (default: CPU count - 1)
+        """
+        import time
+        start_time = time.time()
+
+        self._print_analysis_header()
+
+        # Check if optimizer is available
+        if not OPTIMIZER_AVAILABLE:
+            logger.warning("⚠️  Optimizer not available, falling back to sequential processing")
+            return self.analyze_coverage()
+
+        if not use_parallel and not use_cache:
+            logger.info("ℹ️  Optimizations disabled, using sequential processing")
+            return self.analyze_coverage()
+
+        # Initialize parallel analyzer
+        optimizer = ParallelAnalyzer(
+            analyzer_name='test_coverage',
+            max_workers=max_workers,
+            use_cache=use_cache
+        )
+
+        logger.info(f"🚀 Parallel test coverage analysis enabled")
+        logger.info(f"   Workers: {optimizer.max_workers}")
+        logger.info(f"   Cache enabled: {use_cache}\n")
+
+        # Find test functions (same as sequential)
+        test_functions = self._find_all_test_functions()
+
+        # Collect all source files
+        source_files = list(self._iterate_source_files())
+        logger.info(f"📂 Found {len(source_files)} source files to analyze\n")
+
+        # Process files in parallel
+        if use_parallel and source_files:
+            results = optimizer.process_items_parallel(
+                items=source_files,
+                processor_func=_analyze_file_worker,
+                key_func=get_file_key,
+                hash_func=get_file_content_hash if use_cache else None,
+                skip_cached=use_cache,
+                description="Analyzing source files"
+            )
+
+            # Convert results to FunctionInfo objects
+            # Results are tuples of (file_path: Path, functions_data: List[Dict])
+            source_functions = []
+            for file_path, functions_data in results:
+                if functions_data:  # Only process if we got results
+                    for func_data in functions_data:
+                        func_info = FunctionInfo(
+                            name=func_data['name'],
+                            file_path=func_data['file_path'],
+                            line_number=func_data['line_number'],
+                            is_async=func_data['is_async']
+                        )
+                        source_functions.append(func_info)
+
+            logger.info(f"\n✅ Found {len(source_functions)} functions in source code\n")
+        else:
+            # Fallback to sequential if no files or parallel disabled
+            source_functions = self._find_all_source_functions()
+
+        # Match with tests and calculate coverage (same as sequential)
+        self._match_functions_with_tests(source_functions, test_functions)
+        self._calculate_coverage_percentage()
+
+        # Log performance metrics
+        duration_ms = (time.time() - start_time) * 1000
+        try:
+            log_performance_metric(
+                logger,
+                'test_coverage_optimized',
+                duration_ms,
+                metadata={
+                    'total_files': len(source_files),
+                    'total_functions': self.report.total_functions,
+                    'parallel_enabled': use_parallel,
+                    'cache_enabled': use_cache,
+                    'workers': optimizer.max_workers if use_parallel else 1
+                }
+            )
+        except NameError:
+            # log_performance_metric not available, skip
+            pass
+
+        logger.info(f"⏱️  Analysis completed in {duration_ms:.0f}ms")
+
     def generate_report_text(self) -> str:
         """Generate human-readable coverage report"""
         lines = []
@@ -546,11 +755,28 @@ def main():
 
 def _parse_coverage_args():
     """Parse command line arguments"""
-    parser = argparse.ArgumentParser(description='Test Coverage Analyzer')
+    parser = argparse.ArgumentParser(
+        description='Test Coverage Analyzer with parallel processing and caching'
+    )
     parser.add_argument('src_dir', help='Source code directory')
     parser.add_argument('--test-dir', help='Test directory (default: src_dir/tests)')
     parser.add_argument('--json', help='Output JSON report to file')
     parser.add_argument('--text', help='Output text report to file')
+
+    # Optimization options
+    parser.add_argument('--parallel', action='store_true',
+                       help='Enable parallel file processing (default: enabled)')
+    parser.add_argument('--no-parallel', action='store_true',
+                       help='Disable parallel file processing')
+    parser.add_argument('--cache', action='store_true',
+                       help='Enable caching of analysis results (default: enabled)')
+    parser.add_argument('--no-cache', action='store_true',
+                       help='Disable caching')
+    parser.add_argument('--workers', type=int,
+                       help='Number of worker processes (default: CPU count - 1)')
+    parser.add_argument('--clear-cache', action='store_true',
+                       help='Clear cache before running')
+
     return parser.parse_args()
 
 def _run_coverage_analysis(args):
@@ -558,8 +784,30 @@ def _run_coverage_analysis(args):
     src_dir, test_dir = _setup_directories(args)
     analyzer = _create_coverage_analyzer(src_dir, test_dir)
 
-    _print_coverage_header()
-    _perform_coverage_analysis(analyzer)
+    # Handle cache clearing
+    if args.clear_cache and OPTIMIZER_AVAILABLE:
+        from src.analyzers.analyzer_optimizer import AnalyzerCache
+        from pathlib import Path
+        cache = AnalyzerCache('test_coverage', Path.cwd() / '.analyzer_cache')
+        cache.clear_cache()
+
+    # Determine optimization settings (enabled by default)
+    use_parallel = not args.no_parallel if hasattr(args, 'no_parallel') else True
+    use_cache = not args.no_cache if hasattr(args, 'no_cache') else True
+    max_workers = args.workers if hasattr(args, 'workers') else None
+
+    # Use optimized analysis if available and enabled
+    if OPTIMIZER_AVAILABLE and (use_parallel or use_cache):
+        _print_coverage_header()
+        analyzer.analyze_coverage_optimized(
+            use_parallel=use_parallel,
+            use_cache=use_cache,
+            max_workers=max_workers
+        )
+    else:
+        _print_coverage_header()
+        _perform_coverage_analysis(analyzer)
+
     _save_coverage_reports(analyzer, args)
 
 def _setup_directories(args) -> Tuple[Path, Optional[Path]]:
