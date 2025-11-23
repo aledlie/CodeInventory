@@ -21,11 +21,13 @@ class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
 
     def __init__(self, schemas_path: Path, quality_path: Path = None,
-                 coverage_path: Path = None, dependency_path: Path = None):
+                 coverage_path: Path = None, dependency_path: Path = None,
+                 cache_dir: Path = None):
         self.schemas_path = schemas_path
         self.quality_path = quality_path
         self.coverage_path = coverage_path
         self.dependency_path = dependency_path
+        self.cache_dir = cache_dir or Path.cwd() / '.analyzer_cache'
 
         # Load data
         self.schemas_data = self._load_json(schemas_path)
@@ -33,12 +35,41 @@ class DashboardGenerator:
         self.coverage_data = self._load_json(coverage_path) if coverage_path else None
         self.dependency_data = self._load_json(dependency_path) if dependency_path else None
 
+        # Load performance data
+        self.performance_data = self._load_performance_data()
+
     def _load_json(self, path: Path) -> Dict[str, Any]:
         """Load JSON file"""
         if path and path.exists():
             with open(path, 'r') as f:
                 return json.load(f)
         return {}
+
+    def _load_performance_data(self) -> Dict[str, Any]:
+        """Load performance data from cache files"""
+        performance = {}
+
+        # Load test_coverage cache
+        tc_cache_path = self.cache_dir / 'test_coverage_cache.json'
+        if tc_cache_path.exists():
+            tc_cache = self._load_json(tc_cache_path)
+            performance['test_coverage'] = {
+                'cached_files': len(tc_cache.get('entries', {})),
+                'last_update': tc_cache.get('last_update', 0),
+                'analyzer_name': tc_cache.get('analyzer_name', 'test_coverage')
+            }
+
+        # Load dependencies cache
+        dep_cache_path = self.cache_dir / 'dependencies_cache.json'
+        if dep_cache_path.exists():
+            dep_cache = self._load_json(dep_cache_path)
+            performance['dependencies'] = {
+                'cached_files': len(dep_cache.get('entries', {})),
+                'last_update': dep_cache.get('last_update', 0),
+                'analyzer_name': dep_cache.get('analyzer_name', 'dependencies')
+            }
+
+        return performance
 
     def generate_html(self) -> str:
         """Generate complete HTML dashboard"""
@@ -252,6 +283,65 @@ class DashboardGenerator:
         tr:hover {
             background: #f8f9fa;
         }
+
+        .performance-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .performance-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .performance-card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .performance-card-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .performance-card-body {
+            padding: 1.5rem;
+        }
+
+        .performance-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .performance-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .performance-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .performance-value-small {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .performance-progress {
+            margin-top: 1rem;
+        }
     """
 
     def _generate_body(self) -> str:
@@ -264,6 +354,7 @@ class DashboardGenerator:
 
     <div class="container">
         {self._generate_metrics_section()}
+        {self._generate_performance_section()}
         {self._generate_schemas_section()}
         {self._generate_quality_section()}
         {self._generate_coverage_section()}
@@ -479,6 +570,97 @@ class DashboardGenerator:
                     <td>{summary.get('circular_dependencies_count', 0)}</td>
                 </tr>
             </table>
+        </div>
+        """
+
+    def _generate_performance_section(self) -> str:
+        """Generate performance metrics section"""
+        if not self.performance_data:
+            return ""
+
+        tc_data = self.performance_data.get('test_coverage', {})
+        dep_data = self.performance_data.get('dependencies', {})
+
+        # Calculate cache statistics
+        tc_cached = tc_data.get('cached_files', 0)
+        dep_cached = dep_data.get('cached_files', 0)
+        total_cached = tc_cached + dep_cached
+
+        # Format timestamps
+        import time
+        tc_last_update = time.strftime('%Y-%m-%d %H:%M:%S',
+                                       time.localtime(tc_data.get('last_update', 0))) if tc_data.get('last_update') else 'Never'
+        dep_last_update = time.strftime('%Y-%m-%d %H:%M:%S',
+                                        time.localtime(dep_data.get('last_update', 0))) if dep_data.get('last_update') else 'Never'
+
+        return f"""
+        <div class="section">
+            <h2>⚡ Performance Metrics</h2>
+
+            <div style="margin: 1rem 0;">
+                <p style="color: #666; margin-bottom: 1rem;">
+                    Optimization features include parallel processing and intelligent caching for faster analysis.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <div class="performance-card">
+                    <div class="performance-card-header">
+                        <h3>🧪 Test Coverage Analyzer</h3>
+                        <span class="badge badge-success">Optimized</span>
+                    </div>
+                    <div class="performance-card-body">
+                        <div class="performance-stat">
+                            <span class="performance-label">Cached Files:</span>
+                            <span class="performance-value">{tc_cached}</span>
+                        </div>
+                        <div class="performance-stat">
+                            <span class="performance-label">Last Update:</span>
+                            <span class="performance-value-small">{tc_last_update}</span>
+                        </div>
+                        <div class="performance-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {min(100, tc_cached * 5)}%;">
+                                    Cache Active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-card">
+                    <div class="performance-card-header">
+                        <h3>📦 Dependency Analyzer</h3>
+                        <span class="badge badge-success">Optimized</span>
+                    </div>
+                    <div class="performance-card-body">
+                        <div class="performance-stat">
+                            <span class="performance-label">Cached Files:</span>
+                            <span class="performance-value">{dep_cached}</span>
+                        </div>
+                        <div class="performance-stat">
+                            <span class="performance-label">Last Update:</span>
+                            <span class="performance-value-small">{dep_last_update}</span>
+                        </div>
+                        <div class="performance-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {min(100, dep_cached * 5)}%;">
+                                    Cache Active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #1d1d1f;">Optimization Features</h4>
+                <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                    <li><strong>Parallel Processing:</strong> Multi-core file analysis for faster results</li>
+                    <li><strong>Intelligent Caching:</strong> SHA-256 content-based cache invalidation</li>
+                    <li><strong>Total Cached Files:</strong> {total_cached} files cached for instant retrieval</li>
+                </ul>
+            </div>
         </div>
         """
 
