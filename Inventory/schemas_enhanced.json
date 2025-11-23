@@ -1,61 +1,6 @@
 {
   "@context": "https://schema.org",
   "directories": {
-    ".": {
-      "path": ".",
-      "has_git": true,
-      "git_remote": "git@github.com:aledlie/CodeInventory.git",
-      "subdirectories": [
-        "documentation",
-        "tests",
-        "docs",
-        "ast-grep-rules",
-        "scripts",
-        "outputs",
-        "src"
-      ],
-      "files": [],
-      "schema_org": {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": "Code Repository",
-        "description": "Directory containing 0 code files with 0 classes and 0 functions",
-        "programmingLanguage": [],
-        "codeRepository": "git@github.com:aledlie/CodeInventory.git"
-      }
-    },
-    "documentation": {
-      "path": "documentation",
-      "has_git": false,
-      "subdirectories": [
-        "refactoring"
-      ],
-      "files": [],
-      "schema_org": {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": "documentation",
-        "description": "Directory containing 0 code files with 0 classes and 0 functions",
-        "programmingLanguage": []
-      }
-    },
-    "tests": {
-      "path": "tests",
-      "has_git": false,
-      "subdirectories": [
-        "unit",
-        "integration",
-        "fixtures"
-      ],
-      "files": [],
-      "schema_org": {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": "tests",
-        "description": "Directory containing 0 code files with 0 classes and 0 functions",
-        "programmingLanguage": []
-      }
-    },
     "tests/unit": {
       "path": "tests/unit",
       "has_git": false,
@@ -1174,49 +1119,28 @@
               "name": "ShoppingCart",
               "bases": [],
               "methods": [],
-              "line_number": 14,
-              "is_exported": true
+              "line_number": 13,
+              "is_exported": false
             },
             {
               "name": "Product",
               "bases": [],
               "methods": [],
-              "line_number": 8,
-              "is_exported": true
+              "line_number": 7,
+              "is_exported": false
             }
           ],
           "functions": [
             {
-              "name": "fetchProducts",
-              "args": [],
-              "return_type": "Promise<Product[]>",
-              "line_number": 26,
-              "is_async": true,
-              "is_exported": false
-            },
-            {
-              "name": "processData",
-              "args": [
-                "data"
-              ],
-              "return_type": "any",
-              "line_number": 39,
-              "is_async": false,
-              "is_exported": false
-            },
-            {
               "name": "calculateDiscount",
               "args": [],
               "return_type": null,
-              "line_number": 31,
+              "line_number": 30,
               "is_async": false,
               "is_exported": false
             }
           ],
-          "imports": [
-            "./types",
-            "./config"
-          ]
+          "imports": []
         },
         {
           "@type": "SoftwareSourceCode",
@@ -1281,20 +1205,64 @@
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         "name": "fixtures",
-        "description": "Directory containing 3 code files with 3 classes and 7 functions",
+        "description": "Directory containing 3 code files with 3 classes and 5 functions",
         "programmingLanguage": [
           {
             "@type": "ComputerLanguage",
-            "name": "Typescript"
+            "name": "Python"
           },
+          {
+            "@type": "ComputerLanguage",
+            "name": "Typescript"
+          }
+        ],
+        "featureList": [
+          "3 class definitions",
+          "5 function definitions"
+        ]
+      }
+    },
+    "examples": {
+      "path": "examples",
+      "has_git": false,
+      "subdirectories": [],
+      "files": [
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "examples/sentry_example.py",
+          "language": "python",
+          "classes": [],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "return_type": null,
+              "line_number": 33,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "sys",
+            "time",
+            "pathlib",
+            "src.utils.logging_config"
+          ]
+        }
+      ],
+      "schema_org": {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "examples",
+        "description": "Directory containing 1 code files with 0 classes and 1 functions",
+        "programmingLanguage": [
           {
             "@type": "ComputerLanguage",
             "name": "Python"
           }
         ],
         "featureList": [
-          "3 class definitions",
-          "7 function definitions"
+          "1 function definitions"
         ]
       }
     },
@@ -1317,7 +1285,9 @@
                   "args": [
                     "self",
                     "root_dir",
-                    "output_dir"
+                    "output_dir",
+                    "timeouts",
+                    "repositories"
                   ],
                   "isAsync": false
                 },
@@ -1325,7 +1295,8 @@
                   "name": "_print_command_header",
                   "args": [
                     "self",
-                    "description"
+                    "description",
+                    "timeout"
                   ],
                   "isAsync": false
                 },
@@ -1354,7 +1325,8 @@
                     "self",
                     "name",
                     "command",
-                    "description"
+                    "description",
+                    "timeout"
                   ],
                   "isAsync": false
                 },
@@ -1436,6 +1408,13 @@
                   "isAsync": false
                 },
                 {
+                  "name": "_build_error_details",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
                   "name": "_build_files_section",
                   "args": [
                     "self"
@@ -1466,25 +1445,35 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 15,
+              "line_number": 101,
               "is_exported": false
             }
           ],
           "functions": [
             {
+              "name": "verify_dependencies",
+              "args": [],
+              "return_type": "bool",
+              "line_number": 32,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 298,
+              "line_number": 509,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
             "subprocess",
+            "logging",
             "pathlib",
             "datetime",
             "sys",
+            "shutil",
             "typing",
             "argparse"
           ]
@@ -1627,7 +1616,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 17,
+              "line_number": 21,
               "is_exported": false
             }
           ],
@@ -1636,7 +1625,7 @@
               "name": "_parse_arguments",
               "args": [],
               "return_type": null,
-              "line_number": 216,
+              "line_number": 220,
               "is_async": false,
               "is_exported": false
             },
@@ -1647,7 +1636,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 227,
+              "line_number": 231,
               "is_async": false,
               "is_exported": false
             },
@@ -1658,7 +1647,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 236,
+              "line_number": 240,
               "is_async": false,
               "is_exported": false
             },
@@ -1666,7 +1655,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 255,
+              "line_number": 259,
               "is_async": false,
               "is_exported": false
             }
@@ -1674,6 +1663,7 @@
           "imports": [
             "unittest",
             "sys",
+            "logging",
             "pathlib",
             "subprocess",
             "json",
@@ -1827,7 +1817,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 15,
+              "line_number": 24,
               "is_exported": false
             }
           ],
@@ -1836,13 +1826,14 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 222,
+              "line_number": 231,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
             "json",
+            "logging",
             "pathlib",
             "typing",
             "subprocess",
@@ -1855,7 +1846,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         "name": "scripts",
-        "description": "Directory containing 3 code files with 3 classes and 6 functions",
+        "description": "Directory containing 3 code files with 3 classes and 7 functions",
         "programmingLanguage": [
           {
             "@type": "ComputerLanguage",
@@ -1864,26 +1855,8 @@
         ],
         "featureList": [
           "3 class definitions",
-          "6 function definitions"
+          "7 function definitions"
         ]
-      }
-    },
-    "src": {
-      "path": "src",
-      "has_git": false,
-      "subdirectories": [
-        "analyzers",
-        "utils",
-        "validators",
-        "generators"
-      ],
-      "files": [],
-      "schema_org": {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": "src",
-        "description": "Directory containing 0 code files with 0 classes and 0 functions",
-        "programmingLanguage": []
       }
     },
     "src/analyzers": {
@@ -1900,14 +1873,14 @@
               "name": "FunctionInfo",
               "bases": [],
               "methods": [],
-              "line_number": 14,
+              "line_number": 24,
               "is_exported": false
             },
             {
               "name": "CoverageReport",
               "bases": [],
               "methods": [],
-              "line_number": 24,
+              "line_number": 34,
               "is_exported": false
             },
             {
@@ -2284,7 +2257,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 33,
+              "line_number": 43,
               "is_exported": false
             }
           ],
@@ -2293,7 +2266,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 526,
+              "line_number": 542,
               "is_async": false,
               "is_exported": false
             },
@@ -2301,7 +2274,7 @@
               "name": "_parse_coverage_args",
               "args": [],
               "return_type": null,
-              "line_number": 531,
+              "line_number": 547,
               "is_async": false,
               "is_exported": false
             },
@@ -2311,7 +2284,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 540,
+              "line_number": 556,
               "is_async": false,
               "is_exported": false
             },
@@ -2321,7 +2294,7 @@
                 "args"
               ],
               "return_type": "Tuple[...]",
-              "line_number": 549,
+              "line_number": 565,
               "is_async": false,
               "is_exported": false
             },
@@ -2332,7 +2305,7 @@
                 "test_dir"
               ],
               "return_type": "Constant(value='TestCoverageAnalyzer', kind=None)",
-              "line_number": 555,
+              "line_number": 571,
               "is_async": false,
               "is_exported": false
             },
@@ -2340,7 +2313,7 @@
               "name": "_print_coverage_header",
               "args": [],
               "return_type": null,
-              "line_number": 559,
+              "line_number": 575,
               "is_async": false,
               "is_exported": false
             },
@@ -2350,7 +2323,7 @@
                 "analyzer"
               ],
               "return_type": null,
-              "line_number": 565,
+              "line_number": 581,
               "is_async": false,
               "is_exported": false
             },
@@ -2361,7 +2334,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 569,
+              "line_number": 585,
               "is_async": false,
               "is_exported": false
             },
@@ -2372,13 +2345,15 @@
                 "content"
               ],
               "return_type": null,
-              "line_number": 580,
+              "line_number": 596,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
+            "argparse",
             "json",
+            "logging",
             "subprocess",
             "pathlib",
             "typing",
@@ -2396,14 +2371,14 @@
               "name": "QualityIssue",
               "bases": [],
               "methods": [],
-              "line_number": 17,
+              "line_number": 26,
               "is_exported": false
             },
             {
               "name": "QualityReport",
               "bases": [],
               "methods": [],
-              "line_number": 29,
+              "line_number": 38,
               "is_exported": false
             },
             {
@@ -2702,7 +2677,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 37,
+              "line_number": 46,
               "is_exported": false
             }
           ],
@@ -2711,7 +2686,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 452,
+              "line_number": 461,
               "is_async": false,
               "is_exported": false
             },
@@ -2719,7 +2694,7 @@
               "name": "_parse_arguments",
               "args": [],
               "return_type": null,
-              "line_number": 457,
+              "line_number": 466,
               "is_async": false,
               "is_exported": false
             },
@@ -2729,7 +2704,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 465,
+              "line_number": 474,
               "is_async": false,
               "is_exported": false
             },
@@ -2739,7 +2714,7 @@
                 "path"
               ],
               "return_type": "Constant(value='CodeQualityAnalyzer', kind=None)",
-              "line_number": 477,
+              "line_number": 486,
               "is_async": false,
               "is_exported": false
             },
@@ -2749,7 +2724,7 @@
                 "path"
               ],
               "return_type": null,
-              "line_number": 481,
+              "line_number": 490,
               "is_async": false,
               "is_exported": false
             },
@@ -2760,7 +2735,7 @@
                 "path"
               ],
               "return_type": "bool",
-              "line_number": 488,
+              "line_number": 497,
               "is_async": false,
               "is_exported": false
             },
@@ -2771,7 +2746,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 500,
+              "line_number": 509,
               "is_async": false,
               "is_exported": false
             },
@@ -2782,7 +2757,7 @@
                 "content"
               ],
               "return_type": null,
-              "line_number": 511,
+              "line_number": 520,
               "is_async": false,
               "is_exported": false
             }
@@ -2790,6 +2765,7 @@
           "imports": [
             "argparse",
             "json",
+            "logging",
             "os",
             "subprocess",
             "tempfile",
@@ -2809,14 +2785,14 @@
               "name": "DependencyInfo",
               "bases": [],
               "methods": [],
-              "line_number": 16,
+              "line_number": 26,
               "is_exported": false
             },
             {
               "name": "DependencyReport",
               "bases": [],
               "methods": [],
-              "line_number": 25,
+              "line_number": 35,
               "is_exported": false
             },
             {
@@ -3104,7 +3080,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 35,
+              "line_number": 45,
               "is_exported": false
             }
           ],
@@ -3113,7 +3089,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 490,
+              "line_number": 500,
               "is_async": false,
               "is_exported": false
             },
@@ -3121,7 +3097,7 @@
               "name": "_parse_args",
               "args": [],
               "return_type": null,
-              "line_number": 495,
+              "line_number": 505,
               "is_async": false,
               "is_exported": false
             },
@@ -3131,7 +3107,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 505,
+              "line_number": 515,
               "is_async": false,
               "is_exported": false
             },
@@ -3141,7 +3117,7 @@
                 "directory"
               ],
               "return_type": "Constant(value='DependencyAnalyzer', kind=None)",
-              "line_number": 514,
+              "line_number": 524,
               "is_async": false,
               "is_exported": false
             },
@@ -3151,7 +3127,7 @@
                 "directory"
               ],
               "return_type": null,
-              "line_number": 518,
+              "line_number": 528,
               "is_async": false,
               "is_exported": false
             },
@@ -3162,7 +3138,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 525,
+              "line_number": 535,
               "is_async": false,
               "is_exported": false
             },
@@ -3173,7 +3149,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 533,
+              "line_number": 543,
               "is_async": false,
               "is_exported": false
             },
@@ -3184,13 +3160,15 @@
                 "content"
               ],
               "return_type": null,
-              "line_number": 544,
+              "line_number": 554,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
+            "argparse",
             "json",
+            "logging",
             "os",
             "subprocess",
             "pathlib",
@@ -3225,6 +3203,120 @@
       "files": [
         {
           "@type": "SoftwareSourceCode",
+          "path": "src/utils/logging_config.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "ColoredFormatter",
+              "bases": [
+                "logging.Formatter"
+              ],
+              "methods": [
+                {
+                  "name": "format",
+                  "args": [
+                    "self",
+                    "record"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 42,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "init_sentry",
+              "args": [
+                "dsn",
+                "environment",
+                "traces_sample_rate",
+                "profiles_sample_rate"
+              ],
+              "return_type": "bool",
+              "line_number": 70,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "_before_send_filter",
+              "args": [
+                "event",
+                "hint"
+              ],
+              "return_type": null,
+              "line_number": 125,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "setup_logging",
+              "args": [
+                "name",
+                "level",
+                "log_file",
+                "use_colors",
+                "structured"
+              ],
+              "return_type": "logging.Logger",
+              "line_number": 145,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "get_logger",
+              "args": [
+                "name",
+                "level",
+                "log_file"
+              ],
+              "return_type": "logging.Logger",
+              "line_number": 222,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "log_exception",
+              "args": [
+                "logger",
+                "error",
+                "context"
+              ],
+              "return_type": null,
+              "line_number": 262,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
+              "name": "log_performance_metric",
+              "args": [
+                "logger",
+                "operation",
+                "duration_ms",
+                "metadata"
+              ],
+              "return_type": null,
+              "line_number": 296,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "logging",
+            "logging.handlers",
+            "os",
+            "sys",
+            "pathlib",
+            "typing",
+            "datetime",
+            "sentry_sdk",
+            "sentry_sdk.integrations.logging",
+            "time"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
           "path": "src/utils/git_operations.py",
           "language": "python",
           "classes": [],
@@ -3235,7 +3327,7 @@
                 "schemas_file"
               ],
               "return_type": "List[...]",
-              "line_number": 11,
+              "line_number": 15,
               "is_async": false,
               "is_exported": false
             },
@@ -3245,7 +3337,7 @@
                 "repo_path"
               ],
               "return_type": "Tuple[...]",
-              "line_number": 24,
+              "line_number": 28,
               "is_async": false,
               "is_exported": false
             },
@@ -3255,7 +3347,7 @@
                 "repo_path"
               ],
               "return_type": "bool",
-              "line_number": 39,
+              "line_number": 43,
               "is_async": false,
               "is_exported": false
             },
@@ -3266,7 +3358,7 @@
                 "message"
               ],
               "return_type": "bool",
-              "line_number": 47,
+              "line_number": 51,
               "is_async": false,
               "is_exported": false
             },
@@ -3276,7 +3368,7 @@
                 "repo_path"
               ],
               "return_type": "Tuple[...]",
-              "line_number": 60,
+              "line_number": 64,
               "is_async": false,
               "is_exported": false
             },
@@ -3284,7 +3376,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 74,
+              "line_number": 78,
               "is_async": false,
               "is_exported": false
             }
@@ -3292,6 +3384,7 @@
           "imports": [
             "json",
             "subprocess",
+            "logging",
             "pathlib",
             "typing"
           ]
@@ -3301,7 +3394,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         "name": "utils",
-        "description": "Directory containing 1 code files with 0 classes and 6 functions",
+        "description": "Directory containing 2 code files with 1 classes and 12 functions",
         "programmingLanguage": [
           {
             "@type": "ComputerLanguage",
@@ -3309,7 +3402,8 @@
           }
         ],
         "featureList": [
-          "6 function definitions"
+          "1 class definitions",
+          "12 function definitions"
         ]
       }
     },
@@ -3504,7 +3598,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 11,
+              "line_number": 20,
               "is_exported": false
             }
           ],
@@ -3513,7 +3607,7 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 235,
+              "line_number": 244,
               "is_async": false,
               "is_exported": false
             },
@@ -3521,7 +3615,7 @@
               "name": "_parse_arguments",
               "args": [],
               "return_type": null,
-              "line_number": 245,
+              "line_number": 254,
               "is_async": false,
               "is_exported": false
             },
@@ -3529,7 +3623,7 @@
               "name": "_print_header",
               "args": [],
               "return_type": "Constant(value=None, kind=None)",
-              "line_number": 255,
+              "line_number": 264,
               "is_async": false,
               "is_exported": false
             },
@@ -3540,7 +3634,7 @@
                 "args"
               ],
               "return_type": "bool",
-              "line_number": 261,
+              "line_number": 270,
               "is_async": false,
               "is_exported": false
             },
@@ -3551,13 +3645,14 @@
                 "args"
               ],
               "return_type": "bool",
-              "line_number": 277,
+              "line_number": 286,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
             "json",
+            "logging",
             "pathlib",
             "typing",
             "re",
@@ -3814,7 +3909,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 14,
+              "line_number": 23,
               "is_exported": false
             }
           ],
@@ -3823,13 +3918,14 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 246,
+              "line_number": 255,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
             "json",
+            "logging",
             "pathlib",
             "typing",
             "datetime",
@@ -3996,7 +4092,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 11,
+              "line_number": 20,
               "is_exported": false
             }
           ],
@@ -4005,17 +4101,250 @@
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 486,
+              "line_number": 495,
               "is_async": false,
               "is_exported": false
             }
           ],
           "imports": [
             "json",
+            "logging",
             "pathlib",
             "typing",
             "datetime",
             "argparse"
+          ]
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "src/generators/schema_optimizer.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "FileCache",
+              "bases": [],
+              "methods": [],
+              "line_number": 60,
+              "is_exported": false
+            },
+            {
+              "name": "CacheMetadata",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__post_init__",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 69,
+              "is_exported": false
+            },
+            {
+              "name": "SchemaCache",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "cache_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "_load_cache",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "save_cache",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "get_file_hash",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "is_file_cached",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "get_cached_schema",
+                  "args": [
+                    "self",
+                    "file_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "update_cache",
+                  "args": [
+                    "self",
+                    "file_path",
+                    "schema"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "get_git_commit",
+                  "args": [
+                    "self",
+                    "repo_path"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "get_changed_files_since_commit",
+                  "args": [
+                    "self",
+                    "repo_path",
+                    "commit"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 81,
+              "is_exported": false
+            },
+            {
+              "name": "ParallelSchemaProcessor",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "max_workers",
+                    "use_cache",
+                    "cache_dir"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "process_files_parallel",
+                  "args": [
+                    "self",
+                    "files",
+                    "processor_func",
+                    "skip_cached"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "invalidate_cache_for_files",
+                  "args": [
+                    "self",
+                    "files"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "clear_cache",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 251,
+              "is_exported": false
+            },
+            {
+              "name": "tqdm",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "__init__",
+                  "args": [
+                    "self",
+                    "iterable"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "__iter__",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "__enter__",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "__exit__",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "update",
+                  "args": [
+                    "self",
+                    "n"
+                  ],
+                  "isAsync": false
+                },
+                {
+                  "name": "set_description",
+                  "args": [
+                    "self",
+                    "desc"
+                  ],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 29,
+              "is_exported": false
+            }
+          ],
+          "functions": [
+            {
+              "name": "batch_files_by_directory",
+              "args": [
+                "files",
+                "max_batch_size"
+              ],
+              "return_type": "List[...]",
+              "line_number": 397,
+              "is_async": false,
+              "is_exported": false
+            }
+          ],
+          "imports": [
+            "os",
+            "json",
+            "hashlib",
+            "time",
+            "subprocess",
+            "pathlib",
+            "typing",
+            "concurrent.futures",
+            "dataclasses",
+            "tqdm",
+            "src.utils.logging_config",
+            "logging"
           ]
         },
         {
@@ -4027,28 +4356,28 @@
               "name": "FunctionDef",
               "bases": [],
               "methods": [],
-              "line_number": 24,
+              "line_number": 66,
               "is_exported": false
             },
             {
               "name": "ClassDef",
               "bases": [],
               "methods": [],
-              "line_number": 34,
+              "line_number": 76,
               "is_exported": false
             },
             {
               "name": "FileDef",
               "bases": [],
               "methods": [],
-              "line_number": 44,
+              "line_number": 86,
               "is_exported": false
             },
             {
               "name": "DirectorySchema",
               "bases": [],
               "methods": [],
-              "line_number": 53,
+              "line_number": 95,
               "is_exported": false
             },
             {
@@ -4087,7 +4416,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 61,
+              "line_number": 103,
               "is_exported": false
             },
             {
@@ -4110,7 +4439,7 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 137,
+              "line_number": 205,
               "is_exported": false
             },
             {
@@ -4122,7 +4451,10 @@
                   "args": [
                     "self",
                     "root_path",
-                    "use_astgrep"
+                    "use_astgrep",
+                    "use_parallel",
+                    "use_cache",
+                    "max_workers"
                   ],
                   "isAsync": false
                 },
@@ -4285,6 +4617,13 @@
                   "isAsync": false
                 },
                 {
+                  "name": "scan_all_directories_optimized",
+                  "args": [
+                    "self"
+                  ],
+                  "isAsync": false
+                },
+                {
                   "name": "generate_readme",
                   "args": [
                     "self",
@@ -4437,16 +4776,27 @@
                   "isAsync": false
                 }
               ],
-              "line_number": 180,
+              "line_number": 248,
               "is_exported": false
             }
           ],
           "functions": [
             {
+              "name": "process_single_file",
+              "args": [
+                "file_path",
+                "use_astgrep"
+              ],
+              "return_type": "Optional[...]",
+              "line_number": 31,
+              "is_async": false,
+              "is_exported": false
+            },
+            {
               "name": "main",
               "args": [],
               "return_type": null,
-              "line_number": 771,
+              "line_number": 1024,
               "is_async": false,
               "is_exported": false
             },
@@ -4454,7 +4804,7 @@
               "name": "_parse_arguments",
               "args": [],
               "return_type": null,
-              "line_number": 796,
+              "line_number": 1068,
               "is_async": false,
               "is_exported": false
             },
@@ -4466,7 +4816,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 806,
+              "line_number": 1084,
               "is_async": false,
               "is_exported": false
             },
@@ -4476,7 +4826,7 @@
                 "generator"
               ],
               "return_type": null,
-              "line_number": 816,
+              "line_number": 1102,
               "is_async": false,
               "is_exported": false
             },
@@ -4486,7 +4836,7 @@
                 "root"
               ],
               "return_type": "Path",
-              "line_number": 822,
+              "line_number": 1108,
               "is_async": false,
               "is_exported": false
             },
@@ -4498,7 +4848,7 @@
                 "args"
               ],
               "return_type": "List[...]",
-              "line_number": 831,
+              "line_number": 1117,
               "is_async": false,
               "is_exported": false
             },
@@ -4509,7 +4859,7 @@
                 "content"
               ],
               "return_type": "bool",
-              "line_number": 854,
+              "line_number": 1140,
               "is_async": false,
               "is_exported": false
             },
@@ -4519,7 +4869,7 @@
                 "generator"
               ],
               "return_type": null,
-              "line_number": 863,
+              "line_number": 1149,
               "is_async": false,
               "is_exported": false
             },
@@ -4529,7 +4879,7 @@
                 "generator"
               ],
               "return_type": "List[...]",
-              "line_number": 872,
+              "line_number": 1158,
               "is_async": false,
               "is_exported": false
             },
@@ -4539,7 +4889,7 @@
                 "args"
               ],
               "return_type": null,
-              "line_number": 877,
+              "line_number": 1163,
               "is_async": false,
               "is_exported": false
             },
@@ -4547,7 +4897,7 @@
               "name": "_print_footer",
               "args": [],
               "return_type": null,
-              "line_number": 886,
+              "line_number": 1172,
               "is_async": false,
               "is_exported": false
             }
@@ -4559,14 +4909,19 @@
             "re",
             "tempfile",
             "logging",
+            "time",
             "pathlib",
             "typing",
             "dataclasses",
             "collections",
             "subprocess",
             "sys",
+            "src.utils.logging_config",
             "argparse",
-            "yaml"
+            "os",
+            "functools",
+            "yaml",
+            "src.generators.schema_optimizer"
           ]
         }
       ],
@@ -4574,7 +4929,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         "name": "generators",
-        "description": "Directory containing 3 code files with 9 classes and 13 functions",
+        "description": "Directory containing 4 code files with 14 classes and 15 functions",
         "programmingLanguage": [
           {
             "@type": "ComputerLanguage",
@@ -4582,8 +4937,8 @@
           }
         ],
         "featureList": [
-          "9 class definitions",
-          "13 function definitions"
+          "14 class definitions",
+          "15 function definitions"
         ]
       }
     }

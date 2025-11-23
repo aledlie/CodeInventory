@@ -46,7 +46,7 @@ This directory contains 3 code file(s) with extracted schemas.
 
 **Functions:**
 - `verify_dependencies() -> bool` - Line 32
-- `main()` - Line 505
+- `main()` - Line 509
 
 **Key Imports:** `argparse`, `datetime`, `logging`, `pathlib`, `shutil` (+3 more)
 

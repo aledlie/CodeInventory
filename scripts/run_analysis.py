@@ -248,14 +248,18 @@ class AnalysisRunner:
         logger.info(f"{'='*80}\n")
 
     def _run_schema_generation(self):
-        """Run schema generation analysis"""
+        """Run schema generation analysis with optimization"""
+        command = [
+            'python3', '-m', 'src.generators.schema',
+            '--root', str(self.root_dir),
+            '--parallel',  # Enable parallel processing for speed
+            '--cache'      # Enable caching to skip unchanged files
+        ]
+
         return self.run_command(
             'schema_generation',
-            [
-                'python3', '-m', 'src.generators.schema',
-                '--root', str(self.root_dir)
-            ],
-            'Enhanced Schema Generation'
+            command,
+            'Enhanced Schema Generation (parallel + cache)'
         )
 
     def _run_quality_analysis(self):
