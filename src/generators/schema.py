@@ -1107,12 +1107,14 @@ def _run_scanner(generator: 'EnhancedSchemaGenerator'):
 
 def _get_output_path(root: Path) -> Path:
     """Determine output path for schemas.json"""
+    # Always use outputs/schemas directory for consistency
     if root.name == 'Inventory':
-        return root / 'schemas_enhanced.json'
+        output_dir = root / 'outputs' / 'schemas'
     else:
-        inventory_dir = root / 'Inventory'
-        inventory_dir.mkdir(exist_ok=True)
-        return inventory_dir / 'schemas_enhanced.json'
+        output_dir = root / 'outputs' / 'schemas'
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir / 'schemas_enhanced.json'
 
 def _generate_readme_files(generator: 'EnhancedSchemaGenerator', root: Path, args) -> List[str]:
     """Generate README files for directories"""

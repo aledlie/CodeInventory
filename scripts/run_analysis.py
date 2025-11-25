@@ -316,8 +316,10 @@ class AnalysisRunner:
 
     def _run_quality_analysis(self):
         """Run code quality analysis"""
-        quality_output = self.output_dir / f'quality_report_{self.timestamp}.json'
-        quality_text = self.output_dir / f'quality_report_{self.timestamp}.txt'
+        quality_dir = self.output_dir / 'quality'
+        quality_dir.mkdir(parents=True, exist_ok=True)
+        quality_output = quality_dir / f'quality_report_{self.timestamp}.json'
+        quality_text = quality_dir / f'quality_report_{self.timestamp}.txt'
 
         return self.run_command(
             'quality_analysis',
@@ -332,8 +334,10 @@ class AnalysisRunner:
 
     def _run_coverage_analysis(self):
         """Run test coverage analysis"""
-        coverage_output = self.output_dir / f'coverage_report_{self.timestamp}.json'
-        coverage_text = self.output_dir / f'coverage_report_{self.timestamp}.txt'
+        coverage_dir = self.output_dir / 'coverage'
+        coverage_dir.mkdir(parents=True, exist_ok=True)
+        coverage_output = coverage_dir / f'coverage_report_{self.timestamp}.json'
+        coverage_text = coverage_dir / f'coverage_report_{self.timestamp}.txt'
 
         return self.run_command(
             'coverage_analysis',
@@ -348,8 +352,10 @@ class AnalysisRunner:
 
     def _run_dependency_analysis(self):
         """Run dependency analysis"""
-        dependency_output = self.output_dir / f'dependency_report_{self.timestamp}.json'
-        dependency_text = self.output_dir / f'dependency_report_{self.timestamp}.txt'
+        dependency_dir = self.output_dir / 'dependencies'
+        dependency_dir.mkdir(parents=True, exist_ok=True)
+        dependency_output = dependency_dir / f'dependency_report_{self.timestamp}.json'
+        dependency_text = dependency_dir / f'dependency_report_{self.timestamp}.txt'
 
         return self.run_command(
             'dependency_analysis',
@@ -365,11 +371,13 @@ class AnalysisRunner:
 
     def _generate_dashboard(self):
         """Generate interactive dashboard"""
-        schemas_file = self.root_dir / 'Inventory' / 'schemas_enhanced.json'
-        quality_output = self.output_dir / f'quality_report_{self.timestamp}.json'
-        coverage_output = self.output_dir / f'coverage_report_{self.timestamp}.json'
-        dependency_output = self.output_dir / f'dependency_report_{self.timestamp}.json'
-        dashboard_output = self.output_dir / f'dashboard_{self.timestamp}.html'
+        schemas_file = self.output_dir / 'schemas' / 'schemas_enhanced.json'
+        quality_output = self.output_dir / 'quality' / f'quality_report_{self.timestamp}.json'
+        coverage_output = self.output_dir / 'coverage' / f'coverage_report_{self.timestamp}.json'
+        dependency_output = self.output_dir / 'dependencies' / f'dependency_report_{self.timestamp}.json'
+        dashboard_dir = self.output_dir / 'dashboards'
+        dashboard_dir.mkdir(parents=True, exist_ok=True)
+        dashboard_output = dashboard_dir / f'dashboard_{self.timestamp}.html'
 
         return self.run_command(
             'dashboard_generation',
@@ -386,8 +394,10 @@ class AnalysisRunner:
 
     def _generate_rss_feed(self):
         """Generate RSS feed"""
-        schemas_file = self.root_dir / 'Inventory' / 'schemas_enhanced.json'
-        rss_output = self.output_dir / f'code_updates_{self.timestamp}.xml'
+        schemas_file = self.output_dir / 'schemas' / 'schemas_enhanced.json'
+        rss_dir = self.output_dir / 'rss'
+        rss_dir.mkdir(parents=True, exist_ok=True)
+        rss_output = rss_dir / f'code_updates_{self.timestamp}.xml'
 
         return self.run_command(
             'rss_generation',
