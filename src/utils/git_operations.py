@@ -7,7 +7,7 @@ import json
 import subprocess
 import logging
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -75,7 +75,7 @@ def git_push(repo_path: str) -> Tuple[bool, str]:
     except subprocess.CalledProcessError as e:
         return False, e.stderr
 
-def main():
+def main() -> None:
     # Configure logging for CLI output
     logging.basicConfig(
         level=logging.INFO,
@@ -99,7 +99,7 @@ Generated schema documentation for all code files including:
 
 🤖 Generated with Schema Generator"""
 
-    results = {
+    results: Dict[str, List[str]] = {
         'pushed': [],
         'no_changes': [],
         'errors': []

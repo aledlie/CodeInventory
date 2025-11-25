@@ -6,7 +6,7 @@ RSS Generator - Creates dynamic RSS feeds from code changes with schema.org mark
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 import subprocess
 import xml.etree.ElementTree as ET
@@ -23,7 +23,7 @@ if not logger.handlers:
 class RSSGenerator:
     """Generates RSS feeds from code changes"""
 
-    def __init__(self, schemas_path: Path, git_repo: Path = None):
+    def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):
         self.schemas_path = schemas_path
         self.git_repo = git_repo
 
@@ -45,7 +45,7 @@ class RSSGenerator:
 
     def _is_git_repo(self) -> bool:
         """Check if the directory is a git repository"""
-        return self.git_repo and (self.git_repo / '.git').exists()
+        return bool(self.git_repo and (self.git_repo / '.git').exists())
 
     def _run_git_log(self, limit: int) -> subprocess.CompletedProcess:
         """Run git log command"""
@@ -67,7 +67,7 @@ class RSSGenerator:
                     commits.append(commit)
         return commits
 
-    def _parse_commit_line(self, line: str) -> Dict[str, Any]:
+    def _parse_commit_line(self, line: str) -> Optional[Dict[str, Any]]:
         """Parse a single commit line"""
         try:
             hash, author, email, date, message = line.split('|', 4)
@@ -109,7 +109,7 @@ class RSSGenerator:
 
         return stats
 
-    def _parse_stats_line(self, line: str, stats: Dict[str, Any]):
+    def _parse_stats_line(self, line: str, stats: Dict[str, Any]) -> None:
         """Parse a single statistics line"""
         parts = line.split(',')
         for part in parts:
@@ -153,7 +153,7 @@ class RSSGenerator:
         self._add_atom_link(channel, link)
         return channel
 
-    def _add_channel_metadata(self, channel: ET.Element, title: str, description: str, link: str):
+    def _add_channel_metadata(self, channel: ET.Element, title: str, description: str, link: str) -> None:
         """Add channel metadata elements"""
         ET.SubElement(channel, 'title').text = title
         ET.SubElement(channel, 'description').text = description
@@ -161,20 +161,20 @@ class RSSGenerator:
         ET.SubElement(channel, 'language').text = 'en-us'
         ET.SubElement(channel, 'lastBuildDate').text = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-    def _add_atom_link(self, channel: ET.Element, link: str):
+    def _add_atom_link(self, channel: ET.Element, link: str) -> None:
         """Add Atom self link to channel"""
         atom_link = ET.SubElement(channel, 'atom:link')
         atom_link.set('href', f'{link}/rss.xml')
         atom_link.set('rel', 'self')
         atom_link.set('type', 'application/rss+xml')
 
-    def _add_channel_items(self, channel: ET.Element, link: str):
+    def _add_channel_items(self, channel: ET.Element, link: str) -> None:
         """Add commit items to channel"""
         commits = self.get_recent_commits(limit=20)
         for commit in commits:
             self._create_item(channel, commit, link)
 
-    def _create_item(self, channel: ET.Element, commit: Dict[str, Any], link: str):
+    def _create_item(self, channel: ET.Element, commit: Dict[str, Any], link: str) -> None:
         """Create RSS item for a commit"""
         item = ET.SubElement(channel, 'item')
         self._add_item_metadata(item, commit, link)

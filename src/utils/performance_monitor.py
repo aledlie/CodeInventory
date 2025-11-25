@@ -37,7 +37,7 @@ class PerformanceReport:
 class PerformanceMonitor:
     """Monitor and analyze analyzer performance"""
 
-    def __init__(self, cache_dir: Path = None):
+    def __init__(self, cache_dir: Optional[Path] = None):
         self.cache_dir = cache_dir or Path.cwd() / '.analyzer_cache'
         self.metrics: List[PerformanceMetric] = []
 
@@ -189,7 +189,7 @@ class PerformanceMonitor:
 
         return recommendations
 
-    def save_report(self, report: PerformanceReport, output_path: Path):
+    def save_report(self, report: PerformanceReport, output_path: Path) -> None:
         """Save performance report to JSON file"""
         report_dict = {
             'timestamp': report.timestamp,
@@ -204,7 +204,7 @@ class PerformanceMonitor:
 
         logger.info(f"✅ Performance report saved to {output_path}")
 
-    def print_report(self, report: PerformanceReport):
+    def print_report(self, report: PerformanceReport) -> None:
         """Print performance report to console"""
         print("\n" + "="*80)
         print("PERFORMANCE MONITORING REPORT")
@@ -248,7 +248,7 @@ class PerformanceMonitor:
         print("\n" + "="*80 + "\n")
 
 
-def main():
+def main() -> None:
     """Command-line entry point"""
     import argparse
 
