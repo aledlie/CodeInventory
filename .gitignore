@@ -91,6 +91,25 @@ analysis_reports/
 outputs/
 coverage.json
 
+# Generated schemas and reports (DO NOT COMMIT)
+schemas.json
+schemas_enhanced.json
+quality*.json
+quality*.txt
+rss.xml
+rss-enhanced.xml
+schema.org.jsonld
+analyticsbot_*.json
+analyticsbot_*.txt
+pre_migration_tests.txt
+
+# Generated documentation (auto-created by tools)
+README_ENHANCED.md
+docs/generated/
+
+# Special output directories
+Inventory/
+
 # Repomix output files
 repomix-output.xml
 .schema_cache/
