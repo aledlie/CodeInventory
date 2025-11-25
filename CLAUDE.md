@@ -201,11 +201,11 @@ python3 -m src.analyzers.dependencies /path/to/code \
 **Interactive Dashboard**:
 ```bash
 python3 -m src.generators.dashboard \
-  --schemas schemas_enhanced.json \
-  --quality quality_report.json \
-  --coverage coverage_report.json \
-  --dependency dependency_report.json \
-  --output dashboard.html
+  --schemas outputs/schemas/schemas_enhanced.json \
+  --quality outputs/quality/quality_report.json \
+  --coverage outputs/coverage/coverage_report.json \
+  --dependency outputs/dependencies/dependency_report.json \
+  --output outputs/dashboards/dashboard.html
 ```
 
 ### Testing
@@ -307,8 +307,15 @@ python -m src.analyzers.dependencies src/ --clear-cache
 - `src/utils/performance_monitor.py` - Performance monitoring and reporting
 
 **Documentation**:
-- `docs/PERFORMANCE_TUNING.md` - Comprehensive performance tuning guide
-- `docs/CI_CD_INTEGRATION.md` - CI/CD integration with optimizations
+- `docs/guides/PERFORMANCE_TUNING.md` - Comprehensive performance tuning guide
+- `docs/guides/CI_CD_INTEGRATION.md` - CI/CD integration with optimizations
+- `docs/guides/` - How-to guides and implementation documentation
+- `docs/summaries/` - Project phase summaries and completion reports
+- `docs/testing/` - Test documentation and test case specifications
+- `docs/integrations/` - Integration guides (Sentry, Doppler, etc.)
+- `docs/refactoring/` - Refactoring plans and analysis
+- `docs/examples/` - Code examples and usage patterns
+- `docs/archive/` - Historical documentation
 
 ## Critical Implementation Details
 
@@ -400,10 +407,27 @@ scripts/             # Executable orchestration scripts
 tests/
 ├── unit/           # Isolated unit tests for each module
 ├── integration/    # End-to-end pipeline tests
+├── performance/    # Performance benchmarking tests
 └── fixtures/       # Sample code for testing
 
+outputs/             # All generated outputs (gitignored)
+├── schemas/        # Generated schema files
+├── quality/        # Code quality reports
+├── coverage/       # Test coverage reports
+├── dependencies/   # Dependency analysis reports
+├── dashboards/     # Interactive HTML dashboards
+└── rss/           # RSS feed files
+
+docs/               # Organized documentation
+├── guides/         # How-to guides and implementations
+├── summaries/      # Project phase summaries
+├── testing/        # Test documentation
+├── integrations/   # Integration guides (Sentry, Doppler)
+├── refactoring/    # Refactoring plans
+├── examples/       # Code examples
+└── archive/        # Historical documentation
+
 ast-grep-rules/     # Custom ast-grep pattern definitions
-docs/               # Documentation (guides, summaries, test cases)
 ```
 
 ### Skipped Directories
@@ -490,13 +514,24 @@ Most test failures are due to file path issues. Tests expect to run from reposit
 
 ## Output Files
 
-All analysis tools generate both JSON (machine-readable) and TXT (human-readable) reports:
+All analysis tools generate both JSON (machine-readable) and TXT (human-readable) reports organized by type:
 
-- `schemas_enhanced.json`: Complete code structure with 36MB+ of data
-- `quality_report_*.json/txt`: Code quality issues by severity and category
-- `coverage_report_*.json/txt`: Test coverage analysis with untested functions
-- `dependency_report_*.json/txt`: Dependency graph with circular dependencies
-- `dashboard_*.html`: Interactive visualization of all metrics
-- `code_updates_*.xml`: RSS feed with git commit history
+**Schema Files** (`outputs/schemas/`):
+- `schemas_enhanced.json`: Complete code structure with schema.org vocabulary
 
-Generated files are timestamped to avoid overwriting previous runs.
+**Quality Reports** (`outputs/quality/`):
+- `quality_report_YYYYMMDD_HHMMSS.json/txt`: Code quality issues by severity and category
+
+**Coverage Reports** (`outputs/coverage/`):
+- `coverage_report_YYYYMMDD_HHMMSS.json/txt`: Test coverage analysis with untested functions
+
+**Dependency Reports** (`outputs/dependencies/`):
+- `dependency_report_YYYYMMDD_HHMMSS.json/txt`: Dependency graph with circular dependencies
+
+**Dashboards** (`outputs/dashboards/`):
+- `dashboard_YYYYMMDD_HHMMSS.html`: Interactive visualization of all metrics
+
+**RSS Feeds** (`outputs/rss/`):
+- `code_updates_YYYYMMDD_HHMMSS.xml`: RSS feed with git commit history
+
+All generated files are timestamped and automatically gitignored to prevent committing generated content.
