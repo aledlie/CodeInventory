@@ -7,7 +7,7 @@ import json
 import subprocess
 import logging
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Union, Any
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -99,11 +99,9 @@ Generated schema documentation for all code files including:
 
 🤖 Generated with Schema Generator"""
 
-    results: Dict[str, List[str]] = {
-        'pushed': [],
-        'no_changes': [],
-        'errors': []
-    }
+    pushed: List[str] = []
+    no_changes: List[str] = []
+    errors: List[Tuple[str, str]] = []
 
     for repo_path, remote in repos:
         repo_name = Path(repo_path).name
@@ -118,7 +116,7 @@ Generated schema documentation for all code files including:
 
         if not has_changes:
             logger.info(f"✓ No changes to commit")
-            results['no_changes'].append(repo_name)
+            no_changes.append(repo_name)
             continue
 
         logger.info(f"Changes detected:")
@@ -127,7 +125,7 @@ Generated schema documentation for all code files including:
         # Add all changes
         if not git_add_all(repo_path):
             logger.warning(f"✗ Failed to add changes")
-            results['errors'].append((repo_name, "Failed to add changes"))
+            errors.append((repo_name, "Failed to add changes"))
             continue
 
         logger.info(f"✓ Added changes")
@@ -139,9 +137,9 @@ Generated schema documentation for all code files including:
             has_changes, _ = git_status(repo_path)
             if not has_changes:
                 logger.info(f"  (No uncommitted changes, skipping)")
-                results['no_changes'].append(repo_name)
+                no_changes.append(repo_name)
                 continue
-            results['errors'].append((repo_name, "Failed to commit"))
+            errors.append((repo_name, "Failed to commit"))
             continue
 
         logger.info(f"✓ Committed changes")
@@ -151,26 +149,26 @@ Generated schema documentation for all code files including:
         if success:
             logger.info(f"✓ Pushed to remote")
             logger.info(output[:200])
-            results['pushed'].append(repo_name)
+            pushed.append(repo_name)
         else:
             logger.error(f"✗ Failed to push")
             logger.error(output[:200])
-            results['errors'].append((repo_name, f"Failed to push: {output[:100]}"))
+            errors.append((repo_name, f"Failed to push: {output[:100]}"))
 
     # Summary
     logger.info(f"\n\n{'='*60}")
     logger.info("SUMMARY")
     logger.info('='*60)
-    logger.info(f"Successfully pushed: {len(results['pushed'])}")
-    for repo in results['pushed']:
+    logger.info(f"Successfully pushed: {len(pushed)}")
+    for repo in pushed:
         logger.info(f"  ✓ {repo}")
 
-    logger.info(f"\nNo changes: {len(results['no_changes'])}")
-    for repo in results['no_changes']:
+    logger.info(f"\nNo changes: {len(no_changes)}")
+    for repo in no_changes:
         logger.info(f"  - {repo}")
 
-    logger.info(f"\nErrors: {len(results['errors'])}")
-    for repo, error in results['errors']:
+    logger.info(f"\nErrors: {len(errors)}")
+    for repo, error in errors:
         logger.info(f"  ✗ {repo}: {error}")
 
 if __name__ == '__main__':
