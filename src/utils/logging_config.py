@@ -18,7 +18,7 @@ import logging.handlers
 import os
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Dict, Any, Union
 from datetime import datetime
 
 # Optional Sentry import - gracefully handle if not installed
@@ -52,7 +52,7 @@ class ColoredFormatter(logging.Formatter):
     }
     RESET = '\033[0m'
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         # Add color to levelname
         levelname = record.levelname
         if levelname in self.COLORS:
@@ -122,7 +122,7 @@ def init_sentry(
     return True
 
 
-def _before_send_filter(event, hint):
+def _before_send_filter(event: Dict[str, Any], hint: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
     Filter events before sending to Sentry
 
@@ -143,8 +143,8 @@ def _before_send_filter(event, hint):
 
 
 def setup_logging(
-    name: str = None,
-    level: str = None,
+    name: Optional[str] = None,
+    level: Optional[str] = None,
     log_file: Optional[Path] = None,
     use_colors: bool = True,
     structured: bool = False
@@ -181,6 +181,7 @@ def setup_logging(
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(log_level)
 
+    console_formatter: Union[ColoredFormatter, logging.Formatter]
     if use_colors and sys.stdout.isatty():
         console_formatter = ColoredFormatter(
             log_format,
@@ -221,7 +222,7 @@ def setup_logging(
 
 def get_logger(
     name: str,
-    level: str = None,
+    level: Optional[str] = None,
     log_file: Optional[Path] = None
 ) -> logging.Logger:
     """
@@ -259,7 +260,7 @@ def get_logger(
     return logger
 
 
-def log_exception(logger: logging.Logger, error: Exception, context: dict = None):
+def log_exception(logger: logging.Logger, error: Exception, context: Optional[Dict[str, Any]] = None) -> None:
     """
     Log an exception with optional context and send to Sentry
 
@@ -297,8 +298,8 @@ def log_performance_metric(
     logger: logging.Logger,
     operation: str,
     duration_ms: float,
-    metadata: dict = None
-):
+    metadata: Optional[Dict[str, Any]] = None
+) -> None:
     """
     Log a performance metric
 

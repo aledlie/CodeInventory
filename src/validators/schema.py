@@ -6,7 +6,8 @@ Schema Validator - Validates schema.org JSON-LD markup
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
+import argparse
 import re
 
 # Configure logging
@@ -20,9 +21,9 @@ if not logger.handlers:
 class SchemaValidator:
     """Validates schema.org markup"""
 
-    def __init__(self):
-        self.errors = []
-        self.warnings = []
+    def __init__(self) -> None:
+        self.errors: List[str] = []
+        self.warnings: List[str] = []
         self.valid_types = {
             'SoftwareSourceCode', 'SoftwareApplication', 'Dataset', 'TechArticle',
             'HowTo', 'APIReference', 'DataFeed', 'BlogPosting', 'Article',
@@ -134,7 +135,7 @@ class SchemaValidator:
 
         return self._validate_json_schemas(matches, file_path)
 
-    def _read_file_content(self, file_path: Path) -> str:
+    def _read_file_content(self, file_path: Path) -> Optional[str]:
         """Read file content safely"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -174,7 +175,7 @@ class SchemaValidator:
         else:
             return self.validate_schema(data, str(file_path))
 
-    def _load_json_file(self, file_path: Path) -> Dict[str, Any]:
+    def _load_json_file(self, file_path: Path) -> Optional[Dict[str, Any]]:
         """Load JSON file safely"""
         try:
             with open(file_path, 'r') as f:
@@ -241,7 +242,7 @@ class SchemaValidator:
         lines.append("")
         return lines
 
-def main():
+def main() -> int:
     args = _parse_arguments()
     validator = SchemaValidator()
 
@@ -251,10 +252,8 @@ def main():
     logger.info("\n" + validator.generate_report())
     return 0 if all_valid else 1
 
-def _parse_arguments():
+def _parse_arguments() -> argparse.Namespace:
     """Parse command line arguments"""
-    import argparse
-
     parser = argparse.ArgumentParser(description='Schema.org Validator')
     parser.add_argument('files', nargs='+', help='Files to validate')
     parser.add_argument('--json', action='store_true',
@@ -267,7 +266,7 @@ def _print_header() -> None:
     logger.info("Schema.org Markup Validator")
     logger.info("="*80)
 
-def _process_files(validator: SchemaValidator, args) -> bool:
+def _process_files(validator: SchemaValidator, args: argparse.Namespace) -> bool:
     """Process all input files"""
     all_valid = True
 
@@ -283,7 +282,7 @@ def _process_files(validator: SchemaValidator, args) -> bool:
 
     return all_valid
 
-def _should_process_as_json(path: Path, args) -> bool:
+def _should_process_as_json(path: Path, args: argparse.Namespace) -> bool:
     """Check if file should be processed as JSON"""
     return args.json or path.suffix in ['.jsonld', '.json']
 

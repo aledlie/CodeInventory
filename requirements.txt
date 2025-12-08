@@ -16,6 +16,10 @@ certifi<2025
 # Enables visual progress indicators during schema generation
 tqdm>=4.60.0
 
+# Type checking and validation
+pydantic>=2.0.0  # Runtime data validation with type hints
+mypy>=1.0.0      # Static type checking
+
 # Git operations for incremental analysis (for future Phase 3)
 # Uncomment to enable git-aware analysis:
 # gitpython>=3.1.0
