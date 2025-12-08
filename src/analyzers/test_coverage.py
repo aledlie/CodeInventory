@@ -181,7 +181,7 @@ class TestCoverageAnalyzer:
         """Run ast-grep pattern"""
         try:
             result = subprocess.run(
-                ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
+                ['ast-grep', 'run', '-p', pattern, '-l', language, '--json', str(file_path)],
                 capture_output=True,
                 text=True,
                 timeout=30

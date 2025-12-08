@@ -188,7 +188,7 @@ class DependencyAnalyzer:
         """Run ast-grep pattern"""
         try:
             result = subprocess.run(
-                ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
+                ['ast-grep', 'run', '-p', pattern, '-l', language, '--json', str(file_path)],
                 capture_output=True,
                 text=True,
                 timeout=30
@@ -267,11 +267,16 @@ class DependencyAnalyzer:
 
     def _process_static_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
         """Process static import statements"""
+        # Patterns for both double and single quoted imports
         static_patterns = [
             'import $$ from "$PACKAGE"',
+            "import $$ from '$PACKAGE'",
             'import { $$ } from "$PACKAGE"',
+            "import { $$ } from '$PACKAGE'",
             'import * as $$ from "$PACKAGE"',
-            'import "$PACKAGE"'
+            "import * as $$ from '$PACKAGE'",
+            'import "$PACKAGE"',
+            "import '$PACKAGE'"
         ]
 
         dependencies = []
@@ -286,34 +291,37 @@ class DependencyAnalyzer:
     def _process_dynamic_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
         """Process dynamic import() statements"""
         dependencies = []
-        matches = self._run_astgrep(file_path, 'import("$PACKAGE")', language)
-
-        for match in matches:
-            dep = self._create_dependency_from_match(match, file_path, 'dynamic')
-            if dep:
-                dependencies.append(dep)
+        # Handle both quote styles
+        for pattern in ['import("$PACKAGE")', "import('$PACKAGE')"]:
+            matches = self._run_astgrep(file_path, pattern, language)
+            for match in matches:
+                dep = self._create_dependency_from_match(match, file_path, 'dynamic')
+                if dep:
+                    dependencies.append(dep)
         return dependencies
 
     def _process_require_statements(self, file_path: Path, language: str) -> List[DependencyInfo]:
         """Process require() statements"""
         dependencies = []
-        matches = self._run_astgrep(file_path, 'require("$PACKAGE")', language)
-
-        for match in matches:
-            dep = self._create_dependency_from_match(match, file_path, 'require')
-            if dep:
-                dependencies.append(dep)
+        # Handle both quote styles
+        for pattern in ['require("$PACKAGE")', "require('$PACKAGE')"]:
+            matches = self._run_astgrep(file_path, pattern, language)
+            for match in matches:
+                dep = self._create_dependency_from_match(match, file_path, 'require')
+                if dep:
+                    dependencies.append(dep)
         return dependencies
 
     def _process_type_imports(self, file_path: Path, language: str) -> List[DependencyInfo]:
         """Process TypeScript type-only imports"""
         dependencies = []
-        matches = self._run_astgrep(file_path, 'import type { $$ } from "$PACKAGE"', language)
-
-        for match in matches:
-            dep = self._create_dependency_from_match(match, file_path, 'type_only')
-            if dep:
-                dependencies.append(dep)
+        # Handle both quote styles
+        for pattern in ['import type { $$ } from "$PACKAGE"', "import type { $$ } from '$PACKAGE'"]:
+            matches = self._run_astgrep(file_path, pattern, language)
+            for match in matches:
+                dep = self._create_dependency_from_match(match, file_path, 'type_only')
+                if dep:
+                    dependencies.append(dep)
         return dependencies
 
     def _create_dependency_from_match(self, match: Dict[str, Any], file_path: Path,

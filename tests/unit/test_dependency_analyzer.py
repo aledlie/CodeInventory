@@ -5,11 +5,18 @@ Unit tests for dependency_analyzer.py
 
 import unittest
 import tempfile
+import subprocess
+import shutil
 from pathlib import Path
 import sys
 import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+# Check if ast-grep is available
+def is_astgrep_available() -> bool:
+    """Check if ast-grep CLI is installed and available."""
+    return shutil.which('ast-grep') is not None or shutil.which('sg') is not None
 
 from src.analyzers.dependencies import (
     DependencyAnalyzer,
@@ -91,8 +98,9 @@ from .utils import helper
         self.assertIn("os", packages)
         self.assertIn("sys", packages)
 
+    @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
     def test_analyze_typescript_imports(self):
-        """Test TypeScript import analysis"""
+        """Test TypeScript import analysis (requires ast-grep)"""
         test_file = Path(self.temp_dir) / "test.ts"
         test_file.write_text("""
 import React from 'react';
