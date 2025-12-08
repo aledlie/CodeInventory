@@ -6,7 +6,7 @@ Dashboard Generator - Creates interactive HTML dashboard for code analysis
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 # Configure logging
@@ -20,9 +20,9 @@ if not logger.handlers:
 class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
 
-    def __init__(self, schemas_path: Path, quality_path: Path = None,
-                 coverage_path: Path = None, dependency_path: Path = None,
-                 cache_dir: Path = None):
+    def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,
+                 coverage_path: Optional[Path] = None, dependency_path: Optional[Path] = None,
+                 cache_dir: Optional[Path] = None):
         self.schemas_path = schemas_path
         self.quality_path = quality_path
         self.coverage_path = coverage_path
@@ -38,11 +38,11 @@ class DashboardGenerator:
         # Load performance data
         self.performance_data = self._load_performance_data()
 
-    def _load_json(self, path: Path) -> Dict[str, Any]:
+    def _load_json(self, path: Optional[Path]) -> Dict[str, Any]:
         """Load JSON file"""
         if path and path.exists():
             with open(path, 'r') as f:
-                return json.load(f)
+                return json.load(f)  # type: ignore[no-any-return]
         return {}
 
     def _load_performance_data(self) -> Dict[str, Any]:
@@ -664,7 +664,7 @@ class DashboardGenerator:
         </div>
         """
 
-    def save_dashboard(self, output_path: Path):
+    def save_dashboard(self, output_path: Path) -> None:
         """Save dashboard to file"""
         html = self.generate_html()
 
@@ -674,7 +674,7 @@ class DashboardGenerator:
         logger.info(f"✅ Dashboard saved to {output_path}")
         logger.info(f"   Open in browser: file://{output_path.absolute()}")
 
-def main():
+def main() -> None:
     import argparse
 
     parser = argparse.ArgumentParser(description='Dashboard Generator')

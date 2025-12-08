@@ -129,7 +129,7 @@ class AstGrepHelper:
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)
+                return json.loads(result.stdout)  # type: ignore[no-any-return]
             return []
         except subprocess.TimeoutExpired as e:
             log_exception(logger, e, context={
@@ -176,7 +176,7 @@ class AstGrepHelper:
         try:
             # Create temporary rule file
             with tempfile.NamedTemporaryFile(mode='w', suffix='.yml', delete=False) as f:
-                import yaml
+                import yaml  # type: ignore[import-untyped]
                 yaml.dump({'rule': rule}, f)
                 rule_file = f.name
 
@@ -189,7 +189,7 @@ class AstGrepHelper:
                 )
 
                 if result.returncode == 0 and result.stdout.strip():
-                    return json.loads(result.stdout)
+                    return json.loads(result.stdout)  # type: ignore[no-any-return]
                 return []
             finally:
                 os.unlink(rule_file)
@@ -227,14 +227,14 @@ class SchemaOrgGenerator:
         }
 
         # Add feature list
-        features = []
+        features: List[str] = []
         if total_classes > 0:
             features.append(f"{total_classes} class definitions")
         if total_functions > 0:
             features.append(f"{total_functions} function definitions")
 
         if features:
-            schema["featureList"] = features
+            schema["featureList"] = features  # type: ignore[assignment]
 
         # Clean None values
         return {k: v for k, v in schema.items() if v is not None}
@@ -355,7 +355,7 @@ class EnhancedSchemaGenerator:
             is_async=is_async
         )
 
-    def _get_name(self, node) -> str:
+    def _get_name(self, node: Any) -> str:
         """Get name from AST node"""
         if isinstance(node, ast.Name):
             return node.id
@@ -387,7 +387,7 @@ class EnhancedSchemaGenerator:
 
         return file_def
 
-    def _extract_ts_imports_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+    def _extract_ts_imports_astgrep(self, file_path: Path, file_def: FileDef, lang: str) -> None:
         """Extract TypeScript imports using ast-grep"""
         # Extract default imports
         import_matches = AstGrepHelper.find_pattern(
@@ -411,7 +411,7 @@ class EnhancedSchemaGenerator:
             if package and package not in file_def.imports:
                 file_def.imports.append(package)
 
-    def _extract_ts_classes_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+    def _extract_ts_classes_astgrep(self, file_path: Path, file_def: FileDef, lang: str) -> None:
         """Extract TypeScript classes using ast-grep"""
         class_matches = AstGrepHelper.find_pattern(
             file_path,
@@ -430,7 +430,7 @@ class EnhancedSchemaGenerator:
                 )
                 file_def.classes.append(class_def)
 
-    def _extract_ts_interfaces_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+    def _extract_ts_interfaces_astgrep(self, file_path: Path, file_def: FileDef, lang: str) -> None:
         """Extract TypeScript interfaces using ast-grep"""
         interface_matches = AstGrepHelper.find_pattern(
             file_path,
@@ -449,7 +449,7 @@ class EnhancedSchemaGenerator:
                 )
                 file_def.classes.append(class_def)
 
-    def _extract_ts_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+    def _extract_ts_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str) -> None:
         """Extract TypeScript regular functions using ast-grep"""
         func_matches = AstGrepHelper.find_pattern(
             file_path,
@@ -469,7 +469,7 @@ class EnhancedSchemaGenerator:
                 )
                 file_def.functions.append(func_def)
 
-    def _extract_ts_arrow_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str):
+    def _extract_ts_arrow_functions_astgrep(self, file_path: Path, file_def: FileDef, lang: str) -> None:
         """Extract TypeScript arrow functions using ast-grep"""
         arrow_matches = AstGrepHelper.find_pattern(
             file_path,
@@ -511,13 +511,13 @@ class EnhancedSchemaGenerator:
 
         return file_def
 
-    def _extract_ts_imports_regex(self, content: str, file_def: FileDef):
+    def _extract_ts_imports_regex(self, content: str, file_def: FileDef) -> None:
         """Extract TypeScript imports using regex"""
         import_pattern = r'import\s+(?:{[^}]+}|[^;\n]+)\s+from\s+["\']([^"\']+)["\']'
         for match in re.finditer(import_pattern, content):
             file_def.imports.append(match.group(1))
 
-    def _extract_ts_classes_regex(self, content: str, file_def: FileDef):
+    def _extract_ts_classes_regex(self, content: str, file_def: FileDef) -> None:
         """Extract TypeScript classes using regex"""
         class_pattern = r'(?:export\s+)?(?:abstract\s+)?class\s+(\w+)(?:\s+extends\s+([\w,\s]+))?(?:\s+implements\s+([\w,\s]+))?\s*{'
         for match in re.finditer(class_pattern, content):
@@ -536,7 +536,7 @@ class EnhancedSchemaGenerator:
             )
             file_def.classes.append(class_def)
 
-    def _extract_ts_interfaces_regex(self, content: str, file_def: FileDef):
+    def _extract_ts_interfaces_regex(self, content: str, file_def: FileDef) -> None:
         """Extract TypeScript interfaces using regex"""
         interface_pattern = r'(?:export\s+)?interface\s+(\w+)(?:\s+extends\s+([\w,\s]+))?\s*{'
         for match in re.finditer(interface_pattern, content):
@@ -553,7 +553,7 @@ class EnhancedSchemaGenerator:
             )
             file_def.classes.append(class_def)
 
-    def _extract_ts_functions_regex(self, content: str, file_def: FileDef):
+    def _extract_ts_functions_regex(self, content: str, file_def: FileDef) -> None:
         """Extract TypeScript functions using regex"""
         func_pattern = r'(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)(?:\s*:\s*([^{]+))?'
         for match in re.finditer(func_pattern, content):
@@ -571,7 +571,7 @@ class EnhancedSchemaGenerator:
             )
             file_def.functions.append(func_def)
 
-    def _extract_ts_arrow_functions_regex(self, content: str, file_def: FileDef):
+    def _extract_ts_arrow_functions_regex(self, content: str, file_def: FileDef) -> None:
         """Extract TypeScript arrow functions using regex"""
         arrow_pattern = r'(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s+)?\([^)]*\)\s*=>'
         for match in re.finditer(arrow_pattern, content):
@@ -643,7 +643,7 @@ class EnhancedSchemaGenerator:
 
         return schema
 
-    def scan_all_directories(self):
+    def scan_all_directories(self) -> None:
         """Recursively scan all directories"""
         start_time = time.time()
         total_files = 0
@@ -683,7 +683,7 @@ class EnhancedSchemaGenerator:
             }
         )
 
-    def scan_all_directories_optimized(self):
+    def scan_all_directories_optimized(self) -> None:
         """Recursively scan all directories with parallel processing and caching"""
         if not self.use_parallel and not self.use_cache:
             # Fall back to normal scanning
@@ -781,7 +781,7 @@ class EnhancedSchemaGenerator:
         else:
             # Fallback to sequential processing with cache
             for file_path in all_files:
-                if self.use_cache and self.parallel_processor:
+                if self.use_cache and self.parallel_processor and self.parallel_processor.cache:
                     cached_schema = self.parallel_processor.cache.get_cached_schema(file_path)
                     if cached_schema:
                         continue
@@ -812,7 +812,7 @@ class EnhancedSchemaGenerator:
         """Generate README.md content for a directory with optional schema.org markup"""
         dir_name = Path(dir_rel_path).name if dir_rel_path != '.' else 'Code Repository'
 
-        lines = []
+        lines: List[str] = []
         self._add_readme_header(lines, dir_name, schema, include_schema_org)
         self._add_readme_overview(lines, schema)
         self._add_readme_subdirectories(lines, schema)
@@ -821,7 +821,7 @@ class EnhancedSchemaGenerator:
 
         return '\n'.join(lines)
 
-    def _add_readme_header(self, lines: List[str], dir_name: str, schema: DirectorySchema, include_schema_org: bool):
+    def _add_readme_header(self, lines: List[str], dir_name: str, schema: DirectorySchema, include_schema_org: bool) -> None:
         """Add header section to README"""
         lines.extend([
             f"# {dir_name}",
@@ -836,7 +836,7 @@ class EnhancedSchemaGenerator:
                 ""
             ])
 
-    def _add_readme_overview(self, lines: List[str], schema: DirectorySchema):
+    def _add_readme_overview(self, lines: List[str], schema: DirectorySchema) -> None:
         """Add overview section to README"""
         lines.extend([
             "## Overview",
@@ -851,7 +851,7 @@ class EnhancedSchemaGenerator:
                 ""
             ])
 
-    def _add_readme_subdirectories(self, lines: List[str], schema: DirectorySchema):
+    def _add_readme_subdirectories(self, lines: List[str], schema: DirectorySchema) -> None:
         """Add subdirectories section to README"""
         if schema.subdirectories:
             lines.extend([
@@ -862,7 +862,7 @@ class EnhancedSchemaGenerator:
                 lines.append(f"- `{subdir}/`")
             lines.append("")
 
-    def _add_readme_files(self, lines: List[str], schema: DirectorySchema):
+    def _add_readme_files(self, lines: List[str], schema: DirectorySchema) -> None:
         """Add files and schemas section to README"""
         if not schema.files:
             return
@@ -883,7 +883,7 @@ class EnhancedSchemaGenerator:
             self._add_readme_functions(lines, file_def)
             self._add_readme_imports(lines, file_def)
 
-    def _add_readme_classes(self, lines: List[str], file_def: FileDef):
+    def _add_readme_classes(self, lines: List[str], file_def: FileDef) -> None:
         """Add classes information to README"""
         if not file_def.classes:
             return
@@ -904,7 +904,7 @@ class EnhancedSchemaGenerator:
                     lines[-1] += f" (+{len(cls.methods) - 5} more)"
         lines.append("")
 
-    def _add_readme_functions(self, lines: List[str], file_def: FileDef):
+    def _add_readme_functions(self, lines: List[str], file_def: FileDef) -> None:
         """Add functions information to README"""
         if not file_def.functions:
             return
@@ -921,7 +921,7 @@ class EnhancedSchemaGenerator:
             lines.append(f"- ... and {len(file_def.functions) - 10} more functions")
         lines.append("")
 
-    def _add_readme_imports(self, lines: List[str], file_def: FileDef):
+    def _add_readme_imports(self, lines: List[str], file_def: FileDef) -> None:
         """Add imports information to README"""
         if not file_def.imports:
             return
@@ -934,14 +934,14 @@ class EnhancedSchemaGenerator:
             lines[-1] += f" (+{len(set(file_def.imports)) - 5} more)"
         lines.append("")
 
-    def _add_readme_footer(self, lines: List[str]):
+    def _add_readme_footer(self, lines: List[str]) -> None:
         """Add footer to README"""
         lines.extend([
             "---",
             "*Generated by Enhanced Schema Generator with schema.org markup*"
         ])
 
-    def save_schemas_json(self, output_path: Path, include_schema_org: bool = True):
+    def save_schemas_json(self, output_path: Path, include_schema_org: bool = True) -> None:
         """Save all schemas to a JSON file with schema.org vocabulary"""
         data = self._build_schemas_json_data(include_schema_org)
         self._write_json_file(output_path, data)
@@ -949,7 +949,7 @@ class EnhancedSchemaGenerator:
 
     def _build_schemas_json_data(self, include_schema_org: bool) -> Dict[str, Any]:
         """Build the JSON data structure for schemas"""
-        data = {
+        data: Dict[str, Any] = {
             "@context": "https://schema.org" if include_schema_org else None,
             "directories": {}
         }
@@ -1010,18 +1010,18 @@ class EnhancedSchemaGenerator:
             'is_exported': func_def.is_exported
         }
 
-    def _write_json_file(self, output_path: Path, data: Dict[str, Any]):
+    def _write_json_file(self, output_path: Path, data: Dict[str, Any]) -> None:
         """Write JSON data to file"""
         with open(output_path, 'w') as f:
             json.dump(data, f, indent=2)
 
-    def _print_save_summary(self, output_path: Path, include_schema_org: bool):
+    def _print_save_summary(self, output_path: Path, include_schema_org: bool) -> None:
         """Print summary after saving schemas"""
         logger.info(f"✅ Schemas saved to {output_path}")
         logger.info(f"   Total directories: {len(self.schemas)}")
         logger.info(f"   Schema.org markup: {'Included' if include_schema_org else 'Not included'}")
 
-def main():
+def main() -> Tuple[List[str], List[Tuple[str, str]]]:
     # Configure logging for CLI output
     logging.basicConfig(
         level=logging.INFO,
@@ -1065,7 +1065,7 @@ def main():
 
     return readme_files, _get_git_directories(generator)
 
-def _parse_arguments():
+def _parse_arguments() -> Any:
     """Parse command line arguments"""
     import argparse
     import os
@@ -1078,10 +1078,10 @@ def _parse_arguments():
     parser.add_argument('--cache', action='store_true', help='Enable caching (skip unchanged files)')
     parser.add_argument('--clear-cache', action='store_true', help='Clear cache before running')
     parser.add_argument('--workers', type=int, default=None,
-                       help=f'Number of parallel workers (default: CPU count - 1 = {max(1, os.cpu_count() - 1)})')
+                       help=f'Number of parallel workers (default: CPU count - 1 = {max(1, (os.cpu_count() or 2) - 1)})')
     return parser.parse_args()
 
-def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
+def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args: Any) -> None:
     """Print header information"""
     logger.info(f"\n{'='*60}")
     logger.info("Enhanced Schema Generator")
@@ -1099,7 +1099,7 @@ def _print_header(generator: 'EnhancedSchemaGenerator', root: Path, args):
     logger.info(f"Caching: {'Enabled' if generator.use_cache else 'Disabled'}")
     logger.info("")
 
-def _run_scanner(generator: 'EnhancedSchemaGenerator'):
+def _run_scanner(generator: 'EnhancedSchemaGenerator') -> None:
     """Run directory scanning"""
     logger.info("Scanning directories...")
     generator.scan_all_directories()
@@ -1116,7 +1116,7 @@ def _get_output_path(root: Path) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir / 'schemas_enhanced.json'
 
-def _generate_readme_files(generator: 'EnhancedSchemaGenerator', root: Path, args) -> List[str]:
+def _generate_readme_files(generator: 'EnhancedSchemaGenerator', root: Path, args: Any) -> List[str]:
     """Generate README files for directories"""
     readme_files = []
     for dir_path, schema in generator.schemas.items():
@@ -1148,7 +1148,7 @@ def _should_write_readme(readme_path: Path, content: str) -> bool:
         existing = f.read()
     return existing != content
 
-def _print_git_remotes(generator: 'EnhancedSchemaGenerator'):
+def _print_git_remotes(generator: 'EnhancedSchemaGenerator') -> None:
     """Print directories with git remotes"""
     git_dirs = _get_git_directories(generator)
     if git_dirs:
@@ -1162,7 +1162,7 @@ def _get_git_directories(generator: 'EnhancedSchemaGenerator') -> List[Tuple[str
     return [(path, schema.git_remote) for path, schema in generator.schemas.items()
             if schema.has_git and schema.git_remote]
 
-def _handle_quality_report(args):
+def _handle_quality_report(args: Any) -> None:
     """Handle quality report generation"""
     if args.quality_report:
         logger.info("\n" + "="*60)
@@ -1171,7 +1171,7 @@ def _handle_quality_report(args):
         logger.info("\nℹ️  Quality report feature requires code_quality_analyzer.py")
         logger.info("   This will be implemented next.")
 
-def _print_footer():
+def _print_footer() -> None:
     """Print footer information"""
     logger.info("\n" + "="*60)
     logger.info("✅ Schema generation complete!")

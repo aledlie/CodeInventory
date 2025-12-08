@@ -180,7 +180,7 @@ class RSSGenerator:
         self._add_item_metadata(item, commit, link)
         self._add_item_content(item, commit, link)
 
-    def _add_item_metadata(self, item: ET.Element, commit: Dict[str, Any], link: str):
+    def _add_item_metadata(self, item: ET.Element, commit: Dict[str, Any], link: str) -> None:
         """Add basic item metadata"""
         ET.SubElement(item, 'title').text = commit['message']
         ET.SubElement(item, 'link').text = f"{link}/commit/{commit['hash']}"
@@ -188,7 +188,7 @@ class RSSGenerator:
         ET.SubElement(item, 'pubDate').text = datetime.fromisoformat(commit['date']).strftime('%a, %d %b %Y %H:%M:%S %z')
         ET.SubElement(item, 'author').text = f"{commit['email']} ({commit['author']})"
 
-    def _add_item_content(self, item: ET.Element, commit: Dict[str, Any], link: str):
+    def _add_item_content(self, item: ET.Element, commit: Dict[str, Any], link: str) -> None:
         """Add content to item with stats and schema.org markup"""
         stats = self.analyze_commit_changes(commit['hash'])
         description = self._build_description(commit, stats)
@@ -242,7 +242,7 @@ class RSSGenerator:
         dom = minidom.parseString(xml_str)
         return dom.toprettyxml(indent='  ')
 
-    def save_rss(self, output_path: Path, **kwargs):
+    def save_rss(self, output_path: Path, **kwargs: Any) -> None:
         """Save RSS feed to file"""
         rss_xml = self.generate_rss_xml(**kwargs)
 
@@ -252,7 +252,7 @@ class RSSGenerator:
         logger.info(f"✅ RSS feed saved to {output_path}")
         logger.info(f"   {len(self.get_recent_commits())} commits included")
 
-def main():
+def main() -> None:
     import argparse
 
     parser = argparse.ArgumentParser(description='RSS Feed Generator')
