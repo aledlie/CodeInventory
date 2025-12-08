@@ -86,7 +86,7 @@ def _analyze_file_dependencies_worker(file_path: Path) -> List[Dict[str, Any]]:
             return False
         return any(package.startswith(ind) for ind in external_indicators)
 
-    def run_astgrep(pattern: str, language: str) -> List[Dict]:
+    def run_astgrep(pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern"""
         try:
             result = subprocess.run(
@@ -96,7 +96,8 @@ def _analyze_file_dependencies_worker(file_path: Path) -> List[Dict[str, Any]]:
                 timeout=30
             )
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)
+                parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                return parsed
             return []
         except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception):
             return []
@@ -195,7 +196,8 @@ class DependencyAnalyzer:
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)
+                parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                return parsed
             return []
         except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception):
             return []
@@ -355,7 +357,7 @@ class DependencyAnalyzer:
 
         return None
 
-    def analyze_file(self, file_path: Path):
+    def analyze_file(self, file_path: Path) -> None:
         """Analyze dependencies in a single file"""
         if file_path.suffix == '.py':
             deps = self.analyze_python_imports(file_path)
@@ -381,7 +383,7 @@ class DependencyAnalyzer:
                 src_file = str(file_path)
                 self.report.dependency_graph[src_file].add(dep.package)
 
-    def analyze_directory(self, directory: Path = None, skip_dirs: set = None):
+    def analyze_directory(self, directory: Optional[Path] = None, skip_dirs: Optional[Set[str]] = None) -> None:
         """Analyze all files in a directory"""
         if directory is None:
             directory = self.root_dir
@@ -399,9 +401,9 @@ class DependencyAnalyzer:
                 if file_path.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']:
                     self.analyze_file(file_path)
 
-    def analyze_directory_optimized(self, directory: Path = None, skip_dirs: set = None,
+    def analyze_directory_optimized(self, directory: Optional[Path] = None, skip_dirs: Optional[Set[str]] = None,
                                    use_parallel: bool = True, use_cache: bool = True,
-                                   max_workers: Optional[int] = None):
+                                   max_workers: Optional[int] = None) -> None:
         """
         Analyze all files in a directory with parallel processing and caching
 
@@ -520,9 +522,9 @@ class DependencyAnalyzer:
 
         logger.info(f"⏱️  Analysis completed in {duration_ms:.0f}ms")
 
-    def find_circular_dependencies(self):
+    def find_circular_dependencies(self) -> None:
         """Detect circular dependencies using DFS"""
-        def dfs(node, path, visited, rec_stack):
+        def dfs(node: str, path: List[str], visited: Set[str], rec_stack: Set[str]) -> None:
             visited.add(node)
             rec_stack.add(node)
             path.append(node)
@@ -539,7 +541,7 @@ class DependencyAnalyzer:
 
             rec_stack.remove(node)
 
-        visited = set()
+        visited: Set[str] = set()
         for node in self.report.dependency_graph:
             if node not in visited:
                 dfs(node, [], visited, set())
@@ -641,7 +643,7 @@ class DependencyAnalyzer:
 
     def _get_dependencies_by_type(self) -> Dict[str, int]:
         """Count dependencies by import type"""
-        by_type = defaultdict(int)
+        by_type: Dict[str, int] = defaultdict(int)
         for deps in self.report.dependencies_by_file.values():
             for dep in deps:
                 by_type[dep.import_type] += 1
@@ -709,7 +711,7 @@ class DependencyAnalyzer:
             "="*80
         ]
 
-    def save_report_json(self, output_path: Path):
+    def save_report_json(self, output_path: Path) -> None:
         """Save dependency report as JSON"""
         data = self._build_report_json()
         self._write_json_file(output_path, data)
@@ -750,17 +752,16 @@ class DependencyAnalyzer:
             'is_external': dep.is_external
         }
 
-    def _write_json_file(self, path: Path, data: Dict[str, Any]):
+    def _write_json_file(self, path: Path, data: Dict[str, Any]) -> None:
         """Write JSON data to file"""
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)
 
-def main():
-    import argparse
+def main() -> None:
     args = _parse_args()
     _run_dependency_analysis(args)
 
-def _parse_args():
+def _parse_args() -> argparse.Namespace:
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
         description='Dependency Analyzer with parallel processing and caching'
@@ -787,7 +788,7 @@ def _parse_args():
 
     return parser.parse_args()
 
-def _run_dependency_analysis(args):
+def _run_dependency_analysis(args: argparse.Namespace) -> None:
     """Run the dependency analysis"""
     directory = Path(args.directory)
     analyzer = _init_dependency_analyzer(directory)
@@ -806,14 +807,14 @@ def _init_dependency_analyzer(directory: Path) -> 'DependencyAnalyzer':
     """Initialize dependency analyzer"""
     return DependencyAnalyzer(directory)
 
-def _print_analysis_header(directory: Path):
+def _print_analysis_header(directory: Path) -> None:
     """Print analysis header"""
     logger.info(f"\n{'='*80}")
     logger.info("Dependency Analyzer")
     logger.info(f"{'='*80}\n")
     logger.info(f"Analyzing: {directory}\n")
 
-def _perform_analysis(analyzer: 'DependencyAnalyzer', args):
+def _perform_analysis(analyzer: 'DependencyAnalyzer', args: argparse.Namespace) -> None:
     """Perform the dependency analysis"""
     # Determine optimization settings (enabled by default)
     use_parallel = not args.no_parallel if hasattr(args, 'no_parallel') else True
@@ -834,7 +835,7 @@ def _perform_analysis(analyzer: 'DependencyAnalyzer', args):
         logger.info("\nDetecting circular dependencies...\n")
         analyzer.find_circular_dependencies()
 
-def _output_reports(analyzer: 'DependencyAnalyzer', args):
+def _output_reports(analyzer: 'DependencyAnalyzer', args: argparse.Namespace) -> None:
     """Generate and save reports"""
     text_report = analyzer.generate_report_text()
     logger.info(text_report)
@@ -845,7 +846,7 @@ def _output_reports(analyzer: 'DependencyAnalyzer', args):
     if args.text:
         _save_text_file(args.text, text_report)
 
-def _save_text_file(filepath: str, content: str):
+def _save_text_file(filepath: str, content: str) -> None:
     """Save text content to file"""
     with open(filepath, 'w') as f:
         f.write(content)

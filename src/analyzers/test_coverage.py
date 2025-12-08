@@ -10,7 +10,7 @@ import json
 import logging
 import subprocess
 from pathlib import Path
-from typing import List, Dict, Any, Set, Tuple, Optional
+from typing import List, Dict, Any, Set, Tuple, Optional, Iterator
 from dataclasses import dataclass, field
 from collections import defaultdict
 
@@ -155,7 +155,7 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
 class TestCoverageAnalyzer:
     """Analyzes test coverage by matching functions with test cases"""
 
-    def __init__(self, src_dir: Path, test_dir: Path = None):
+    def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):
         self.src_dir = src_dir
         self.test_dir = test_dir or src_dir / 'tests'
         self.report = CoverageReport()
@@ -188,7 +188,8 @@ class TestCoverageAnalyzer:
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)
+                parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                return parsed
             # Optionally log stderr for debugging
             if result.returncode != 0 and result.stderr:
                 logger.error(f"ast-grep error: {result.stderr[:200]}")
@@ -206,7 +207,7 @@ class TestCoverageAnalyzer:
     def find_functions_in_file(self, file_path: Path) -> List[FunctionInfo]:
         """Find all functions in a file"""
         language, patterns = self._get_language_patterns(file_path)
-        if not language:
+        if not language or not patterns:
             return []
 
         functions = []
@@ -382,7 +383,7 @@ class TestCoverageAnalyzer:
 
         return {clean_name, test_name.lower()}
 
-    def analyze_coverage(self):
+    def analyze_coverage(self) -> None:
         """Analyze test coverage for the source directory"""
         self._print_analysis_header()
 
@@ -392,7 +393,7 @@ class TestCoverageAnalyzer:
         self._match_functions_with_tests(source_functions, test_functions)
         self._calculate_coverage_percentage()
 
-    def _print_analysis_header(self):
+    def _print_analysis_header(self) -> None:
         """Print analysis header information"""
         logger.info(f"\nAnalyzing source directory: {self.src_dir}")
         logger.info(f"Looking for tests in: {self.test_dir}\n")
@@ -414,7 +415,7 @@ class TestCoverageAnalyzer:
         logger.info(f"Found {len(source_functions)} functions in source code\n")
         return source_functions
 
-    def _iterate_source_files(self):
+    def _iterate_source_files(self) -> Iterator[Path]:
         """Iterate through valid source files"""
         for file_path in self.src_dir.rglob('*'):
             if self._is_valid_source_file(file_path):
@@ -429,7 +430,7 @@ class TestCoverageAnalyzer:
         return file_path.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']
 
     def _match_functions_with_tests(self, source_functions: List[FunctionInfo],
-                                   test_functions: Set[str]):
+                                   test_functions: Set[str]) -> None:
         """Match source functions with their tests"""
         for func in source_functions:
             is_tested = self._is_function_tested(func, test_functions)
@@ -442,7 +443,7 @@ class TestCoverageAnalyzer:
         func_name_lower = func.name.lower()
         return any(func_name_lower in test_name for test_name in test_functions)
 
-    def _record_function_coverage(self, func: FunctionInfo, is_tested: bool):
+    def _record_function_coverage(self, func: FunctionInfo, is_tested: bool) -> None:
         """Record coverage for a function"""
         func.is_tested = is_tested
         self.report.functions.append(func)
@@ -453,7 +454,7 @@ class TestCoverageAnalyzer:
             self.report.untested_functions += 1
             self.report.untested_by_file[func.file_path].append(func)
 
-    def _calculate_coverage_percentage(self):
+    def _calculate_coverage_percentage(self) -> None:
         """Calculate coverage percentage"""
         if self.report.total_functions > 0:
             self.report.coverage_percentage = (
@@ -461,7 +462,7 @@ class TestCoverageAnalyzer:
             )
 
     def analyze_coverage_optimized(self, use_parallel: bool = True, use_cache: bool = True,
-                                   max_workers: Optional[int] = None):
+                                   max_workers: Optional[int] = None) -> None:
         """
         Analyze test coverage with parallel processing and caching
 
@@ -689,7 +690,7 @@ class TestCoverageAnalyzer:
             "="*80
         ]
 
-    def save_report_json(self, output_path: Path):
+    def save_report_json(self, output_path: Path) -> None:
         """Save coverage report as JSON"""
         data = self._build_json_report()
         self._write_json_to_file(output_path, data)
@@ -743,17 +744,16 @@ class TestCoverageAnalyzer:
             'is_async': func.is_async
         }
 
-    def _write_json_to_file(self, path: Path, data: Dict[str, Any]):
+    def _write_json_to_file(self, path: Path, data: Dict[str, Any]) -> None:
         """Write JSON data to file"""
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)
 
-def main():
-    import argparse
+def main() -> None:
     args = _parse_coverage_args()
     _run_coverage_analysis(args)
 
-def _parse_coverage_args():
+def _parse_coverage_args() -> argparse.Namespace:
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
         description='Test Coverage Analyzer with parallel processing and caching'
@@ -779,7 +779,7 @@ def _parse_coverage_args():
 
     return parser.parse_args()
 
-def _run_coverage_analysis(args):
+def _run_coverage_analysis(args: argparse.Namespace) -> None:
     """Run coverage analysis"""
     src_dir, test_dir = _setup_directories(args)
     analyzer = _create_coverage_analyzer(src_dir, test_dir)
@@ -810,7 +810,7 @@ def _run_coverage_analysis(args):
 
     _save_coverage_reports(analyzer, args)
 
-def _setup_directories(args) -> Tuple[Path, Optional[Path]]:
+def _setup_directories(args: argparse.Namespace) -> Tuple[Path, Optional[Path]]:
     """Setup source and test directories"""
     src_dir = Path(args.src_dir)
     test_dir = Path(args.test_dir) if args.test_dir else None
@@ -820,17 +820,17 @@ def _create_coverage_analyzer(src_dir: Path, test_dir: Optional[Path]) -> 'TestC
     """Create coverage analyzer instance"""
     return TestCoverageAnalyzer(src_dir, test_dir)
 
-def _print_coverage_header():
+def _print_coverage_header() -> None:
     """Print coverage analysis header"""
     logger.info(f"\n{'='*80}")
     logger.info("Test Coverage Analyzer")
     logger.info(f"{'='*80}")
 
-def _perform_coverage_analysis(analyzer: 'TestCoverageAnalyzer'):
+def _perform_coverage_analysis(analyzer: 'TestCoverageAnalyzer') -> None:
     """Perform the coverage analysis"""
     analyzer.analyze_coverage()
 
-def _save_coverage_reports(analyzer: 'TestCoverageAnalyzer', args):
+def _save_coverage_reports(analyzer: 'TestCoverageAnalyzer', args: argparse.Namespace) -> None:
     """Save coverage reports"""
     text_report = analyzer.generate_report_text()
     logger.info(text_report)
@@ -841,7 +841,7 @@ def _save_coverage_reports(analyzer: 'TestCoverageAnalyzer', args):
     if args.text:
         _save_text_coverage_report(args.text, text_report)
 
-def _save_text_coverage_report(filepath: str, content: str):
+def _save_text_coverage_report(filepath: str, content: str) -> None:
     """Save text coverage report to file"""
     with open(filepath, 'w') as f:
         f.write(content)

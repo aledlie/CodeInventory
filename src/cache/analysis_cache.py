@@ -46,7 +46,7 @@ class AnalysisCache:
     }
     """
 
-    def __init__(self, root_dir: Path, cache_file: Path = None):
+    def __init__(self, root_dir: Path, cache_file: Optional[Path] = None):
         """
         Initialize analysis cache
 
@@ -63,7 +63,7 @@ class AnalysisCache:
         if self.cache_file.exists():
             try:
                 with open(self.cache_file, 'r') as f:
-                    cache = json.load(f)
+                    cache: Dict[str, Any] = json.load(f)
                     logger.info(f"✅ Loaded cache from {self.cache_file}")
                     logger.info(f"   Last run: {cache.get('last_run', 'Never')}")
                     logger.info(f"   Cached files: {len(cache.get('analyzed_files', {}))}")
@@ -84,7 +84,7 @@ class AnalysisCache:
             }
         }
 
-    def save_cache(self):
+    def save_cache(self) -> None:
         """Save cache to disk"""
         try:
             self.cache_data['last_run'] = datetime.now().isoformat()
@@ -248,11 +248,12 @@ class AnalysisCache:
         cached_entry = self.cache_data['analyzed_files'].get(file_key)
 
         if cached_entry and self.is_file_cached(file_path):
-            return cached_entry.get('analysis_results')
+            result: Optional[Dict[str, Any]] = cached_entry.get('analysis_results')
+            return result
 
         return None
 
-    def update_file_cache(self, file_path: Path, analysis_results: Dict[str, Any]):
+    def update_file_cache(self, file_path: Path, analysis_results: Dict[str, Any]) -> None:
         """
         Update cache with new analysis results
 
@@ -270,7 +271,7 @@ class AnalysisCache:
 
         self.cache_data['metadata']['total_files'] = len(self.cache_data['analyzed_files'])
 
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear all cached data"""
         logger.info("🗑️  Clearing analysis cache...")
         self.cache_data = {
@@ -326,7 +327,7 @@ class CheckpointManager:
     }
     """
 
-    def __init__(self, root_dir: Path, checkpoint_file: Path = None):
+    def __init__(self, root_dir: Path, checkpoint_file: Optional[Path] = None):
         """
         Initialize checkpoint manager
 
@@ -343,7 +344,7 @@ class CheckpointManager:
         if self.checkpoint_file.exists():
             try:
                 with open(self.checkpoint_file, 'r') as f:
-                    checkpoint = json.load(f)
+                    checkpoint: Dict[str, Any] = json.load(f)
                     logger.info(f"✅ Found existing checkpoint from {checkpoint.get('timestamp')}")
                     logger.info(f"   Completed: {len(checkpoint.get('completed', []))}/{checkpoint['metadata']['total_steps']} steps")
                     return checkpoint
@@ -363,7 +364,7 @@ class CheckpointManager:
             }
         }
 
-    def save_checkpoint(self):
+    def save_checkpoint(self) -> None:
         """Save checkpoint to disk"""
         try:
             self.checkpoint_data['timestamp'] = datetime.now().isoformat()
@@ -378,7 +379,7 @@ class CheckpointManager:
         except IOError as e:
             logger.error(f"❌ Failed to save checkpoint: {e}")
 
-    def initialize_steps(self, all_steps: List[str]):
+    def initialize_steps(self, all_steps: List[str]) -> None:
         """
         Initialize checkpoint with list of all analysis steps
 
@@ -393,7 +394,7 @@ class CheckpointManager:
             # Resuming - keep existing state
             logger.info(f"🔄 Resuming from checkpoint...")
 
-    def mark_step_in_progress(self, step_name: str):
+    def mark_step_in_progress(self, step_name: str) -> None:
         """
         Mark a step as currently in progress
 
@@ -406,7 +407,7 @@ class CheckpointManager:
         self.save_checkpoint()
         logger.info(f"🔄 Started: {step_name}")
 
-    def mark_step_completed(self, step_name: str, result: Dict[str, Any]):
+    def mark_step_completed(self, step_name: str, result: Dict[str, Any]) -> None:
         """
         Mark a step as completed
 
@@ -440,11 +441,13 @@ class CheckpointManager:
 
     def get_pending_steps(self) -> List[str]:
         """Get list of pending steps"""
-        return self.checkpoint_data['pending'].copy()
+        pending: List[str] = self.checkpoint_data['pending']
+        return pending.copy()
 
     def get_completed_steps(self) -> List[str]:
         """Get list of completed steps"""
-        return self.checkpoint_data['completed'].copy()
+        completed: List[str] = self.checkpoint_data['completed']
+        return completed.copy()
 
     def get_step_result(self, step_name: str) -> Optional[Dict[str, Any]]:
         """
@@ -456,7 +459,8 @@ class CheckpointManager:
         Returns:
             Step result or None if not completed
         """
-        return self.checkpoint_data['results'].get(step_name)
+        result: Optional[Dict[str, Any]] = self.checkpoint_data['results'].get(step_name)
+        return result
 
     def has_checkpoint(self) -> bool:
         """Check if a valid checkpoint exists"""
@@ -465,7 +469,7 @@ class CheckpointManager:
             len(self.checkpoint_data.get('completed', [])) > 0
         )
 
-    def clear_checkpoint(self):
+    def clear_checkpoint(self) -> None:
         """Clear checkpoint after successful completion"""
         logger.info("🗑️  Clearing checkpoint...")
         if self.checkpoint_file.exists():
