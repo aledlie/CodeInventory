@@ -51,7 +51,7 @@ jobs:
         coverage html
 
     - name: Upload coverage to artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: htmlcov/
@@ -88,7 +88,7 @@ jobs:
         python tests/performance/benchmark_suite.py
 
     - name: Upload benchmark results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: performance-report
         path: performance_report.json
@@ -142,7 +142,7 @@ jobs:
           --cache
 
     - name: Upload analysis reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: analysis-reports
         path: |
@@ -178,7 +178,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Download analysis reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: analysis-reports
 
@@ -196,7 +196,7 @@ jobs:
           --output dashboard.html
 
     - name: Upload dashboard
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dashboard
         path: dashboard.html
