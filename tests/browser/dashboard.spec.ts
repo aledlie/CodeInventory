@@ -37,24 +37,32 @@ test.describe('Dashboard', () => {
   });
 
   test('should navigate to quality page', async ({ page }) => {
-    // Click quality link in navigation
-    const qualityLink = page.getByRole('link', { name: /quality/i });
-    await qualityLink.click();
+    // Try multiple selectors for quality link
+    const qualityLink = page.locator('a[href*="quality"]').or(
+      page.getByRole('link', { name: /quality/i })
+    ).or(page.locator('text=Quality').first());
 
+    await qualityLink.first().click({ timeout: 10000 });
     await expect(page).toHaveURL(/\/dashboard\/quality/);
   });
 
   test('should navigate to coverage page', async ({ page }) => {
-    const coverageLink = page.getByRole('link', { name: /coverage/i });
-    await coverageLink.click();
+    // Try multiple selectors for coverage link
+    const coverageLink = page.locator('a[href*="coverage"]').or(
+      page.getByRole('link', { name: /coverage/i })
+    ).or(page.locator('text=Coverage').first());
 
+    await coverageLink.first().click({ timeout: 10000 });
     await expect(page).toHaveURL(/\/dashboard\/coverage/);
   });
 
   test('should navigate to dependencies page', async ({ page }) => {
-    const depsLink = page.getByRole('link', { name: /dependenc/i });
-    await depsLink.click();
+    // Try multiple selectors for dependencies link
+    const depsLink = page.locator('a[href*="dependencies"]').or(
+      page.getByRole('link', { name: /dependenc/i })
+    ).or(page.locator('text=Dependencies').first());
 
+    await depsLink.first().click({ timeout: 10000 });
     await expect(page).toHaveURL(/\/dashboard\/dependencies/);
   });
 });
