@@ -123,3 +123,24 @@ export {
   useDismissInsight,
   usePrefetchAnalytics,
 } from './useAnalytics';
+
+// Phase 5B: Personalization Hooks
+export {
+  personalizationKeys,
+  useSavedViews,
+  useSavedView,
+  useActiveViewId,
+  useCreateSavedView,
+  useUpdateSavedView,
+  useDeleteSavedView,
+  useSetActiveView,
+  usePreferences,
+  useUpdatePreferences,
+  useUpdateNotificationSettings,
+  useWidgetMetadata,
+  useWidgetsByCategory,
+  useSavedViewsManager,
+  usePreferencesManager,
+  useWidgetLibrary,
+  useLayoutOperations,
+} from './usePersonalization';

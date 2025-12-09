@@ -13,6 +13,7 @@ import type {
   DashboardNotificationSettings,
   WidgetMetadata,
   WidgetCategory,
+  WidgetConfig,
   DashboardLayout,
 } from '../types';
 
@@ -327,12 +328,7 @@ export function useLayoutOperations(
 
   const updateWidget = (
     instanceId: string,
-    updates: Partial<{
-      visible: boolean;
-      size: string;
-      position: { row: number; column: number };
-      settings: Record<string, unknown>;
-    }>
+    updates: Partial<Pick<WidgetConfig, 'visible' | 'size' | 'position' | 'settings'>>
   ) => {
     const updatedLayout: DashboardLayout = {
       ...currentLayout,
