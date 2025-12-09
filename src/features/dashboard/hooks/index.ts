@@ -34,3 +34,5 @@ export {
   useDependencyReport,
   useQueryClient,
 } from './useDashboardData';
+
+export { useChartTheme, useChartOptions, useSeverityColors } from './useChartTheme';
