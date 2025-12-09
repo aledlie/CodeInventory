@@ -1,0 +1,24 @@
+name: 'Setup ast-grep'
+description: 'Install ast-grep CLI for structural code analysis'
+inputs:
+  version:
+    description: 'ast-grep version to install (latest if not specified)'
+    required: false
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install ast-grep
+      shell: bash
+      run: |
+        echo "Installing ast-grep..."
+        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
+        unzip -o ast-grep.zip
+        sudo mv sg /usr/local/bin/ast-grep
+        chmod +x /usr/local/bin/ast-grep
+        rm ast-grep.zip
+
+        # Verify installation
+        echo "Installed ast-grep version:"
+        ast-grep --version

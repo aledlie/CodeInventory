@@ -31,25 +31,25 @@ try:
 except ImportError:
     TQDM_AVAILABLE = False
     # Fallback: create a dummy tqdm that does nothing
-    class tqdm:
-        def __init__(self, iterable=None, *args, **kwargs):
+    class tqdm:  # type: ignore[no-redef]
+        def __init__(self, iterable: Any = None, *args: Any, **kwargs: Any) -> None:
             self.iterable = iterable
             self.n = 0
             self.total = kwargs.get('total', 0)
 
-        def __iter__(self):
+        def __iter__(self) -> Any:
             return iter(self.iterable) if self.iterable else iter([])
 
-        def __enter__(self):
+        def __enter__(self) -> 'tqdm':
             return self
 
-        def __exit__(self, *args):
+        def __exit__(self, *args: Any) -> None:
             pass
 
-        def update(self, n=1):
+        def update(self, n: int = 1) -> None:
             self.n += n
 
-        def set_description(self, desc):
+        def set_description(self, desc: str) -> None:
             pass
 
 # Import centralized logging
@@ -77,9 +77,9 @@ class CacheMetadata:
     version: str = "1.0"
     analyzer_name: str = ""
     last_update: float = 0.0
-    entries: Dict[str, AnalysisCache] = None
+    entries: Dict[str, 'AnalysisCache'] = None  # type: ignore[assignment]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.entries is None:
             self.entries = {}
 
@@ -135,7 +135,7 @@ class AnalyzerCache:
             })
             return CacheMetadata(analyzer_name=self.analyzer_name)
 
-    def save_cache(self):
+    def save_cache(self) -> None:
         """Save cache to disk"""
         try:
             # Convert to dict for JSON serialization
@@ -206,7 +206,7 @@ class AnalyzerCache:
             return self.metadata.entries[key].result
         return None
 
-    def update_cache(self, key: str, content_hash: str, result: Any):
+    def update_cache(self, key: str, content_hash: str, result: Any) -> None:
         """Update cache entry"""
         self.metadata.entries[key] = AnalysisCache(
             key=key,
@@ -215,7 +215,7 @@ class AnalyzerCache:
             result=result
         )
 
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear entire cache"""
         self.metadata.entries = {}
         self.save_cache()
@@ -242,7 +242,8 @@ class ParallelAnalyzer:
             cache_dir: Directory for cache files (default: .analyzer_cache)
         """
         self.analyzer_name = analyzer_name
-        self.max_workers = max_workers or max(1, os.cpu_count() - 1)
+        cpu_count = os.cpu_count() or 1
+        self.max_workers = max_workers or max(1, cpu_count - 1)
         self.use_cache = use_cache
 
         if cache_dir is None:
@@ -283,7 +284,7 @@ class ParallelAnalyzer:
         items_to_process = []
         cached_results = []
 
-        if self.use_cache and skip_cached and hash_func:
+        if self.use_cache and skip_cached and hash_func and self.cache:
             for item in items:
                 key = key_func(item)
                 content_hash = hash_func(item)
@@ -329,7 +330,7 @@ class ParallelAnalyzer:
                             results.append((item, result))
 
                             # Update cache if enabled
-                            if self.use_cache and result and hash_func:
+                            if self.use_cache and result and hash_func and self.cache:
                                 key = key_func(item)
                                 content_hash = hash_func(item)
                                 self.cache.update_cache(key, content_hash, result)
@@ -353,7 +354,7 @@ class ParallelAnalyzer:
                             pbar.update(1)
 
         # Save cache if enabled
-        if self.use_cache:
+        if self.use_cache and self.cache:
             self.cache.save_cache()
 
         # Log performance metrics
@@ -373,9 +374,9 @@ class ParallelAnalyzer:
 
         return results
 
-    def invalidate_cache_for_items(self, keys: List[str]):
+    def invalidate_cache_for_items(self, keys: List[str]) -> None:
         """Invalidate cache entries for specific keys"""
-        if not self.use_cache:
+        if not self.use_cache or not self.cache:
             return
 
         for key in keys:
@@ -384,9 +385,9 @@ class ParallelAnalyzer:
 
         logger.info(f"🗑️  Invalidated {self.analyzer_name} cache for {len(keys)} items")
 
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear entire cache"""
-        if self.use_cache:
+        if self.use_cache and self.cache:
             self.cache.clear_cache()
 
 

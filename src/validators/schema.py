@@ -179,7 +179,8 @@ class SchemaValidator:
         """Load JSON file safely"""
         try:
             with open(file_path, 'r') as f:
-                return json.load(f)
+                data: Dict[str, Any] = json.load(f)
+                return data
         except json.JSONDecodeError as e:
             self.errors.append(f"{file_path}: Invalid JSON - {e}")
             return None

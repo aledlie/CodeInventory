@@ -26,25 +26,25 @@ try:
 except ImportError:
     TQDM_AVAILABLE = False
     # Fallback: create a dummy tqdm that does nothing
-    class tqdm:
-        def __init__(self, iterable=None, *args, **kwargs):
+    class tqdm:  # type: ignore[no-redef]
+        def __init__(self, iterable: Any = None, *args: Any, **kwargs: Any) -> None:
             self.iterable = iterable
             self.n = 0
             self.total = kwargs.get('total', 0)
 
-        def __iter__(self):
+        def __iter__(self) -> Any:
             return iter(self.iterable) if self.iterable else iter([])
 
-        def __enter__(self):
+        def __enter__(self) -> 'tqdm':
             return self
 
-        def __exit__(self, *args):
+        def __exit__(self, *args: Any) -> None:
             pass
 
-        def update(self, n=1):
+        def update(self, n: int = 1) -> None:
             self.n += n
 
-        def set_description(self, desc):
+        def set_description(self, desc: str) -> None:
             pass
 
 # Import centralized logging
@@ -71,9 +71,9 @@ class CacheMetadata:
     version: str = "1.0"
     last_update: float = 0.0
     git_commit: Optional[str] = None
-    files: Dict[str, FileCache] = None
+    files: Dict[str, FileCache] = None  # type: ignore[assignment]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.files is None:
             self.files = {}
 
@@ -121,7 +121,7 @@ class SchemaCache:
             })
             return CacheMetadata()
 
-    def save_cache(self):
+    def save_cache(self) -> None:
         """Save cache to disk"""
         try:
             # Convert to dict for JSON serialization
@@ -196,7 +196,7 @@ class SchemaCache:
             return self.metadata.files[file_str].schema
         return None
 
-    def update_cache(self, file_path: Path, schema: Dict[str, Any]):
+    def update_cache(self, file_path: Path, schema: Dict[str, Any]) -> None:
         """Update cache entry for a file"""
         file_str = str(file_path)
         self.metadata.files[file_str] = FileCache(
@@ -260,7 +260,8 @@ class ParallelSchemaProcessor:
             use_cache: Whether to use caching
             cache_dir: Directory for cache files (default: .schema_cache)
         """
-        self.max_workers = max_workers or max(1, os.cpu_count() - 1)
+        cpu_count = os.cpu_count() or 1
+        self.max_workers = max_workers or max(1, cpu_count - 1)
         self.use_cache = use_cache
 
         if cache_dir is None:
@@ -275,7 +276,7 @@ class ParallelSchemaProcessor:
     def process_files_parallel(
         self,
         files: List[Path],
-        processor_func,
+        processor_func: Any,
         skip_cached: bool = True
     ) -> List[Tuple[Path, Any]]:
         """
@@ -295,7 +296,7 @@ class ParallelSchemaProcessor:
         files_to_process = []
         cached_results = []
 
-        if self.use_cache and skip_cached:
+        if self.use_cache and skip_cached and self.cache:
             for file_path in files:
                 cached_schema = self.cache.get_cached_schema(file_path)
                 if cached_schema:
@@ -338,7 +339,7 @@ class ParallelSchemaProcessor:
                             results.append((file_path, result))
 
                             # Update cache if enabled
-                            if self.use_cache and result:
+                            if self.use_cache and result and self.cache:
                                 self.cache.update_cache(file_path, result)
 
                             pbar.update(1)
@@ -352,7 +353,7 @@ class ParallelSchemaProcessor:
                             pbar.update(1)
 
         # Save cache if enabled
-        if self.use_cache:
+        if self.use_cache and self.cache:
             self.cache.save_cache()
 
         # Log performance metrics
@@ -372,9 +373,9 @@ class ParallelSchemaProcessor:
 
         return results
 
-    def invalidate_cache_for_files(self, files: List[Path]):
+    def invalidate_cache_for_files(self, files: List[Path]) -> None:
         """Invalidate cache entries for specific files"""
-        if not self.use_cache:
+        if not self.use_cache or not self.cache:
             return
 
         for file_path in files:
@@ -384,9 +385,9 @@ class ParallelSchemaProcessor:
 
         logger.info(f"🗑️  Invalidated cache for {len(files)} files")
 
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear entire cache"""
-        if not self.use_cache:
+        if not self.use_cache or not self.cache:
             return
 
         self.cache.metadata.files = {}

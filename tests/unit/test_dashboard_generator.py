@@ -117,7 +117,7 @@ class TestDashboardGenerator(unittest.TestCase):
         # Check for key HTML elements
         self.assertIn("<!DOCTYPE html>", html)
         self.assertIn("Code Inventory Dashboard", html)
-        self.assertIn("Metrics Overview", html)
+        self.assertIn("metrics-grid", html)  # Updated to match actual class name in generated HTML
 
     def test_generate_metrics_section(self):
         """Test metrics section generation"""

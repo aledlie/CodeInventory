@@ -260,10 +260,10 @@ export function formatUser(user: User): string {
 
         self.assertGreater(len(src_files), 0)
 
-        # Find the calculator.py file
+        # Find the calculator.py file (not test_calculator.py)
         calc_file = None
         for file_def in src_files:
-            if 'calculator.py' in file_def.path:
+            if file_def.path.endswith('calculator.py') and 'test_calculator' not in file_def.path:
                 calc_file = file_def
                 break
 

@@ -10,7 +10,7 @@ import os
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from collections import defaultdict
 
@@ -233,15 +233,16 @@ class CodeQualityAnalyzer:
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)
+                parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                return parsed
             return []
         except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception):
             return []
 
-    def analyze_file(self, file_path: Path):
+    def analyze_file(self, file_path: Path) -> None:
         """Analyze a single file for quality issues"""
         language, rules = self._get_language_and_rules(file_path)
-        if not language:
+        if not language or not rules:
             return
 
         self.report.total_files_scanned += 1
@@ -259,7 +260,7 @@ class CodeQualityAnalyzer:
             return 'javascript', self.typescript_rules
         return None, None
 
-    def _process_rule_matches(self, file_path: Path, rule: Dict[str, Any], language: str):
+    def _process_rule_matches(self, file_path: Path, rule: Dict[str, Any], language: str) -> None:
         """Process matches for a single rule"""
         matches = self._run_astgrep_rule(file_path, rule['pattern'], language)
 
@@ -295,14 +296,14 @@ class CodeQualityAnalyzer:
             suggestion=rule.get('suggestion')
         )
 
-    def _record_issue(self, issue: QualityIssue, rule: Dict[str, Any]):
+    def _record_issue(self, issue: QualityIssue, rule: Dict[str, Any]) -> None:
         """Record an issue in the report"""
         self.report.issues.append(issue)
         self.report.total_issues += 1
         self.report.issues_by_severity[rule['severity']] += 1
         self.report.issues_by_category[rule['category']] += 1
 
-    def analyze_directory(self, directory: Path, skip_dirs: set = None):
+    def analyze_directory(self, directory: Path, skip_dirs: Optional[Set[str]] = None) -> None:
         """Analyze all files in a directory recursively"""
         if skip_dirs is None:
             skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
@@ -414,7 +415,7 @@ class CodeQualityAnalyzer:
             "="*80
         ]
 
-    def save_report_json(self, output_path: Path):
+    def save_report_json(self, output_path: Path) -> None:
         """Save report as JSON"""
         data = self._build_report_data()
         self._write_json_file(output_path, data)
@@ -453,17 +454,16 @@ class CodeQualityAnalyzer:
             'suggestion': issue.suggestion
         }
 
-    def _write_json_file(self, path: Path, data: Dict[str, Any]):
+    def _write_json_file(self, path: Path, data: Dict[str, Any]) -> None:
         """Write data to JSON file"""
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)
 
-def main():
-    import argparse
+def main() -> None:
     args = _parse_arguments()
     _run_analysis(args)
 
-def _parse_arguments():
+def _parse_arguments() -> argparse.Namespace:
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(description='Code Quality Analyzer')
     parser.add_argument('path', help='File or directory to analyze')
@@ -471,7 +471,7 @@ def _parse_arguments():
     parser.add_argument('--text', help='Output text report to file')
     return parser.parse_args()
 
-def _run_analysis(args):
+def _run_analysis(args: argparse.Namespace) -> None:
     """Run the code quality analysis"""
     path = Path(args.path)
     analyzer = _initialize_analyzer(path)
@@ -487,7 +487,7 @@ def _initialize_analyzer(path: Path) -> 'CodeQualityAnalyzer':
     """Initialize the analyzer"""
     return CodeQualityAnalyzer(path)
 
-def _print_header(path: Path):
+def _print_header(path: Path) -> None:
     """Print analysis header"""
     logger.info(f"\n{'='*80}")
     logger.info("Code Quality Analyzer")
@@ -506,7 +506,7 @@ def _analyze_path(analyzer: 'CodeQualityAnalyzer', path: Path) -> bool:
         logger.error(f"Error: {path} is not a valid file or directory")
         return False
 
-def _generate_and_save_reports(analyzer: 'CodeQualityAnalyzer', args):
+def _generate_and_save_reports(analyzer: 'CodeQualityAnalyzer', args: argparse.Namespace) -> None:
     """Generate and save reports"""
     text_report = analyzer.generate_report_text()
     logger.info(text_report)
@@ -517,7 +517,7 @@ def _generate_and_save_reports(analyzer: 'CodeQualityAnalyzer', args):
     if args.text:
         _save_text_report(args.text, text_report)
 
-def _save_text_report(filepath: str, content: str):
+def _save_text_report(filepath: str, content: str) -> None:
     """Save text report to file"""
     with open(filepath, 'w') as f:
         f.write(content)
