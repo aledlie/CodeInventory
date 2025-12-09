@@ -28,38 +28,34 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // Chrome runs first - this is our primary browser
+    // Chrome - primary browser
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
-    // Firefox runs after Chrome passes
+    // Firefox - secondary browser (no dependencies for separate CI job)
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-      dependencies: ['chromium'], // Only runs if chromium passes
     },
 
-    // WebKit/Safari runs after Chrome passes
+    // WebKit/Safari - secondary browser (no dependencies for separate CI job)
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-      dependencies: ['chromium'], // Only runs if chromium passes
     },
 
-    // Mobile Chrome (optional - runs after desktop Chrome)
+    // Mobile Chrome
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 5'] },
-      dependencies: ['chromium'],
     },
 
-    // Mobile Safari (optional - runs after desktop Chrome)
+    // Mobile Safari
     {
       name: 'mobile-safari',
       use: { ...devices['iPhone 12'] },
-      dependencies: ['chromium'],
     },
   ],
 
