@@ -126,6 +126,11 @@ class AnalysisRunner:
         self.timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.results = {}
 
+        # Track timing and file counts for dashboard
+        self.start_time = None
+        self.end_time = None
+        self.total_files_processed = 0
+
         # Merge custom timeouts with defaults
         self.timeouts = DEFAULT_TIMEOUTS.copy()
         if timeouts:
@@ -299,6 +304,37 @@ class AnalysisRunner:
 
         logger.info(f"{'='*80}\n")
 
+    def _count_source_files(self) -> int:
+        """Count source files in the root directory"""
+        import os
+
+        count = 0
+        valid_extensions = {'.py', '.ts', '.tsx', '.js', '.jsx', '.rb'}
+        skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+                     '_site', '.venv', 'venv', 'env', '.cache', 'coverage', 'htmlcov'}
+
+        for root, dirs, files in os.walk(self.root_dir):
+            # Skip unwanted directories
+            dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
+
+            for filename in files:
+                if Path(filename).suffix in valid_extensions:
+                    count += 1
+
+        return count
+
+    def _get_elapsed_time(self) -> str:
+        """Get formatted elapsed time"""
+        if self.start_time and self.end_time:
+            elapsed = self.end_time - self.start_time
+            if elapsed < 60:
+                return f"{elapsed:.1f}s"
+            else:
+                minutes = int(elapsed // 60)
+                seconds = elapsed % 60
+                return f"{minutes}m {seconds:.1f}s"
+        return "N/A"
+
     def _run_schema_generation(self):
         """Run schema generation analysis with optimization"""
         # Ensure schemas directory exists
@@ -385,16 +421,26 @@ class AnalysisRunner:
         dashboard_dir.mkdir(parents=True, exist_ok=True)
         dashboard_output = dashboard_dir / f'dashboard_{self.timestamp}.html'
 
+        # Build command with optional timing/file count args
+        command = [
+            'python3', '-m', 'src.generators.dashboard',
+            '--schemas', str(schemas_file),
+            '--quality', str(quality_output),
+            '--coverage', str(coverage_output),
+            '--dependency', str(dependency_output),
+            '--output', str(dashboard_output),
+            '--files-processed', str(self.total_files_processed)
+        ]
+
+        # Add elapsed time if available (will be computed at generation time)
+        if self.start_time:
+            import time
+            elapsed = time.time() - self.start_time
+            command.extend(['--elapsed-time', f"{elapsed:.1f}"])
+
         return self.run_command(
             'dashboard_generation',
-            [
-                'python3', '-m', 'src.generators.dashboard',
-                '--schemas', str(schemas_file),
-                '--quality', str(quality_output),
-                '--coverage', str(coverage_output),
-                '--dependency', str(dependency_output),
-                '--output', str(dashboard_output)
-            ],
+            command,
             'Dashboard Generation'
         )
 
@@ -445,7 +491,15 @@ class AnalysisRunner:
 
     def run_all_analysis(self):
         """Run complete analysis pipeline with checkpoint support"""
+        import time
+
+        # Start timing
+        self.start_time = time.time()
+
         self._print_analysis_header()
+
+        # Count files to be processed
+        self.total_files_processed = self._count_source_files()
 
         # Initialize checkpoint manager if enabled
         if self.checkpoint:
@@ -482,6 +536,9 @@ class AnalysisRunner:
             # Mark step as completed and save checkpoint
             if self.checkpoint:
                 self.checkpoint.mark_step_completed(step_name, self.results.get(step_name, {}))
+
+        # Record end time
+        self.end_time = time.time()
 
         # Generate Summary Report
         self.generate_summary_report()

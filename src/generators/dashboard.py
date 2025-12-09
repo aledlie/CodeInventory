@@ -22,12 +22,15 @@ class DashboardGenerator:
 
     def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,
                  coverage_path: Optional[Path] = None, dependency_path: Optional[Path] = None,
-                 cache_dir: Optional[Path] = None):
+                 cache_dir: Optional[Path] = None, files_processed: int = 0,
+                 elapsed_time: float = 0):
         self.schemas_path = schemas_path
         self.quality_path = quality_path
         self.coverage_path = coverage_path
         self.dependency_path = dependency_path
         self.cache_dir = cache_dir or Path.cwd() / '.analyzer_cache'
+        self.files_processed = files_processed
+        self.elapsed_time = elapsed_time
 
         # Load data
         self.schemas_data = self._load_json(schemas_path)
@@ -344,12 +347,31 @@ class DashboardGenerator:
         }
     """
 
+    def _format_elapsed_time(self) -> str:
+        """Format elapsed time for display"""
+        if self.elapsed_time <= 0:
+            return ""
+        if self.elapsed_time < 60:
+            return f"{self.elapsed_time:.1f}s"
+        minutes = int(self.elapsed_time // 60)
+        seconds = self.elapsed_time % 60
+        return f"{minutes}m {seconds:.1f}s"
+
+    def _generate_processing_stats(self) -> str:
+        """Generate processing stats line"""
+        if self.files_processed > 0 and self.elapsed_time > 0:
+            return f"<p style=\"opacity: 0.8; font-size: 0.9rem;\">Processed {self.files_processed} files in {self._format_elapsed_time()}</p>"
+        elif self.files_processed > 0:
+            return f"<p style=\"opacity: 0.8; font-size: 0.9rem;\">Processed {self.files_processed} files</p>"
+        return ""
+
     def _generate_body(self) -> str:
         """Generate HTML body content"""
         return f"""
     <div class="header">
         <h1>📊 Code Inventory Dashboard</h1>
         <p>Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        {self._generate_processing_stats()}
     </div>
 
     <div class="container">
@@ -683,6 +705,8 @@ def main() -> None:
     parser.add_argument('--coverage', help='Path to coverage report JSON')
     parser.add_argument('--dependency', help='Path to dependency report JSON')
     parser.add_argument('--output', default='dashboard.html', help='Output HTML file')
+    parser.add_argument('--files-processed', type=int, default=0, help='Number of files processed')
+    parser.add_argument('--elapsed-time', type=float, default=0, help='Elapsed time in seconds')
 
     args = parser.parse_args()
 
@@ -690,7 +714,9 @@ def main() -> None:
         schemas_path=Path(args.schemas),
         quality_path=Path(args.quality) if args.quality else None,
         coverage_path=Path(args.coverage) if args.coverage else None,
-        dependency_path=Path(args.dependency) if args.dependency else None
+        dependency_path=Path(args.dependency) if args.dependency else None,
+        files_processed=args.files_processed,
+        elapsed_time=args.elapsed_time
     )
 
     output_path = Path(args.output)
