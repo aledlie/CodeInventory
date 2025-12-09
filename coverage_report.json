@@ -86,48 +86,6 @@
       "is_tested": true
     },
     {
-      "name": "format",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "init_sentry",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 70,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "setup_logging",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 145,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_logger",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 223,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "log_exception",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 263,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "log_performance_metric",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 297,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "load_cache_statistics",
       "file_path": "src/utils/performance_monitor.py",
       "line_number": 44,
@@ -168,6 +126,48 @@
       "line_number": 251,
       "is_async": false,
       "is_tested": true
+    },
+    {
+      "name": "format",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "init_sentry",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 70,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "setup_logging",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 145,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_logger",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 223,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_exception",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 263,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_performance_metric",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 297,
+      "is_async": false,
+      "is_tested": false
     },
     {
       "name": "getStoredMode",
@@ -1381,34 +1381,6 @@
       "is_tested": false
     },
     {
-      "name": "generateId",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 22,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getStoredVisualizations",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "saveToStorage",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "createDefaultConfig",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 56,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "fetchToolsReport",
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 6,
@@ -1441,6 +1413,34 @@
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 41,
       "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "generateId",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getStoredVisualizations",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "saveToStorage",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "createDefaultConfig",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 56,
+      "is_async": false,
       "is_tested": false
     },
     {
@@ -2074,48 +2074,6 @@
       "is_tested": false
     },
     {
-      "name": "calculateQualityScore",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 51,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateHealthStatus",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 78,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateDashboardMetrics",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 119,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidQualityReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 158,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidCoverageReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 180,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidDependencyReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 201,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "useDashboardMetrics",
       "file_path": "src/features/dashboard/helpers/usage-example.tsx",
       "line_number": 22,
@@ -2170,6 +2128,48 @@
       "line_number": 265,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "calculateQualityScore",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateHealthStatus",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 78,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateDashboardMetrics",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 119,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidQualityReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 158,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidCoverageReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 180,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidDependencyReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 201,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "DashboardLayoutExample",
@@ -4244,6 +4244,27 @@
       "is_tested": false
     },
     {
+      "name": "getTrendIcon",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getChangeColor",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 61,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ComparisonCard",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 67,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "useToolsReport",
       "file_path": "src/features/dashboard/hooks/useToolsData.ts",
       "line_number": 13,
@@ -4275,27 +4296,6 @@
       "name": "useModuleToolCandidates",
       "file_path": "src/features/dashboard/hooks/useToolsData.ts",
       "line_number": 57,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getTrendIcon",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getChangeColor",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ComparisonCard",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 67,
       "is_async": false,
       "is_tested": false
     },
@@ -4489,6 +4489,160 @@
       "is_tested": false
     },
     {
+      "name": "useSavedViews",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 42,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useSavedView",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 53,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useActiveViewId",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 64,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useCreateSavedView",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 75,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateSavedView",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 90,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDeleteSavedView",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 111,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useSetActiveView",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 125,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "usePreferences",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 143,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdatePreferences",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 154,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateNotificationSettings",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useWidgetMetadata",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 188,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useWidgetsByCategory",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 199,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useSavedViewsManager",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "usePreferencesManager",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 252,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useWidgetLibrary",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 274,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useLayoutOperations",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 301,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "findNextAvailablePosition",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 370,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "addWidget",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 305,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "removeWidget",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 320,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "updateWidget",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 329,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "moveWidget",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 343,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "toggleWidgetVisibility",
+      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
+      "line_number": 347,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "InsightsPage",
       "file_path": "src/features/dashboard/hooks/useInsights.ts",
       "line_number": 31,
@@ -4671,160 +4825,6 @@
       "is_tested": false
     },
     {
-      "name": "useSavedViews",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 42,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useSavedView",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 53,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useActiveViewId",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 64,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useCreateSavedView",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 75,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useUpdateSavedView",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 90,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useDeleteSavedView",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 111,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useSetActiveView",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 125,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "usePreferences",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 143,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useUpdatePreferences",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 154,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useUpdateNotificationSettings",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useWidgetMetadata",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 188,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useWidgetsByCategory",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 199,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useSavedViewsManager",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 214,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "usePreferencesManager",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 252,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useWidgetLibrary",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 274,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useLayoutOperations",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 301,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "findNextAvailablePosition",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 370,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "addWidget",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 305,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "removeWidget",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 320,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "updateWidget",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 329,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "moveWidget",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 343,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "toggleWidgetVisibility",
-      "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
-      "line_number": 347,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "useNotifications",
       "file_path": "src/features/dashboard/hooks/useNotifications.ts",
       "line_number": 27,
@@ -4916,6 +4916,41 @@
       "is_tested": false
     },
     {
+      "name": "distance",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 41,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "initializePositions",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 50,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "simulationStep",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 74,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "runSimulation",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 152,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useForceSimulation",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 168,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "ExportButton",
       "file_path": "src/features/dashboard/hooks/useExport.ts",
       "line_number": 59,
@@ -4954,69 +4989,6 @@
       "name": "useSeverityColors",
       "file_path": "src/features/dashboard/hooks/useChartTheme.ts",
       "line_number": 161,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "distance",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 41,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "initializePositions",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 50,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "simulationStep",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 74,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "runSimulation",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 152,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useForceSimulation",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 168,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "App",
-      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
-      "line_number": 48,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QueryProvider",
-      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
-      "line_number": 57,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "RefreshButton",
-      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
-      "line_number": 83,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleRefresh",
-      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
-      "line_number": 86,
       "is_async": false,
       "is_tested": false
     },
@@ -5124,6 +5096,34 @@
       "line_number": 327,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "App",
+      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 48,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QueryProvider",
+      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 57,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "RefreshButton",
+      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleRefresh",
+      "file_path": "src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": false
     }
   ],
   "untested_by_file": {
@@ -5154,6 +5154,28 @@
         "is_async": false
       }
     ],
+    "src/utils/performance_monitor.py": [
+      {
+        "name": "load_cache_statistics",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "calculate_cache_hit_rate",
+        "line_number": 78,
+        "is_async": false
+      },
+      {
+        "name": "analyze_performance",
+        "line_number": 84,
+        "is_async": false
+      },
+      {
+        "name": "print_report",
+        "line_number": 207,
+        "is_async": false
+      }
+    ],
     "src/utils/logging_config.py": [
       {
         "name": "init_sentry",
@@ -5178,28 +5200,6 @@
       {
         "name": "log_performance_metric",
         "line_number": 297,
-        "is_async": false
-      }
-    ],
-    "src/utils/performance_monitor.py": [
-      {
-        "name": "load_cache_statistics",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "calculate_cache_hit_rate",
-        "line_number": 78,
-        "is_async": false
-      },
-      {
-        "name": "analyze_performance",
-        "line_number": 84,
-        "is_async": false
-      },
-      {
-        "name": "print_report",
-        "line_number": 207,
         "is_async": false
       }
     ],
@@ -5855,28 +5855,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/visualizationApi.ts": [
-      {
-        "name": "generateId",
-        "line_number": 22,
-        "is_async": false
-      },
-      {
-        "name": "getStoredVisualizations",
-        "line_number": 29,
-        "is_async": false
-      },
-      {
-        "name": "saveToStorage",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "createDefaultConfig",
-        "line_number": 56,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/toolsApi.ts": [
       {
         "name": "fetchToolsReport",
@@ -5902,6 +5880,28 @@
         "name": "fetchToolsStatistics",
         "line_number": 41,
         "is_async": true
+      }
+    ],
+    "src/features/dashboard/api/visualizationApi.ts": [
+      {
+        "name": "generateId",
+        "line_number": 22,
+        "is_async": false
+      },
+      {
+        "name": "getStoredVisualizations",
+        "line_number": 29,
+        "is_async": false
+      },
+      {
+        "name": "saveToStorage",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "createDefaultConfig",
+        "line_number": 56,
+        "is_async": false
       }
     ],
     "src/features/dashboard/api/comparisonApi.ts": [
@@ -8013,6 +8013,23 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/comparison/ComparisonCard.tsx": [
+      {
+        "name": "getTrendIcon",
+        "line_number": 29,
+        "is_async": false
+      },
+      {
+        "name": "getChangeColor",
+        "line_number": 61,
+        "is_async": false
+      },
+      {
+        "name": "ComparisonCard",
+        "line_number": 67,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/useToolsData.ts": [
       {
         "name": "useToolsReport",
@@ -8037,23 +8054,6 @@
       {
         "name": "useModuleToolCandidates",
         "line_number": 57,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/comparison/ComparisonCard.tsx": [
-      {
-        "name": "getTrendIcon",
-        "line_number": 29,
-        "is_async": false
-      },
-      {
-        "name": "getChangeColor",
-        "line_number": 61,
-        "is_async": false
-      },
-      {
-        "name": "ComparisonCard",
-        "line_number": 67,
         "is_async": false
       }
     ],
@@ -8200,6 +8200,118 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/hooks/usePersonalization.ts": [
+      {
+        "name": "useSavedViews",
+        "line_number": 42,
+        "is_async": false
+      },
+      {
+        "name": "useSavedView",
+        "line_number": 53,
+        "is_async": false
+      },
+      {
+        "name": "useActiveViewId",
+        "line_number": 64,
+        "is_async": false
+      },
+      {
+        "name": "useCreateSavedView",
+        "line_number": 75,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateSavedView",
+        "line_number": 90,
+        "is_async": false
+      },
+      {
+        "name": "useDeleteSavedView",
+        "line_number": 111,
+        "is_async": false
+      },
+      {
+        "name": "useSetActiveView",
+        "line_number": 125,
+        "is_async": false
+      },
+      {
+        "name": "usePreferences",
+        "line_number": 143,
+        "is_async": false
+      },
+      {
+        "name": "useUpdatePreferences",
+        "line_number": 154,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateNotificationSettings",
+        "line_number": 169,
+        "is_async": false
+      },
+      {
+        "name": "useWidgetMetadata",
+        "line_number": 188,
+        "is_async": false
+      },
+      {
+        "name": "useWidgetsByCategory",
+        "line_number": 199,
+        "is_async": false
+      },
+      {
+        "name": "useSavedViewsManager",
+        "line_number": 214,
+        "is_async": false
+      },
+      {
+        "name": "usePreferencesManager",
+        "line_number": 252,
+        "is_async": false
+      },
+      {
+        "name": "useWidgetLibrary",
+        "line_number": 274,
+        "is_async": false
+      },
+      {
+        "name": "useLayoutOperations",
+        "line_number": 301,
+        "is_async": false
+      },
+      {
+        "name": "findNextAvailablePosition",
+        "line_number": 370,
+        "is_async": false
+      },
+      {
+        "name": "addWidget",
+        "line_number": 305,
+        "is_async": false
+      },
+      {
+        "name": "removeWidget",
+        "line_number": 320,
+        "is_async": false
+      },
+      {
+        "name": "updateWidget",
+        "line_number": 329,
+        "is_async": false
+      },
+      {
+        "name": "moveWidget",
+        "line_number": 343,
+        "is_async": false
+      },
+      {
+        "name": "toggleWidgetVisibility",
+        "line_number": 347,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/useInsights.ts": [
       {
         "name": "InsightsPage",
@@ -8334,118 +8446,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/usePersonalization.ts": [
-      {
-        "name": "useSavedViews",
-        "line_number": 42,
-        "is_async": false
-      },
-      {
-        "name": "useSavedView",
-        "line_number": 53,
-        "is_async": false
-      },
-      {
-        "name": "useActiveViewId",
-        "line_number": 64,
-        "is_async": false
-      },
-      {
-        "name": "useCreateSavedView",
-        "line_number": 75,
-        "is_async": false
-      },
-      {
-        "name": "useUpdateSavedView",
-        "line_number": 90,
-        "is_async": false
-      },
-      {
-        "name": "useDeleteSavedView",
-        "line_number": 111,
-        "is_async": false
-      },
-      {
-        "name": "useSetActiveView",
-        "line_number": 125,
-        "is_async": false
-      },
-      {
-        "name": "usePreferences",
-        "line_number": 143,
-        "is_async": false
-      },
-      {
-        "name": "useUpdatePreferences",
-        "line_number": 154,
-        "is_async": false
-      },
-      {
-        "name": "useUpdateNotificationSettings",
-        "line_number": 169,
-        "is_async": false
-      },
-      {
-        "name": "useWidgetMetadata",
-        "line_number": 188,
-        "is_async": false
-      },
-      {
-        "name": "useWidgetsByCategory",
-        "line_number": 199,
-        "is_async": false
-      },
-      {
-        "name": "useSavedViewsManager",
-        "line_number": 214,
-        "is_async": false
-      },
-      {
-        "name": "usePreferencesManager",
-        "line_number": 252,
-        "is_async": false
-      },
-      {
-        "name": "useWidgetLibrary",
-        "line_number": 274,
-        "is_async": false
-      },
-      {
-        "name": "useLayoutOperations",
-        "line_number": 301,
-        "is_async": false
-      },
-      {
-        "name": "findNextAvailablePosition",
-        "line_number": 370,
-        "is_async": false
-      },
-      {
-        "name": "addWidget",
-        "line_number": 305,
-        "is_async": false
-      },
-      {
-        "name": "removeWidget",
-        "line_number": 320,
-        "is_async": false
-      },
-      {
-        "name": "updateWidget",
-        "line_number": 329,
-        "is_async": false
-      },
-      {
-        "name": "moveWidget",
-        "line_number": 343,
-        "is_async": false
-      },
-      {
-        "name": "toggleWidgetVisibility",
-        "line_number": 347,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/hooks/useNotifications.ts": [
       {
         "name": "useNotifications",
@@ -8513,6 +8513,33 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/hooks/useForceSimulation.ts": [
+      {
+        "name": "distance",
+        "line_number": 41,
+        "is_async": false
+      },
+      {
+        "name": "initializePositions",
+        "line_number": 50,
+        "is_async": false
+      },
+      {
+        "name": "simulationStep",
+        "line_number": 74,
+        "is_async": false
+      },
+      {
+        "name": "runSimulation",
+        "line_number": 152,
+        "is_async": false
+      },
+      {
+        "name": "useForceSimulation",
+        "line_number": 168,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/useExport.ts": [
       {
         "name": "ExportButton",
@@ -8544,50 +8571,6 @@
       {
         "name": "useSeverityColors",
         "line_number": 161,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/hooks/useForceSimulation.ts": [
-      {
-        "name": "distance",
-        "line_number": 41,
-        "is_async": false
-      },
-      {
-        "name": "initializePositions",
-        "line_number": 50,
-        "is_async": false
-      },
-      {
-        "name": "simulationStep",
-        "line_number": 74,
-        "is_async": false
-      },
-      {
-        "name": "runSimulation",
-        "line_number": 152,
-        "is_async": false
-      },
-      {
-        "name": "useForceSimulation",
-        "line_number": 168,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/providers/QueryProvider.tsx": [
-      {
-        "name": "QueryProvider",
-        "line_number": 57,
-        "is_async": false
-      },
-      {
-        "name": "RefreshButton",
-        "line_number": 83,
-        "is_async": false
-      },
-      {
-        "name": "handleRefresh",
-        "line_number": 86,
         "is_async": false
       }
     ],
@@ -8665,6 +8648,23 @@
       {
         "name": "usePrefetchAnalytics",
         "line_number": 327,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/providers/QueryProvider.tsx": [
+      {
+        "name": "QueryProvider",
+        "line_number": 57,
+        "is_async": false
+      },
+      {
+        "name": "RefreshButton",
+        "line_number": 83,
+        "is_async": false
+      },
+      {
+        "name": "handleRefresh",
+        "line_number": 86,
         "is_async": false
       }
     ]

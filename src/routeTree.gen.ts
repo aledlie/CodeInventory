@@ -9,6 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrendsRouteImport } from './routes/trends'
+import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as QualityRouteImport } from './routes/quality'
+import { Route as PredictionsRouteImport } from './routes/predictions'
+import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as GraphRouteImport } from './routes/graph'
+import { Route as DependenciesRouteImport } from './routes/dependencies'
+import { Route as CoverageRouteImport } from './routes/coverage'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardTrendsIndexRouteImport } from './routes/dashboard/trends/index'
@@ -26,6 +38,66 @@ import { Route as DashboardAnalyticsIndexRouteImport } from './routes/dashboard/
 import { Route as DashboardToolsModuleIdRouteImport } from './routes/dashboard/tools/$moduleId'
 import { Route as DashboardToolsCandidateCandidateNameRouteImport } from './routes/dashboard/tools/candidate/$candidateName'
 
+const TrendsRoute = TrendsRouteImport.update({
+  id: '/trends',
+  path: '/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QualityRoute = QualityRouteImport.update({
+  id: '/quality',
+  path: '/quality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PredictionsRoute = PredictionsRouteImport.update({
+  id: '/predictions',
+  path: '/predictions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraphRoute = GraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DependenciesRoute = DependenciesRouteImport.update({
+  id: '/dependencies',
+  path: '/dependencies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoverageRoute = CoverageRouteImport.update({
+  id: '/coverage',
+  path: '/coverage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -112,6 +184,18 @@ const DashboardToolsCandidateCandidateNameRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/compare': typeof CompareRoute
+  '/coverage': typeof CoverageRoute
+  '/dependencies': typeof DependenciesRoute
+  '/graph': typeof GraphRoute
+  '/insights': typeof InsightsRoute
+  '/predictions': typeof PredictionsRoute
+  '/quality': typeof QualityRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
+  '/trends': typeof TrendsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
   '/dashboard/analytics': typeof DashboardAnalyticsIndexRoute
@@ -130,6 +214,18 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/compare': typeof CompareRoute
+  '/coverage': typeof CoverageRoute
+  '/dependencies': typeof DependenciesRoute
+  '/graph': typeof GraphRoute
+  '/insights': typeof InsightsRoute
+  '/predictions': typeof PredictionsRoute
+  '/quality': typeof QualityRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
+  '/trends': typeof TrendsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
   '/dashboard/analytics': typeof DashboardAnalyticsIndexRoute
@@ -149,6 +245,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/compare': typeof CompareRoute
+  '/coverage': typeof CoverageRoute
+  '/dependencies': typeof DependenciesRoute
+  '/graph': typeof GraphRoute
+  '/insights': typeof InsightsRoute
+  '/predictions': typeof PredictionsRoute
+  '/quality': typeof QualityRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
+  '/trends': typeof TrendsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
   '/dashboard/analytics/': typeof DashboardAnalyticsIndexRoute
@@ -169,6 +277,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/analytics'
+    | '/compare'
+    | '/coverage'
+    | '/dependencies'
+    | '/graph'
+    | '/insights'
+    | '/predictions'
+    | '/quality'
+    | '/reports'
+    | '/settings'
+    | '/tools'
+    | '/trends'
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
     | '/dashboard/analytics'
@@ -187,6 +307,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/analytics'
+    | '/compare'
+    | '/coverage'
+    | '/dependencies'
+    | '/graph'
+    | '/insights'
+    | '/predictions'
+    | '/quality'
+    | '/reports'
+    | '/settings'
+    | '/tools'
+    | '/trends'
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
     | '/dashboard/analytics'
@@ -205,6 +337,18 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/analytics'
+    | '/compare'
+    | '/coverage'
+    | '/dependencies'
+    | '/graph'
+    | '/insights'
+    | '/predictions'
+    | '/quality'
+    | '/reports'
+    | '/settings'
+    | '/tools'
+    | '/trends'
     | '/dashboard/'
     | '/dashboard/tools/$moduleId'
     | '/dashboard/analytics/'
@@ -224,6 +368,18 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  CompareRoute: typeof CompareRoute
+  CoverageRoute: typeof CoverageRoute
+  DependenciesRoute: typeof DependenciesRoute
+  GraphRoute: typeof GraphRoute
+  InsightsRoute: typeof InsightsRoute
+  PredictionsRoute: typeof PredictionsRoute
+  QualityRoute: typeof QualityRoute
+  ReportsRoute: typeof ReportsRoute
+  SettingsRoute: typeof SettingsRoute
+  ToolsRoute: typeof ToolsRoute
+  TrendsRoute: typeof TrendsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardToolsModuleIdRoute: typeof DashboardToolsModuleIdRoute
   DashboardAnalyticsIndexRoute: typeof DashboardAnalyticsIndexRoute
@@ -243,6 +399,90 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trends': {
+      id: '/trends'
+      path: '/trends'
+      fullPath: '/trends'
+      preLoaderRoute: typeof TrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quality': {
+      id: '/quality'
+      path: '/quality'
+      fullPath: '/quality'
+      preLoaderRoute: typeof QualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/predictions': {
+      id: '/predictions'
+      path: '/predictions'
+      fullPath: '/predictions'
+      preLoaderRoute: typeof PredictionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/graph': {
+      id: '/graph'
+      path: '/graph'
+      fullPath: '/graph'
+      preLoaderRoute: typeof GraphRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dependencies': {
+      id: '/dependencies'
+      path: '/dependencies'
+      fullPath: '/dependencies'
+      preLoaderRoute: typeof DependenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coverage': {
+      id: '/coverage'
+      path: '/coverage'
+      fullPath: '/coverage'
+      preLoaderRoute: typeof CoverageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -360,6 +600,18 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  CompareRoute: CompareRoute,
+  CoverageRoute: CoverageRoute,
+  DependenciesRoute: DependenciesRoute,
+  GraphRoute: GraphRoute,
+  InsightsRoute: InsightsRoute,
+  PredictionsRoute: PredictionsRoute,
+  QualityRoute: QualityRoute,
+  ReportsRoute: ReportsRoute,
+  SettingsRoute: SettingsRoute,
+  ToolsRoute: ToolsRoute,
+  TrendsRoute: TrendsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardToolsModuleIdRoute: DashboardToolsModuleIdRoute,
   DashboardAnalyticsIndexRoute: DashboardAnalyticsIndexRoute,
