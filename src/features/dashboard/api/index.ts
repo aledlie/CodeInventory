@@ -6,6 +6,13 @@
 
 export { dashboardApi } from './dashboardApi';
 
+// Phase 3 APIs
+export { trendsApi } from './trendsApi';
+export { graphApi } from './graphApi';
+export { comparisonApi } from './comparisonApi';
+export { reportsApi, AVAILABLE_SECTIONS } from './reportsApi';
+export { toolsApi } from './toolsApi';
+
 // Phase 4 APIs
 export { insightsApi } from './insightsApi';
 export { predictionsApi } from './predictionsApi';
