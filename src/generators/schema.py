@@ -103,33 +103,102 @@ class DirectorySchema:
 class AstGrepHelper:
     """Helper class for ast-grep operations"""
 
-    @staticmethod
-    def check_available() -> bool:
-        """Check if ast-grep CLI is available"""
-        try:
-            result = subprocess.run(
-                ['ast-grep', '--version'],
-                capture_output=True,
-                text=True,
-                timeout=5
-            )
-            return result.returncode == 0
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            return False
+    # Class variable to cache the ast-grep executable path
+    _executable: Optional[str] = None
 
-    @staticmethod
-    def find_pattern(file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
+    @classmethod
+    def _find_executable(cls) -> Optional[str]:
+        """Find ast-grep executable in multiple locations"""
+        if cls._executable is not None:
+            return cls._executable if cls._executable else None
+
+        # List of locations to check, in order of preference
+        project_root = Path.cwd()
+        possible_paths = [
+            # 1. Local npm (preferred for consistency)
+            str(project_root / 'node_modules' / '.bin' / 'ast-grep'),
+            # 2. npx (if npm available)
+            'npx ast-grep',
+            # 3. In PATH (brew install, cargo install, etc.)
+            'ast-grep',
+            # 4. macOS Homebrew (Apple Silicon)
+            '/opt/homebrew/bin/ast-grep',
+            # 5. Linux/Intel Mac Homebrew or system
+            '/usr/local/bin/ast-grep',
+            # 6. Alternative binary name (sg)
+            'sg',
+        ]
+
+        for path in possible_paths:
+            try:
+                # Handle 'npx ast-grep' specially (shell=True needed)
+                if path.startswith('npx '):
+                    result = subprocess.run(
+                        path.split(),
+                        capture_output=True,
+                        text=True,
+                        timeout=10
+                    )
+                    # npx may output version info differently
+                    if result.returncode == 0 or 'ast-grep' in result.stdout.lower():
+                        cls._executable = path
+                        logger.debug(f"Found ast-grep via: {path}")
+                        return cls._executable
+                else:
+                    result = subprocess.run(
+                        [path, '--version'],
+                        capture_output=True,
+                        text=True,
+                        timeout=5
+                    )
+                    if result.returncode == 0:
+                        cls._executable = path
+                        logger.debug(f"Found ast-grep at: {path}")
+                        return cls._executable
+            except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+                continue
+
+        # Not found - cache empty string to avoid repeated searches
+        cls._executable = ''
+        return None
+
+    @classmethod
+    def check_available(cls) -> bool:
+        """Check if ast-grep CLI is available"""
+        return cls._find_executable() is not None
+
+    @classmethod
+    def get_executable(cls) -> str:
+        """Get the ast-grep executable path, raises if not found"""
+        exe = cls._find_executable()
+        if exe is None:
+            raise FileNotFoundError("ast-grep not found. Install with: npm install, brew install ast-grep, or cargo install ast-grep")
+        return exe
+
+    @classmethod
+    def find_pattern(cls, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Find code patterns using ast-grep"""
         try:
+            exe = cls._find_executable()
+            if exe is None:
+                return []
+
+            # Build command based on executable type
+            if exe.startswith('npx '):
+                cmd = exe.split() + ['run', '-p', pattern, '-l', language, '--json', str(file_path)]
+            else:
+                cmd = [exe, 'run', '-p', pattern, '-l', language, '--json', str(file_path)]
+
             result = subprocess.run(
-                ['ast-grep', 'run', '-p', pattern, '-l', language, '--json', str(file_path)],
+                cmd,
                 capture_output=True,
                 text=True,
                 timeout=30
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                return json.loads(result.stdout)  # type: ignore[no-any-return]
+                parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                return parsed
             return []
         except subprocess.TimeoutExpired as e:
             log_exception(logger, e, context={
@@ -170,10 +239,14 @@ class AstGrepHelper:
             return var_node.get('text') if isinstance(var_node, dict) else str(var_node)
         return None
 
-    @staticmethod
-    def find_with_rule(file_path: Path, rule: Dict[str, Any], language: str) -> List[Dict[str, Any]]:
+    @classmethod
+    def find_with_rule(cls, file_path: Path, rule: Dict[str, Any], language: str) -> List[Dict[str, Any]]:
         """Find code using ast-grep YAML rule"""
         try:
+            exe = cls._find_executable()
+            if exe is None:
+                return []
+
             # Create temporary rule file
             with tempfile.NamedTemporaryFile(mode='w', suffix='.yml', delete=False) as f:
                 import yaml  # type: ignore[import-untyped]
@@ -181,15 +254,22 @@ class AstGrepHelper:
                 rule_file = f.name
 
             try:
+                # Build command based on executable type
+                if exe.startswith('npx '):
+                    cmd = exe.split() + ['scan', '-r', rule_file, '--json', str(file_path)]
+                else:
+                    cmd = [exe, 'scan', '-r', rule_file, '--json', str(file_path)]
+
                 result = subprocess.run(
-                    ['ast-grep', 'scan', '-r', rule_file, '--json', str(file_path)],
+                    cmd,
                     capture_output=True,
                     text=True,
                     timeout=30
                 )
 
                 if result.returncode == 0 and result.stdout.strip():
-                    return json.loads(result.stdout)  # type: ignore[no-any-return]
+                    parsed: List[Dict[str, Any]] = json.loads(result.stdout)
+                    return parsed
                 return []
             finally:
                 os.unlink(rule_file)
