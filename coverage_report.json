@@ -9,6 +9,41 @@
   },
   "functions": [
     {
+      "name": "validate_schema",
+      "file_path": "src/validators/schema.py",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_file",
+      "file_path": "src/validators/schema.py",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_json_file",
+      "file_path": "src/validators/schema.py",
+      "line_number": 164,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_report",
+      "file_path": "src/validators/schema.py",
+      "line_number": 228,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/validators/schema.py",
+      "line_number": 274,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "get_git_repos_with_remotes",
       "file_path": "src/utils/git_operations.py",
       "line_number": 14,
@@ -47,41 +82,6 @@
       "name": "main",
       "file_path": "src/utils/git_operations.py",
       "line_number": 77,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validate_schema",
-      "file_path": "src/validators/schema.py",
-      "line_number": 32,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validate_file",
-      "file_path": "src/validators/schema.py",
-      "line_number": 122,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validate_json_file",
-      "file_path": "src/validators/schema.py",
-      "line_number": 164,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_report",
-      "file_path": "src/validators/schema.py",
-      "line_number": 228,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/validators/schema.py",
-      "line_number": 274,
       "is_async": false,
       "is_tested": true
     },
@@ -168,27 +168,6 @@
       "line_number": 296,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "generate_html",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 73,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_dashboard",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 666,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 676,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "update",
@@ -313,6 +292,27 @@
       "name": "main",
       "file_path": "src/generators/rss.py",
       "line_number": 254,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_html",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_dashboard",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 666,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 676,
       "is_async": false,
       "is_tested": true
     },
@@ -450,6 +450,104 @@
       "is_tested": false
     },
     {
+      "name": "update",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 48,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "set_description",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_cache",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculate_hash",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "is_cached",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 192,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_cached_result",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 202,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "update_cache",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 208,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 217,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process_items_parallel",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "invalidate_cache_for_items",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 376,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 387,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_file_content_hash",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 395,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_file_key",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 405,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "batch_items_by_attribute",
+      "file_path": "src/analyzers/analyzer_optimizer.py",
+      "line_number": 410,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "process_single_file",
       "file_path": "src/generators/schema.py",
       "line_number": 30,
@@ -574,104 +672,6 @@
       "line_number": 1103,
       "is_async": false,
       "is_tested": true
-    },
-    {
-      "name": "update",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 48,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "set_description",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 51,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_cache",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 137,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "calculate_hash",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "is_cached",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 192,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_cached_result",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 202,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "update_cache",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 208,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "clear_cache",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 217,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "process_items_parallel",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 257,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "invalidate_cache_for_items",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 376,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "clear_cache",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 387,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_file_content_hash",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 395,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_file_key",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 405,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "batch_items_by_attribute",
-      "file_path": "src/analyzers/analyzer_optimizer.py",
-      "line_number": 410,
-      "is_async": false,
-      "is_tested": false
     },
     {
       "name": "is_external",
@@ -1031,43 +1031,6 @@
         "is_async": false
       }
     ],
-    "src/generators/schema.py": [
-      {
-        "name": "process_single_file",
-        "line_number": 30,
-        "is_async": false
-      },
-      {
-        "name": "get_executable",
-        "line_number": 170,
-        "is_async": false
-      },
-      {
-        "name": "get_meta_var",
-        "line_number": 228,
-        "is_async": false
-      },
-      {
-        "name": "find_with_rule",
-        "line_number": 242,
-        "is_async": false
-      },
-      {
-        "name": "extract_typescript_schema_astgrep",
-        "line_number": 447,
-        "is_async": false
-      },
-      {
-        "name": "scan_all_directories",
-        "line_number": 725,
-        "is_async": false
-      },
-      {
-        "name": "scan_all_directories_optimized",
-        "line_number": 765,
-        "is_async": false
-      }
-    ],
     "src/analyzers/analyzer_optimizer.py": [
       {
         "name": "set_description",
@@ -1112,6 +1075,43 @@
       {
         "name": "batch_items_by_attribute",
         "line_number": 410,
+        "is_async": false
+      }
+    ],
+    "src/generators/schema.py": [
+      {
+        "name": "process_single_file",
+        "line_number": 30,
+        "is_async": false
+      },
+      {
+        "name": "get_executable",
+        "line_number": 170,
+        "is_async": false
+      },
+      {
+        "name": "get_meta_var",
+        "line_number": 228,
+        "is_async": false
+      },
+      {
+        "name": "find_with_rule",
+        "line_number": 242,
+        "is_async": false
+      },
+      {
+        "name": "extract_typescript_schema_astgrep",
+        "line_number": 447,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories",
+        "line_number": 725,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories_optimized",
+        "line_number": 765,
         "is_async": false
       }
     ],
