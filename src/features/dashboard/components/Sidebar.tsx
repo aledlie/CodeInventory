@@ -32,6 +32,8 @@ import {
   Close as CloseIcon,
   TrendingUp as TrendingUpIcon,
   Hub as GraphIcon,
+  CompareArrows as CompareIcon,
+  Description as ReportsIcon,
 } from '@mui/icons-material';
 
 /**
@@ -93,6 +95,16 @@ const navigationItems: NavItem[] = [
     label: 'Graph',
     path: '/dashboard/graph',
     icon: <GraphIcon />,
+  },
+  {
+    label: 'Compare',
+    path: '/dashboard/compare',
+    icon: <CompareIcon />,
+  },
+  {
+    label: 'Reports',
+    path: '/dashboard/reports',
+    icon: <ReportsIcon />,
   },
   {
     label: 'Settings',

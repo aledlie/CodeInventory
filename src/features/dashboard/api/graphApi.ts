@@ -75,7 +75,7 @@ function getModule(filePath: string, rootDir: string): string {
 function transformToGraph(report: PythonDependencyReport): DependencyGraph {
   const nodeMap = new Map<string, GraphNode>();
   const edges: GraphEdge[] = [];
-  const rootDir = report.summary.root_directory;
+  const rootDir = ''; // Root dir not available in report
 
   // First pass: create nodes for all files
   Object.keys(report.dependencies_by_file).forEach((filePath) => {

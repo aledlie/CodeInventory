@@ -5,7 +5,7 @@
  * Supports zoom, pan, and node selection.
  */
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { Box, Paper, Typography, Chip, useTheme } from '@mui/material';
 import type { DependencyGraph, GraphNode, GraphEdge, NodeType } from '../../types/graph';
 import { useForceSimulation, type SimulationNode } from '../../hooks/useForceSimulation';
@@ -43,7 +43,7 @@ export function DependencyGraphCanvas({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  const { nodes, isSimulating, updateNodePosition } = useForceSimulation(graph, {
+  const { nodes, isSimulating } = useForceSimulation(graph, {
     width,
     height,
     iterations: 150,

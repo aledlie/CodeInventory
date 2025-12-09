@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardTrendsIndexRouteImport } from './routes/dashboard/trends/index'
 import { Route as DashboardToolsIndexRouteImport } from './routes/dashboard/tools/index'
+import { Route as DashboardReportsIndexRouteImport } from './routes/dashboard/reports/index'
 import { Route as DashboardQualityIndexRouteImport } from './routes/dashboard/quality/index'
 import { Route as DashboardGraphIndexRouteImport } from './routes/dashboard/graph/index'
 import { Route as DashboardDependenciesIndexRouteImport } from './routes/dashboard/dependencies/index'
 import { Route as DashboardCoverageIndexRouteImport } from './routes/dashboard/coverage/index'
+import { Route as DashboardCompareIndexRouteImport } from './routes/dashboard/compare/index'
 import { Route as DashboardToolsModuleIdRouteImport } from './routes/dashboard/tools/$moduleId'
 import { Route as DashboardToolsCandidateCandidateNameRouteImport } from './routes/dashboard/tools/candidate/$candidateName'
 
@@ -32,6 +34,11 @@ const DashboardTrendsIndexRoute = DashboardTrendsIndexRouteImport.update({
 const DashboardToolsIndexRoute = DashboardToolsIndexRouteImport.update({
   id: '/dashboard/tools/',
   path: '/dashboard/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardReportsIndexRoute = DashboardReportsIndexRouteImport.update({
+  id: '/dashboard/reports/',
+  path: '/dashboard/reports/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardQualityIndexRoute = DashboardQualityIndexRouteImport.update({
@@ -55,6 +62,11 @@ const DashboardCoverageIndexRoute = DashboardCoverageIndexRouteImport.update({
   path: '/dashboard/coverage/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardCompareIndexRoute = DashboardCompareIndexRouteImport.update({
+  id: '/dashboard/compare/',
+  path: '/dashboard/compare/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardToolsModuleIdRoute = DashboardToolsModuleIdRouteImport.update({
   id: '/dashboard/tools/$moduleId',
   path: '/dashboard/tools/$moduleId',
@@ -70,10 +82,12 @@ const DashboardToolsCandidateCandidateNameRoute =
 export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/compare': typeof DashboardCompareIndexRoute
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph': typeof DashboardGraphIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
+  '/dashboard/reports': typeof DashboardReportsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
   '/dashboard/trends': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -81,10 +95,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/compare': typeof DashboardCompareIndexRoute
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph': typeof DashboardGraphIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
+  '/dashboard/reports': typeof DashboardReportsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
   '/dashboard/trends': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -93,10 +109,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/compare/': typeof DashboardCompareIndexRoute
   '/dashboard/coverage/': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies/': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph/': typeof DashboardGraphIndexRoute
   '/dashboard/quality/': typeof DashboardQualityIndexRoute
+  '/dashboard/reports/': typeof DashboardReportsIndexRoute
   '/dashboard/tools/': typeof DashboardToolsIndexRoute
   '/dashboard/trends/': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -106,10 +124,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/compare'
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
     | '/dashboard/graph'
     | '/dashboard/quality'
+    | '/dashboard/reports'
     | '/dashboard/tools'
     | '/dashboard/trends'
     | '/dashboard/tools/candidate/$candidateName'
@@ -117,10 +137,12 @@ export interface FileRouteTypes {
   to:
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/compare'
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
     | '/dashboard/graph'
     | '/dashboard/quality'
+    | '/dashboard/reports'
     | '/dashboard/tools'
     | '/dashboard/trends'
     | '/dashboard/tools/candidate/$candidateName'
@@ -128,10 +150,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/dashboard/'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/compare/'
     | '/dashboard/coverage/'
     | '/dashboard/dependencies/'
     | '/dashboard/graph/'
     | '/dashboard/quality/'
+    | '/dashboard/reports/'
     | '/dashboard/tools/'
     | '/dashboard/trends/'
     | '/dashboard/tools/candidate/$candidateName'
@@ -140,10 +164,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardToolsModuleIdRoute: typeof DashboardToolsModuleIdRoute
+  DashboardCompareIndexRoute: typeof DashboardCompareIndexRoute
   DashboardCoverageIndexRoute: typeof DashboardCoverageIndexRoute
   DashboardDependenciesIndexRoute: typeof DashboardDependenciesIndexRoute
   DashboardGraphIndexRoute: typeof DashboardGraphIndexRoute
   DashboardQualityIndexRoute: typeof DashboardQualityIndexRoute
+  DashboardReportsIndexRoute: typeof DashboardReportsIndexRoute
   DashboardToolsIndexRoute: typeof DashboardToolsIndexRoute
   DashboardTrendsIndexRoute: typeof DashboardTrendsIndexRoute
   DashboardToolsCandidateCandidateNameRoute: typeof DashboardToolsCandidateCandidateNameRoute
@@ -170,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/tools'
       fullPath: '/dashboard/tools'
       preLoaderRoute: typeof DashboardToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/reports/': {
+      id: '/dashboard/reports/'
+      path: '/dashboard/reports'
+      fullPath: '/dashboard/reports'
+      preLoaderRoute: typeof DashboardReportsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/quality/': {
@@ -200,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCoverageIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/compare/': {
+      id: '/dashboard/compare/'
+      path: '/dashboard/compare'
+      fullPath: '/dashboard/compare'
+      preLoaderRoute: typeof DashboardCompareIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/tools/$moduleId': {
       id: '/dashboard/tools/$moduleId'
       path: '/dashboard/tools/$moduleId'
@@ -220,10 +260,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardToolsModuleIdRoute: DashboardToolsModuleIdRoute,
+  DashboardCompareIndexRoute: DashboardCompareIndexRoute,
   DashboardCoverageIndexRoute: DashboardCoverageIndexRoute,
   DashboardDependenciesIndexRoute: DashboardDependenciesIndexRoute,
   DashboardGraphIndexRoute: DashboardGraphIndexRoute,
   DashboardQualityIndexRoute: DashboardQualityIndexRoute,
+  DashboardReportsIndexRoute: DashboardReportsIndexRoute,
   DashboardToolsIndexRoute: DashboardToolsIndexRoute,
   DashboardTrendsIndexRoute: DashboardTrendsIndexRoute,
   DashboardToolsCandidateCandidateNameRoute:
