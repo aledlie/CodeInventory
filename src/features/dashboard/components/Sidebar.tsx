@@ -30,6 +30,8 @@ import {
   Settings as SettingsIcon,
   Menu as MenuIcon,
   Close as CloseIcon,
+  TrendingUp as TrendingUpIcon,
+  Hub as GraphIcon,
 } from '@mui/icons-material';
 
 /**
@@ -81,6 +83,16 @@ const navigationItems: NavItem[] = [
     label: 'Dependencies',
     path: '/dashboard/dependencies',
     icon: <NetworkIcon />,
+  },
+  {
+    label: 'Trends',
+    path: '/dashboard/trends',
+    icon: <TrendingUpIcon />,
+  },
+  {
+    label: 'Graph',
+    path: '/dashboard/graph',
+    icon: <GraphIcon />,
   },
   {
     label: 'Settings',
