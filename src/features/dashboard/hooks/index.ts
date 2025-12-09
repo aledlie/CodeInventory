@@ -36,3 +36,25 @@ export {
 } from './useDashboardData';
 
 export { useChartTheme, useChartOptions, useSeverityColors } from './useChartTheme';
+
+// Phase 4 Hooks
+export {
+  useInsightsReport,
+  useInsights,
+  useInsightsByType,
+  useInsightsSummary,
+  useAcknowledgeInsight,
+  useRegenerateInsights,
+  useInsightCounts,
+} from './useInsights';
+
+export {
+  usePredictionsReport,
+  usePrediction,
+  useRisks,
+  useScenarios,
+  usePredictionsSummary,
+  useUpdateScenario,
+  useRiskCounts,
+  useAllPredictions,
+} from './usePredictions';

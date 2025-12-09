@@ -5,3 +5,7 @@
  */
 
 export { dashboardApi } from './dashboardApi';
+
+// Phase 4 APIs
+export { insightsApi } from './insightsApi';
+export { predictionsApi } from './predictionsApi';
