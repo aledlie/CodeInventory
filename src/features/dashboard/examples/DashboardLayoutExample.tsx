@@ -9,14 +9,14 @@
  * - Content rendering
  */
 
-import React, { useState } from 'react';
-import { Box, Typography, Card, CardContent, Grid } from '@mui/material';
+import { useState } from 'react';
+import { Typography, Card, CardContent, Grid } from '@mui/material';
 import { DashboardLayout } from '../components/DashboardLayout';
 
 /**
  * Example Dashboard Page Component
  */
-export const DashboardLayoutExample: React.FC = () => {
+export function DashboardLayoutExample() {
   // State for current path (in real app, use React Router)
   const [currentPath, setCurrentPath] = useState('/dashboard');
 

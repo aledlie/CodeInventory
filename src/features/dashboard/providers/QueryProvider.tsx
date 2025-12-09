@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -10,6 +10,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
  * - gcTime: 10 minutes - How long unused data stays in cache
  * - retry: 1 - Only retry failed requests once
  * - refetchOnWindowFocus: false - Don't refetch when window regains focus
+ *
+ * Note: In TanStack Query v5, Suspense is opted into per-query using
+ * useSuspenseQuery, useSuspenseQueries, or useSuspenseInfiniteQuery hooks.
  */
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,13 +22,12 @@ export const queryClient = new QueryClient({
       retry: 1, // Only retry once on failure
       refetchOnWindowFocus: false, // Don't auto-refetch on window focus
       refetchOnReconnect: true, // Refetch when network reconnects
-      suspense: false, // Individual hooks opt into Suspense via useSuspenseQuery
     },
   },
 });
 
 interface QueryProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Show React Query DevTools in development
    * @default true in development, false in production
@@ -52,23 +54,22 @@ interface QueryProviderProps {
  * }
  * ```
  */
-export const QueryProvider: React.FC<QueryProviderProps> = ({
+export function QueryProvider({
   children,
   showDevTools = import.meta.env.DEV,
-}) => {
+}: QueryProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
       {showDevTools && (
         <ReactQueryDevtools
           initialIsOpen={false}
-          position="bottom-right"
           buttonPosition="bottom-right"
         />
       )}
     </QueryClientProvider>
   );
-};
+}
 
 /**
  * Hook to access the query client directly
