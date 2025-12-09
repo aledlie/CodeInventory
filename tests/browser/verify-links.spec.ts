@@ -25,6 +25,25 @@ const ROUTES = [
   '/dashboard/analytics',
 ];
 
+// Top-level routes that should redirect to /dashboard/*
+const REDIRECT_ROUTES = [
+  { from: '/reports', to: '/dashboard/reports' },
+  { from: '/quality', to: '/dashboard/quality' },
+  { from: '/coverage', to: '/dashboard/coverage' },
+  { from: '/tools', to: '/dashboard/tools' },
+  { from: '/insights', to: '/dashboard/insights' },
+];
+
+test.describe('Top-Level Route Redirects', () => {
+  for (const { from, to } of REDIRECT_ROUTES) {
+    test(`${from} redirects to ${to}`, async ({ page }) => {
+      await page.goto(`${PROD_URL}${from}`);
+      await page.waitForTimeout(3000);
+      await expect(page).toHaveURL(new RegExp(to.replace('/', '\\/')));
+    });
+  }
+});
+
 test.describe('Production Link Verification', () => {
   test('root page loads correctly', async ({ page }) => {
     await page.goto(PROD_URL);
