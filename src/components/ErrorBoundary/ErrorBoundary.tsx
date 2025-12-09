@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import {
   Box,
   Container,
@@ -97,7 +97,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
    */
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
 
@@ -127,7 +127,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
    * Render fallback UI when error occurs
    */
   renderErrorUI(): ReactNode {
-    const { fallback, showDetails = process.env.NODE_ENV === 'development' } = this.props;
+    const { fallback, showDetails = import.meta.env.DEV } = this.props;
     const { error, errorInfo } = this.state;
 
     // Use custom fallback if provided
