@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardTrendsIndexRouteImport } from './routes/dashboard/trends/index'
 import { Route as DashboardToolsIndexRouteImport } from './routes/dashboard/tools/index'
+import { Route as DashboardSettingsIndexRouteImport } from './routes/dashboard/settings/index'
 import { Route as DashboardReportsIndexRouteImport } from './routes/dashboard/reports/index'
 import { Route as DashboardQualityIndexRouteImport } from './routes/dashboard/quality/index'
 import { Route as DashboardPredictionsIndexRouteImport } from './routes/dashboard/predictions/index'
@@ -37,6 +38,11 @@ const DashboardTrendsIndexRoute = DashboardTrendsIndexRouteImport.update({
 const DashboardToolsIndexRoute = DashboardToolsIndexRouteImport.update({
   id: '/dashboard/tools/',
   path: '/dashboard/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardSettingsIndexRoute = DashboardSettingsIndexRouteImport.update({
+  id: '/dashboard/settings/',
+  path: '/dashboard/settings/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardReportsIndexRoute = DashboardReportsIndexRouteImport.update({
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/predictions': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
   '/dashboard/reports': typeof DashboardReportsIndexRoute
+  '/dashboard/settings': typeof DashboardSettingsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
   '/dashboard/trends': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/dashboard/predictions': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
   '/dashboard/reports': typeof DashboardReportsIndexRoute
+  '/dashboard/settings': typeof DashboardSettingsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
   '/dashboard/trends': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/dashboard/predictions/': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality/': typeof DashboardQualityIndexRoute
   '/dashboard/reports/': typeof DashboardReportsIndexRoute
+  '/dashboard/settings/': typeof DashboardSettingsIndexRoute
   '/dashboard/tools/': typeof DashboardToolsIndexRoute
   '/dashboard/trends/': typeof DashboardTrendsIndexRoute
   '/dashboard/tools/candidate/$candidateName': typeof DashboardToolsCandidateCandidateNameRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/dashboard/predictions'
     | '/dashboard/quality'
     | '/dashboard/reports'
+    | '/dashboard/settings'
     | '/dashboard/tools'
     | '/dashboard/trends'
     | '/dashboard/tools/candidate/$candidateName'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/dashboard/predictions'
     | '/dashboard/quality'
     | '/dashboard/reports'
+    | '/dashboard/settings'
     | '/dashboard/tools'
     | '/dashboard/trends'
     | '/dashboard/tools/candidate/$candidateName'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/dashboard/predictions/'
     | '/dashboard/quality/'
     | '/dashboard/reports/'
+    | '/dashboard/settings/'
     | '/dashboard/tools/'
     | '/dashboard/trends/'
     | '/dashboard/tools/candidate/$candidateName'
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   DashboardPredictionsIndexRoute: typeof DashboardPredictionsIndexRoute
   DashboardQualityIndexRoute: typeof DashboardQualityIndexRoute
   DashboardReportsIndexRoute: typeof DashboardReportsIndexRoute
+  DashboardSettingsIndexRoute: typeof DashboardSettingsIndexRoute
   DashboardToolsIndexRoute: typeof DashboardToolsIndexRoute
   DashboardTrendsIndexRoute: typeof DashboardTrendsIndexRoute
   DashboardToolsCandidateCandidateNameRoute: typeof DashboardToolsCandidateCandidateNameRoute
@@ -236,6 +249,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/tools'
       fullPath: '/dashboard/tools'
       preLoaderRoute: typeof DashboardToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/settings/': {
+      id: '/dashboard/settings/'
+      path: '/dashboard/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/reports/': {
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardPredictionsIndexRoute: DashboardPredictionsIndexRoute,
   DashboardQualityIndexRoute: DashboardQualityIndexRoute,
   DashboardReportsIndexRoute: DashboardReportsIndexRoute,
+  DashboardSettingsIndexRoute: DashboardSettingsIndexRoute,
   DashboardToolsIndexRoute: DashboardToolsIndexRoute,
   DashboardTrendsIndexRoute: DashboardTrendsIndexRoute,
   DashboardToolsCandidateCandidateNameRoute:
