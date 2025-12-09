@@ -7,7 +7,6 @@
  * - Action items list with severity indicators
  */
 
-import React from 'react';
 import {
   Box,
   Card,

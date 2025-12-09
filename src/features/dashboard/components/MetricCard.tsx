@@ -25,7 +25,7 @@
  * ```
  */
 
-import React from 'react';
+import type { ReactNode } from 'react';
 import { Card, CardContent, Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -34,7 +34,7 @@ import { styled } from '@mui/material/styles';
  */
 export interface MetricCardProps {
   /** Optional icon displayed in header alongside label */
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   /** Metric label/title */
   label: string;
   /** Metric value (number or formatted string) */
@@ -48,18 +48,6 @@ export interface MetricCardProps {
   /** Optional click handler - makes card interactive */
   onClick?: () => void;
 }
-
-/**
- * Status Color Mapping
- * Maps status variants to theme palette colors for left border accent
- */
-const STATUS_COLORS = {
-  default: 'transparent',
-  primary: 'primary.main',
-  success: 'success.main',
-  warning: 'warning.main',
-  error: 'error.main',
-} as const;
 
 /**
  * Styled Card with Status Border
@@ -112,7 +100,7 @@ const StyledMetricCard = styled(Card, {
  * Displays a single metric with optional icon, trend, and status indicator.
  * Responsive design with mobile-first font scaling.
  */
-export const MetricCard: React.FC<MetricCardProps> = ({
+export function MetricCard({
   icon,
   label,
   value,
@@ -120,7 +108,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   status = 'default',
   trend,
   onClick,
-}) => {
+}: MetricCardProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 

@@ -12,7 +12,7 @@
  * - Accessible labels and ARIA attributes
  */
 
-import React from 'react';
+import type { ReactElement, SyntheticEvent } from 'react';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -37,7 +37,7 @@ export interface MobileNavItem {
   /** Route path */
   path: string;
   /** Icon component */
-  icon: React.ReactElement;
+  icon: ReactElement;
 }
 
 /**
@@ -105,10 +105,10 @@ const mobileNavItems: MobileNavItem[] = [
  * This component only renders on mobile devices (<768px).
  * Use as an alternative to the drawer-based Sidebar on mobile.
  */
-export const MobileMenu: React.FC<MobileMenuProps> = ({
+export function MobileMenu({
   currentPath = '/dashboard',
   onNavigate,
-}) => {
+}: MobileMenuProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md')); // <768px
 
@@ -138,7 +138,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   /**
    * Handle navigation action change
    */
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
     const selectedItem = mobileNavItems[newValue];
     if (selectedItem && onNavigate) {
       onNavigate(selectedItem.path);

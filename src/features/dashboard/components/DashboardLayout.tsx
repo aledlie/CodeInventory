@@ -23,8 +23,9 @@
  * - Focus management for mobile drawer
  */
 
-import React, { useState } from 'react';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
+import { Box, useTheme } from '@mui/material';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 
@@ -35,7 +36,7 @@ export interface DashboardLayoutProps {
   /**
    * Content to render in the main content area
    */
-  children: React.ReactNode;
+  children: ReactNode;
 
   /**
    * Timestamp of when the dashboard data was last generated
@@ -90,26 +91,18 @@ export interface DashboardLayoutProps {
  * </DashboardLayout>
  * ```
  */
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+export function DashboardLayout({
   children,
   lastGenerated,
   currentPath = '/dashboard',
   onNavigate,
   onSettingsClick,
   onExportClick,
-}) => {
+}: DashboardLayoutProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md')); // <768px
 
   // Mobile drawer state
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-
-  /**
-   * Handle opening mobile drawer
-   */
-  const handleMobileDrawerOpen = () => {
-    setMobileDrawerOpen(true);
-  };
 
   /**
    * Handle closing mobile drawer

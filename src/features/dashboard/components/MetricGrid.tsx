@@ -34,9 +34,9 @@
  * ```
  */
 
-import React from 'react';
+import type { ReactNode } from 'react';
 import { Grid2 as Grid, useTheme, useMediaQuery } from '@mui/material';
-import { MetricCard, type MetricCardProps } from './MetricCard';
+import { MetricCard } from './MetricCard';
 
 /**
  * MetricGrid Props Interface
@@ -45,7 +45,7 @@ export interface MetricGridProps {
   /** Array of metric configurations to display as cards */
   metrics: Array<{
     /** Optional icon displayed in header alongside label */
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     /** Metric label/title */
     label: string;
     /** Metric value (number or formatted string) */
@@ -67,7 +67,7 @@ export interface MetricGridProps {
  * Responsive grid layout for metric cards with breakpoint-based column adjustment.
  * Uses MUI Grid v7 (Grid2) with size prop for responsive behavior.
  */
-export const MetricGrid: React.FC<MetricGridProps> = ({ metrics }) => {
+export function MetricGrid({ metrics }: MetricGridProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
