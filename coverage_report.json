@@ -2739,6 +2739,48 @@
       "is_tested": false
     },
     {
+      "name": "DashboardSkeleton",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 62,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "SummaryCard",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 85,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ScenarioCard",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 126,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "PredictiveDashboardContent",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 195,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "PredictiveDashboard",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 397,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getTrendIcon",
+      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "InsightsListSkeleton",
       "file_path": "src/features/dashboard/components/InsightsPage.tsx",
       "line_number": 56,
@@ -2784,48 +2826,6 @@
       "name": "handleRefresh",
       "file_path": "src/features/dashboard/components/InsightsPage.tsx",
       "line_number": 187,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "DashboardSkeleton",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 62,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "SummaryCard",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 85,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ScenarioCard",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 126,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "PredictiveDashboardContent",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 195,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "PredictiveDashboard",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 397,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getTrendIcon",
-      "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
-      "line_number": 214,
       "is_async": false,
       "is_tested": false
     },
@@ -4489,97 +4489,6 @@
       "is_tested": false
     },
     {
-      "name": "InsightsPage",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsReport",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 37,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ConcernsList",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsights",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ImprovementsList",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 82,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsByType",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 88,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "InsightsSummaryCard",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 108,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsSummary",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 114,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "InsightCard",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 130,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useAcknowledgeInsight",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 144,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "RegenerateButton",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 171,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useRegenerateInsights",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 182,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightCounts",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 203,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "useSavedViews",
       "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
       "line_number": 42,
@@ -4734,93 +4643,93 @@
       "is_tested": false
     },
     {
-      "name": "useNotifications",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 27,
+      "name": "InsightsPage",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 31,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useNotificationStats",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 38,
+      "name": "useInsightsReport",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 37,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useAlertTriggers",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 49,
+      "name": "ConcernsList",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 55,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useNotificationPreferences",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 60,
+      "name": "useInsights",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 61,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useMarkNotificationAsRead",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 71,
+      "name": "ImprovementsList",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 82,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useMarkAllNotificationsAsRead",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 86,
+      "name": "useInsightsByType",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 88,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useDismissNotification",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 100,
+      "name": "InsightsSummaryCard",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 108,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useCreateAlertTrigger",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 115,
+      "name": "useInsightsSummary",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 114,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useUpdateAlertTrigger",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 131,
+      "name": "InsightCard",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 130,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useDeleteAlertTrigger",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 151,
+      "name": "useAcknowledgeInsight",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 144,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useUpdateNotificationPreferences",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 166,
+      "name": "RegenerateButton",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 171,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useNotificationCenter",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 183,
+      "name": "useRegenerateInsights",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 182,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useAlertTriggersManager",
-      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
-      "line_number": 205,
+      "name": "useInsightCounts",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 203,
       "is_async": false,
       "is_tested": false
     },
@@ -4912,6 +4821,97 @@
       "name": "useAllPredictions",
       "file_path": "src/features/dashboard/hooks/usePredictions.ts",
       "line_number": 221,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useNotifications",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useNotificationStats",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 38,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useAlertTriggers",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 49,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useNotificationPreferences",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 60,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useMarkNotificationAsRead",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 71,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useMarkAllNotificationsAsRead",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDismissNotification",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useCreateAlertTrigger",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 115,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateAlertTrigger",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 131,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDeleteAlertTrigger",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 151,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateNotificationPreferences",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 166,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useNotificationCenter",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useAlertTriggersManager",
+      "file_path": "src/features/dashboard/hooks/useNotifications.ts",
+      "line_number": 205,
       "is_async": false,
       "is_tested": false
     },
@@ -6830,6 +6830,38 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/PredictiveDashboard.tsx": [
+      {
+        "name": "DashboardSkeleton",
+        "line_number": 62,
+        "is_async": false
+      },
+      {
+        "name": "SummaryCard",
+        "line_number": 85,
+        "is_async": false
+      },
+      {
+        "name": "ScenarioCard",
+        "line_number": 126,
+        "is_async": false
+      },
+      {
+        "name": "PredictiveDashboardContent",
+        "line_number": 195,
+        "is_async": false
+      },
+      {
+        "name": "PredictiveDashboard",
+        "line_number": 397,
+        "is_async": false
+      },
+      {
+        "name": "getTrendIcon",
+        "line_number": 214,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/components/InsightsPage.tsx": [
       {
         "name": "InsightsListSkeleton",
@@ -6864,38 +6896,6 @@
       {
         "name": "handleRefresh",
         "line_number": 187,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/PredictiveDashboard.tsx": [
-      {
-        "name": "DashboardSkeleton",
-        "line_number": 62,
-        "is_async": false
-      },
-      {
-        "name": "SummaryCard",
-        "line_number": 85,
-        "is_async": false
-      },
-      {
-        "name": "ScenarioCard",
-        "line_number": 126,
-        "is_async": false
-      },
-      {
-        "name": "PredictiveDashboardContent",
-        "line_number": 195,
-        "is_async": false
-      },
-      {
-        "name": "PredictiveDashboard",
-        "line_number": 397,
-        "is_async": false
-      },
-      {
-        "name": "getTrendIcon",
-        "line_number": 214,
         "is_async": false
       }
     ],
@@ -8200,73 +8200,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useInsights.ts": [
-      {
-        "name": "InsightsPage",
-        "line_number": 31,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsReport",
-        "line_number": 37,
-        "is_async": false
-      },
-      {
-        "name": "ConcernsList",
-        "line_number": 55,
-        "is_async": false
-      },
-      {
-        "name": "useInsights",
-        "line_number": 61,
-        "is_async": false
-      },
-      {
-        "name": "ImprovementsList",
-        "line_number": 82,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsByType",
-        "line_number": 88,
-        "is_async": false
-      },
-      {
-        "name": "InsightsSummaryCard",
-        "line_number": 108,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsSummary",
-        "line_number": 114,
-        "is_async": false
-      },
-      {
-        "name": "InsightCard",
-        "line_number": 130,
-        "is_async": false
-      },
-      {
-        "name": "useAcknowledgeInsight",
-        "line_number": 144,
-        "is_async": false
-      },
-      {
-        "name": "RegenerateButton",
-        "line_number": 171,
-        "is_async": false
-      },
-      {
-        "name": "useRegenerateInsights",
-        "line_number": 182,
-        "is_async": false
-      },
-      {
-        "name": "useInsightCounts",
-        "line_number": 203,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/hooks/usePersonalization.ts": [
       {
         "name": "useSavedViews",
@@ -8379,70 +8312,70 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useNotifications.ts": [
+    "src/features/dashboard/hooks/useInsights.ts": [
       {
-        "name": "useNotifications",
-        "line_number": 27,
+        "name": "InsightsPage",
+        "line_number": 31,
         "is_async": false
       },
       {
-        "name": "useNotificationStats",
-        "line_number": 38,
+        "name": "useInsightsReport",
+        "line_number": 37,
         "is_async": false
       },
       {
-        "name": "useAlertTriggers",
-        "line_number": 49,
+        "name": "ConcernsList",
+        "line_number": 55,
         "is_async": false
       },
       {
-        "name": "useNotificationPreferences",
-        "line_number": 60,
+        "name": "useInsights",
+        "line_number": 61,
         "is_async": false
       },
       {
-        "name": "useMarkNotificationAsRead",
-        "line_number": 71,
+        "name": "ImprovementsList",
+        "line_number": 82,
         "is_async": false
       },
       {
-        "name": "useMarkAllNotificationsAsRead",
-        "line_number": 86,
+        "name": "useInsightsByType",
+        "line_number": 88,
         "is_async": false
       },
       {
-        "name": "useDismissNotification",
-        "line_number": 100,
+        "name": "InsightsSummaryCard",
+        "line_number": 108,
         "is_async": false
       },
       {
-        "name": "useCreateAlertTrigger",
-        "line_number": 115,
+        "name": "useInsightsSummary",
+        "line_number": 114,
         "is_async": false
       },
       {
-        "name": "useUpdateAlertTrigger",
-        "line_number": 131,
+        "name": "InsightCard",
+        "line_number": 130,
         "is_async": false
       },
       {
-        "name": "useDeleteAlertTrigger",
-        "line_number": 151,
+        "name": "useAcknowledgeInsight",
+        "line_number": 144,
         "is_async": false
       },
       {
-        "name": "useUpdateNotificationPreferences",
-        "line_number": 166,
+        "name": "RegenerateButton",
+        "line_number": 171,
         "is_async": false
       },
       {
-        "name": "useNotificationCenter",
-        "line_number": 183,
+        "name": "useRegenerateInsights",
+        "line_number": 182,
         "is_async": false
       },
       {
-        "name": "useAlertTriggersManager",
-        "line_number": 205,
+        "name": "useInsightCounts",
+        "line_number": 203,
         "is_async": false
       }
     ],
@@ -8510,6 +8443,73 @@
       {
         "name": "useAllPredictions",
         "line_number": 221,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useNotifications.ts": [
+      {
+        "name": "useNotifications",
+        "line_number": 27,
+        "is_async": false
+      },
+      {
+        "name": "useNotificationStats",
+        "line_number": 38,
+        "is_async": false
+      },
+      {
+        "name": "useAlertTriggers",
+        "line_number": 49,
+        "is_async": false
+      },
+      {
+        "name": "useNotificationPreferences",
+        "line_number": 60,
+        "is_async": false
+      },
+      {
+        "name": "useMarkNotificationAsRead",
+        "line_number": 71,
+        "is_async": false
+      },
+      {
+        "name": "useMarkAllNotificationsAsRead",
+        "line_number": 86,
+        "is_async": false
+      },
+      {
+        "name": "useDismissNotification",
+        "line_number": 100,
+        "is_async": false
+      },
+      {
+        "name": "useCreateAlertTrigger",
+        "line_number": 115,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateAlertTrigger",
+        "line_number": 131,
+        "is_async": false
+      },
+      {
+        "name": "useDeleteAlertTrigger",
+        "line_number": 151,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateNotificationPreferences",
+        "line_number": 166,
+        "is_async": false
+      },
+      {
+        "name": "useNotificationCenter",
+        "line_number": 183,
+        "is_async": false
+      },
+      {
+        "name": "useAlertTriggersManager",
+        "line_number": 205,
         "is_async": false
       }
     ],
