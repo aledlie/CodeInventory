@@ -352,3 +352,16 @@ export interface LoadReportsResult {
   data: PythonAnalyzerData;
   errors: ReportLoadError[];
 }
+
+// ============================================================================
+// Phase 4 Type Exports
+// ============================================================================
+
+// Phase 4A: AI-Powered Insights
+export * from './insights';
+
+// Phase 4B: Predictive Analytics
+export * from './predictions';
+
+// Phase 4D: Team Collaboration
+export * from './collaboration';
