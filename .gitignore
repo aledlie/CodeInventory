@@ -95,6 +95,8 @@ coverage.json
 schemas.json
 schemas_enhanced.json
 quality*.json
+!public/data/**/quality*.json
+!public/data/**/coverage*.json
 quality*.txt
 rss.xml
 rss-enhanced.xml

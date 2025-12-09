@@ -1,0 +1,2270 @@
+{
+  "summary": {
+    "source_directory": "/Users/alyshialedlie/code/Inventory/src",
+    "test_directory": "/Users/alyshialedlie/code/Inventory/tests",
+    "total_functions": 205,
+    "tested_functions": 52,
+    "untested_functions": 153,
+    "coverage_percentage": 25.37
+  },
+  "functions": [
+    {
+      "name": "analyze_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
+      "line_number": 371,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
+      "line_number": 466,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_report_text",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
+      "line_number": 512,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_report_json",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
+      "line_number": 609,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
+      "line_number": 653,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "update",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 48,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "set_description",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculate_hash",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "is_cached",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 192,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_cached_result",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 202,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "update_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 208,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 217,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process_items_parallel",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "invalidate_cache_for_items",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 376,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 387,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_file_content_hash",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 395,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_file_key",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 405,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "batch_items_by_attribute",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
+      "line_number": 410,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "is_external",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 82,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "run_astgrep",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 88,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "extract_package",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 104,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_python_imports",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 213,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_typescript_imports",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 359,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 385,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory_optimized",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 403,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_circular_dependencies",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 527,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "dfs",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 529,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_report_text",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 551,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_report_json",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 716,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
+      "line_number": 762,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_changed_files_since_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 116,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_changed_files_since_last_run",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 154,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "is_file_cached",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 209,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_cached_result",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 236,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "update_file_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 255,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 273,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_cache_stats",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 291,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_checkpoint",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 366,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "initialize_steps",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 381,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "mark_step_in_progress",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 396,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "mark_step_completed",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 409,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "is_step_completed",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 429,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_pending_steps",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 441,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_completed_steps",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 446,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_step_result",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 451,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "has_checkpoint",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 464,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_checkpoint",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 471,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_checkpoint_stats",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
+      "line_number": 491,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "App",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "RefreshButton",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 82,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleRefresh",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx",
+      "line_number": 85,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getMetricStatus",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatNumber",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HeaderExample.tsx",
+      "line_number": 38,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HeaderExample.tsx",
+      "line_number": 46,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "handleMobileDrawerOpen",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/DashboardLayout.tsx",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleMobileDrawerClose",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/DashboardLayout.tsx",
+      "line_number": 117,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculateHealthStatus",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 57,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getProgressColor",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 68,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getDependencyHealth",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 78,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getSeverityIcon",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 87,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ProgressBarWithLabel",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 107,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateActionItems",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 141,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "HealthSummary",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx",
+      "line_number": 202,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleMenuToggle",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
+      "line_number": 105,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "renderActionButtons",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "renderMobileDrawer",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
+      "line_number": 172,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleNavigationClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx",
+      "line_number": 127,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleKeyDown",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx",
+      "line_number": 140,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "navList",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx",
+      "line_number": 164,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleCardClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/MetricCardExample.tsx",
+      "line_number": 33,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "App",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx",
+      "line_number": 26,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DashboardLayout",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx",
+      "line_number": 143,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleNavigate",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx",
+      "line_number": 40,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleChange",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/MobileMenu.tsx",
+      "line_number": 141,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ThemedHeader",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/__stories__/Header.stories.tsx",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardPage",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 16,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDashboardData",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useQualityReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useCoverageReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 56,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDependencyReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardPage",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/index.ts",
+      "line_number": 13,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardContent",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/index.ts",
+      "line_number": 23,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleNavigate",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 30,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 38,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "renderContent",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 54,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardApp",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 23,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardContent",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 35,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "QualityDashboard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "CoverageDashboard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 68,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DependencyDashboard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 81,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "RefreshButton",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardWithPrefetch",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 119,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardWithErrorRecovery",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 144,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardWithNestedSuspense",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 170,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "QualitySection",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 191,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "CoverageSection",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 196,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DependencySection",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 201,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardSkeleton",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 210,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "SectionSkeleton",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 220,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "LoadingSpinner",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 228,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardError",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 236,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "MetricsOverview",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 258,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "MetricCard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 286,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleRefresh",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 100,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "handleMouseEnter",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx",
+      "line_number": 124,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardLoader",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 35,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardErrorFallback",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 63,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "BasicDashboardExample",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 141,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "CustomPathDashboardExample",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 158,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateQualityReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 36,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateCoverageReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 53,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateDependencyReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 71,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "LoadingSpinner",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 15,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ErrorDisplay",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 26,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "QualitySummary",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "CoverageSummary",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DependencySummary",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 109,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "LoadReportsExample",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 142,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "loadReports",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 148,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "LoadReportsWithCustomPath",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 208,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "LoadIndividualReportsExample",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "loadQuality",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 251,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "calculateQualityScore",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 79,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculateHealthStatus",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 106,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculateDashboardMetrics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 142,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "isValidQualityReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 181,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "isValidCoverageReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 203,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "isValidDependencyReport",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 225,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useDashboardMetrics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "loadMetrics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 29,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "DashboardExample",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "MetricCard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "loadLocalReports",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 192,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "getServerSideProps",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 220,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "getStaticProps",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 242,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "useRealtimeMetrics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx",
+      "line_number": 265,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "format",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 54,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "init_sentry",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 69,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "setup_logging",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 144,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_logger",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 222,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_exception",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 262,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_performance_metric",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
+      "line_number": 296,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "load_cache_statistics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 43,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculate_cache_hit_rate",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_performance",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_report",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 191,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "print_report",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 206,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 250,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_git_repos_with_remotes",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 14,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "git_status",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "git_add_all",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 42,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "git_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 50,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "git_push",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 63,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_json_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
+      "line_number": 164,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_report",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
+      "line_number": 228,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
+      "line_number": 274,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_recent_commits",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_commit_changes",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 96,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_rss_xml",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 145,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_rss",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 267,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_html",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_dashboard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 666,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 676,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "update",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 43,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "set_description",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 123,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_file_hash",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 153,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "is_file_cached",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 165,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_cached_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 191,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "update_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 198,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_git_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 208,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_changed_files_since_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 227,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "process_files_parallel",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 275,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "invalidate_cache_for_files",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 375,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 387,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "batch_files_by_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 397,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "process_single_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "check_available",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 166,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_executable",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 171,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_pattern",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 179,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_meta_var",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 229,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_with_rule",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 243,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_software_source_code",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 289,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_jsonld_script",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 323,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_python_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 365,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_typescript_schema_astgrep",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 448,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "extract_typescript_schema_regex",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 571,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_typescript_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 667,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "scan_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 674,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "scan_all_directories",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 726,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "scan_all_directories_optimized",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 766,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_readme",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 891,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_schemas_json",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 1024,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 1104,
+      "is_async": false,
+      "is_tested": true
+    }
+  ],
+  "untested_by_file": {
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py": [
+      {
+        "name": "set_description",
+        "line_number": 51,
+        "is_async": false
+      },
+      {
+        "name": "save_cache",
+        "line_number": 137,
+        "is_async": false
+      },
+      {
+        "name": "is_cached",
+        "line_number": 192,
+        "is_async": false
+      },
+      {
+        "name": "get_cached_result",
+        "line_number": 202,
+        "is_async": false
+      },
+      {
+        "name": "update_cache",
+        "line_number": 208,
+        "is_async": false
+      },
+      {
+        "name": "process_items_parallel",
+        "line_number": 257,
+        "is_async": false
+      },
+      {
+        "name": "invalidate_cache_for_items",
+        "line_number": 376,
+        "is_async": false
+      },
+      {
+        "name": "get_file_content_hash",
+        "line_number": 395,
+        "is_async": false
+      },
+      {
+        "name": "batch_items_by_attribute",
+        "line_number": 410,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py": [
+      {
+        "name": "run_astgrep",
+        "line_number": 88,
+        "is_async": false
+      },
+      {
+        "name": "extract_package",
+        "line_number": 104,
+        "is_async": false
+      },
+      {
+        "name": "analyze_directory_optimized",
+        "line_number": 403,
+        "is_async": false
+      },
+      {
+        "name": "dfs",
+        "line_number": 529,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py": [
+      {
+        "name": "save_cache",
+        "line_number": 86,
+        "is_async": false
+      },
+      {
+        "name": "get_changed_files_since_commit",
+        "line_number": 116,
+        "is_async": false
+      },
+      {
+        "name": "get_changed_files_since_last_run",
+        "line_number": 154,
+        "is_async": false
+      },
+      {
+        "name": "is_file_cached",
+        "line_number": 209,
+        "is_async": false
+      },
+      {
+        "name": "get_cached_result",
+        "line_number": 236,
+        "is_async": false
+      },
+      {
+        "name": "update_file_cache",
+        "line_number": 255,
+        "is_async": false
+      },
+      {
+        "name": "get_cache_stats",
+        "line_number": 291,
+        "is_async": false
+      },
+      {
+        "name": "save_checkpoint",
+        "line_number": 366,
+        "is_async": false
+      },
+      {
+        "name": "initialize_steps",
+        "line_number": 381,
+        "is_async": false
+      },
+      {
+        "name": "mark_step_in_progress",
+        "line_number": 396,
+        "is_async": false
+      },
+      {
+        "name": "mark_step_completed",
+        "line_number": 409,
+        "is_async": false
+      },
+      {
+        "name": "is_step_completed",
+        "line_number": 429,
+        "is_async": false
+      },
+      {
+        "name": "get_pending_steps",
+        "line_number": 441,
+        "is_async": false
+      },
+      {
+        "name": "get_completed_steps",
+        "line_number": 446,
+        "is_async": false
+      },
+      {
+        "name": "get_step_result",
+        "line_number": 451,
+        "is_async": false
+      },
+      {
+        "name": "has_checkpoint",
+        "line_number": 464,
+        "is_async": false
+      },
+      {
+        "name": "clear_checkpoint",
+        "line_number": 471,
+        "is_async": false
+      },
+      {
+        "name": "get_checkpoint_stats",
+        "line_number": 491,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx": [
+      {
+        "name": "RefreshButton",
+        "line_number": 82,
+        "is_async": false
+      },
+      {
+        "name": "handleRefresh",
+        "line_number": 85,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Dashboard.tsx": [
+      {
+        "name": "getMetricStatus",
+        "line_number": 73,
+        "is_async": false
+      },
+      {
+        "name": "formatNumber",
+        "line_number": 112,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HeaderExample.tsx": [
+      {
+        "name": "handleSettingsClick",
+        "line_number": 38,
+        "is_async": false
+      },
+      {
+        "name": "handleExportClick",
+        "line_number": 46,
+        "is_async": true
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/DashboardLayout.tsx": [
+      {
+        "name": "handleMobileDrawerOpen",
+        "line_number": 110,
+        "is_async": false
+      },
+      {
+        "name": "handleMobileDrawerClose",
+        "line_number": 117,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/HealthSummary.tsx": [
+      {
+        "name": "calculateHealthStatus",
+        "line_number": 57,
+        "is_async": false
+      },
+      {
+        "name": "getProgressColor",
+        "line_number": 68,
+        "is_async": false
+      },
+      {
+        "name": "getDependencyHealth",
+        "line_number": 78,
+        "is_async": false
+      },
+      {
+        "name": "getSeverityIcon",
+        "line_number": 87,
+        "is_async": false
+      },
+      {
+        "name": "ProgressBarWithLabel",
+        "line_number": 107,
+        "is_async": false
+      },
+      {
+        "name": "generateActionItems",
+        "line_number": 141,
+        "is_async": false
+      },
+      {
+        "name": "HealthSummary",
+        "line_number": 202,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx": [
+      {
+        "name": "handleMenuToggle",
+        "line_number": 105,
+        "is_async": false
+      },
+      {
+        "name": "handleSettingsClick",
+        "line_number": 112,
+        "is_async": false
+      },
+      {
+        "name": "handleExportClick",
+        "line_number": 122,
+        "is_async": false
+      },
+      {
+        "name": "renderActionButtons",
+        "line_number": 132,
+        "is_async": false
+      },
+      {
+        "name": "renderMobileDrawer",
+        "line_number": 172,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx": [
+      {
+        "name": "handleNavigationClick",
+        "line_number": 127,
+        "is_async": false
+      },
+      {
+        "name": "handleKeyDown",
+        "line_number": 140,
+        "is_async": false
+      },
+      {
+        "name": "navList",
+        "line_number": 164,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/MetricCardExample.tsx": [
+      {
+        "name": "handleCardClick",
+        "line_number": 33,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx": [
+      {
+        "name": "DashboardLayout",
+        "line_number": 143,
+        "is_async": false
+      },
+      {
+        "name": "handleNavigate",
+        "line_number": 40,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/MobileMenu.tsx": [
+      {
+        "name": "handleChange",
+        "line_number": 141,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/__stories__/Header.stories.tsx": [
+      {
+        "name": "ThemedHeader",
+        "line_number": 22,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/useDashboardData.ts": [
+      {
+        "name": "DashboardPage",
+        "line_number": 16,
+        "is_async": false
+      },
+      {
+        "name": "useDashboardData",
+        "line_number": 22,
+        "is_async": false
+      },
+      {
+        "name": "useQualityReport",
+        "line_number": 39,
+        "is_async": false
+      },
+      {
+        "name": "useCoverageReport",
+        "line_number": 56,
+        "is_async": false
+      },
+      {
+        "name": "useDependencyReport",
+        "line_number": 73,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/hooks/index.ts": [
+      {
+        "name": "DashboardPage",
+        "line_number": 13,
+        "is_async": false
+      },
+      {
+        "name": "DashboardContent",
+        "line_number": 23,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardLayoutExample.tsx": [
+      {
+        "name": "handleNavigate",
+        "line_number": 30,
+        "is_async": false
+      },
+      {
+        "name": "handleSettingsClick",
+        "line_number": 38,
+        "is_async": false
+      },
+      {
+        "name": "handleExportClick",
+        "line_number": 46,
+        "is_async": false
+      },
+      {
+        "name": "renderContent",
+        "line_number": 54,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/HooksUsage.example.tsx": [
+      {
+        "name": "DashboardApp",
+        "line_number": 23,
+        "is_async": false
+      },
+      {
+        "name": "DashboardContent",
+        "line_number": 35,
+        "is_async": false
+      },
+      {
+        "name": "QualityDashboard",
+        "line_number": 55,
+        "is_async": false
+      },
+      {
+        "name": "CoverageDashboard",
+        "line_number": 68,
+        "is_async": false
+      },
+      {
+        "name": "DependencyDashboard",
+        "line_number": 81,
+        "is_async": false
+      },
+      {
+        "name": "RefreshButton",
+        "line_number": 97,
+        "is_async": false
+      },
+      {
+        "name": "DashboardWithPrefetch",
+        "line_number": 119,
+        "is_async": false
+      },
+      {
+        "name": "DashboardWithErrorRecovery",
+        "line_number": 144,
+        "is_async": false
+      },
+      {
+        "name": "DashboardWithNestedSuspense",
+        "line_number": 170,
+        "is_async": false
+      },
+      {
+        "name": "QualitySection",
+        "line_number": 191,
+        "is_async": false
+      },
+      {
+        "name": "CoverageSection",
+        "line_number": 196,
+        "is_async": false
+      },
+      {
+        "name": "DependencySection",
+        "line_number": 201,
+        "is_async": false
+      },
+      {
+        "name": "DashboardSkeleton",
+        "line_number": 210,
+        "is_async": false
+      },
+      {
+        "name": "SectionSkeleton",
+        "line_number": 220,
+        "is_async": false
+      },
+      {
+        "name": "LoadingSpinner",
+        "line_number": 228,
+        "is_async": false
+      },
+      {
+        "name": "DashboardError",
+        "line_number": 236,
+        "is_async": false
+      },
+      {
+        "name": "MetricsOverview",
+        "line_number": 258,
+        "is_async": false
+      },
+      {
+        "name": "MetricCard",
+        "line_number": 286,
+        "is_async": false
+      },
+      {
+        "name": "handleRefresh",
+        "line_number": 100,
+        "is_async": true
+      },
+      {
+        "name": "handleMouseEnter",
+        "line_number": 124,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/examples/DashboardExample.tsx": [
+      {
+        "name": "DashboardLoader",
+        "line_number": 35,
+        "is_async": false
+      },
+      {
+        "name": "DashboardErrorFallback",
+        "line_number": 63,
+        "is_async": false
+      },
+      {
+        "name": "BasicDashboardExample",
+        "line_number": 141,
+        "is_async": false
+      },
+      {
+        "name": "CustomPathDashboardExample",
+        "line_number": 158,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/dashboardApi.ts": [
+      {
+        "name": "validateQualityReport",
+        "line_number": 36,
+        "is_async": false
+      },
+      {
+        "name": "validateCoverageReport",
+        "line_number": 53,
+        "is_async": false
+      },
+      {
+        "name": "validateDependencyReport",
+        "line_number": 71,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/api/examples/LoadReports.example.tsx": [
+      {
+        "name": "LoadingSpinner",
+        "line_number": 15,
+        "is_async": false
+      },
+      {
+        "name": "ErrorDisplay",
+        "line_number": 26,
+        "is_async": false
+      },
+      {
+        "name": "QualitySummary",
+        "line_number": 46,
+        "is_async": false
+      },
+      {
+        "name": "CoverageSummary",
+        "line_number": 83,
+        "is_async": false
+      },
+      {
+        "name": "DependencySummary",
+        "line_number": 109,
+        "is_async": false
+      },
+      {
+        "name": "LoadReportsExample",
+        "line_number": 142,
+        "is_async": false
+      },
+      {
+        "name": "loadReports",
+        "line_number": 148,
+        "is_async": true
+      },
+      {
+        "name": "LoadReportsWithCustomPath",
+        "line_number": 208,
+        "is_async": false
+      },
+      {
+        "name": "LoadIndividualReportsExample",
+        "line_number": 246,
+        "is_async": false
+      },
+      {
+        "name": "loadQuality",
+        "line_number": 251,
+        "is_async": true
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/calculateMetrics.ts": [
+      {
+        "name": "calculateQualityScore",
+        "line_number": 79,
+        "is_async": false
+      },
+      {
+        "name": "calculateHealthStatus",
+        "line_number": 106,
+        "is_async": false
+      },
+      {
+        "name": "calculateDashboardMetrics",
+        "line_number": 142,
+        "is_async": false
+      },
+      {
+        "name": "isValidQualityReport",
+        "line_number": 181,
+        "is_async": false
+      },
+      {
+        "name": "isValidCoverageReport",
+        "line_number": 203,
+        "is_async": false
+      },
+      {
+        "name": "isValidDependencyReport",
+        "line_number": 225,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/features/dashboard/helpers/usage-example.tsx": [
+      {
+        "name": "useDashboardMetrics",
+        "line_number": 22,
+        "is_async": false
+      },
+      {
+        "name": "loadMetrics",
+        "line_number": 29,
+        "is_async": true
+      },
+      {
+        "name": "DashboardExample",
+        "line_number": 76,
+        "is_async": false
+      },
+      {
+        "name": "MetricCard",
+        "line_number": 169,
+        "is_async": false
+      },
+      {
+        "name": "loadLocalReports",
+        "line_number": 192,
+        "is_async": true
+      },
+      {
+        "name": "getServerSideProps",
+        "line_number": 220,
+        "is_async": true
+      },
+      {
+        "name": "getStaticProps",
+        "line_number": 242,
+        "is_async": true
+      },
+      {
+        "name": "useRealtimeMetrics",
+        "line_number": 265,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py": [
+      {
+        "name": "init_sentry",
+        "line_number": 69,
+        "is_async": false
+      },
+      {
+        "name": "setup_logging",
+        "line_number": 144,
+        "is_async": false
+      },
+      {
+        "name": "get_logger",
+        "line_number": 222,
+        "is_async": false
+      },
+      {
+        "name": "log_exception",
+        "line_number": 262,
+        "is_async": false
+      },
+      {
+        "name": "log_performance_metric",
+        "line_number": 296,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py": [
+      {
+        "name": "load_cache_statistics",
+        "line_number": 43,
+        "is_async": false
+      },
+      {
+        "name": "calculate_cache_hit_rate",
+        "line_number": 77,
+        "is_async": false
+      },
+      {
+        "name": "analyze_performance",
+        "line_number": 83,
+        "is_async": false
+      },
+      {
+        "name": "print_report",
+        "line_number": 206,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py": [
+      {
+        "name": "get_git_repos_with_remotes",
+        "line_number": 14,
+        "is_async": false
+      },
+      {
+        "name": "git_status",
+        "line_number": 27,
+        "is_async": false
+      },
+      {
+        "name": "git_add_all",
+        "line_number": 42,
+        "is_async": false
+      },
+      {
+        "name": "git_commit",
+        "line_number": 50,
+        "is_async": false
+      },
+      {
+        "name": "git_push",
+        "line_number": 63,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py": [
+      {
+        "name": "set_description",
+        "line_number": 46,
+        "is_async": false
+      },
+      {
+        "name": "save_cache",
+        "line_number": 123,
+        "is_async": false
+      },
+      {
+        "name": "get_file_hash",
+        "line_number": 153,
+        "is_async": false
+      },
+      {
+        "name": "is_file_cached",
+        "line_number": 165,
+        "is_async": false
+      },
+      {
+        "name": "get_cached_schema",
+        "line_number": 191,
+        "is_async": false
+      },
+      {
+        "name": "update_cache",
+        "line_number": 198,
+        "is_async": false
+      },
+      {
+        "name": "get_git_commit",
+        "line_number": 208,
+        "is_async": false
+      },
+      {
+        "name": "get_changed_files_since_commit",
+        "line_number": 227,
+        "is_async": false
+      },
+      {
+        "name": "process_files_parallel",
+        "line_number": 275,
+        "is_async": false
+      },
+      {
+        "name": "invalidate_cache_for_files",
+        "line_number": 375,
+        "is_async": false
+      },
+      {
+        "name": "batch_files_by_directory",
+        "line_number": 397,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/generators/schema.py": [
+      {
+        "name": "process_single_file",
+        "line_number": 31,
+        "is_async": false
+      },
+      {
+        "name": "get_executable",
+        "line_number": 171,
+        "is_async": false
+      },
+      {
+        "name": "get_meta_var",
+        "line_number": 229,
+        "is_async": false
+      },
+      {
+        "name": "find_with_rule",
+        "line_number": 243,
+        "is_async": false
+      },
+      {
+        "name": "extract_typescript_schema_astgrep",
+        "line_number": 448,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories",
+        "line_number": 726,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories_optimized",
+        "line_number": 766,
+        "is_async": false
+      }
+    ]
+  }
+}
