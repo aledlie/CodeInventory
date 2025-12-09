@@ -177,19 +177,15 @@ class TestCoverageAnalyzer:
         filename = file_path.name
 
         # Check filename patterns (test_ prefix, _test/_spec suffix, .test./.spec. in name)
-        filename_patterns = ['test_', '_test.py', '_spec.ts', '_spec.js', '.test.', '.spec.']
-        for pattern in filename_patterns:
-            if pattern == 'test_' and filename.startswith('test_'):
-                return True
-            elif pattern in ['.test.', '.spec.'] and pattern in filename:
-                return True
-            elif pattern in ['_test.py', '_spec.ts', '_spec.js'] and filename.endswith(pattern):
-                return True
+        if filename.startswith('test_'):
+            return True
+        if any(filename.endswith(suffix) for suffix in ['_test.py', '_spec.ts', '_spec.js']):
+            return True
+        if '.test.' in filename or '.spec.' in filename:
+            return True
 
         # Check directory patterns (tests/ or __tests__/ as path segments)
-        path_parts = file_path.parts
-        directory_patterns = ['tests', '__tests__']
-        return any(part in directory_patterns for part in path_parts)
+        return any(part in ['tests', '__tests__'] for part in file_path.parts)
 
     def _run_astgrep(self, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern"""
@@ -242,14 +238,14 @@ class TestCoverageAnalyzer:
         return None, None
 
     def _get_python_patterns(self) -> List[str]:
-        """Get Python function patterns - use simpler patterns to match all function variants"""
+        """Get Python function patterns - simpler patterns to match all variants"""
         return [
             'def $NAME($$$)',
             'async def $NAME($$$)'
         ]
 
     def _get_typescript_patterns(self) -> List[str]:
-        """Get TypeScript function patterns - simpler patterns to match all function variants"""
+        """Get TypeScript function patterns - simpler patterns to match all variants"""
         return [
             'function $NAME($$$)',
             'const $NAME = ($$$) =>',
@@ -258,7 +254,7 @@ class TestCoverageAnalyzer:
         ]
 
     def _get_javascript_patterns(self) -> List[str]:
-        """Get JavaScript function patterns - simpler patterns to match all function variants"""
+        """Get JavaScript function patterns - simpler patterns to match all variants"""
         return [
             'function $NAME($$$)',
             'const $NAME = ($$$) =>',

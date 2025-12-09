@@ -163,7 +163,7 @@ class SchemaValidator:
         return all_valid
 
     def validate_json_file(self, file_path: Path) -> bool:
-        """Validate pure JSON-LD file"""
+        """Validate pure JSON-LD file or inventory schema format"""
         logger.info(f"\nValidating JSON file: {file_path}")
 
         data = self._load_json_file(file_path)
@@ -172,8 +172,36 @@ class SchemaValidator:
 
         if '@graph' in data:
             return self._validate_graph_schemas(data['@graph'], file_path)
+        elif 'directories' in data:
+            # Custom inventory schema format - validate embedded schema.org markup
+            return self._validate_inventory_schema(data, file_path)
         else:
             return self.validate_schema(data, str(file_path))
+
+    def _validate_inventory_schema(self, data: Dict[str, Any], file_path: Path) -> bool:
+        """Validate inventory schema format with embedded schema.org markup"""
+        all_valid = True
+
+        # Validate @context if present at root
+        if '@context' in data:
+            self._validate_context(data, str(file_path))
+
+        # Validate each directory's schema_org entry
+        directories = data.get('directories', {})
+        for dir_name, dir_data in directories.items():
+            if 'schema_org' in dir_data:
+                context = f"{file_path}[{dir_name}]"
+                is_valid = self.validate_schema(dir_data['schema_org'], context)
+                all_valid &= is_valid
+
+            # Validate file-level @type entries
+            for file_entry in dir_data.get('files', []):
+                if '@type' in file_entry:
+                    file_context = f"{file_path}[{dir_name}/{file_entry.get('path', 'unknown')}]"
+                    if file_entry['@type'] not in self.valid_types:
+                        self.warnings.append(f"{file_context}: Uncommon @type '{file_entry['@type']}'")
+
+        return all_valid
 
     def _load_json_file(self, file_path: Path) -> Optional[Dict[str, Any]]:
         """Load JSON file safely"""

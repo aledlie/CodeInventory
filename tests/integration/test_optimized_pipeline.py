@@ -94,19 +94,23 @@ class TestOptimizedPipeline:
         """Test that caching provides speedup on subsequent runs"""
         import time
 
-        # First run (no cache)
+        # First run (no cache - uses isolated temp_cache_dir)
         analyzer1 = DependencyAnalyzer(sample_src_dir)
         start = time.time()
-        analyzer1.analyze_directory_optimized(use_parallel=True, use_cache=True, max_workers=2)
+        analyzer1.analyze_directory_optimized(
+            use_parallel=True, use_cache=True, max_workers=2, cache_dir=temp_cache_dir
+        )
         first_run_time = time.time() - start
 
-        # Second run (with cache)
+        # Second run (with cache - same temp_cache_dir)
         analyzer2 = DependencyAnalyzer(sample_src_dir)
         start = time.time()
-        analyzer2.analyze_directory_optimized(use_parallel=True, use_cache=True, max_workers=2)
+        analyzer2.analyze_directory_optimized(
+            use_parallel=True, use_cache=True, max_workers=2, cache_dir=temp_cache_dir
+        )
         second_run_time = time.time() - start
 
-        # Second run should be faster
+        # Second run should be faster due to cache hits
         assert second_run_time < first_run_time
 
         # Results should be identical

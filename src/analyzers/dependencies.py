@@ -403,7 +403,8 @@ class DependencyAnalyzer:
 
     def analyze_directory_optimized(self, directory: Optional[Path] = None, skip_dirs: Optional[Set[str]] = None,
                                    use_parallel: bool = True, use_cache: bool = True,
-                                   max_workers: Optional[int] = None) -> None:
+                                   max_workers: Optional[int] = None,
+                                   cache_dir: Optional[Path] = None) -> None:
         """
         Analyze all files in a directory with parallel processing and caching
 
@@ -413,6 +414,7 @@ class DependencyAnalyzer:
             use_parallel: Enable parallel file processing
             use_cache: Enable caching of analysis results
             max_workers: Number of worker processes (default: CPU count - 1)
+            cache_dir: Directory for cache files (default: .analyzer_cache)
         """
         import time
         start_time = time.time()
@@ -437,7 +439,8 @@ class DependencyAnalyzer:
         optimizer = ParallelAnalyzer(
             analyzer_name='dependencies',
             max_workers=max_workers,
-            use_cache=use_cache
+            use_cache=use_cache,
+            cache_dir=cache_dir
         )
 
         logger.info(f"\n🚀 Parallel dependency analysis enabled")
