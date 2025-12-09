@@ -88,6 +88,24 @@ export {
   useCollaborationHub,
 } from './useCollaboration';
 
+// Phase 4E: Notification Hooks
+export {
+  notificationKeys,
+  useNotifications,
+  useNotificationStats,
+  useAlertTriggers,
+  useNotificationPreferences,
+  useMarkNotificationAsRead,
+  useMarkAllNotificationsAsRead,
+  useDismissNotification,
+  useCreateAlertTrigger,
+  useUpdateAlertTrigger,
+  useDeleteAlertTrigger,
+  useUpdateNotificationPreferences,
+  useNotificationCenter,
+  useAlertTriggersManager,
+} from './useNotifications';
+
 // Phase 5 Hooks
 export {
   analyticsKeys,

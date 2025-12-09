@@ -369,6 +369,9 @@ export * from './visualizations';
 // Phase 4D: Team Collaboration
 export * from './collaboration';
 
+// Phase 4E: Smart Notifications
+export * from './notifications';
+
 // ============================================================================
 // Phase 5 Type Exports
 // ============================================================================

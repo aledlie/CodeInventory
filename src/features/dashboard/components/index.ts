@@ -53,3 +53,6 @@ export * from './visualizations';
 
 // Phase 4D: Team Collaboration Hub components
 export * from './collaboration';
+
+// Phase 4E: Smart Notifications components
+export * from './notifications';

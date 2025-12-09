@@ -11,6 +11,7 @@ export { insightsApi } from './insightsApi';
 export { predictionsApi } from './predictionsApi';
 export { visualizationApi } from './visualizationApi';
 export { collaborationApi } from './collaborationApi';
+export { notificationsApi } from './notificationsApi';
 
 // Phase 5 APIs
 export { analyticsApi } from './analyticsApi';
