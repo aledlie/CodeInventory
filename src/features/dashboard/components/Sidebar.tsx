@@ -36,6 +36,7 @@ import {
   Description as ReportsIcon,
   AutoAwesome as InsightsIcon,
   Timeline as PredictionsIcon,
+  Analytics as AnalyticsIcon,
 } from '@mui/icons-material';
 
 /**
@@ -117,6 +118,11 @@ const navigationItems: NavItem[] = [
     label: 'Predictions',
     path: '/dashboard/predictions',
     icon: <PredictionsIcon />,
+  },
+  {
+    label: 'Analytics',
+    path: '/dashboard/analytics',
+    icon: <AnalyticsIcon />,
   },
   {
     label: 'Settings',

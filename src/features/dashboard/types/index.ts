@@ -363,5 +363,15 @@ export * from './insights';
 // Phase 4B: Predictive Analytics
 export * from './predictions';
 
+// Phase 4C: Custom Visualizations
+export * from './visualizations';
+
 // Phase 4D: Team Collaboration
 export * from './collaboration';
+
+// ============================================================================
+// Phase 5 Type Exports
+// ============================================================================
+
+// Phase 5A: Advanced Analytics
+export * from './analytics';

@@ -58,3 +58,50 @@ export {
   useRiskCounts,
   useAllPredictions,
 } from './usePredictions';
+
+// Phase 4C: Visualization Hooks
+export {
+  useSavedVisualizations,
+  useVisualization,
+  useCreateVisualization,
+  useSaveVisualization,
+  useDeleteVisualization,
+  useDuplicateVisualization,
+  useExportVisualization,
+  useAvailableMetrics,
+  useAvailableChartTypes,
+} from './useVisualization';
+
+// Phase 4D: Collaboration Hooks
+export {
+  collaborationKeys,
+  useCollaborationSummary,
+  useActivities,
+  useIssues,
+  useTeamMembers,
+  useSprintGoals,
+  useComments,
+  useAssignIssue,
+  useUpdateIssueStatus,
+  useAddComment,
+  useMarkActivityAsRead,
+  useCollaborationHub,
+} from './useCollaboration';
+
+// Phase 5 Hooks
+export {
+  analyticsKeys,
+  useAnalyticsReport,
+  useRiskData,
+  useDebtSummary,
+  usePredictions,
+  useAnalyticsInsights,
+  useFilteredRiskData,
+  useSortedRiskData,
+  useRiskCounts as useAnalyticsRiskCounts,
+  useFilteredInsights,
+  useDebtBurndownSummary,
+  useAnalyticsSummary,
+  useDismissInsight,
+  usePrefetchAnalytics,
+} from './useAnalytics';
