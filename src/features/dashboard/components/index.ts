@@ -67,3 +67,6 @@ export * from './notifications';
 // Phase 5B: Dashboard Personalization components
 export * from './personalization';
 export { SettingsPage } from './SettingsPage';
+
+// Phase 5C: Data Export components
+export * from './export';

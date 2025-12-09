@@ -26,12 +26,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import PaletteIcon from '@mui/icons-material/Palette';
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
 import {
   WidgetLibrary,
   SavedViewsDropdown,
   NotificationPreferences,
   DashboardEditor,
+  ThemeSettings,
 } from './personalization';
 import { useSavedViewsManager, usePreferencesManager, useWidgetLibrary } from '../hooks/usePersonalization';
 import type { WidgetCategory, EditorMode, DashboardLayout, WidgetId } from '../types';
@@ -406,6 +408,12 @@ export function SettingsPage() {
             label="Notifications"
             {...a11yProps(2)}
           />
+          <Tab
+            icon={<PaletteIcon />}
+            iconPosition="start"
+            label="Appearance"
+            {...a11yProps(3)}
+          />
         </Tabs>
 
         <Box sx={{ p: 2 }}>
@@ -419,6 +427,9 @@ export function SettingsPage() {
               </TabPanel>
               <TabPanel value={activeTab} index={2}>
                 <NotificationPreferencesContent />
+              </TabPanel>
+              <TabPanel value={activeTab} index={3}>
+                <ThemeSettings showPreview showSystemInfo />
               </TabPanel>
             </Suspense>
           </ErrorBoundary>
