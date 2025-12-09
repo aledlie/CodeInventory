@@ -5,7 +5,7 @@
  * and Chart.js configuration types used throughout the dashboard.
  */
 
-import type { ChartOptions, ChartData, ChartType } from 'chart.js';
+import type { ChartOptions, ChartData } from 'chart.js';
 
 // ============================================================================
 // Historical Data Types

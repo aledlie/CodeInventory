@@ -6,7 +6,7 @@
  */
 
 import type { AnalysisRun } from './charts';
-import type { RunComparison, AIComparisonSummary } from './comparison';
+import type { AIComparisonSummary } from './comparison';
 import type {
   PythonQualityReport,
   PythonCoverageReport,

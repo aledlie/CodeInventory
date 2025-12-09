@@ -5,7 +5,8 @@
  * including nodes, edges, layouts, and interaction patterns.
  */
 
-import type { SimulationNodeDatum, SimulationLinkDatum } from 'd3-force';
+// D3 types will be added when d3 is installed
+// import type { SimulationNodeDatum, SimulationLinkDatum } from 'd3-force';
 
 // ============================================================================
 // Graph Data Structures
@@ -33,8 +34,9 @@ export type ImportType =
 
 /**
  * Graph node representing a module/file
+ * Note: Extends D3 SimulationNodeDatum when d3 is installed
  */
-export interface GraphNode extends SimulationNodeDatum {
+export interface GraphNode {
   /** Unique identifier (file path) */
   id: string;
   /** Display label (shortened file name) */
@@ -86,8 +88,9 @@ export interface GraphNode extends SimulationNodeDatum {
 
 /**
  * Graph edge representing a dependency
+ * Note: Extends D3 SimulationLinkDatum when d3 is installed
  */
-export interface GraphEdge extends SimulationLinkDatum<GraphNode> {
+export interface GraphEdge {
   /** Source node ID */
   source: string | GraphNode;
   /** Target node ID */
