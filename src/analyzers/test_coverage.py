@@ -81,23 +81,23 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
         if file_path.suffix == '.py':
             language = 'python'
             patterns = [
-                'def $NAME($$$): $$$',
-                'async def $NAME($$$): $$$'
+                'def $NAME($$$)',
+                'async def $NAME($$$)'
             ]
         elif file_path.suffix in ['.ts', '.tsx']:
             language = 'typescript'
             patterns = [
-                'function $NAME($$$) { $$$ }',
-                'const $NAME = ($$$) => $$$',
-                'export function $NAME($$$) { $$$ }',
-                'async function $NAME($$$) { $$$ }'
+                'function $NAME($$$)',
+                'const $NAME = ($$$) =>',
+                'export function $NAME($$$)',
+                'async function $NAME($$$)'
             ]
         elif file_path.suffix in ['.js', '.jsx']:
             language = 'javascript'
             patterns = [
-                'function $NAME($$$) { $$$ }',
-                'const $NAME = ($$$) => $$$',
-                'export function $NAME($$$) { $$$ }'
+                'function $NAME($$$)',
+                'const $NAME = ($$$) =>',
+                'export function $NAME($$$)'
             ]
 
         if not language:
@@ -173,9 +173,23 @@ class TestCoverageAnalyzer:
         ]
 
     def _is_test_file(self, file_path: Path) -> bool:
-        """Check if a file is a test file"""
-        path_str = str(file_path)
-        return any(pattern in path_str for pattern in self.test_patterns)
+        """Check if a file is a test file based on filename and directory patterns"""
+        filename = file_path.name
+
+        # Check filename patterns (test_ prefix, _test/_spec suffix, .test./.spec. in name)
+        filename_patterns = ['test_', '_test.py', '_spec.ts', '_spec.js', '.test.', '.spec.']
+        for pattern in filename_patterns:
+            if pattern == 'test_' and filename.startswith('test_'):
+                return True
+            elif pattern in ['.test.', '.spec.'] and pattern in filename:
+                return True
+            elif pattern in ['_test.py', '_spec.ts', '_spec.js'] and filename.endswith(pattern):
+                return True
+
+        # Check directory patterns (tests/ or __tests__/ as path segments)
+        path_parts = file_path.parts
+        directory_patterns = ['tests', '__tests__']
+        return any(part in directory_patterns for part in path_parts)
 
     def _run_astgrep(self, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern"""
@@ -228,27 +242,27 @@ class TestCoverageAnalyzer:
         return None, None
 
     def _get_python_patterns(self) -> List[str]:
-        """Get Python function patterns"""
+        """Get Python function patterns - use simpler patterns to match all function variants"""
         return [
-            'def $NAME($$$): $$$',
-            'async def $NAME($$$): $$$'
+            'def $NAME($$$)',
+            'async def $NAME($$$)'
         ]
 
     def _get_typescript_patterns(self) -> List[str]:
-        """Get TypeScript function patterns"""
+        """Get TypeScript function patterns - simpler patterns to match all function variants"""
         return [
-            'function $NAME($$$) { $$$ }',
-            'const $NAME = ($$$) => $$$',
-            'export function $NAME($$$) { $$$ }',
-            'async function $NAME($$$) { $$$ }'
+            'function $NAME($$$)',
+            'const $NAME = ($$$) =>',
+            'export function $NAME($$$)',
+            'async function $NAME($$$)'
         ]
 
     def _get_javascript_patterns(self) -> List[str]:
-        """Get JavaScript function patterns"""
+        """Get JavaScript function patterns - simpler patterns to match all function variants"""
         return [
-            'function $NAME($$$) { $$$ }',
-            'const $NAME = ($$$) => $$$',
-            'export function $NAME($$$) { $$$ }'
+            'function $NAME($$$)',
+            'const $NAME = ($$$) =>',
+            'export function $NAME($$$)'
         ]
 
     def _find_functions_with_pattern(self, file_path: Path, pattern: str,
