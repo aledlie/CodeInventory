@@ -63,7 +63,12 @@ src/
 │   ├── index.tsx        # /dashboard - main overview
 │   ├── quality/         # /dashboard/quality - code quality details
 │   ├── coverage/        # /dashboard/coverage - test coverage details
-│   └── dependencies/    # /dashboard/dependencies - dependency details
+│   ├── dependencies/    # /dashboard/dependencies - dependency details
+│   ├── trends/          # /dashboard/trends - trend charts
+│   ├── graph/           # /dashboard/graph - dependency graph
+│   ├── tools/           # /dashboard/tools - tools & utilities
+│   ├── compare/         # /dashboard/compare - historical comparison
+│   └── reports/         # /dashboard/reports - report generation
 ├── theme/               # MUI v7 theme (dashboardTheme.ts)
 ├── styles/              # CSS design tokens & global styles
 └── components/          # Shared: ErrorBoundary, SuspenseLoader
@@ -134,6 +139,10 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 
 | Commit | Date | Description |
 |--------|------|-------------|
+| `211066d` | 2025-12-09 | docs: update phase 3 documentation with comparison and reports features |
+| `1f5b857` | 2025-12-09 | feat(dashboard): add navigation for phase 3 visualization features |
+| `26308ec` | 2025-12-09 | feat(dashboard): add custom report generation feature |
+| `3302134` | 2025-12-09 | feat(dashboard): add historical metrics comparison feature |
 | `d632264` | 2025-12-09 | chore: update project configuration and generated files |
 | `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
 | `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
@@ -142,16 +151,13 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 | `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
 | `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
 | `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
-| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
-| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
-| `8ce00a2` | 2025-12-09 | docs(tools): add tools & utility modules design and implementation |
-| `c2b0566` | 2025-12-09 | docs: add recent git activity to documentation |
 
 ### Current Development Phase
 
-**Phase 3: Visual Storytelling & Reports** (Implementation In Progress)
+**Phase 3: Visual Storytelling & Reports** (COMPLETE)
 - Trend analysis charts - components created
 - Dependency graph visualization - components created
 - Tools & utility modules analyzer - Python analyzer + React UI
-- Historical comparison (pending)
-- Custom report generation (pending)
+- Historical metrics comparison - ComparisonPage with DateRangeSelector
+- Custom report generation - ReportsPage with PDF/HTML/JSON/CSV/Markdown export
+- Sidebar navigation updated with Graph, Compare, and Reports links
