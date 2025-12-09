@@ -451,12 +451,8 @@ class DashboardGenerator:
         return f"""
         <div class="metrics-grid">
             <div class="metric-card">
-                <div class="metric-label">Directories Scanned</div>
+                <div class="metric-label">Directories</div>
                 <div class="metric-value">{metrics['total_dirs']}</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Code Files</div>
-                <div class="metric-value">{metrics['total_files']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Classes</div>
@@ -465,6 +461,10 @@ class DashboardGenerator:
             <div class="metric-card">
                 <div class="metric-label">Functions</div>
                 <div class="metric-value">{metrics['total_functions']}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Code Files</div>
+                <div class="metric-value">{metrics['total_files']}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Code Quality</div>
