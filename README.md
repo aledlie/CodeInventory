@@ -78,13 +78,25 @@ Inventory/
     └── rss/                      # RSS feeds
 ```
 
-## 🎉 Latest Update (2025-12-09)
+## Live Site
 
-**PHASE 5B: DASHBOARD PERSONALIZATION - IN PROGRESS!**
+**Production URL**: [https://integrityaistudio.com/](https://integrityaistudio.com/)
 
-Phase 5B adds comprehensive dashboard customization with personalization features:
+The dashboard is deployed automatically via GitHub Pages on every push to `main`.
 
-### Phase 5B Features (In Progress)
+## Latest Update (2025-12-09)
+
+**PHASE 5C COMPLETE - DEPLOYED TO PRODUCTION**
+
+Phase 5B/5C dashboard personalization and export features are complete and live:
+
+### Deployment Infrastructure
+- **GitHub Pages**: Automated deployment via `.github/workflows/deploy-pages.yml`
+- **SPA Routing**: Custom `404.html` redirect for client-side routing
+- **Root Redirect**: Base URL (`/`) redirects to `/dashboard`
+- **Test Data**: Pre-configured JSON data files in `public/data/`
+
+### Phase 5B/5C Features (Complete)
 - **Widget Library** (`WidgetLibrary.tsx`): Widget catalog with category filtering and search
 - **Saved Views** (`SavedViewsDropdown.tsx`): Dashboard view management with CRUD operations
 - **Notification Preferences** (`NotificationPreferences.tsx`): Per-widget alert configuration
@@ -93,6 +105,8 @@ Phase 5B adds comprehensive dashboard customization with personalization feature
 - **Zustand Store** (`dashboardStore.ts`): State management with undo/redo and localStorage persistence
 - **Personalization API** (`personalizationApi.ts`): Full CRUD for views and preferences
 - **React Query Hooks** (`usePersonalization.ts`): Data fetching with caching
+- **Theme Settings**: Light/dark/system themes with system preference detection
+- **Data Export**: CSV, PDF, JSON export functionality
 
 ### Phase 4 Features (Complete)
 - **AI Insights** (`/dashboard/insights`): InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
@@ -119,13 +133,22 @@ Phase 5B adds comprehensive dashboard customization with personalization feature
 
 ### CI/CD Pipeline
 - **GitHub Actions** with matrix testing (Python 3.11, 3.12)
+- **GitHub Pages Deployment**: Automatic on push to `main` branch
 - **Environment verification**: `npm run verify` checks all dependencies
 - **Test coverage**: 97 tests passing, coverage reporting enabled
 
 ### Start the Dashboard
 ```bash
-npm run dev  # http://localhost:5173/dashboard
+npm run dev    # Local development at http://localhost:5173/dashboard
+npm run build  # Production build to ./dist
 ```
+
+### Production Deployment
+The site deploys automatically via GitHub Actions:
+1. Push to `main` branch triggers `.github/workflows/deploy-pages.yml`
+2. Builds the Vite project with `npm run build`
+3. Deploys `./dist` to GitHub Pages
+4. Live at [https://integrityaistudio.com/](https://integrityaistudio.com/)
 
 ---
 
@@ -480,22 +503,23 @@ See the individual integration guides for detailed usage instructions and exampl
 
 ## Recent Git Activity
 
-**Branch:** feature/dashboard-visualization
+**Branch:** main
+**Live URL:** [https://integrityaistudio.com/](https://integrityaistudio.com/)
 
 ### Commit History (Last 10)
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `3f2a876` | 2025-12-09 | docs: update project documentation with phase 5b implementation status |
-| `b3fd19c` | 2025-12-09 | test(dashboard): add orphaned components detection test |
-| `af649a8` | 2025-12-09 | chore(exports): add phase 3 component and type exports |
-| `a2f889a` | 2025-12-09 | chore(exports): add phase 3 api exports for trends, graph, and tools |
-| `1728bb3` | 2025-12-09 | chore(exports): add tools and force simulation hooks exports |
-| `ca3d5c3` | 2025-12-09 | chore(routes): regenerate route tree with settings route |
-| `fa58da6` | 2025-12-09 | feat(routes): add dashboard settings route for phase 5b personalization |
-| `49a67d0` | 2025-12-09 | feat(components): add personalization components for phase 5b dashboard |
-| `254f58d` | 2025-12-09 | feat(store): add zustand dashboard store for phase 5b personalization |
-| `93ddabc` | 2025-12-09 | feat(hooks): add personalization hooks for phase 5b dashboard management |
+| `ae5823e` | 2025-12-09 | feat(routing): add top-level route redirects to dashboard |
+| `4f4d558` | 2025-12-09 | fix(dashboard): add missing tools_report.json data file |
+| `a8627a3` | 2025-12-09 | fix: add SPA routing support for GitHub Pages |
+| `dba319c` | 2025-12-09 | feat: add test data for dashboard UI |
+| `8298907` | 2025-12-09 | chore: regenerate route tree with index route |
+| `616de76` | 2025-12-09 | fix: add root route redirect to /dashboard |
+| `3aba82d` | 2025-12-09 | fix(tests): remove playwright project dependencies for separate CI jobs |
+| `3800835` | 2025-12-09 | fix(tests): make navigation tests resilient to CI environment |
+| `7ee31e8` | 2025-12-09 | docs: update project documentation with phase 5b/5c completion |
+| `5f0e824` | 2025-12-09 | fix(tests): improve browser test selectors for navigation |
 
 ---
 *Last updated: 2025-12-09 | Originally generated on 2025-11-01*

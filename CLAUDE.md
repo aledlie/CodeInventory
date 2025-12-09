@@ -2,11 +2,14 @@
 
 Code Inventory: A code analysis system using ast-grep and Schema.org to analyze codebases, detect quality issues, track test coverage, analyze dependencies, and generate interactive dashboards.
 
+**Live Site**: [https://integrityaistudio.com/](https://integrityaistudio.com/)
+
 ## Quick Start
 
 ```bash
 python3 scripts/run_analysis.py --root /path/to/code --parallel --cache  # Full analysis
-npm run dev                                                               # Dashboard at localhost:3000
+npm run dev                                                               # Dashboard at localhost:5173/dashboard
+npm run build                                                             # Production build
 python3 scripts/run_tests.py                                              # Run tests
 npm run verify                                                            # Check dependencies
 ```
@@ -71,11 +74,22 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 
 ## CI/CD Pipeline
 
-**GitHub Actions** (`.github/workflows/analysis-pipeline.yml`):
-- **test**: Unit/integration tests with coverage (Python 3.11, 3.12)
-- **benchmark**: Performance benchmarks
-- **analyze**: Code quality, coverage, dependency analysis
-- **dashboard**: Deploy to GitHub Pages
+**GitHub Actions Workflows**:
+
+1. **Analysis Pipeline** (`.github/workflows/analysis-pipeline.yml`):
+   - **test**: Unit/integration tests with coverage (Python 3.11, 3.12)
+   - **benchmark**: Performance benchmarks
+   - **analyze**: Code quality, coverage, dependency analysis
+
+2. **GitHub Pages Deployment** (`.github/workflows/deploy-pages.yml`):
+   - Triggers on push to `main` branch
+   - Builds Vite project with `npm run build`
+   - Deploys `./dist` to GitHub Pages
+   - Live at https://integrityaistudio.com/
+
+**SPA Routing Support**:
+- `public/404.html` redirects to `index.html` for client-side routing
+- Root route (`/`) redirects to `/dashboard`
 
 **Dependencies** (requirements.txt):
 ```
@@ -119,7 +133,22 @@ coverage html                                   # HTML report: htmlcov/index.htm
 - **Dark Mode** (5C): Light/dark/system themes with system preference detection and localStorage persistence
 - **Data Export** (5C): CSV, PDF, JSON export with pre-configured column definitions
 
+## Test Data Files
+
+Test data for dashboard UI located in `public/data/`:
+- `quality/quality_report.json` - Code quality metrics
+- `coverage/coverage_report.json` - Test coverage data
+- `tools/tools_report.json` - Tools analysis data
+- `dependencies/`, `insights/`, `predictions/` - Additional dashboard data
+
 ## Secrets
 
 - Run with Doppler: `./scripts/run_with_doppler.sh python3 scripts/run_analysis.py`
 - Never hardcode credentials
+
+## Project Status (2025-12-09)
+
+- **Phase 5B/5C**: Complete (dashboard personalization, export, themes)
+- **Deployment**: Live at https://integrityaistudio.com/
+- **Routing**: SPA with 404.html redirect, root redirects to /dashboard
+- **CI/CD**: GitHub Pages auto-deploy on push to main
