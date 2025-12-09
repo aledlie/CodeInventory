@@ -6,6 +6,7 @@
 **Branch:** feature/dashboard-visualization
 **Predecessor:** Phase 3 (Visual Storytelling & Reports) - COMPLETE
 **Target:** Enterprise-Grade Analytics Platform
+**Visual Design:** See `PHASE5_VISUAL_DESIGN.md` for detailed visual specifications
 
 ---
 
@@ -52,6 +53,11 @@ npm install zustand@^4.5.0
 
 # Drag-and-drop for widget arrangement
 npm install @dnd-kit/core@^6.1.0 @dnd-kit/sortable@^8.0.0
+# Alternative: react-grid-layout for more complex layouts
+npm install react-grid-layout@^1.4.0
+
+# Animations (see PHASE5_VISUAL_DESIGN.md for animation patterns)
+npm install framer-motion@^11.0.0
 
 # Date handling for scheduling
 npm install date-fns@^3.3.0
@@ -61,6 +67,9 @@ npm install @react-pdf/renderer@^3.3.0
 
 # Statistical analysis
 npm install simple-statistics@^7.8.3
+
+# Virtual scrolling for large lists
+npm install react-window@^1.8.10
 ```
 
 ---
@@ -117,11 +126,15 @@ src/routes/dashboard/
 
 ## Feature Specifications
 
+> **Visual Design Reference:** For detailed color palettes, animation patterns, user journey flows, and ASCII mockups, see `PHASE5_VISUAL_DESIGN.md`.
+
 ### Feature 5.1: Predictive Analytics
 
 #### 5.1.1 Risk Score Heatmap
 
 Visualize risk concentration across the codebase using a bar chart with color gradients.
+
+> **See:** `PHASE5_VISUAL_DESIGN.md` → "Risk Assessment Heatmap" for matrix layout and color encoding
 
 **Component:** `RiskHeatmap.tsx`
 
@@ -162,6 +175,8 @@ interface RiskFactor {
 
 Time-series comparing actual debt reduction vs. target pace.
 
+> **See:** `PHASE5_VISUAL_DESIGN.md` → "Technical Debt Sunburst" for hierarchical breakdown visualization
+
 **Component:** `DebtBurndownChart.tsx`
 
 ```typescript
@@ -190,6 +205,8 @@ interface DataPoint {
 #### 5.1.3 Predictive Trend Cards
 
 Show where metrics are heading with confidence indicators.
+
+> **See:** `PHASE5_VISUAL_DESIGN.md` → "Predictive Trend with Confidence Bands" for chart styling and "Confidence Level Indicators" for visual encoding
 
 **Component:** `PredictiveTrendCard.tsx`
 
@@ -274,9 +291,13 @@ interface InsightCardProps {
 
 ### Feature 5.2: Dashboard Personalization
 
+> **See:** `PHASE5_VISUAL_DESIGN.md` → "Personalization Page Layout" for complete wireframe mockup
+
 #### 5.2.1 Widget Library
 
 Enable users to customize their dashboard layout.
+
+> **See:** `PHASE5_VISUAL_DESIGN.md` → "Drag-and-Drop Feedback" for interaction states
 
 **Component:** `WidgetLibrary.tsx`
 
@@ -564,6 +585,8 @@ interface SharedInsight {
 
 ## UI/UX Design Specifications
 
+> **Comprehensive Visual Guide:** For complete visual specifications including extended color palettes, animation code examples, user journey flows, and ASCII mockups, see `PHASE5_VISUAL_DESIGN.md`.
+
 ### Visual Hierarchy
 
 **Design Principle: Progressive Disclosure**
@@ -621,6 +644,8 @@ Icon (64px, 50% opacity)
 
 ### Animation Patterns
 
+> **Detailed Implementation:** See `PHASE5_VISUAL_DESIGN.md` → "Animation & Interaction Patterns" for Framer Motion code examples and micro-animation specifications.
+
 **Transitions:**
 - Fast: 150ms (hover, focus)
 - Normal: 200ms (state changes)
@@ -630,6 +655,12 @@ Icon (64px, 50% opacity)
 - Hover lift: translateY(-2px) on clickable cards
 - Focus: 2px outline, primary color
 - Active: Scale down slightly (0.98)
+
+**Micro-animations (see PHASE5_VISUAL_DESIGN.md):**
+- Metric card reveal with staggered timing
+- Delta indicator slide-in with success glow
+- Risk heatmap cell reveal with spring easing
+- Chart data point highlights with hover effects
 
 ---
 
@@ -785,11 +816,27 @@ Potential future improvements beyond Phase 5:
 
 | Document | Purpose |
 |----------|---------|
+| **`PHASE5_VISUAL_DESIGN.md`** | **Comprehensive visual design specification for Phase 5** |
 | `DASHBOARD_QUICKSTART.md` | Quick start guide for running the dashboard |
 | `TOOLS_IMPLEMENTATION_SUMMARY.md` | Tools feature implementation details |
 | `PHASE3_IMPLEMENTATION_GUIDE.md` | Phase 3 implementation details |
 | `docs/guides/DASHBOARD_UI_UX_DESIGN.md` | Complete UI/UX design specs |
 | `docs/guides/DASHBOARD_COMPONENT_EXAMPLES.md` | Production-ready code examples |
+
+### PHASE5_VISUAL_DESIGN.md Contents
+
+The visual design document includes:
+
+- **Extended Color Palette** - Comparison, confidence, risk, and personalization colors
+- **Visual Encoding Standards** - Delta indicators, confidence levels, risk badges
+- **Chart Types** - Delta waterfall, radar, heatmap, sunburst, predictive trends, anomaly scatter
+- **User Journey Flows** - Engineering Manager, Developer, QA Lead, Architect scenarios
+- **Animation Patterns** - Framer Motion code examples, micro-animations, loading states
+- **Accessibility Deep Dive** - Keyboard navigation map, screen reader announcements, focus management
+- **Performance Optimization** - Budgets, code splitting, caching, virtual scrolling, Web Workers
+- **Component File Structure** - 45 new components across 4 categories
+- **Visual Mockups** - ASCII wireframes for Analytics and Personalization pages
+- **Implementation Checklist** - Per-phase task lists with success metrics
 
 ---
 
