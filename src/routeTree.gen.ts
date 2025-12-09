@@ -14,6 +14,8 @@ import { Route as DashboardTrendsIndexRouteImport } from './routes/dashboard/tre
 import { Route as DashboardToolsIndexRouteImport } from './routes/dashboard/tools/index'
 import { Route as DashboardReportsIndexRouteImport } from './routes/dashboard/reports/index'
 import { Route as DashboardQualityIndexRouteImport } from './routes/dashboard/quality/index'
+import { Route as DashboardPredictionsIndexRouteImport } from './routes/dashboard/predictions/index'
+import { Route as DashboardInsightsIndexRouteImport } from './routes/dashboard/insights/index'
 import { Route as DashboardGraphIndexRouteImport } from './routes/dashboard/graph/index'
 import { Route as DashboardDependenciesIndexRouteImport } from './routes/dashboard/dependencies/index'
 import { Route as DashboardCoverageIndexRouteImport } from './routes/dashboard/coverage/index'
@@ -44,6 +46,17 @@ const DashboardReportsIndexRoute = DashboardReportsIndexRouteImport.update({
 const DashboardQualityIndexRoute = DashboardQualityIndexRouteImport.update({
   id: '/dashboard/quality/',
   path: '/dashboard/quality/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardPredictionsIndexRoute =
+  DashboardPredictionsIndexRouteImport.update({
+    id: '/dashboard/predictions/',
+    path: '/dashboard/predictions/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DashboardInsightsIndexRoute = DashboardInsightsIndexRouteImport.update({
+  id: '/dashboard/insights/',
+  path: '/dashboard/insights/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardGraphIndexRoute = DashboardGraphIndexRouteImport.update({
@@ -86,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph': typeof DashboardGraphIndexRoute
+  '/dashboard/insights': typeof DashboardInsightsIndexRoute
+  '/dashboard/predictions': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
   '/dashboard/reports': typeof DashboardReportsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
@@ -99,6 +114,8 @@ export interface FileRoutesByTo {
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph': typeof DashboardGraphIndexRoute
+  '/dashboard/insights': typeof DashboardInsightsIndexRoute
+  '/dashboard/predictions': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality': typeof DashboardQualityIndexRoute
   '/dashboard/reports': typeof DashboardReportsIndexRoute
   '/dashboard/tools': typeof DashboardToolsIndexRoute
@@ -113,6 +130,8 @@ export interface FileRoutesById {
   '/dashboard/coverage/': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies/': typeof DashboardDependenciesIndexRoute
   '/dashboard/graph/': typeof DashboardGraphIndexRoute
+  '/dashboard/insights/': typeof DashboardInsightsIndexRoute
+  '/dashboard/predictions/': typeof DashboardPredictionsIndexRoute
   '/dashboard/quality/': typeof DashboardQualityIndexRoute
   '/dashboard/reports/': typeof DashboardReportsIndexRoute
   '/dashboard/tools/': typeof DashboardToolsIndexRoute
@@ -128,6 +147,8 @@ export interface FileRouteTypes {
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
     | '/dashboard/graph'
+    | '/dashboard/insights'
+    | '/dashboard/predictions'
     | '/dashboard/quality'
     | '/dashboard/reports'
     | '/dashboard/tools'
@@ -141,6 +162,8 @@ export interface FileRouteTypes {
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
     | '/dashboard/graph'
+    | '/dashboard/insights'
+    | '/dashboard/predictions'
     | '/dashboard/quality'
     | '/dashboard/reports'
     | '/dashboard/tools'
@@ -154,6 +177,8 @@ export interface FileRouteTypes {
     | '/dashboard/coverage/'
     | '/dashboard/dependencies/'
     | '/dashboard/graph/'
+    | '/dashboard/insights/'
+    | '/dashboard/predictions/'
     | '/dashboard/quality/'
     | '/dashboard/reports/'
     | '/dashboard/tools/'
@@ -168,6 +193,8 @@ export interface RootRouteChildren {
   DashboardCoverageIndexRoute: typeof DashboardCoverageIndexRoute
   DashboardDependenciesIndexRoute: typeof DashboardDependenciesIndexRoute
   DashboardGraphIndexRoute: typeof DashboardGraphIndexRoute
+  DashboardInsightsIndexRoute: typeof DashboardInsightsIndexRoute
+  DashboardPredictionsIndexRoute: typeof DashboardPredictionsIndexRoute
   DashboardQualityIndexRoute: typeof DashboardQualityIndexRoute
   DashboardReportsIndexRoute: typeof DashboardReportsIndexRoute
   DashboardToolsIndexRoute: typeof DashboardToolsIndexRoute
@@ -210,6 +237,20 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/quality'
       fullPath: '/dashboard/quality'
       preLoaderRoute: typeof DashboardQualityIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/predictions/': {
+      id: '/dashboard/predictions/'
+      path: '/dashboard/predictions'
+      fullPath: '/dashboard/predictions'
+      preLoaderRoute: typeof DashboardPredictionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/insights/': {
+      id: '/dashboard/insights/'
+      path: '/dashboard/insights'
+      fullPath: '/dashboard/insights'
+      preLoaderRoute: typeof DashboardInsightsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/graph/': {
@@ -264,6 +305,8 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardCoverageIndexRoute: DashboardCoverageIndexRoute,
   DashboardDependenciesIndexRoute: DashboardDependenciesIndexRoute,
   DashboardGraphIndexRoute: DashboardGraphIndexRoute,
+  DashboardInsightsIndexRoute: DashboardInsightsIndexRoute,
+  DashboardPredictionsIndexRoute: DashboardPredictionsIndexRoute,
   DashboardQualityIndexRoute: DashboardQualityIndexRoute,
   DashboardReportsIndexRoute: DashboardReportsIndexRoute,
   DashboardToolsIndexRoute: DashboardToolsIndexRoute,
