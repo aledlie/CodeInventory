@@ -1,0 +1,43 @@
+id: security-checks
+language: python
+rule:
+  any:
+    # Potential hardcoded secrets
+    - id: hardcoded-password
+      pattern: |
+        $VAR = "$VALUE"
+      constraints:
+        VALUE:
+          regex: ".*(password|secret|api[_-]?key|token).*"
+      severity: error
+      message: Potential hardcoded credential detected
+      note: Use environment variables or secure credential storage
+
+    # SQL injection risk
+    - id: sql-injection
+      pattern: |
+        execute($SQL)
+      constraints:
+        SQL:
+          regex: ".*%s.*|.*\\+.*"
+      severity: error
+      message: Potential SQL injection vulnerability
+      note: Use parameterized queries
+
+    # Unsafe pickle usage
+    - id: unsafe-pickle
+      pattern: pickle.loads($$$)
+      severity: warning
+      message: pickle.loads() can execute arbitrary code
+      note: Only unpickle data from trusted sources
+
+    # Command injection
+    - id: command-injection
+      pattern: |
+        subprocess.$METHOD($CMD)
+      constraints:
+        CMD:
+          regex: ".*\\+.*|.*%.*"
+      severity: error
+      message: Potential command injection
+      note: Use list arguments instead of shell=True with string concatenation

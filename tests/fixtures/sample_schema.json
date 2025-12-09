@@ -1,0 +1,54 @@
+{
+  "@context": "https://schema.org",
+  "directories": {
+    "src": {
+      "path": "src",
+      "has_git": true,
+      "git_remote": "https://github.com/user/repo.git",
+      "files": [
+        {
+          "@type": "SoftwareSourceCode",
+          "path": "src/main.py",
+          "language": "python",
+          "classes": [
+            {
+              "name": "Application",
+              "bases": [],
+              "methods": [
+                {
+                  "name": "run",
+                  "args": [],
+                  "isAsync": false
+                }
+              ],
+              "line_number": 10,
+              "is_exported": true
+            }
+          ],
+          "functions": [
+            {
+              "name": "main",
+              "args": [],
+              "line_number": 5,
+              "is_async": false,
+              "is_exported": true
+            }
+          ],
+          "imports": ["os", "sys", "pathlib"]
+        }
+      ],
+      "schema_org": {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "src",
+        "description": "Source code directory",
+        "programmingLanguage": [
+          {
+            "@type": "ComputerLanguage",
+            "name": "Python"
+          }
+        ]
+      }
+    }
+  }
+}

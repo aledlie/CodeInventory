@@ -1,0 +1,122 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.tox/
+venv/
+env/
+ENV/
+
+# Analysis outputs (temporary)
+test_results.json
+test_results.txt
+analysis_reports/
+outputs/
+coverage.json
+
+# Generated schemas and reports (DO NOT COMMIT)
+schemas.json
+schemas_enhanced.json
+quality*.json
+quality*.txt
+rss.xml
+rss-enhanced.xml
+schema.org.jsonld
+analyticsbot_*.json
+analyticsbot_*.txt
+pre_migration_tests.txt
+
+# Generated documentation (auto-created by tools)
+README_ENHANCED.md
+docs/generated/
+
+# Special output directories
+Inventory/
+
+# Repomix output files
+repomix-output.xml
+.schema_cache/
+
+# Analyzer cache files
+.analyzer_cache/
+
+# Phase 3: Analysis cache and checkpoint files
+.analysis-cache.json
+.analysis-checkpoint.json
