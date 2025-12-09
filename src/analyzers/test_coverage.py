@@ -66,6 +66,7 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
     Worker function to analyze a single file for functions.
 
     This function must be at module level to be picklable for ProcessPoolExecutor.
+    Optimized to use regex fallback when ast-grep is slow, and batch pattern matching.
 
     Args:
         file_path: Path to file to analyze
@@ -103,53 +104,131 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
         if not language:
             return []
 
-        # Find functions with each pattern
-        functions_data = []
-        for pattern in patterns:
-            try:
-                result = subprocess.run(
-                    ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
-                    capture_output=True,
-                    text=True,
-                    timeout=30
-                )
+        # Try fast regex-based extraction first for simple cases
+        functions_data = _extract_functions_regex(file_path, language)
+        if functions_data:
+            return functions_data
 
-                if result.returncode == 0 and result.stdout.strip():
-                    matches = json.loads(result.stdout)
-                    for match in matches:
-                        # Extract function name
-                        meta = match.get('metaVariables', {})
-                        func_name = None
-
-                        if 'single' in meta and 'NAME' in meta['single']:
-                            func_node = meta['single']['NAME']
-                            func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
-                        elif 'NAME' in meta:
-                            func_node = meta['NAME']
-                            func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
-
-                        # Skip private functions
-                        if func_name and not func_name.startswith('_'):
-                            line_num = match.get('range', {}).get('start', {}).get('line', 0)
-                            is_async = 'async' in pattern or 'async' in match.get('text', '')
-
-                            functions_data.append({
-                                'name': func_name,
-                                'file_path': str(file_path),
-                                'line_number': line_num,
-                                'is_async': is_async
-                            })
-
-            except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
-                # Log error but continue processing
-                logger.debug(f"Error processing {file_path} with pattern {pattern}: {e}")
-                continue
-
-        return functions_data
+        # Fall back to ast-grep for complex cases (with timeout)
+        return _extract_functions_astgrep(file_path, language, patterns)
 
     except Exception as e:
         logger.error(f"Worker error processing {file_path}: {e}")
         return []
+
+
+def _extract_functions_regex(file_path: Path, language: str) -> List[Dict[str, Any]]:
+    """
+    Fast regex-based function extraction for common patterns.
+    Returns empty list if file is too complex for regex parsing.
+    """
+    import re
+
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        # Skip files that are too large or have complex syntax
+        if len(content) > 500000:  # 500KB limit for regex
+            return []
+
+        functions_data = []
+        seen_names = set()  # Avoid duplicates
+
+        if language == 'python':
+            # Match Python function definitions
+            pattern = r'^[ \t]*(async\s+)?def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\('
+            for match in re.finditer(pattern, content, re.MULTILINE):
+                is_async = match.group(1) is not None
+                func_name = match.group(2)
+                if func_name and not func_name.startswith('_') and func_name not in seen_names:
+                    line_num = content[:match.start()].count('\n') + 1
+                    functions_data.append({
+                        'name': func_name,
+                        'file_path': str(file_path),
+                        'line_number': line_num,
+                        'is_async': is_async
+                    })
+                    seen_names.add(func_name)
+
+        elif language in ['typescript', 'javascript']:
+            # Match JS/TS function definitions
+            patterns = [
+                # Regular functions: function name(
+                r'(?:export\s+)?(?:async\s+)?function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(',
+                # Arrow functions: const name = (
+                r'(?:export\s+)?const\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*=\s*(?:async\s+)?\([^)]*\)\s*=>',
+            ]
+
+            for pat in patterns:
+                for match in re.finditer(pat, content, re.MULTILINE):
+                    func_name = match.group(1)
+                    if func_name and not func_name.startswith('_') and func_name not in seen_names:
+                        line_num = content[:match.start()].count('\n') + 1
+                        is_async = 'async' in match.group(0)
+                        functions_data.append({
+                            'name': func_name,
+                            'file_path': str(file_path),
+                            'line_number': line_num,
+                            'is_async': is_async
+                        })
+                        seen_names.add(func_name)
+
+        return functions_data
+
+    except Exception:
+        return []  # Fall back to ast-grep
+
+
+def _extract_functions_astgrep(file_path: Path, language: str, patterns: List[str]) -> List[Dict[str, Any]]:
+    """
+    Extract functions using ast-grep (more accurate but slower).
+    Used as fallback when regex fails or for complex files.
+    """
+    functions_data = []
+    seen_names = set()
+
+    for pattern in patterns:
+        try:
+            result = subprocess.run(
+                ['ast-grep', 'run', '-p', pattern, '--lang', language, '--json', str(file_path)],
+                capture_output=True,
+                text=True,
+                timeout=10  # Reduced timeout per pattern
+            )
+
+            if result.returncode == 0 and result.stdout.strip():
+                matches = json.loads(result.stdout)
+                for match in matches:
+                    # Extract function name
+                    meta = match.get('metaVariables', {})
+                    func_name = None
+
+                    if 'single' in meta and 'NAME' in meta['single']:
+                        func_node = meta['single']['NAME']
+                        func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+                    elif 'NAME' in meta:
+                        func_node = meta['NAME']
+                        func_name = func_node.get('text') if isinstance(func_node, dict) else str(func_node)
+
+                    # Skip private functions and duplicates
+                    if func_name and not func_name.startswith('_') and func_name not in seen_names:
+                        line_num = match.get('range', {}).get('start', {}).get('line', 0)
+                        is_async = 'async' in pattern or 'async' in match.get('text', '')
+
+                        functions_data.append({
+                            'name': func_name,
+                            'file_path': str(file_path),
+                            'line_number': line_num,
+                            'is_async': is_async
+                        })
+                        seen_names.add(func_name)
+
+        except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception) as e:
+            logger.debug(f"ast-grep error for {file_path}: {e}")
+            continue
+
+    return functions_data
 
 
 class TestCoverageAnalyzer:
@@ -305,17 +384,61 @@ class TestCoverageAnalyzer:
         return None
 
     def find_test_functions(self, test_dir: Path) -> Set[str]:
-        """Find all test function names"""
+        """Find all test function names - optimized with regex and parallel processing"""
         if not test_dir.exists():
             return set()
 
         test_functions = set()
-        for file_path in test_dir.rglob('*'):
-            if file_path.is_file():
-                names = self._find_test_names_in_file(file_path)
-                test_functions.update(names)
+
+        # Collect all test files first
+        test_files = [
+            f for f in test_dir.rglob('*')
+            if f.is_file() and f.suffix in ['.py', '.ts', '.tsx', '.js', '.jsx']
+        ]
+
+        # Use fast regex extraction for all files
+        for file_path in test_files:
+            names = self._find_test_names_fast(file_path)
+            test_functions.update(names)
 
         return test_functions
+
+    def _find_test_names_fast(self, file_path: Path) -> Set[str]:
+        """Fast regex-based test name extraction"""
+        import re
+
+        try:
+            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+
+            test_names = set()
+
+            if file_path.suffix == '.py':
+                # Match Python test functions: def test_something(
+                pattern = r'def\s+(test_[a-zA-Z0-9_]+)\s*\('
+                for match in re.finditer(pattern, content):
+                    test_name = match.group(1)
+                    clean_names = self._clean_test_name(test_name)
+                    test_names.update(clean_names)
+
+            elif file_path.suffix in ['.ts', '.tsx', '.js', '.jsx']:
+                # Match JS/TS test patterns
+                patterns = [
+                    r'it\s*\(\s*[\'"]([^"\']+)[\'"]',       # it("test name"
+                    r'test\s*\(\s*[\'"]([^"\']+)[\'"]',     # test("test name"
+                    r'describe\s*\(\s*[\'"]([^"\']+)[\'"]', # describe("suite name"
+                ]
+                for pat in patterns:
+                    for match in re.finditer(pat, content):
+                        test_name = match.group(1)
+                        clean_names = self._clean_test_name(test_name)
+                        test_names.update(clean_names)
+
+            return test_names
+
+        except Exception:
+            # Fall back to ast-grep method
+            return self._find_test_names_in_file(file_path)
 
     def _find_test_names_in_file(self, file_path: Path) -> Set[str]:
         """Find test function names in a single file"""
@@ -426,9 +549,35 @@ class TestCoverageAnalyzer:
         return source_functions
 
     def _iterate_source_files(self) -> Iterator[Path]:
-        """Iterate through valid source files"""
-        for file_path in self.src_dir.rglob('*'):
-            if self._is_valid_source_file(file_path):
+        """Iterate through valid source files - optimized to skip directories early"""
+        import os
+
+        # Directories to skip entirely
+        skip_dirs = {
+            '.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+            '_site', '.venv', 'venv', 'env', '.cache', 'coverage', 'htmlcov',
+            'vendor', 'third_party', 'site-packages', '.idea', '.vscode',
+            'tests', '__tests__', 'test', 'spec', 'fixtures', 'mocks'
+        }
+
+        # Valid extensions
+        valid_extensions = {'.py', '.ts', '.tsx', '.js', '.jsx'}
+
+        for root, dirs, files in os.walk(self.src_dir):
+            # Prune directories we don't want to traverse
+            dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
+
+            for filename in files:
+                file_path = Path(root) / filename
+
+                # Quick extension check first (fastest)
+                if file_path.suffix not in valid_extensions:
+                    continue
+
+                # Skip test files by name pattern
+                if self._is_test_file(file_path):
+                    continue
+
                 yield file_path
 
     def _is_valid_source_file(self, file_path: Path) -> bool:
