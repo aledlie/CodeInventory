@@ -56,3 +56,7 @@ export * from './collaboration';
 
 // Phase 4E: Smart Notifications components
 export * from './notifications';
+
+// Phase 5B: Dashboard Personalization components
+export * from './personalization';
+export { SettingsPage } from './SettingsPage';
