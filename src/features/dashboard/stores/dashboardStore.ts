@@ -14,7 +14,6 @@ import type {
   DashboardLayout,
   DashboardPreferences,
   DashboardNotificationSettings,
-  SavedView,
   WidgetConfig,
   WidgetId,
   WidgetSize,
