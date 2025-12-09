@@ -31,6 +31,11 @@ Source Code
     ↓
 4. Validation (src/validators/)
    - Schema.org validation for generated JSON-LD
+    ↓
+5. Interactive Dashboard (src/features/dashboard/)
+   - React 18 + TypeScript + MUI v7 frontend
+   - Consumes JSON reports from public/data/
+   - Real-time metrics visualization with Chart.js
 ```
 
 ### Key Design Patterns
@@ -198,7 +203,7 @@ python3 -m src.analyzers.dependencies /path/to/code \
   --workers 4
 ```
 
-**Interactive Dashboard**:
+**Interactive Dashboard** (Static HTML):
 ```bash
 python3 -m src.generators.dashboard \
   --schemas outputs/schemas/schemas_enhanced.json \
@@ -206,6 +211,33 @@ python3 -m src.generators.dashboard \
   --coverage outputs/coverage/coverage_report.json \
   --dependency outputs/dependencies/dependency_report.json \
   --output outputs/dashboards/dashboard.html
+```
+
+### React Dashboard Frontend
+
+**Development Server**:
+```bash
+npm run dev
+# Opens at http://localhost:5173/dashboard
+```
+
+**Build & Preview**:
+```bash
+npm run build
+npm run preview
+```
+
+**Update Dashboard Data** (after running Python analysis):
+```bash
+# Copy latest reports to public/data/ for dashboard to consume
+cp outputs/quality/quality_report*.json public/data/quality/quality_report.json
+cp outputs/coverage/coverage_report*.json public/data/coverage/coverage_report.json
+cp outputs/dependencies/dependency_report*.json public/data/dependencies/dependency_report.json
+```
+
+**TypeScript Type Checking**:
+```bash
+npx tsc --noEmit
 ```
 
 ### Testing
@@ -394,17 +426,17 @@ def dfs(node, path, visited, rec_stack):
 
 This correctly identifies all cycles without false positives from DAG structures.
 
-## Directory Structure (29 directories, 88 files)
+## Directory Structure
 
 ```
 Inventory/
-├── src/                          # Source code modules
-│   ├── analyzers/                # Code analysis modules
+├── src/                          # Source code (Python analyzers + React frontend)
+│   ├── analyzers/                # Python code analysis modules
 │   │   ├── analyzer_optimizer.py # Parallel processing & caching
 │   │   ├── code_quality.py       # Code quality and best practices
 │   │   ├── dependencies.py       # Dependency analysis
 │   │   └── test_coverage.py      # Test coverage tracking
-│   ├── generators/               # Content generation modules
+│   ├── generators/               # Python content generation
 │   │   ├── schema.py             # Enhanced schema generator
 │   │   ├── schema_optimizer.py   # Schema optimization utilities
 │   │   ├── dashboard.py          # HTML dashboard generator
@@ -413,10 +445,26 @@ Inventory/
 │   │   └── schema.py             # Schema.org validator
 │   ├── cache/                    # Caching utilities
 │   │   └── analysis_cache.py     # Analysis result caching
-│   └── utils/                    # Utility modules
-│       ├── git_operations.py     # Git automation
-│       ├── logging_config.py     # Centralized logging
-│       └── performance_monitor.py # Performance tracking
+│   ├── utils/                    # Utility modules
+│   │   ├── git_operations.py     # Git automation
+│   │   ├── logging_config.py     # Centralized logging
+│   │   └── performance_monitor.py # Performance tracking
+│   ├── features/dashboard/       # React dashboard frontend
+│   │   ├── components/           # UI components (Dashboard, Header, Sidebar, etc.)
+│   │   ├── api/                  # Data fetching & transformation
+│   │   ├── hooks/                # TanStack Query hooks
+│   │   ├── helpers/              # Metrics calculation utilities
+│   │   ├── types/                # TypeScript interfaces
+│   │   └── providers/            # React context providers
+│   ├── routes/                   # TanStack Router routes
+│   │   └── dashboard/            # Dashboard route
+│   ├── theme/                    # MUI v7 theme configuration
+│   ├── styles/                   # CSS design tokens & global styles
+│   └── components/               # Shared React components
+├── public/data/                  # Dashboard data (served by Vite)
+│   ├── quality/                  # Quality reports for dashboard
+│   ├── coverage/                 # Coverage reports for dashboard
+│   └── dependencies/             # Dependency reports for dashboard
 ├── scripts/                      # Executable scripts
 │   ├── run_analysis.py           # Analysis orchestrator
 │   ├── run_tests.py              # Test runner
@@ -424,29 +472,33 @@ Inventory/
 │   ├── enhance_docs.py           # Documentation enhancer
 │   └── push_changes.sh           # Git push automation
 ├── tests/                        # Test suite
-│   ├── unit/                     # Unit tests (7 test files)
-│   ├── integration/              # Integration tests (4 test files)
+│   ├── unit/                     # Unit tests (Python + React)
+│   ├── integration/              # Integration tests
 │   ├── performance/              # Benchmarking tests
 │   └── fixtures/                 # Sample code for testing
 ├── docs/                         # Documentation
-│   ├── guides/                   # How-to guides (5 files)
-│   ├── summaries/                # Phase summaries (9 files)
-│   ├── testing/                  # Test documentation (3 files)
-│   ├── integrations/             # Integration guides (2 files)
-│   ├── archive/                  # Historical docs (6 files)
+│   ├── guides/                   # How-to guides
+│   ├── summaries/                # Phase summaries
+│   ├── testing/                  # Test documentation
+│   ├── integrations/             # Integration guides
+│   ├── archive/                  # Historical docs
 │   ├── examples/                 # Code examples
 │   └── refactoring/              # Refactoring plans
 ├── ast-grep-rules/               # Custom ast-grep patterns
 │   ├── python-best-practices.yml
 │   ├── typescript-best-practices.yml
 │   └── security-checks.yml
-└── outputs/                      # Generated files (gitignored)
-    ├── schemas/                  # Schema JSON files
-    ├── quality/                  # Quality reports
-    ├── coverage/                 # Coverage reports
-    ├── dependencies/             # Dependency reports
-    ├── dashboards/               # HTML dashboards
-    └── rss/                      # RSS feeds
+├── outputs/                      # Generated files (gitignored)
+│   ├── schemas/                  # Schema JSON files
+│   ├── quality/                  # Quality reports
+│   ├── coverage/                 # Coverage reports
+│   ├── dependencies/             # Dependency reports
+│   ├── dashboards/               # HTML dashboards
+│   └── rss/                      # RSS feeds
+├── package.json                  # npm dependencies (React frontend)
+├── vite.config.ts                # Vite configuration
+├── tsconfig.json                 # TypeScript configuration
+└── tsr.config.json               # TanStack Router configuration
 ```
 
 ### Skipped Directories
@@ -470,6 +522,118 @@ Provides structural code search via AST patterns. Used extensively by all analyz
 Located at: `/Users/alyshialedlie/code/ISInternal/schema-org-mcp`
 
 Provides schema.org vocabulary access and JSON-LD generation. Used by validators and generators for semantic markup.
+
+## Interactive Dashboard (React Frontend)
+
+### Overview
+
+The project includes a React 18 + TypeScript interactive dashboard for visualizing analysis results. Located in `src/features/dashboard/` with TanStack Router routing at `src/routes/dashboard/`.
+
+**Tech Stack:**
+- React 18 with TypeScript (strict mode)
+- MUI v7 with custom theme and design tokens
+- TanStack Query for data fetching
+- TanStack Router for file-based routing
+- Chart.js for visualizations
+- Vite for development and building
+
+### Running the Dashboard
+
+```bash
+# Install dependencies (first time only)
+npm install
+
+# Development server
+npm run dev
+# Opens at http://localhost:5173
+
+# Production build
+npm run build
+npm run preview
+```
+
+### Data Connection
+
+The dashboard consumes JSON reports generated by the Python analyzers. Reports are copied to `public/data/` for the frontend to fetch:
+
+```
+public/data/
+├── quality/
+│   └── quality_report.json       # Code quality issues
+├── coverage/
+│   └── coverage_report.json      # Test coverage metrics
+└── dependencies/
+    └── dependency_report.json    # Dependency analysis
+```
+
+**Data Flow:**
+1. Python analyzers generate reports to `outputs/` directory
+2. Reports are copied to `public/data/` (manual or via script)
+3. React dashboard fetches from `/data/*.json` via TanStack Query
+4. Data transformation layer (`api/dashboardApi.ts`) converts Python report format to TypeScript interfaces
+
+**Refreshing Dashboard Data:**
+```bash
+# Run analysis pipeline (generates reports in outputs/)
+python3 scripts/run_analysis.py --root /path/to/code --parallel --cache
+
+# Copy reports to public/data/ for dashboard
+cp outputs/quality/quality_report*.json public/data/quality/quality_report.json
+cp outputs/coverage/coverage_report*.json public/data/coverage/coverage_report.json
+cp outputs/dependencies/dependency_report*.json public/data/dependencies/dependency_report.json
+```
+
+### Dashboard Structure
+
+```
+src/
+├── features/dashboard/
+│   ├── components/           # UI components
+│   │   ├── Dashboard.tsx     # Main dashboard page
+│   │   ├── DashboardLayout.tsx # Header + Sidebar layout
+│   │   ├── Header.tsx        # Navigation header
+│   │   ├── Sidebar.tsx       # Navigation sidebar
+│   │   ├── MetricCard.tsx    # Individual metric display
+│   │   ├── MetricGrid.tsx    # Grid of metrics
+│   │   └── HealthSummary.tsx # Overall health indicator
+│   ├── api/
+│   │   └── dashboardApi.ts   # Data fetching & transformation
+│   ├── hooks/
+│   │   └── useDashboardData.ts # TanStack Query hooks
+│   ├── helpers/
+│   │   └── calculateMetrics.ts # Metrics calculation
+│   ├── types/
+│   │   └── index.ts          # TypeScript interfaces
+│   └── providers/
+│       └── QueryProvider.tsx # TanStack Query provider
+├── routes/dashboard/
+│   └── index.tsx             # Dashboard route
+├── theme/
+│   └── dashboardTheme.ts     # MUI theme configuration
+└── styles/
+    ├── design-tokens.css     # CSS custom properties
+    └── global.css            # Global styles
+```
+
+### Key TypeScript Types
+
+The dashboard uses typed interfaces for all report data:
+
+```typescript
+// Python report formats (input)
+interface PythonQualityReport {
+  summary: { total_issues: number; critical: number; ... };
+  issues: Array<{ file: string; line: number; ... }>;
+}
+
+// Dashboard formats (transformed)
+interface QualityData {
+  totalIssues: number;
+  criticalIssues: number;
+  issuesByCategory: Record<string, number>;
+  ...
+}
+```
 
 ## Testing Strategy
 
