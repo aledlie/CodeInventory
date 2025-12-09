@@ -354,6 +354,25 @@ export interface LoadReportsResult {
 }
 
 // ============================================================================
+// Phase 3 Type Exports
+// ============================================================================
+
+// Phase 3: Trends & Charts
+export * from './charts';
+
+// Phase 3: Dependency Graph
+export * from './graph';
+
+// Phase 3: Historical Comparison
+export * from './comparison';
+
+// Phase 3: Report Generation
+export * from './reports';
+
+// Phase 3: Tools & Utilities
+export * from './tools';
+
+// ============================================================================
 // Phase 4 Type Exports
 // ============================================================================
 

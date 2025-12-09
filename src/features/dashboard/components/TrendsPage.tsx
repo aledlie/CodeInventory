@@ -17,12 +17,12 @@ import {
   TimeRangeSelector,
 } from './charts';
 import { trendsApi } from '../api/trendsApi';
-import type { TimeRange } from '../types/charts';
+import type { ChartTimeRange } from '../types/charts';
 
 const DATA_PATH = '/data';
 
 interface TrendsContentProps {
-  timeRange: TimeRange;
+  timeRange: ChartTimeRange;
 }
 
 /**
@@ -93,7 +93,7 @@ function TrendsLoadingSkeleton() {
  * Main TrendsPage component
  */
 export const TrendsPage: React.FC = () => {
-  const [timeRange, setTimeRange] = useState<TimeRange>('30d');
+  const [timeRange, setTimeRange] = useState<ChartTimeRange>('30d');
 
   return (
     <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/trends">

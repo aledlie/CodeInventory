@@ -65,21 +65,22 @@ export interface HistoryManifest {
 }
 
 /**
- * Time range filter for trend charts
+ * Time range filter for trend charts (Phase 3)
+ * Note: Different from Phase 4C visualizations TimeRange
  */
-export type TimeRange = '7d' | '30d' | '90d' | 'all';
+export type ChartTimeRange = '7d' | '30d' | '90d' | 'all';
 
 /**
- * Trend direction indicator
+ * Trend direction indicator (Phase 3)
  */
-export type TrendDirection = 'improving' | 'stable' | 'declining';
+export type ChartTrendDirection = 'improving' | 'stable' | 'declining';
 
 /**
  * Trend summary statistics
  */
 export interface TrendSummary {
   /** Overall trend direction */
-  trend: TrendDirection;
+  trend: ChartTrendDirection;
   /** Percentage change from first to last */
   changePercentage: number;
   /** Standard deviation (volatility) */
@@ -101,7 +102,7 @@ export interface TrendData {
   /** Display name */
   metricName: string;
   /** Time range filter applied */
-  timeRange: TimeRange;
+  timeRange: ChartTimeRange;
   /** Data points ordered by timestamp */
   dataPoints: Array<{
     timestamp: string;
@@ -327,7 +328,7 @@ export interface DoughnutChartProps extends BaseChartProps {
  */
 export type TrendDataTransformer = (
   runs: AnalysisRun[],
-  timeRange: TimeRange
+  timeRange: ChartTimeRange
 ) => TrendData;
 
 /**
@@ -517,7 +518,7 @@ export interface ChartInteractionState {
  */
 export interface ChartFilterState {
   /** Time range filter */
-  timeRange: TimeRange;
+  timeRange: ChartTimeRange;
   /** Metric filter (which metrics to show) */
   metrics: string[];
   /** Severity filter (for issue charts) */

@@ -34,11 +34,18 @@ export { CodeQualityPage } from './CodeQualityPage';
 export { TestCoveragePage } from './TestCoveragePage';
 export { DependenciesPage } from './DependenciesPage';
 
-// Phase 3 components
+// Phase 3 page components
 export { TrendsPage } from './TrendsPage';
 export { DependencyGraphPage } from './DependencyGraphPage';
 export { ComparisonPage } from './ComparisonPage';
 export { ReportsPage } from './ReportsPage';
+
+// Phase 3 subdirectory components
+export * from './charts';
+export * from './graph';
+export * from './comparison';
+export * from './tools';
+export * from './analytics';
 
 // Phase 4A: AI Insights components
 export { InsightsPage, type InsightsPageProps } from './InsightsPage';

@@ -9,4 +9,4 @@ export { QualityTrendChart } from './QualityTrendChart';
 export { CoverageTrendChart } from './CoverageTrendChart';
 export { IssueVelocityChart } from './IssueVelocityChart';
 export { CircularDepsChart } from './CircularDepsChart';
-export { TimeRangeSelector } from './TimeRangeSelector';
+export { ChartTimeRangeSelector, ChartTimeRangeSelector as TimeRangeSelector } from './TimeRangeSelector';

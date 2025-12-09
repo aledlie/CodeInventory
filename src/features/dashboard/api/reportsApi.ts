@@ -7,7 +7,7 @@
 import type {
   ReportConfig,
   ReportType,
-  ExportFormat,
+  ReportExportFormat,
   ReportSection,
   ReportSectionConfig,
 } from '../types/reports';
@@ -229,7 +229,7 @@ function generateRecommendations(_config: ReportConfig): string {
 /**
  * Export report to specified format
  */
-async function exportReport(config: ReportConfig, format: ExportFormat): Promise<Blob> {
+async function exportReport(config: ReportConfig, format: ReportExportFormat): Promise<Blob> {
   const content = await generateReportContent(config);
 
   switch (format) {
@@ -362,14 +362,14 @@ export const reportsApi = {
   /**
    * Export report to specified format
    */
-  async exportReport(config: ReportConfig, format: ExportFormat): Promise<Blob> {
+  async exportReport(config: ReportConfig, format: ReportExportFormat): Promise<Blob> {
     return exportReport(config, format);
   },
 
   /**
    * Download report
    */
-  async downloadReport(config: ReportConfig, format: ExportFormat): Promise<void> {
+  async downloadReport(config: ReportConfig, format: ReportExportFormat): Promise<void> {
     const blob = await this.exportReport(config, format);
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

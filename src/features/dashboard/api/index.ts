@@ -11,7 +11,7 @@ export { trendsApi } from './trendsApi';
 export { graphApi } from './graphApi';
 export { comparisonApi } from './comparisonApi';
 export { reportsApi, AVAILABLE_SECTIONS } from './reportsApi';
-export { toolsApi } from './toolsApi';
+export * from './toolsApi';
 
 // Phase 4 APIs
 export { insightsApi } from './insightsApi';
