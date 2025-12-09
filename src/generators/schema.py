@@ -1134,7 +1134,7 @@ def main() -> Tuple[List[str], List[Tuple[str, str]]]:
     else:
         _run_scanner(generator)
 
-    schema_json_path = _get_output_path(root)
+    schema_json_path = _get_output_path(root, args)
     generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
     logger.info("")
 
@@ -1151,6 +1151,7 @@ def _parse_arguments() -> Any:
     import os
     parser = argparse.ArgumentParser(description='Enhanced Schema Generator with optimization features')
     parser.add_argument('--root', default='/Users/alyshialedlie/code', help='Root directory to scan')
+    parser.add_argument('--output', help='Output file path for schemas JSON (default: root/outputs/schemas/schemas_enhanced.json)')
     parser.add_argument('--no-astgrep', action='store_true', help='Disable ast-grep (use regex fallback)')
     parser.add_argument('--no-schema-org', action='store_true', help='Disable schema.org markup in READMEs')
     parser.add_argument('--quality-report', action='store_true', help='Generate code quality report')
@@ -1185,14 +1186,16 @@ def _run_scanner(generator: 'EnhancedSchemaGenerator') -> None:
     generator.scan_all_directories()
     logger.info(f"✅ Found {len(generator.schemas)} directories to process\n")
 
-def _get_output_path(root: Path) -> Path:
+def _get_output_path(root: Path, args: Any = None) -> Path:
     """Determine output path for schemas.json"""
-    # Always use outputs/schemas directory for consistency
-    if root.name == 'Inventory':
-        output_dir = root / 'outputs' / 'schemas'
-    else:
-        output_dir = root / 'outputs' / 'schemas'
+    # Use explicit output path if provided
+    if args and args.output:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        return output_path
 
+    # Default: use outputs/schemas directory
+    output_dir = root / 'outputs' / 'schemas'
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir / 'schemas_enhanced.json'
 

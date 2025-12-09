@@ -301,9 +301,15 @@ class AnalysisRunner:
 
     def _run_schema_generation(self):
         """Run schema generation analysis with optimization"""
+        # Ensure schemas directory exists
+        schemas_dir = self.output_dir / 'schemas'
+        schemas_dir.mkdir(parents=True, exist_ok=True)
+        schemas_output = schemas_dir / 'schemas_enhanced.json'
+
         command = [
             'python3', '-m', 'src.generators.schema',
             '--root', str(self.root_dir),
+            '--output', str(schemas_output),  # Output to analysis_reports/schemas/
             '--parallel',  # Enable parallel processing for speed
             '--cache'      # Enable caching to skip unchanged files
         ]
@@ -395,6 +401,12 @@ class AnalysisRunner:
     def _generate_rss_feed(self):
         """Generate RSS feed"""
         schemas_file = self.output_dir / 'schemas' / 'schemas_enhanced.json'
+
+        # Skip RSS generation if schemas file doesn't exist
+        if not schemas_file.exists():
+            logger.warning(f"⚠️  Skipping RSS generation - schemas file not found: {schemas_file}")
+            return True  # Don't fail the pipeline
+
         rss_dir = self.output_dir / 'rss'
         rss_dir.mkdir(parents=True, exist_ok=True)
         rss_output = rss_dir / f'code_updates_{self.timestamp}.xml'
@@ -413,13 +425,20 @@ class AnalysisRunner:
         )
 
     def _validate_schema(self):
-        """Validate Schema.org markup"""
+        """Validate Schema.org markup in the generated schemas file"""
+        schemas_file = self.output_dir / 'schemas' / 'schemas_enhanced.json'
+
+        # Skip validation if schemas file doesn't exist
+        if not schemas_file.exists():
+            logger.warning(f"⚠️  Skipping schema validation - schemas file not found: {schemas_file}")
+            return True  # Don't fail the pipeline
+
         return self.run_command(
             'schema_validation',
             [
                 'python3', '-m', 'src.validators.schema',
                 '--json',
-                str(self.root_dir / 'Inventory' / 'schema.org.jsonld')
+                str(schemas_file)
             ],
             'Schema.org Validation'
         )

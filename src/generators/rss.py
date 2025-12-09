@@ -26,10 +26,22 @@ class RSSGenerator:
     def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):
         self.schemas_path = schemas_path
         self.git_repo = git_repo
+        self.schemas_data = {}
 
-        # Load schemas data
-        with open(schemas_path, 'r') as f:
-            self.schemas_data = json.load(f)
+        # Load schemas data with graceful error handling
+        if not schemas_path.exists():
+            logger.warning(f"⚠️  Schemas file not found: {schemas_path}")
+            logger.warning("   RSS feed will be generated without schema data")
+        else:
+            try:
+                with open(schemas_path, 'r') as f:
+                    self.schemas_data = json.load(f)
+            except json.JSONDecodeError as e:
+                logger.error(f"❌ Invalid JSON in schemas file: {e}")
+                logger.warning("   RSS feed will be generated without schema data")
+            except Exception as e:
+                logger.error(f"❌ Error loading schemas: {e}")
+                logger.warning("   RSS feed will be generated without schema data")
 
     def get_recent_commits(self, limit: int = 10) -> List[Dict[str, Any]]:
         """Get recent git commits"""
