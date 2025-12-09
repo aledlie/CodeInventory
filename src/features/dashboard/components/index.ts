@@ -28,3 +28,8 @@ export { HealthSummary, type HealthSummaryProps, type ActionItem } from './Healt
 
 // Main Dashboard component (integrates all components above)
 export { Dashboard, type DashboardProps } from './Dashboard';
+
+// Detail page components (Phase 2)
+export { CodeQualityPage } from './CodeQualityPage';
+export { TestCoveragePage } from './TestCoveragePage';
+export { DependenciesPage } from './DependenciesPage';
