@@ -532,9 +532,69 @@ class TestCoverageAnalyzer:
         logger.info(f"Looking for tests in: {self.test_dir}\n")
 
     def _find_all_test_functions(self) -> Set[str]:
-        """Find all test function names"""
-        test_functions = self.find_test_functions(self.test_dir)
-        logger.info(f"Found {len(test_functions)} test patterns\n")
+        """Find all test function names from multiple locations"""
+        test_functions = set()
+
+        # 1. Search the explicit test_dir if it exists
+        if self.test_dir.exists():
+            test_functions.update(self.find_test_functions(self.test_dir))
+            logger.info(f"Found {len(test_functions)} test patterns in {self.test_dir}")
+
+        # 2. Search the entire source tree for test files
+        additional_tests = self._find_test_functions_in_source_tree()
+        if additional_tests:
+            new_tests = additional_tests - test_functions
+            if new_tests:
+                logger.info(f"Found {len(new_tests)} additional test patterns in source tree")
+            test_functions.update(additional_tests)
+
+        logger.info(f"Found {len(test_functions)} total test patterns\n")
+        return test_functions
+
+    def _find_test_functions_in_source_tree(self) -> Set[str]:
+        """Find test files scattered throughout the source tree (e.g., __tests__ directories)"""
+        import os
+
+        test_functions = set()
+
+        # Directories that indicate test files
+        test_dir_patterns = {'tests', '__tests__', 'test', 'spec', 'fixtures'}
+
+        # File patterns that indicate test files
+        test_file_patterns = ['.test.', '.spec.', '_test.', 'test_']
+
+        # Skip these directories entirely
+        skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+                     '_site', '.venv', 'venv', 'env', '.cache', 'coverage', 'htmlcov',
+                     'vendor', 'third_party', 'site-packages', '.idea', '.vscode'}
+
+        valid_extensions = {'.py', '.ts', '.tsx', '.js', '.jsx'}
+
+        for root, dirs, files in os.walk(self.src_dir):
+            # Skip unwanted directories but keep test directories
+            dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
+
+            # Check if we're in a test directory
+            current_dir = Path(root).name
+            in_test_dir = current_dir in test_dir_patterns
+
+            for filename in files:
+                file_path = Path(root) / filename
+
+                # Skip non-code files
+                if file_path.suffix not in valid_extensions:
+                    continue
+
+                # Check if this is a test file
+                is_test_file = (
+                    in_test_dir or
+                    any(pattern in filename for pattern in test_file_patterns)
+                )
+
+                if is_test_file:
+                    names = self._find_test_names_fast(file_path)
+                    test_functions.update(names)
+
         return test_functions
 
     def _find_all_source_functions(self) -> List[FunctionInfo]:
