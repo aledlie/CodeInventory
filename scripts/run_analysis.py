@@ -742,11 +742,16 @@ Advanced:
     if args.timeout:
         timeouts = {key: args.timeout for key in DEFAULT_TIMEOUTS.keys()}
 
-    # Change to Inventory directory to run scripts
-    inventory_dir = root_dir / 'Inventory'
-    if not inventory_dir.exists():
-        logger.error(f"Error: Inventory directory not found at {inventory_dir}")
-        logger.error(f"The analysis tools must be run from within the Inventory project.")
+    # Verify this script is being run from the Inventory project
+    script_dir = Path(__file__).parent.parent.resolve()
+    if not (script_dir / 'src' / 'analyzers').exists():
+        logger.error(f"Error: This script must be run from the Inventory project directory")
+        logger.error(f"Script location: {script_dir}")
+        sys.exit(1)
+
+    # Verify root directory exists
+    if not root_dir.exists():
+        logger.error(f"Error: Target directory not found at {root_dir}")
         sys.exit(1)
 
     # Handle cache clearing

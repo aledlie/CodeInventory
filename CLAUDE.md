@@ -554,3 +554,4 @@ All analysis tools generate both JSON (machine-readable) and TXT (human-readable
 - `code_updates_YYYYMMDD_HHMMSS.xml`: RSS feed with git commit history
 
 All generated files are timestamped and automatically gitignored to prevent committing generated content.
+- python3 scripts/run_analysis.py --root {analysis_filepath}
