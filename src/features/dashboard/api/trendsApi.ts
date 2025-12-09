@@ -5,7 +5,7 @@
  * Supports time range filtering and trend calculations.
  */
 
-import type { HistoryManifest, AnalysisRun, TrendData, TimeRange } from '../types/charts';
+import type { HistoryManifest, AnalysisRun, TrendData, ChartTimeRange } from '../types/charts';
 
 /**
  * Load historical runs manifest from the data directory
@@ -81,7 +81,7 @@ function generateMockManifest(): HistoryManifest {
 /**
  * Filter runs by time range
  */
-function filterRunsByTimeRange(runs: AnalysisRun[], timeRange: TimeRange): AnalysisRun[] {
+function filterRunsByChartTimeRange(runs: AnalysisRun[], timeRange: ChartTimeRange): AnalysisRun[] {
   if (timeRange === 'all') return runs;
 
   const now = new Date();
@@ -181,10 +181,10 @@ export const trendsApi = {
   async loadTrendData(
     basePath: string,
     metricKey: keyof AnalysisRun['metrics'],
-    timeRange: TimeRange = '30d'
+    timeRange: ChartTimeRange = '30d'
   ): Promise<TrendData> {
     const manifest = await loadHistoryManifest(basePath);
-    const filteredRuns = filterRunsByTimeRange(manifest.runs, timeRange);
+    const filteredRuns = filterRunsByChartTimeRange(manifest.runs, timeRange);
     const trendData = extractMetricValues(filteredRuns, metricKey);
     return { ...trendData, timeRange };
   },
@@ -195,10 +195,10 @@ export const trendsApi = {
   async loadMultipleTrends(
     basePath: string,
     metricKeys: Array<keyof AnalysisRun['metrics']>,
-    timeRange: TimeRange = '30d'
+    timeRange: ChartTimeRange = '30d'
   ): Promise<TrendData[]> {
     const manifest = await loadHistoryManifest(basePath);
-    const filteredRuns = filterRunsByTimeRange(manifest.runs, timeRange);
+    const filteredRuns = filterRunsByChartTimeRange(manifest.runs, timeRange);
 
     return metricKeys.map((key) => {
       const trendData = extractMetricValues(filteredRuns, key);
@@ -216,8 +216,8 @@ export const trendsApi = {
   /**
    * Load all analysis runs
    */
-  async loadRuns(basePath: string, timeRange: TimeRange = '30d'): Promise<AnalysisRun[]> {
+  async loadRuns(basePath: string, timeRange: ChartTimeRange = '30d'): Promise<AnalysisRun[]> {
     const manifest = await loadHistoryManifest(basePath);
-    return filterRunsByTimeRange(manifest.runs, timeRange);
+    return filterRunsByChartTimeRange(manifest.runs, timeRange);
   },
 };

@@ -15,69 +15,263 @@ permissions:
   pages: write
 
 jobs:
-  test:
-    name: Run Tests
+  # Fast unit tests - run first and in parallel
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run unit tests
+      run: |
+        python scripts/run_tests.py --unit-only --no-coverage
+
+    - name: Generate unit test coverage
+      run: |
+        coverage run -m pytest tests/unit/ --tb=short
+        coverage report --show-missing
+        coverage xml -o coverage-unit.xml
+
+    - name: Upload unit test coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-unit-py${{ matrix.python-version }}
+        path: coverage-unit.xml
+
+  # Integration tests - component interaction tests
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest pytest-cov
-
-    - name: Run unit tests
-      run: |
-        python scripts/run_tests.py --unit-only
 
     - name: Run integration tests
       run: |
-        python scripts/run_tests.py --integration-only
+        python scripts/run_tests.py --integration-only --no-coverage
 
-    - name: Generate coverage report
+    - name: Generate integration test coverage
       run: |
-        coverage report
-        coverage html
+        coverage run -m pytest tests/integration/ --tb=short
+        coverage report --show-missing
+        coverage xml -o coverage-integration.xml
 
-    - name: Upload coverage to artifacts
+    - name: Upload integration test coverage
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
-        path: htmlcov/
+        name: coverage-integration-py${{ matrix.python-version }}
+        path: coverage-integration.xml
+
+  # E2E tests - full pipeline tests (slower, run separately)
+  e2e-tests:
+    name: End-to-End Tests
+    runs-on: ubuntu-latest
+    needs: integration-tests
+
+    strategy:
+      matrix:
+        python-version: ['3.11']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Setup ast-grep
+      uses: ./.github/actions/setup-ast-grep
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Verify dependencies
+      run: |
+        echo "=== Verifying dependencies ==="
+        echo "Node.js: $(node --version)"
+        echo "Python: $(python --version)"
+        echo "ast-grep: $(ast-grep --version)"
+        python -c "import pydantic; print(f'pydantic: {pydantic.__version__}')"
+        python -c "import coverage; print(f'coverage: {coverage.__version__}')"
+        python -c "import tqdm; print(f'tqdm: {tqdm.__version__}')"
+        python -c "import pytest; print(f'pytest: {pytest.__version__}')"
+
+    - name: Run environment verification
+      run: npm run verify
+
+    - name: Run e2e tests
+      run: |
+        python scripts/run_tests.py --e2e-only --no-coverage
+
+    - name: Generate e2e test coverage
+      run: |
+        coverage run -m pytest tests/e2e/ --tb=short
+        coverage report --show-missing
+        coverage xml -o coverage-e2e.xml
+        coverage html
+
+    - name: Upload e2e test coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-e2e-py${{ matrix.python-version }}
+        path: |
+          coverage-e2e.xml
+          htmlcov/
+
+  # Browser tests - Chrome runs first, other browsers depend on Chrome passing
+  browser-tests-chrome:
+    name: Browser Tests (Chrome)
+    runs-on: ubuntu-latest
+    needs: e2e-tests
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers (Chromium only)
+      run: npx playwright install chromium --with-deps
+
+    - name: Run Chrome browser tests
+      run: npm run test:browser:chrome
+
+    - name: Upload Chrome test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: browser-test-results-chrome
+        path: |
+          playwright-report/
+          test-results/
+
+  browser-tests-other:
+    name: Browser Tests (Firefox & WebKit)
+    runs-on: ubuntu-latest
+    needs: browser-tests-chrome  # Only runs if Chrome tests pass
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers (Firefox & WebKit)
+      run: |
+        npx playwright install firefox --with-deps
+        npx playwright install webkit --with-deps
+
+    - name: Run Firefox browser tests
+      run: npm run test:browser:firefox
+
+    - name: Run WebKit browser tests
+      run: npm run test:browser:webkit
+
+    - name: Upload other browser test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: browser-test-results-other
+        path: |
+          playwright-report/
+          test-results/
 
   benchmark:
     name: Performance Benchmarks
     runs-on: ubuntu-latest
-    needs: test
+    needs: browser-tests-other  # Now waits for all browser tests
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest
 
     - name: Run performance benchmarks
       run: |
@@ -92,21 +286,31 @@ jobs:
   analyze:
     name: Code Analysis
     runs-on: ubuntu-latest
-    needs: test
+    needs: browser-tests-other  # Now waits for all browser tests
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -152,15 +356,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt

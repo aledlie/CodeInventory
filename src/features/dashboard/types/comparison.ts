@@ -491,20 +491,22 @@ export interface SparklineMatrixData {
 // ============================================================================
 
 /**
- * AI insight type
+ * Comparison AI insight type (Phase 3)
+ * Note: Different from Phase 4 InsightType which is for the full insights system
  */
-export type InsightType =
+export type ComparisonInsightType =
   | 'improvement'    // Positive change
   | 'concern'        // Negative change
   | 'recommendation' // Suggested action
   | 'observation';   // Neutral observation
 
 /**
- * AI-generated insight
+ * AI-generated comparison insight (Phase 3)
+ * Note: Different from Phase 4 AIInsight which has more fields
  */
-export interface AIInsight {
+export interface ComparisonAIInsight {
   /** Insight type */
-  type: InsightType;
+  type: ComparisonInsightType;
   /** Severity/priority */
   severity: 'critical' | 'high' | 'medium' | 'low';
   /** Title/summary */
@@ -529,13 +531,13 @@ export interface AIComparisonSummary {
   /** Overall assessment */
   overallAssessment: string;
   /** Key improvements */
-  improvements: AIInsight[];
+  improvements: ComparisonAIInsight[];
   /** Areas needing attention */
-  concerns: AIInsight[];
+  concerns: ComparisonAIInsight[];
   /** Recommendations */
-  recommendations: AIInsight[];
+  recommendations: ComparisonAIInsight[];
   /** Additional observations */
-  observations: AIInsight[];
+  observations: ComparisonAIInsight[];
   /** Overall score (0-100) */
   overallScore: number;
   /** Generated timestamp */

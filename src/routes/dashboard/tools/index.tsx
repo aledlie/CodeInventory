@@ -4,7 +4,6 @@ import {
   Box,
   Paper,
   Typography,
-  Stack
 } from '@mui/material';
 import {
   Folder as FolderIcon,
@@ -14,7 +13,6 @@ import {
 } from '@mui/icons-material';
 import { DashboardLayout } from '../../../features/dashboard/components/DashboardLayout';
 import { MetricGrid } from '../../../features/dashboard/components/MetricGrid';
-import { MetricCard } from '../../../features/dashboard/components/MetricCard';
 import { SuspenseLoader } from '../../../components/SuspenseLoader';
 import { useToolsReport, useToolsStatistics } from '../../../features/dashboard/hooks/useToolsData';
 import { ModularityDistributionChart } from '../../../features/dashboard/components/tools/ModularityDistributionChart';
@@ -101,34 +99,36 @@ function ToolsOverviewPageContent() {
       </Box>
 
       {/* Metrics Overview */}
-      <MetricGrid columns={4}>
-        <MetricCard
-          title="Total Modules"
-          value={stats.totalModules}
-          subtitle="utility modules"
-          icon={<FolderIcon />}
-        />
-        <MetricCard
-          title="Avg Extraction Potential"
-          value={`${avgExtractionPercentage}%`}
-          progress={stats.avgExtractionPotential}
-          icon={<TrendingUpIcon />}
-        />
-        <MetricCard
-          title="Highly Modular"
-          value={stats.modularityDistribution.highly_modular || 0}
-          subtitle={`${highModularPercentage}% of modules`}
-          color="success"
-          icon={<CheckCircleIcon />}
-        />
-        <MetricCard
-          title="Ready for Extraction"
-          value={stats.highPotentialCandidates}
-          subtitle="high-potential candidates"
-          color="info"
-          icon={<RocketLaunchIcon />}
-        />
-      </MetricGrid>
+      <MetricGrid
+        metrics={[
+          {
+            label: "Total Modules",
+            value: stats.totalModules,
+            unit: "utility modules",
+            icon: <FolderIcon />,
+          },
+          {
+            label: "Avg Extraction Potential",
+            value: `${avgExtractionPercentage}%`,
+            trend: `${stats.avgExtractionPotential.toFixed(2)} avg score`,
+            icon: <TrendingUpIcon />,
+          },
+          {
+            label: "Highly Modular",
+            value: stats.modularityDistribution.highly_modular || 0,
+            trend: `${highModularPercentage}% of modules`,
+            status: "success" as const,
+            icon: <CheckCircleIcon />,
+          },
+          {
+            label: "Ready for Extraction",
+            value: stats.highPotentialCandidates,
+            trend: "high-potential candidates",
+            status: "primary" as const,
+            icon: <RocketLaunchIcon />,
+          },
+        ]}
+      />
 
       {/* Modularity Distribution */}
       <Paper sx={{ p: 3, mb: 3 }}>

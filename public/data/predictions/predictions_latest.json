@@ -1,0 +1,411 @@
+{
+  "quality_prediction": {
+    "metric": "qualityScore",
+    "metric_label": "Quality Score",
+    "historical": [
+      {"date": "2025-09-15", "value": 72},
+      {"date": "2025-09-22", "value": 73},
+      {"date": "2025-09-29", "value": 74},
+      {"date": "2025-10-06", "value": 75},
+      {"date": "2025-10-13", "value": 76},
+      {"date": "2025-10-20", "value": 78},
+      {"date": "2025-10-27", "value": 79},
+      {"date": "2025-11-03", "value": 80},
+      {"date": "2025-11-10", "value": 82},
+      {"date": "2025-11-17", "value": 83},
+      {"date": "2025-11-24", "value": 85},
+      {"date": "2025-12-01", "value": 86},
+      {"date": "2025-12-08", "value": 87}
+    ],
+    "predicted": [
+      {"date": "2025-12-15", "value": 88},
+      {"date": "2025-12-22", "value": 88.5},
+      {"date": "2025-12-29", "value": 89},
+      {"date": "2026-01-05", "value": 89.5},
+      {"date": "2026-01-12", "value": 90},
+      {"date": "2026-01-19", "value": 90.3},
+      {"date": "2026-01-26", "value": 90.6},
+      {"date": "2026-02-02", "value": 91},
+      {"date": "2026-02-09", "value": 91.2},
+      {"date": "2026-02-16", "value": 91.5},
+      {"date": "2026-02-23", "value": 91.7},
+      {"date": "2026-03-02", "value": 92}
+    ],
+    "confidence_bands": {
+      "lower": [
+        {"date": "2025-12-15", "value": 85},
+        {"date": "2025-12-22", "value": 85},
+        {"date": "2025-12-29", "value": 85.5},
+        {"date": "2026-01-05", "value": 86},
+        {"date": "2026-01-12", "value": 86},
+        {"date": "2026-01-19", "value": 86.5},
+        {"date": "2026-01-26", "value": 87},
+        {"date": "2026-02-02", "value": 87},
+        {"date": "2026-02-09", "value": 87.5},
+        {"date": "2026-02-16", "value": 88},
+        {"date": "2026-02-23", "value": 88},
+        {"date": "2026-03-02", "value": 88.5}
+      ],
+      "upper": [
+        {"date": "2025-12-15", "value": 91},
+        {"date": "2025-12-22", "value": 92},
+        {"date": "2025-12-29", "value": 92.5},
+        {"date": "2026-01-05", "value": 93},
+        {"date": "2026-01-12", "value": 94},
+        {"date": "2026-01-19", "value": 94},
+        {"date": "2026-01-26", "value": 94.5},
+        {"date": "2026-02-02", "value": 95},
+        {"date": "2026-02-09", "value": 95},
+        {"date": "2026-02-16", "value": 95.5},
+        {"date": "2026-02-23", "value": 95.5},
+        {"date": "2026-03-02", "value": 96}
+      ]
+    },
+    "confidence": 85,
+    "horizon": 90,
+    "methodology": "linear-regression",
+    "factors": [
+      {"name": "Issue Resolution Rate", "weight": 0.4, "direction": "positive", "explanation": "Consistent resolution of issues is improving quality"},
+      {"name": "Test Coverage Growth", "weight": 0.3, "direction": "positive", "explanation": "Increased test coverage is catching bugs earlier"},
+      {"name": "Code Review Adoption", "weight": 0.2, "direction": "positive", "explanation": "Regular code reviews prevent quality degradation"},
+      {"name": "Dependency Updates", "weight": 0.1, "direction": "neutral", "explanation": "Dependencies are being maintained"}
+    ],
+    "goals": [
+      {"value": 90, "label": "Target Quality", "predicted_date": "2026-01-12", "achievable": true, "confidence": 85}
+    ],
+    "unit": "%",
+    "min": 0,
+    "max": 100
+  },
+  "coverage_prediction": {
+    "metric": "testCoverage",
+    "metric_label": "Test Coverage",
+    "historical": [
+      {"date": "2025-09-15", "value": 55},
+      {"date": "2025-09-22", "value": 57},
+      {"date": "2025-09-29", "value": 58},
+      {"date": "2025-10-06", "value": 60},
+      {"date": "2025-10-13", "value": 62},
+      {"date": "2025-10-20", "value": 64},
+      {"date": "2025-10-27", "value": 66},
+      {"date": "2025-11-03", "value": 68},
+      {"date": "2025-11-10", "value": 70},
+      {"date": "2025-11-17", "value": 72},
+      {"date": "2025-11-24", "value": 74},
+      {"date": "2025-12-01", "value": 76},
+      {"date": "2025-12-08", "value": 78}
+    ],
+    "predicted": [
+      {"date": "2025-12-15", "value": 80},
+      {"date": "2025-12-22", "value": 81},
+      {"date": "2025-12-29", "value": 82},
+      {"date": "2026-01-05", "value": 83},
+      {"date": "2026-01-12", "value": 84},
+      {"date": "2026-01-19", "value": 85},
+      {"date": "2026-01-26", "value": 86},
+      {"date": "2026-02-02", "value": 86.5},
+      {"date": "2026-02-09", "value": 87},
+      {"date": "2026-02-16", "value": 87.5},
+      {"date": "2026-02-23", "value": 88},
+      {"date": "2026-03-02", "value": 88}
+    ],
+    "confidence_bands": {
+      "lower": [
+        {"date": "2025-12-15", "value": 76},
+        {"date": "2025-12-22", "value": 77},
+        {"date": "2025-12-29", "value": 77},
+        {"date": "2026-01-05", "value": 78},
+        {"date": "2026-01-12", "value": 79},
+        {"date": "2026-01-19", "value": 80},
+        {"date": "2026-01-26", "value": 80},
+        {"date": "2026-02-02", "value": 81},
+        {"date": "2026-02-09", "value": 81},
+        {"date": "2026-02-16", "value": 82},
+        {"date": "2026-02-23", "value": 82},
+        {"date": "2026-03-02", "value": 83}
+      ],
+      "upper": [
+        {"date": "2025-12-15", "value": 84},
+        {"date": "2025-12-22", "value": 85},
+        {"date": "2025-12-29", "value": 87},
+        {"date": "2026-01-05", "value": 88},
+        {"date": "2026-01-12", "value": 89},
+        {"date": "2026-01-19", "value": 90},
+        {"date": "2026-01-26", "value": 92},
+        {"date": "2026-02-02", "value": 92},
+        {"date": "2026-02-09", "value": 93},
+        {"date": "2026-02-16", "value": 93},
+        {"date": "2026-02-23", "value": 94},
+        {"date": "2026-03-02", "value": 95}
+      ]
+    },
+    "confidence": 82,
+    "horizon": 90,
+    "methodology": "linear-regression",
+    "factors": [
+      {"name": "New Test Additions", "weight": 0.5, "direction": "positive", "explanation": "Team is actively adding tests"},
+      {"name": "Code Additions", "weight": 0.3, "direction": "negative", "explanation": "New code needs test coverage"},
+      {"name": "Refactoring Efforts", "weight": 0.2, "direction": "positive", "explanation": "Refactored code often gets better coverage"}
+    ],
+    "goals": [
+      {"value": 85, "label": "Target Coverage", "predicted_date": "2026-01-19", "achievable": true, "confidence": 80}
+    ],
+    "unit": "%",
+    "min": 0,
+    "max": 100
+  },
+  "issues_prediction": {
+    "metric": "issueCount",
+    "metric_label": "Open Issues",
+    "historical": [
+      {"date": "2025-09-15", "value": 65},
+      {"date": "2025-09-22", "value": 62},
+      {"date": "2025-09-29", "value": 58},
+      {"date": "2025-10-06", "value": 55},
+      {"date": "2025-10-13", "value": 52},
+      {"date": "2025-10-20", "value": 50},
+      {"date": "2025-10-27", "value": 48},
+      {"date": "2025-11-03", "value": 45},
+      {"date": "2025-11-10", "value": 42},
+      {"date": "2025-11-17", "value": 40},
+      {"date": "2025-11-24", "value": 38},
+      {"date": "2025-12-01", "value": 35},
+      {"date": "2025-12-08", "value": 33}
+    ],
+    "predicted": [
+      {"date": "2025-12-15", "value": 30},
+      {"date": "2025-12-22", "value": 28},
+      {"date": "2025-12-29", "value": 26},
+      {"date": "2026-01-05", "value": 24},
+      {"date": "2026-01-12", "value": 22},
+      {"date": "2026-01-19", "value": 20},
+      {"date": "2026-01-26", "value": 18},
+      {"date": "2026-02-02", "value": 17},
+      {"date": "2026-02-09", "value": 16},
+      {"date": "2026-02-16", "value": 15},
+      {"date": "2026-02-23", "value": 14},
+      {"date": "2026-03-02", "value": 13}
+    ],
+    "confidence_bands": {
+      "lower": [
+        {"date": "2025-12-15", "value": 25},
+        {"date": "2025-12-22", "value": 22},
+        {"date": "2025-12-29", "value": 20},
+        {"date": "2026-01-05", "value": 18},
+        {"date": "2026-01-12", "value": 15},
+        {"date": "2026-01-19", "value": 13},
+        {"date": "2026-01-26", "value": 12},
+        {"date": "2026-02-02", "value": 10},
+        {"date": "2026-02-09", "value": 9},
+        {"date": "2026-02-16", "value": 8},
+        {"date": "2026-02-23", "value": 7},
+        {"date": "2026-03-02", "value": 5}
+      ],
+      "upper": [
+        {"date": "2025-12-15", "value": 35},
+        {"date": "2025-12-22", "value": 34},
+        {"date": "2025-12-29", "value": 32},
+        {"date": "2026-01-05", "value": 30},
+        {"date": "2026-01-12", "value": 29},
+        {"date": "2026-01-19", "value": 27},
+        {"date": "2026-01-26", "value": 24},
+        {"date": "2026-02-02", "value": 24},
+        {"date": "2026-02-09", "value": 23},
+        {"date": "2026-02-16", "value": 22},
+        {"date": "2026-02-23", "value": 21},
+        {"date": "2026-03-02", "value": 21}
+      ]
+    },
+    "confidence": 80,
+    "horizon": 90,
+    "methodology": "linear-regression",
+    "factors": [
+      {"name": "Resolution Rate", "weight": 0.4, "direction": "positive", "explanation": "Issues are being resolved consistently"},
+      {"name": "New Issue Rate", "weight": 0.35, "direction": "negative", "explanation": "Some new issues still appearing"},
+      {"name": "Prevention Measures", "weight": 0.25, "direction": "positive", "explanation": "Code reviews and testing are preventing issues"}
+    ],
+    "goals": [
+      {"value": 20, "label": "Target Issues", "predicted_date": "2026-01-19", "achievable": true, "confidence": 75}
+    ],
+    "unit": "",
+    "min": 0
+  },
+  "risks": [
+    {
+      "id": "risk-001",
+      "name": "Security Gap",
+      "description": "Authentication module lacks proper input validation, potentially allowing injection attacks.",
+      "impact": "critical",
+      "probability": "high",
+      "category": "security",
+      "affected_files": ["src/auth/login.ts", "src/auth/register.ts", "src/api/middleware/auth.ts"],
+      "mitigation": "Implement comprehensive input validation and sanitization. Use parameterized queries and escape user inputs.",
+      "estimated_effort": 16,
+      "confidence": 90,
+      "is_active": true,
+      "identified_at": "2025-12-05T10:00:00Z",
+      "updated_at": "2025-12-08T14:00:00Z"
+    },
+    {
+      "id": "risk-002",
+      "name": "Dependency X Outdated",
+      "description": "Critical dependency react-router has a known vulnerability in version 5.x. Update to 6.x is recommended.",
+      "impact": "high",
+      "probability": "medium",
+      "category": "dependency",
+      "affected_files": ["package.json", "src/routes/index.tsx"],
+      "mitigation": "Upgrade react-router to version 6.x. This requires refactoring route configurations.",
+      "estimated_effort": 8,
+      "confidence": 95,
+      "is_active": true,
+      "identified_at": "2025-11-28T08:00:00Z",
+      "updated_at": "2025-12-01T10:00:00Z"
+    },
+    {
+      "id": "risk-003",
+      "name": "Technical Debt Accumulation",
+      "description": "TODO comments have increased by 40% in the last month, indicating growing technical debt.",
+      "impact": "medium",
+      "probability": "high",
+      "category": "quality",
+      "affected_files": ["Multiple files across codebase"],
+      "mitigation": "Schedule dedicated sprint for technical debt reduction. Address high-priority TODOs first.",
+      "estimated_effort": 24,
+      "confidence": 85,
+      "is_active": true,
+      "identified_at": "2025-12-01T14:00:00Z",
+      "updated_at": "2025-12-08T16:00:00Z"
+    },
+    {
+      "id": "risk-004",
+      "name": "Test Debt in New Features",
+      "description": "Recently added features have lower test coverage (45%) compared to codebase average (78%).",
+      "impact": "medium",
+      "probability": "medium",
+      "category": "coverage",
+      "affected_files": ["src/features/newFeature/*", "src/components/NewComponent.tsx"],
+      "mitigation": "Require minimum 70% test coverage for new features before merging PRs.",
+      "estimated_effort": 12,
+      "confidence": 88,
+      "is_active": true,
+      "identified_at": "2025-12-03T11:00:00Z",
+      "updated_at": "2025-12-07T09:00:00Z"
+    },
+    {
+      "id": "risk-005",
+      "name": "Performance Regression",
+      "description": "Bundle size increased by 15% after recent additions. May impact initial load time.",
+      "impact": "low",
+      "probability": "medium",
+      "category": "performance",
+      "affected_files": ["src/index.tsx", "package.json"],
+      "mitigation": "Implement code splitting and lazy loading for non-critical components. Consider tree shaking.",
+      "estimated_effort": 6,
+      "confidence": 75,
+      "is_active": true,
+      "identified_at": "2025-12-06T15:00:00Z",
+      "updated_at": "2025-12-08T12:00:00Z"
+    },
+    {
+      "id": "risk-006",
+      "name": "API Rate Limiting",
+      "description": "External API calls lack proper rate limiting, risk of being blocked during high traffic.",
+      "impact": "high",
+      "probability": "low",
+      "category": "performance",
+      "affected_files": ["src/api/externalService.ts"],
+      "mitigation": "Implement exponential backoff and request queuing for external API calls.",
+      "estimated_effort": 4,
+      "confidence": 70,
+      "is_active": true,
+      "identified_at": "2025-11-25T09:00:00Z",
+      "updated_at": "2025-12-02T11:00:00Z"
+    }
+  ],
+  "scenarios": {
+    "current": {
+      "scenario": {
+        "name": "Current Pace",
+        "coverage_growth_rate": 0.02,
+        "issue_resolution_rate": 3,
+        "new_issues_rate": 1,
+        "dependency_update_rate": 0.5
+      },
+      "prediction": {
+        "metric": "qualityScore",
+        "metric_label": "Quality Score",
+        "historical": [],
+        "predicted": [],
+        "confidence_bands": {"lower": [], "upper": []},
+        "confidence": 85,
+        "horizon": 90,
+        "methodology": "linear-regression",
+        "factors": [],
+        "unit": "%"
+      },
+      "days_to_90_quality": 35,
+      "days_to_target_coverage": 45,
+      "projected_quality": 92,
+      "projected_coverage": 88
+    },
+    "accelerated": {
+      "scenario": {
+        "name": "Accelerated",
+        "coverage_growth_rate": 0.04,
+        "issue_resolution_rate": 5,
+        "new_issues_rate": 1,
+        "dependency_update_rate": 1
+      },
+      "prediction": {
+        "metric": "qualityScore",
+        "metric_label": "Quality Score",
+        "historical": [],
+        "predicted": [],
+        "confidence_bands": {"lower": [], "upper": []},
+        "confidence": 75,
+        "horizon": 90,
+        "methodology": "linear-regression",
+        "factors": [],
+        "unit": "%"
+      },
+      "days_to_90_quality": 21,
+      "days_to_target_coverage": 30,
+      "projected_quality": 95,
+      "projected_coverage": 92
+    },
+    "relaxed": {
+      "scenario": {
+        "name": "Relaxed",
+        "coverage_growth_rate": 0.01,
+        "issue_resolution_rate": 2,
+        "new_issues_rate": 2,
+        "dependency_update_rate": 0.25
+      },
+      "prediction": {
+        "metric": "qualityScore",
+        "metric_label": "Quality Score",
+        "historical": [],
+        "predicted": [],
+        "confidence_bands": {"lower": [], "upper": []},
+        "confidence": 90,
+        "horizon": 90,
+        "methodology": "linear-regression",
+        "factors": [],
+        "unit": "%"
+      },
+      "days_to_90_quality": 60,
+      "days_to_target_coverage": 75,
+      "projected_quality": 89,
+      "projected_coverage": 82
+    }
+  },
+  "summary": {
+    "total_risks": 6,
+    "critical_risks": 1,
+    "high_risks": 2,
+    "average_confidence": 84,
+    "trend_direction": "improving"
+  },
+  "generated_at": "2025-12-09T10:30:00Z",
+  "analyzer_version": "1.0.0"
+}

@@ -14,7 +14,6 @@ function getGaugeColor(value: number): string {
 export function ExtractionGauge({ value, size = 200 }: ExtractionGaugeProps) {
   const percentage = Math.round(value * 100);
   const angle = -90 + (value * 180); // -90 to 90 degrees
-  const radius = 80;
   const centerX = 100;
   const centerY = 100;
 

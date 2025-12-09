@@ -47,7 +47,7 @@ import { DashboardLayout } from './DashboardLayout';
 import { reportsApi, AVAILABLE_SECTIONS } from '../api/reportsApi';
 import type {
   ReportType,
-  ExportFormat,
+  ReportExportFormat,
   ReportConfig,
 } from '../types/reports';
 
@@ -95,7 +95,7 @@ const REPORT_TYPES: Array<{
  * Export format options
  */
 const EXPORT_FORMATS: Array<{
-  format: ExportFormat;
+  format: ReportExportFormat;
   label: string;
   description: string;
 }> = [
@@ -178,7 +178,7 @@ export function ReportsPage() {
   /**
    * Export report
    */
-  const handleExport = useCallback(async (format: ExportFormat) => {
+  const handleExport = useCallback(async (format: ReportExportFormat) => {
     if (!config) return;
 
     setExporting(true);
