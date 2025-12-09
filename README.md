@@ -85,14 +85,22 @@ Inventory/
 Building on the completed Phase 3 visualization features, Phase 4 adds AI-powered intelligence:
 
 ### Phase 4 Progress (Current)
-- **AI Insights UI Components**: InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
-- **Predictions Infrastructure**: APIs (insightsApi.ts, predictionsApi.ts), hooks (useInsights.ts, usePredictions.ts)
+- **Sidebar Navigation**: AI Insights and Predictions routes added to navigation
+- **Routes Configured**: `/dashboard/insights` and `/dashboard/predictions`
+- **APIs Exported**: insightsApi.ts, predictionsApi.ts via barrel export
+- **Hooks Exported**: useInsights.ts, usePredictions.ts with full hook suite
 - **TypeScript Types**: insights.ts, predictions.ts, collaboration.ts
-- **Planning Documents**: PHASE4_VISUAL_STORYTELLING_GUIDE.md, PHASE4_COMPONENT_MOCKUPS.md
+- **Components**: InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard, PredictiveDashboard
+
+### Phase 5 Infrastructure (Ready)
+- **APIs**: analyticsApi.ts, visualizationApi.ts created
+- **Hooks**: useAnalytics.ts, useVisualization.ts created
+- **Types**: analytics.ts, visualizations.ts defined
+- **Planning**: PHASE5_IMPLEMENTATION_GUIDE.md, PHASE5_VISUAL_DESIGN.md
 
 ### Dashboard Features (Phase 3 Complete)
 - **React 18 + TypeScript** with MUI v7 components
-- **9 dashboard routes**: Overview, Quality, Coverage, Dependencies, Trends, Graph, Tools, Compare, Reports
+- **11 dashboard routes**: Overview, Quality, Coverage, Dependencies, Trends, Graph, Tools, Compare, Reports, Insights, Predictions
 - **Historical metrics comparison** with DateRangeSelector and trend indicators
 - **Custom report generation** with PDF, HTML, JSON, CSV, and Markdown export
 - **Dependency graph visualization** with interactive canvas
@@ -104,12 +112,12 @@ Building on the completed Phase 3 visualization features, Phase 4 adds AI-powere
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `6d30432` | 2025-12-09 | feat(phase4): add AI insights UI components |
-| `8209d4b` | 2025-12-09 | feat(phase4): add AI insights and predictions infrastructure |
-| `01d1d54` | 2025-12-09 | docs(phase4-5): add planning documents for advanced dashboard features |
-| `ff00ba0` | 2025-12-09 | fix(tools): correct MetricGrid usage and update type exports |
-| `0762663` | 2025-12-09 | fix(typescript): resolve unused variables in tools components |
-| `00e04e6` | 2025-12-09 | docs: update project documentation with phase 3 completion status |
+| `586594a` | 2025-12-09 | chore: update dependencies and project configuration |
+| `a3f5adf` | 2025-12-09 | docs(phase3): update completion documentation and quick reference |
+| `eb14b67` | 2025-12-09 | docs: update project documentation with phase 4 implementation status |
+| `e54c25d` | 2025-12-09 | docs(phase4-5): add planning and implementation guides |
+| `193a6e0` | 2025-12-09 | feat(sidebar): add phase 4 navigation for insights and predictions |
+| `18d2d96` | 2025-12-09 | feat: export phase 4 insight and prediction APIs and hooks |
 
 ### Start the Dashboard
 ```bash
@@ -475,18 +483,18 @@ See the individual integration guides for detailed usage instructions and exampl
 
 | Commit | Date | Description |
 |--------|------|-------------|
+| `586594a` | 2025-12-09 | chore: update dependencies and project configuration |
+| `a3f5adf` | 2025-12-09 | docs(phase3): update completion documentation and quick reference |
+| `eb14b67` | 2025-12-09 | docs: update project documentation with phase 4 implementation status |
+| `e54c25d` | 2025-12-09 | docs(phase4-5): add planning and implementation guides |
+| `193a6e0` | 2025-12-09 | feat(sidebar): add phase 4 navigation for insights and predictions |
+| `18d2d96` | 2025-12-09 | feat: export phase 4 insight and prediction APIs and hooks |
+| `ccf2f3d` | 2025-12-09 | chore: regenerate route tree after phase 4 route additions |
 | `6d30432` | 2025-12-09 | feat(phase4): add AI insights UI components |
 | `8209d4b` | 2025-12-09 | feat(phase4): add AI insights and predictions infrastructure |
 | `01d1d54` | 2025-12-09 | docs(phase4-5): add planning documents for advanced dashboard features |
 | `ff00ba0` | 2025-12-09 | fix(tools): correct MetricGrid usage and update type exports |
 | `0762663` | 2025-12-09 | fix(typescript): resolve unused variables in tools components |
-| `00e04e6` | 2025-12-09 | docs: update project documentation with phase 3 completion status |
-| `211066d` | 2025-12-09 | docs: update phase 3 documentation with comparison and reports features |
-| `1f5b857` | 2025-12-09 | feat(dashboard): add navigation for phase 3 visualization features |
-| `26308ec` | 2025-12-09 | feat(dashboard): add custom report generation feature |
-| `3302134` | 2025-12-09 | feat(dashboard): add historical metrics comparison feature |
-| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
-| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
 
 ---
 *Last updated: 2025-12-09 | Originally generated on 2025-11-01*

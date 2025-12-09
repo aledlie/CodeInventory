@@ -55,9 +55,10 @@ src/
 ├── features/dashboard/  # React dashboard
 │   ├── components/      # Dashboard, Header, Sidebar, MetricCard, MetricGrid
 │   │                    # CodeQualityPage, TestCoveragePage, DependenciesPage
-│   ├── api/             # dashboardApi.ts - data fetching
-│   ├── hooks/           # useDashboardData.ts - TanStack Query
-│   ├── types/           # TypeScript interfaces
+│   │                    # InsightsPage (Phase 4), PredictiveDashboard (Phase 4)
+│   ├── api/             # dashboardApi, insightsApi, predictionsApi, analyticsApi
+│   ├── hooks/           # useDashboardData, useInsights, usePredictions, useAnalytics
+│   ├── types/           # TypeScript interfaces (insights, predictions, analytics)
 │   └── providers/       # QueryProvider.tsx
 ├── routes/dashboard/    # TanStack Router file-based routes
 │   ├── index.tsx        # /dashboard - main overview
@@ -68,11 +69,15 @@ src/
 │   ├── graph/           # /dashboard/graph - dependency graph
 │   ├── tools/           # /dashboard/tools - tools & utilities
 │   ├── compare/         # /dashboard/compare - historical comparison
-│   └── reports/         # /dashboard/reports - report generation
+│   ├── reports/         # /dashboard/reports - report generation
+│   ├── insights/        # /dashboard/insights - AI-powered insights (Phase 4)
+│   └── predictions/     # /dashboard/predictions - predictive analytics (Phase 4)
 ├── theme/               # MUI v7 theme (dashboardTheme.ts)
 ├── styles/              # CSS design tokens & global styles
 └── components/          # Shared: ErrorBoundary, SuspenseLoader
 public/data/             # JSON reports consumed by dashboard
+├── insights/            # AI insights data (Phase 4)
+└── predictions/         # Predictive analytics data (Phase 4)
 outputs/                 # Generated reports (gitignored)
 ```
 
@@ -139,12 +144,12 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `6d30432` | 2025-12-09 | feat(phase4): add AI insights UI components |
-| `8209d4b` | 2025-12-09 | feat(phase4): add AI insights and predictions infrastructure |
-| `01d1d54` | 2025-12-09 | docs(phase4-5): add planning documents for advanced dashboard features |
-| `ff00ba0` | 2025-12-09 | fix(tools): correct MetricGrid usage and update type exports |
-| `0762663` | 2025-12-09 | fix(typescript): resolve unused variables in tools components |
-| `00e04e6` | 2025-12-09 | docs: update project documentation with phase 3 completion status |
+| `586594a` | 2025-12-09 | chore: update dependencies and project configuration |
+| `a3f5adf` | 2025-12-09 | docs(phase3): update completion documentation and quick reference |
+| `eb14b67` | 2025-12-09 | docs: update project documentation with phase 4 implementation status |
+| `e54c25d` | 2025-12-09 | docs(phase4-5): add planning and implementation guides for advanced features |
+| `193a6e0` | 2025-12-09 | feat(sidebar): add phase 4 navigation for insights and predictions |
+| `18d2d96` | 2025-12-09 | feat: export phase 4 insight and prediction APIs and hooks |
 
 ### Current Development Phase
 
@@ -157,8 +162,16 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 - Sidebar navigation updated with Graph, Compare, and Reports links
 
 **Phase 4: AI Insights & Predictions** (IN PROGRESS)
-- AI Insights UI components - InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
-- Predictions infrastructure - APIs (insightsApi.ts, predictionsApi.ts), hooks (useInsights.ts, usePredictions.ts)
+- Sidebar navigation - AI Insights and Predictions routes added
+- Routes - `/dashboard/insights` and `/dashboard/predictions` configured
+- APIs exported - insightsApi.ts, predictionsApi.ts via barrel export
+- Hooks exported - useInsights.ts, usePredictions.ts via barrel export
 - TypeScript types - insights.ts, predictions.ts, collaboration.ts
-- Planning documents - PHASE4_VISUAL_STORYTELLING_GUIDE.md, PHASE4_COMPONENT_MOCKUPS.md, PHASE4_QUICK_REFERENCE.md
-- Phase 5 planning - PHASE5_IMPLEMENTATION_GUIDE.md, PHASE5_VISUAL_DESIGN.md
+- Components - InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
+- Predictions components - PredictiveDashboard with prediction cards
+
+**Phase 5: Advanced Analytics** (INFRASTRUCTURE READY)
+- APIs - analyticsApi.ts, visualizationApi.ts created
+- Hooks - useAnalytics.ts, useVisualization.ts created
+- Types - analytics.ts, visualizations.ts defined
+- Planning docs - PHASE5_IMPLEMENTATION_GUIDE.md, PHASE5_VISUAL_DESIGN.md
