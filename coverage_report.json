@@ -1598,6 +1598,34 @@
       "is_tested": false
     },
     {
+      "name": "escapeCsvValue",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatExportDate",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "downloadFile",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "exportToPdf",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 316,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "transformRiskData",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 132,
@@ -1685,34 +1713,6 @@
       "name": "generateMockAnalyticsReport",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 484,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "escapeCsvValue",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatExportDate",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "downloadFile",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "exportToPdf",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 316,
       "is_async": false,
       "is_tested": false
     },
@@ -1941,6 +1941,69 @@
       "is_tested": false
     },
     {
+      "name": "generateReportContent",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 75,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "generateSectionContent",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateExecutiveSummary",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 126,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateQualitySection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 151,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateCoverageSection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateDependencySection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 188,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateRecommendations",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 205,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "exportReport",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 232,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "markdownToHtml",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 284,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "LoadingSpinner",
       "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
       "line_number": 15,
@@ -2009,69 +2072,6 @@
       "line_number": 251,
       "is_async": true,
       "is_tested": true
-    },
-    {
-      "name": "generateReportContent",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 75,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "generateSectionContent",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateExecutiveSummary",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 126,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateQualitySection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 151,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateCoverageSection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateDependencySection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 188,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateRecommendations",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 205,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "exportReport",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 232,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "markdownToHtml",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 284,
-      "is_async": false,
-      "is_tested": false
     },
     {
       "name": "useDashboardMetrics",
@@ -6018,6 +6018,28 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/api/exportApi.ts": [
+      {
+        "name": "escapeCsvValue",
+        "line_number": 100,
+        "is_async": false
+      },
+      {
+        "name": "formatExportDate",
+        "line_number": 139,
+        "is_async": false
+      },
+      {
+        "name": "downloadFile",
+        "line_number": 146,
+        "is_async": false
+      },
+      {
+        "name": "exportToPdf",
+        "line_number": 316,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/api/analyticsApi.ts": [
       {
         "name": "transformRiskData",
@@ -6082,28 +6104,6 @@
       {
         "name": "generateMockAnalyticsReport",
         "line_number": 484,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/api/exportApi.ts": [
-      {
-        "name": "escapeCsvValue",
-        "line_number": 100,
-        "is_async": false
-      },
-      {
-        "name": "formatExportDate",
-        "line_number": 139,
-        "is_async": false
-      },
-      {
-        "name": "downloadFile",
-        "line_number": 146,
-        "is_async": false
-      },
-      {
-        "name": "exportToPdf",
-        "line_number": 316,
         "is_async": false
       }
     ],
@@ -6273,53 +6273,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/examples/LoadReports.example.tsx": [
-      {
-        "name": "LoadingSpinner",
-        "line_number": 15,
-        "is_async": false
-      },
-      {
-        "name": "ErrorDisplay",
-        "line_number": 26,
-        "is_async": false
-      },
-      {
-        "name": "QualitySummary",
-        "line_number": 46,
-        "is_async": false
-      },
-      {
-        "name": "CoverageSummary",
-        "line_number": 83,
-        "is_async": false
-      },
-      {
-        "name": "DependencySummary",
-        "line_number": 109,
-        "is_async": false
-      },
-      {
-        "name": "LoadReportsExample",
-        "line_number": 142,
-        "is_async": false
-      },
-      {
-        "name": "loadReports",
-        "line_number": 148,
-        "is_async": true
-      },
-      {
-        "name": "LoadReportsWithCustomPath",
-        "line_number": 208,
-        "is_async": false
-      },
-      {
-        "name": "LoadIndividualReportsExample",
-        "line_number": 246,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/reportsApi.ts": [
       {
         "name": "generateReportContent",
@@ -6364,6 +6317,53 @@
       {
         "name": "markdownToHtml",
         "line_number": 284,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/api/examples/LoadReports.example.tsx": [
+      {
+        "name": "LoadingSpinner",
+        "line_number": 15,
+        "is_async": false
+      },
+      {
+        "name": "ErrorDisplay",
+        "line_number": 26,
+        "is_async": false
+      },
+      {
+        "name": "QualitySummary",
+        "line_number": 46,
+        "is_async": false
+      },
+      {
+        "name": "CoverageSummary",
+        "line_number": 83,
+        "is_async": false
+      },
+      {
+        "name": "DependencySummary",
+        "line_number": 109,
+        "is_async": false
+      },
+      {
+        "name": "LoadReportsExample",
+        "line_number": 142,
+        "is_async": false
+      },
+      {
+        "name": "loadReports",
+        "line_number": 148,
+        "is_async": true
+      },
+      {
+        "name": "LoadReportsWithCustomPath",
+        "line_number": 208,
+        "is_async": false
+      },
+      {
+        "name": "LoadIndividualReportsExample",
+        "line_number": 246,
         "is_async": false
       }
     ],
