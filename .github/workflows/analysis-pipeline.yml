@@ -19,23 +19,51 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x]
+        python-version: ['3.11', '3.12']
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
       with:
-        python-version: '3.11'
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest pytest-cov
+
+    - name: Verify dependencies
+      run: |
+        echo "=== Verifying dependencies ==="
+        echo "Node.js: $(node --version)"
+        echo "Python: $(python --version)"
+        echo "ast-grep: $(ast-grep --version)"
+        python -c "import pydantic; print(f'pydantic: {pydantic.__version__}')"
+        python -c "import coverage; print(f'coverage: {coverage.__version__}')"
+        python -c "import tqdm; print(f'tqdm: {tqdm.__version__}')"
+        python -c "import pytest; print(f'pytest: {pytest.__version__}')"
+
+    - name: Run environment verification
+      run: npm run verify
 
     - name: Run unit tests
       run: |
@@ -47,13 +75,14 @@ jobs:
 
     - name: Generate coverage report
       run: |
-        coverage report
+        coverage run -m pytest tests/ --tb=short
+        coverage report --show-missing
         coverage html
 
     - name: Upload coverage to artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
+        name: coverage-report-py${{ matrix.python-version }}
         path: htmlcov/
 
   benchmark:
@@ -65,19 +94,28 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest
 
     - name: Run performance benchmarks
       run: |
@@ -98,15 +136,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -152,15 +200,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Setup ast-grep
       uses: ./.github/actions/setup-ast-grep
 
-    - name: Install dependencies
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
