@@ -1,0 +1,597 @@
+/**
+ * Global Styles & CSS Reset
+ *
+ * Establishes baseline styles for the Code Inventory Dashboard
+ * including CSS reset, typography, accessibility defaults, and
+ * responsive font adjustments.
+ */
+
+/* Import Design Tokens */
+@import './design-tokens.css';
+
+/* ================================
+   CSS Reset
+   ================================ */
+
+/**
+ * 1. Use border-box for all elements and pseudo-elements
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+ * 2. Remove default margins and padding
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * 3. Set core root defaults
+ */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+/**
+ * 4. Set core body defaults
+ */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
+  color: var(--color-text-primary, #1a1a1a);
+  background-color: var(--color-background, #ffffff);
+  overflow-x: hidden;
+}
+
+/**
+ * 5. Make images and media easier to work with
+ */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+ * 6. Inherit fonts for inputs and buttons
+ */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/**
+ * 7. Remove default button styles
+ */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/**
+ * 8. Remove list styles on ul, ol elements with a class
+ */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/**
+ * 9. Remove animations and transitions for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
+   Base Typography
+   ================================ */
+
+/**
+ * Heading Styles (h1-h6)
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text-heading, #1a1a1a);
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: var(--font-size-h1, 32px);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--font-size-h2, 24px);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: var(--font-size-h3, 18px);
+}
+
+h4 {
+  font-size: var(--font-size-h4, 16px);
+}
+
+h5 {
+  font-size: var(--font-size-h5, 14px);
+}
+
+h6 {
+  font-size: var(--font-size-h6, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/**
+ * Paragraph Styles
+ */
+p {
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.5;
+  margin-bottom: 1em;
+  color: var(--color-text-body, #333333);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Code and Preformatted Text
+ */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono, 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Roboto Mono', monospace);
+  font-size: 0.9em;
+}
+
+code {
+  background-color: var(--color-code-background, #f5f5f5);
+  padding: 0.2em 0.4em;
+  border-radius: var(--border-radius-sm, 4px);
+  color: var(--color-code-text, #c7254e);
+}
+
+pre {
+  background-color: var(--color-code-background, #f5f5f5);
+  padding: 1em;
+  border-radius: var(--border-radius-md, 8px);
+  overflow-x: auto;
+  line-height: 1.4;
+  border: 1px solid var(--color-border, #e0e0e0);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+/**
+ * Link Styles
+ */
+a {
+  color: var(--color-primary, #0066cc);
+  text-decoration: none;
+  transition: color 200ms ease-in-out, text-decoration 200ms ease-in-out;
+}
+
+a:hover {
+  color: var(--color-primary-dark, #0052a3);
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 2px solid var(--color-focus, #0066cc);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+a:active {
+  color: var(--color-primary-darker, #003d7a);
+}
+
+/**
+ * Strong and Emphasis
+ */
+strong,
+b {
+  font-weight: 600;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+/**
+ * Small Text
+ */
+small {
+  font-size: 0.875em;
+  color: var(--color-text-secondary, #666666);
+}
+
+/* ================================
+   Accessibility Defaults
+   ================================ */
+
+/**
+ * Focus Visible Styles
+ * Provides consistent focus indicators across the application
+ */
+*:focus-visible {
+  outline: 2px solid var(--color-focus, #0066cc);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/**
+ * Remove focus outline for mouse users (if :focus-visible is not supported)
+ */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/**
+ * Skip Link Utility
+ * Allows keyboard users to skip navigation
+ */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary, #0066cc);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 0 0 var(--border-radius-sm, 4px) 0;
+  font-weight: 600;
+  transition: top 200ms ease-in-out;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--color-focus, #0066cc);
+  outline-offset: 2px;
+}
+
+/**
+ * Screen Reader Only Utility
+ * Hides content visually but keeps it accessible to screen readers
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/**
+ * Screen Reader Only - Focusable
+ * Makes sr-only content visible when focused (for skip links)
+ */
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/**
+ * Reduced Motion Preferences
+ * Respects user's motion preferences for animations
+ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ================================
+   Responsive Font Adjustments
+   ================================ */
+
+/**
+ * Mobile Devices (< 768px)
+ * Reduce font sizes for better mobile readability
+ */
+@media screen and (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1-mobile, 24px);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2-mobile, 20px);
+  }
+
+  h3 {
+    font-size: var(--font-size-h3-mobile, 16px);
+  }
+
+  h4 {
+    font-size: var(--font-size-h4-mobile, 14px);
+  }
+
+  h5 {
+    font-size: var(--font-size-h5-mobile, 13px);
+  }
+
+  h6 {
+    font-size: var(--font-size-h6-mobile, 11px);
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+/**
+ * Tablet Devices (768px - 1023px)
+ * Moderate adjustments for tablet viewing
+ */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  html {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1-tablet, 28px);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2-tablet, 22px);
+  }
+}
+
+/**
+ * Large Screens (>= 1440px)
+ * Slightly larger fonts for better readability on large displays
+ */
+@media screen and (min-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1-desktop, 36px);
+  }
+}
+
+/**
+ * Fluid Typography (Experimental)
+ * Scales font size smoothly between viewport widths
+ */
+@supports (font-size: clamp(1rem, 2vw, 3rem)) {
+  h1 {
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  h2 {
+    font-size: clamp(20px, 4vw, 28px);
+  }
+
+  h3 {
+    font-size: clamp(16px, 3vw, 20px);
+  }
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+
+/**
+ * Text Alignment
+ */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/**
+ * Font Weight Utilities
+ */
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/**
+ * Text Truncation
+ */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/**
+ * Visibility Utilities
+ */
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+/**
+ * Responsive Visibility
+ */
+@media screen and (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* ================================
+   Selection Styles
+   ================================ */
+
+/**
+ * Text Selection
+ */
+::selection {
+  background-color: var(--color-primary-light, #e6f2ff);
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary-light, #e6f2ff);
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+/* ================================
+   Print Styles
+   ================================ */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+    border: 1px solid #999;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

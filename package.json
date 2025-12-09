@@ -2,7 +2,13 @@
   "name": "code-inventory",
   "version": "1.0.0",
   "description": "Code analysis and documentation system using ast-grep and Schema.org",
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "routes:generate": "tsr generate",
+    "routes:watch": "tsr watch",
     "test": "python3 scripts/run_tests.py",
     "test:unit": "python3 scripts/run_tests.py --unit-only",
     "test:integration": "python3 scripts/run_tests.py --integration-only",
@@ -12,9 +18,24 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.68.0",
     "@posthog/ai": "^6.5.0",
-    "posthog-node": "^5.11.0"
+    "posthog-node": "^5.11.0",
+    "@mui/material": "^6.1.10",
+    "@mui/icons-material": "^6.1.10",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@tanstack/react-router": "^1.93.0",
+    "@tanstack/react-query": "^5.62.11",
+    "@tanstack/react-query-devtools": "^5.62.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@ast-grep/cli": "^0.31.1"
+    "@ast-grep/cli": "^0.31.1",
+    "@tanstack/router-cli": "^1.93.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
   }
 }
