@@ -134,22 +134,24 @@ def get_meta_var(match: Dict[str, Any], var_name: str) -> Optional[str]:
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `ac6391c` | 2025-12-09 | docs(phase3): add visual mockups and layout designs |
-| `0e04151` | 2025-12-09 | docs(phase3): add visualization design specifications |
-| `5f860f2` | 2025-12-09 | docs(phase3): add implementation guide for visual storytelling |
-| `e0c45ff` | 2025-12-09 | feat(dashboard): add Phase 3 visualization type definitions |
-| `4148004` | 2025-12-09 | fix(schema): convert ssh git urls to https for schema.org compliance |
-| `d8e2e96` | 2025-12-09 | test: update dashboard test for shortened label |
-| `769a758` | 2025-12-09 | docs: update DASHBOARD_QUICKSTART with Phase 2 delivery details |
-| `3d50518` | 2025-12-09 | feat(dashboard): add Phase 2 detail page components and routes |
-| `8941b40` | 2025-12-09 | feat(dashboard): complete Phase 1 - Foundation & Core Dashboard |
-| `763f248` | 2025-12-08 | docs(dashboard): add quick start guide for Phase 1 execution |
+| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
+| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | 2025-12-09 | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | 2025-12-09 | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
+| `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
+| `8ce00a2` | 2025-12-09 | docs(tools): add tools & utility modules design and implementation |
+| `c2b0566` | 2025-12-09 | docs: add recent git activity to documentation |
 
 ### Current Development Phase
 
-**Phase 3: Visual Storytelling & Reports** (In Progress)
-- Trend analysis charts
-- Dependency graph visualization
-- Historical comparison
-- Custom report generation
-- AI-powered insights
+**Phase 3: Visual Storytelling & Reports** (Implementation In Progress)
+- Trend analysis charts - components created
+- Dependency graph visualization - components created
+- Tools & utility modules analyzer - Python analyzer + React UI
+- Historical comparison (pending)
+- Custom report generation (pending)

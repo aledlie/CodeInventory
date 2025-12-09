@@ -465,10 +465,18 @@ Ready for implementation!
 
 | Commit | Description |
 |--------|-------------|
-| `ac6391c` | docs(phase3): add visual mockups and layout designs |
-| `0e04151` | docs(phase3): add visualization design specifications |
-| `5f860f2` | docs(phase3): add implementation guide for visual storytelling |
-| `e0c45ff` | feat(dashboard): add Phase 3 visualization type definitions |
+| `d632264` | chore: update project configuration and generated files |
+| `bd7dd19` | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | feat(graph): add dependency graph visualization components |
+| `36fc699` | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | feat(types): add phase 3 visualization and tools type definitions |
+| `8ce00a2` | docs(tools): add tools & utility modules design and implementation |
+| `c2b0566` | docs: add recent git activity to documentation |
 
 ### Related Files Created
 - `PHASE3_SUMMARY.md` - This overview document
@@ -479,5 +487,9 @@ Ready for implementation!
 - `src/features/dashboard/types/charts.ts` - Chart type definitions
 - `src/features/dashboard/types/graph.ts` - Graph type definitions
 - `src/features/dashboard/types/reports.ts` - Report type definitions
+- `src/features/dashboard/components/charts/` - Trend chart components
+- `src/features/dashboard/components/dependencyGraph/` - Graph visualization
+- `src/routes/dashboard/trends/` - Trends page routes
+- `src/routes/dashboard/graph/` - Graph page routes
 
 **Last Updated**: 2025-12-09

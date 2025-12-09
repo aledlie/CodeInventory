@@ -409,9 +409,15 @@ Happy coding!
 
 | Commit | Description |
 |--------|-------------|
-| `ac6391c` | docs(phase3): add visual mockups and layout designs |
-| `0e04151` | docs(phase3): add visualization design specifications |
-| `5f860f2` | docs(phase3): add implementation guide for visual storytelling |
-| `e0c45ff` | feat(dashboard): add Phase 3 visualization type definitions |
+| `d632264` | chore: update project configuration and generated files |
+| `bd7dd19` | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | feat(graph): add dependency graph visualization components |
+| `36fc699` | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | feat(types): add phase 3 visualization and tools type definitions |
 
 **Last Updated**: 2025-12-09

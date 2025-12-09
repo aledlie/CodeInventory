@@ -512,11 +512,20 @@ open http://localhost:3000/dashboard/tools
 
 | Commit | Description |
 |--------|-------------|
-| `e0c45ff` | feat(dashboard): add Phase 3 visualization type definitions |
-| `3d50518` | feat(dashboard): add Phase 2 detail page components and routes |
+| `d632264` | chore: update project configuration and generated files |
+| `bd7dd19` | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | feat(graph): add dependency graph visualization components |
+| `36fc699` | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | feat(types): add phase 3 visualization and tools type definitions |
+| `8ce00a2` | docs(tools): add tools & utility modules design and implementation |
 
 ---
 
 **Last Updated**: 2025-12-09
 **Version**: 1.0.0
-**Status**: Ready for integration
+**Status**: Implementation complete - routes, components, hooks, and API created
