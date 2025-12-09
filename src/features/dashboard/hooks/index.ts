@@ -37,6 +37,22 @@ export {
 
 export { useChartTheme, useChartOptions, useSeverityColors } from './useChartTheme';
 
+// Phase 3 Hooks: Tools & Utilities
+export {
+  useToolsReport,
+  useToolsStatistics,
+  useUtilityModule,
+  useToolCandidate,
+  useModuleToolCandidates,
+} from './useToolsData';
+
+// Phase 3 Hooks: Force Simulation (Dependency Graph)
+export {
+  useForceSimulation,
+  type SimulationNode,
+  type SimulationConfig,
+} from './useForceSimulation';
+
 // Phase 4 Hooks
 export {
   useInsightsReport,
