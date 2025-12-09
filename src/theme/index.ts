@@ -7,3 +7,13 @@
 
 export { dashboardTheme, darkDashboardTheme } from './dashboardTheme';
 export { default } from './dashboardTheme';
+
+// Phase 5C: Theme context and hook for dark mode support
+export {
+  ThemeProvider,
+  useTheme,
+  type ThemeMode,
+  type ResolvedTheme,
+  type ThemeContextValue,
+  type ThemeProviderProps,
+} from './ThemeContext';
