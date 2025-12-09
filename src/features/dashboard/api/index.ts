@@ -23,3 +23,16 @@ export { notificationsApi } from './notificationsApi';
 // Phase 5 APIs
 export { analyticsApi } from './analyticsApi';
 export { personalizationApi, WIDGET_METADATA } from './personalizationApi';
+
+// Phase 5C: Export API
+export {
+  exportApi,
+  exportToCsv,
+  exportToJson,
+  exportToPdf,
+  type CsvColumn,
+  type CsvExportOptions,
+  type PdfExportOptions,
+  type JsonExportOptions,
+  type ExportResult,
+} from './exportApi';

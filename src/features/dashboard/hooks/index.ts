@@ -160,3 +160,16 @@ export {
   useWidgetLibrary,
   useLayoutOperations,
 } from './usePersonalization';
+
+// Phase 5C: Export Hooks
+export {
+  useExport,
+  formatBytes,
+  generateHtmlTable,
+  QUALITY_ISSUES_COLUMNS,
+  COVERAGE_DATA_COLUMNS,
+  DEPENDENCY_DATA_COLUMNS,
+  INSIGHTS_DATA_COLUMNS,
+  type UseExportState,
+  type UseExportReturn,
+} from './useExport';
