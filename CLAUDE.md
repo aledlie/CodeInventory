@@ -25,8 +25,13 @@ src/
 ├── generators/          # Python: schema, dashboard, rss
 ├── validators/          # Python: schema.org validation
 ├── features/dashboard/  # React: components/, api/, hooks/, types/, stores/, providers/
+│   ├── api/             # dashboardApi, personalizationApi, exportApi
+│   ├── components/      # Dashboard components + personalization/ + export/
+│   ├── hooks/           # useDashboardData, usePersonalization, useExport
+│   ├── stores/          # Zustand: dashboardStore
+│   └── types/           # TypeScript interfaces
 ├── routes/dashboard/    # TanStack Router: quality, coverage, dependencies, trends, graph, tools, compare, reports, insights, predictions, settings
-├── theme/               # MUI v7 theme
+├── theme/               # MUI v7 theme + ThemeContext (dark mode)
 └── components/          # Shared: ErrorBoundary, SuspenseLoader
 public/data/             # JSON reports for dashboard
 outputs/                 # Generated reports (gitignored)
@@ -46,6 +51,9 @@ outputs/                 # Generated reports (gitignored)
 - **Data fetching**: `useSuspenseQuery` with Suspense boundaries
 - **Routes**: `React.lazy()` for code splitting
 - **MUI v7**: Use `size` prop for Grid
+- **Theme**: Use `useTheme()` from `@/theme` for dark mode support
+- **Export**: Use `useExport()` hook for CSV/PDF/JSON export functionality
+- **State**: Zustand for dashboard personalization state (`dashboardStore`)
 
 ## ast-grep Meta Variable Handling
 
@@ -104,6 +112,12 @@ coverage html                                   # HTML report: htmlcov/index.htm
 | Empty schemas.json | Run from Inventory directory with valid code path |
 | TypeScript errors | `npx tsc --noEmit`, exclude examples in tsconfig |
 | Dashboard no data | Copy reports to `public/data/` |
+
+## Dashboard Features (Phase 5 Complete)
+
+- **Personalization** (5B): Widget library, saved views, notification preferences, drag-and-drop editor
+- **Dark Mode** (5C): Light/dark/system themes with system preference detection and localStorage persistence
+- **Data Export** (5C): CSV, PDF, JSON export with pre-configured column definitions
 
 ## Secrets
 

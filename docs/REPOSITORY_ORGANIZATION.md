@@ -1,6 +1,7 @@
 # Repository Organization Analysis
 
 *Generated: 2025-12-08*
+*Updated: 2025-12-09 (Phase 5B/5C Complete)*
 
 ## Executive Summary
 
@@ -105,13 +106,16 @@ graph TD
 
 ### 4. Documentation Sprawl
 
-**docs/summaries/** contains 9 phase summary files that could be consolidated:
+**docs/summaries/** contains phase summary files:
 
 - PHASE_1_COMPLETE.md
 - PHASE_2_COMPLETE.md
 - PHASE_3_COMPLETE.md
 - PHASE_3_GIT_SUMMARY.md (duplicate of PHASE_3_COMPLETE)
 - PHASE_3_SUMMARY.md (duplicate of PHASE_3_COMPLETE)
+- PHASE_4_COMPLETE.md
+- PHASE_5B_COMPLETE.md (Dashboard Personalization)
+- PHASE_5C_COMPLETE.md (Dark Mode, Data Export)
 - FINAL_SUMMARY.md
 - IMPROVEMENTS_SUMMARY.md
 - SCHEMA_SUMMARY.md
