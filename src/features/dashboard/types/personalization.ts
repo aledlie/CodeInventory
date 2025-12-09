@@ -424,9 +424,10 @@ export interface SavedViewsDropdownProps {
 }
 
 /**
- * NotificationPreferences component props
+ * Dashboard NotificationPreferences component props
+ * Named differently from notifications.ts NotificationPreferencesProps to avoid conflict
  */
-export interface NotificationPreferencesProps {
+export interface DashboardNotificationPreferencesProps {
   /** Current notification settings */
   settings: DashboardNotificationSettings;
   /** Update settings handler */

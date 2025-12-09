@@ -378,3 +378,6 @@ export * from './notifications';
 
 // Phase 5A: Advanced Analytics
 export * from './analytics';
+
+// Phase 5B: Dashboard Personalization
+export * from './personalization';
