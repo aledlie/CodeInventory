@@ -86,48 +86,6 @@
       "is_tested": true
     },
     {
-      "name": "load_cache_statistics",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "calculate_cache_hit_rate",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 78,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "analyze_performance",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_report",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 192,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "print_report",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 207,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "main",
-      "file_path": "src/utils/performance_monitor.py",
-      "line_number": 251,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "format",
       "file_path": "src/utils/logging_config.py",
       "line_number": 55,
@@ -168,6 +126,48 @@
       "line_number": 297,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "load_cache_statistics",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculate_cache_hit_rate",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 78,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_performance",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_report",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 192,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "print_report",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 207,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "main",
+      "file_path": "src/utils/performance_monitor.py",
+      "line_number": 251,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "getStoredMode",
@@ -786,97 +786,6 @@
       "is_tested": false
     },
     {
-      "name": "is_external",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 83,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "run_astgrep",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 89,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_package",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 105,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "analyze_python_imports",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 214,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_typescript_imports",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 258,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_file",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 360,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_directory",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 386,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_directory_optimized",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 404,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "find_circular_dependencies",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 528,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "dfs",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 530,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_report_text",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 552,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_report_json",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 717,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 763,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "update",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 49,
@@ -966,6 +875,97 @@
       "line_number": 411,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "is_external",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "run_astgrep",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 89,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "extract_package",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 105,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_python_imports",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_typescript_imports",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 258,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_file",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 360,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 386,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory_optimized",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 404,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_circular_dependencies",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 528,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "dfs",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 530,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_report_text",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 552,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_report_json",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 717,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 763,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "analyze_python_file",
@@ -1598,34 +1598,6 @@
       "is_tested": false
     },
     {
-      "name": "escapeCsvValue",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatExportDate",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "downloadFile",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "exportToPdf",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 316,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "transformRiskData",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 132,
@@ -1713,6 +1685,34 @@
       "name": "generateMockAnalyticsReport",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 484,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "escapeCsvValue",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatExportDate",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "downloadFile",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "exportToPdf",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 316,
       "is_async": false,
       "is_tested": false
     },
@@ -1941,69 +1941,6 @@
       "is_tested": false
     },
     {
-      "name": "generateReportContent",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 75,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "generateSectionContent",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateExecutiveSummary",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 126,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateQualitySection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 151,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateCoverageSection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateDependencySection",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 188,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generateRecommendations",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 205,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "exportReport",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 232,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "markdownToHtml",
-      "file_path": "src/features/dashboard/api/reportsApi.ts",
-      "line_number": 284,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "LoadingSpinner",
       "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
       "line_number": 15,
@@ -2072,6 +2009,69 @@
       "line_number": 251,
       "is_async": true,
       "is_tested": true
+    },
+    {
+      "name": "generateReportContent",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 75,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "generateSectionContent",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateExecutiveSummary",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 126,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateQualitySection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 151,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateCoverageSection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateDependencySection",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 188,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generateRecommendations",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 205,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "exportReport",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 232,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "markdownToHtml",
+      "file_path": "src/features/dashboard/api/reportsApi.ts",
+      "line_number": 284,
+      "is_async": false,
+      "is_tested": false
     },
     {
       "name": "useDashboardMetrics",
@@ -4916,34 +4916,6 @@
       "is_tested": false
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 59,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 77,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatBytes",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 348,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 62,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
       "name": "distance",
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 41,
@@ -4976,6 +4948,34 @@
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 168,
       "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 59,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatBytes",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 348,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 62,
+      "is_async": true,
       "is_tested": false
     },
     {
@@ -5154,28 +5154,6 @@
         "is_async": false
       }
     ],
-    "src/utils/performance_monitor.py": [
-      {
-        "name": "load_cache_statistics",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "calculate_cache_hit_rate",
-        "line_number": 78,
-        "is_async": false
-      },
-      {
-        "name": "analyze_performance",
-        "line_number": 84,
-        "is_async": false
-      },
-      {
-        "name": "print_report",
-        "line_number": 207,
-        "is_async": false
-      }
-    ],
     "src/utils/logging_config.py": [
       {
         "name": "init_sentry",
@@ -5200,6 +5178,28 @@
       {
         "name": "log_performance_metric",
         "line_number": 297,
+        "is_async": false
+      }
+    ],
+    "src/utils/performance_monitor.py": [
+      {
+        "name": "load_cache_statistics",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "calculate_cache_hit_rate",
+        "line_number": 78,
+        "is_async": false
+      },
+      {
+        "name": "analyze_performance",
+        "line_number": 84,
+        "is_async": false
+      },
+      {
+        "name": "print_report",
+        "line_number": 207,
         "is_async": false
       }
     ],
@@ -5544,28 +5544,6 @@
         "is_async": false
       }
     ],
-    "src/analyzers/dependencies.py": [
-      {
-        "name": "run_astgrep",
-        "line_number": 89,
-        "is_async": false
-      },
-      {
-        "name": "extract_package",
-        "line_number": 105,
-        "is_async": false
-      },
-      {
-        "name": "analyze_directory_optimized",
-        "line_number": 404,
-        "is_async": false
-      },
-      {
-        "name": "dfs",
-        "line_number": 530,
-        "is_async": false
-      }
-    ],
     "src/analyzers/analyzer_optimizer.py": [
       {
         "name": "set_description",
@@ -5610,6 +5588,28 @@
       {
         "name": "batch_items_by_attribute",
         "line_number": 411,
+        "is_async": false
+      }
+    ],
+    "src/analyzers/dependencies.py": [
+      {
+        "name": "run_astgrep",
+        "line_number": 89,
+        "is_async": false
+      },
+      {
+        "name": "extract_package",
+        "line_number": 105,
+        "is_async": false
+      },
+      {
+        "name": "analyze_directory_optimized",
+        "line_number": 404,
+        "is_async": false
+      },
+      {
+        "name": "dfs",
+        "line_number": 530,
         "is_async": false
       }
     ],
@@ -6018,28 +6018,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/exportApi.ts": [
-      {
-        "name": "escapeCsvValue",
-        "line_number": 100,
-        "is_async": false
-      },
-      {
-        "name": "formatExportDate",
-        "line_number": 139,
-        "is_async": false
-      },
-      {
-        "name": "downloadFile",
-        "line_number": 146,
-        "is_async": false
-      },
-      {
-        "name": "exportToPdf",
-        "line_number": 316,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/analyticsApi.ts": [
       {
         "name": "transformRiskData",
@@ -6104,6 +6082,28 @@
       {
         "name": "generateMockAnalyticsReport",
         "line_number": 484,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/api/exportApi.ts": [
+      {
+        "name": "escapeCsvValue",
+        "line_number": 100,
+        "is_async": false
+      },
+      {
+        "name": "formatExportDate",
+        "line_number": 139,
+        "is_async": false
+      },
+      {
+        "name": "downloadFile",
+        "line_number": 146,
+        "is_async": false
+      },
+      {
+        "name": "exportToPdf",
+        "line_number": 316,
         "is_async": false
       }
     ],
@@ -6273,53 +6273,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/reportsApi.ts": [
-      {
-        "name": "generateReportContent",
-        "line_number": 75,
-        "is_async": true
-      },
-      {
-        "name": "generateSectionContent",
-        "line_number": 101,
-        "is_async": false
-      },
-      {
-        "name": "generateExecutiveSummary",
-        "line_number": 126,
-        "is_async": false
-      },
-      {
-        "name": "generateQualitySection",
-        "line_number": 151,
-        "is_async": false
-      },
-      {
-        "name": "generateCoverageSection",
-        "line_number": 169,
-        "is_async": false
-      },
-      {
-        "name": "generateDependencySection",
-        "line_number": 188,
-        "is_async": false
-      },
-      {
-        "name": "generateRecommendations",
-        "line_number": 205,
-        "is_async": false
-      },
-      {
-        "name": "exportReport",
-        "line_number": 232,
-        "is_async": true
-      },
-      {
-        "name": "markdownToHtml",
-        "line_number": 284,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/examples/LoadReports.example.tsx": [
       {
         "name": "LoadingSpinner",
@@ -6364,6 +6317,53 @@
       {
         "name": "LoadIndividualReportsExample",
         "line_number": 246,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/api/reportsApi.ts": [
+      {
+        "name": "generateReportContent",
+        "line_number": 75,
+        "is_async": true
+      },
+      {
+        "name": "generateSectionContent",
+        "line_number": 101,
+        "is_async": false
+      },
+      {
+        "name": "generateExecutiveSummary",
+        "line_number": 126,
+        "is_async": false
+      },
+      {
+        "name": "generateQualitySection",
+        "line_number": 151,
+        "is_async": false
+      },
+      {
+        "name": "generateCoverageSection",
+        "line_number": 169,
+        "is_async": false
+      },
+      {
+        "name": "generateDependencySection",
+        "line_number": 188,
+        "is_async": false
+      },
+      {
+        "name": "generateRecommendations",
+        "line_number": 205,
+        "is_async": false
+      },
+      {
+        "name": "exportReport",
+        "line_number": 232,
+        "is_async": true
+      },
+      {
+        "name": "markdownToHtml",
+        "line_number": 284,
         "is_async": false
       }
     ],
@@ -8513,28 +8513,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useExport.ts": [
-      {
-        "name": "ExportButton",
-        "line_number": 59,
-        "is_async": false
-      },
-      {
-        "name": "useExport",
-        "line_number": 77,
-        "is_async": false
-      },
-      {
-        "name": "formatBytes",
-        "line_number": 348,
-        "is_async": false
-      },
-      {
-        "name": "handleExport",
-        "line_number": 62,
-        "is_async": true
-      }
-    ],
     "src/features/dashboard/hooks/useForceSimulation.ts": [
       {
         "name": "distance",
@@ -8560,6 +8538,28 @@
         "name": "useForceSimulation",
         "line_number": 168,
         "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useExport.ts": [
+      {
+        "name": "ExportButton",
+        "line_number": 59,
+        "is_async": false
+      },
+      {
+        "name": "useExport",
+        "line_number": 77,
+        "is_async": false
+      },
+      {
+        "name": "formatBytes",
+        "line_number": 348,
+        "is_async": false
+      },
+      {
+        "name": "handleExport",
+        "line_number": 62,
+        "is_async": true
       }
     ],
     "src/features/dashboard/hooks/useChartTheme.ts": [
