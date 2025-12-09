@@ -15,3 +15,4 @@ export { notificationsApi } from './notificationsApi';
 
 // Phase 5 APIs
 export { analyticsApi } from './analyticsApi';
+export { personalizationApi, WIDGET_METADATA } from './personalizationApi';
