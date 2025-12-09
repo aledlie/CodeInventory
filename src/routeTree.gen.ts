@@ -20,6 +20,7 @@ import { Route as DashboardGraphIndexRouteImport } from './routes/dashboard/grap
 import { Route as DashboardDependenciesIndexRouteImport } from './routes/dashboard/dependencies/index'
 import { Route as DashboardCoverageIndexRouteImport } from './routes/dashboard/coverage/index'
 import { Route as DashboardCompareIndexRouteImport } from './routes/dashboard/compare/index'
+import { Route as DashboardAnalyticsIndexRouteImport } from './routes/dashboard/analytics/index'
 import { Route as DashboardToolsModuleIdRouteImport } from './routes/dashboard/tools/$moduleId'
 import { Route as DashboardToolsCandidateCandidateNameRouteImport } from './routes/dashboard/tools/candidate/$candidateName'
 
@@ -80,6 +81,11 @@ const DashboardCompareIndexRoute = DashboardCompareIndexRouteImport.update({
   path: '/dashboard/compare/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardAnalyticsIndexRoute = DashboardAnalyticsIndexRouteImport.update({
+  id: '/dashboard/analytics/',
+  path: '/dashboard/analytics/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardToolsModuleIdRoute = DashboardToolsModuleIdRouteImport.update({
   id: '/dashboard/tools/$moduleId',
   path: '/dashboard/tools/$moduleId',
@@ -95,6 +101,7 @@ const DashboardToolsCandidateCandidateNameRoute =
 export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsIndexRoute
   '/dashboard/compare': typeof DashboardCompareIndexRoute
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsIndexRoute
   '/dashboard/compare': typeof DashboardCompareIndexRoute
   '/dashboard/coverage': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies': typeof DashboardDependenciesIndexRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/tools/$moduleId': typeof DashboardToolsModuleIdRoute
+  '/dashboard/analytics/': typeof DashboardAnalyticsIndexRoute
   '/dashboard/compare/': typeof DashboardCompareIndexRoute
   '/dashboard/coverage/': typeof DashboardCoverageIndexRoute
   '/dashboard/dependencies/': typeof DashboardDependenciesIndexRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/analytics'
     | '/dashboard/compare'
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
   to:
     | '/dashboard'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/analytics'
     | '/dashboard/compare'
     | '/dashboard/coverage'
     | '/dashboard/dependencies'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/dashboard/'
     | '/dashboard/tools/$moduleId'
+    | '/dashboard/analytics/'
     | '/dashboard/compare/'
     | '/dashboard/coverage/'
     | '/dashboard/dependencies/'
@@ -189,6 +201,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardToolsModuleIdRoute: typeof DashboardToolsModuleIdRoute
+  DashboardAnalyticsIndexRoute: typeof DashboardAnalyticsIndexRoute
   DashboardCompareIndexRoute: typeof DashboardCompareIndexRoute
   DashboardCoverageIndexRoute: typeof DashboardCoverageIndexRoute
   DashboardDependenciesIndexRoute: typeof DashboardDependenciesIndexRoute
@@ -281,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCompareIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/analytics/': {
+      id: '/dashboard/analytics/'
+      path: '/dashboard/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/tools/$moduleId': {
       id: '/dashboard/tools/$moduleId'
       path: '/dashboard/tools/$moduleId'
@@ -301,6 +321,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardToolsModuleIdRoute: DashboardToolsModuleIdRoute,
+  DashboardAnalyticsIndexRoute: DashboardAnalyticsIndexRoute,
   DashboardCompareIndexRoute: DashboardCompareIndexRoute,
   DashboardCoverageIndexRoute: DashboardCoverageIndexRoute,
   DashboardDependenciesIndexRoute: DashboardDependenciesIndexRoute,
