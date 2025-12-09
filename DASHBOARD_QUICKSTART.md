@@ -140,15 +140,21 @@ Phase 2 adds three comprehensive detail pages for deep-dive analysis:
 - File dependency explorer with import details
 - "Circular First" sorting to prioritize problems
 
-## Next Steps (Phase 3)
+## Next Steps
 
-Future enhancements to consider:
+### Phase 4: Polish & Integration (Optional)
+- Performance optimization and bundle size reduction
+- Additional test coverage
+- Documentation refinement
 
-### Phase 3: Visualizations (Not Started)
-- Chart.js integration for trend charts
-- Interactive dependency graph visualization
-- Historical metrics comparison and trending
-- Custom report generation
+### Phase 5: Advanced Analytics & Personalization (PLANNED)
+See `PHASE5_IMPLEMENTATION_GUIDE.md` and `PHASE5_VISUAL_DESIGN.md` for complete specifications.
+
+**Key Features:**
+- **Predictive Analytics** - Risk heatmaps, debt burndown, AI-powered insights
+- **Dashboard Personalization** - Widget library, saved views, drag-and-drop layout
+- **Team Collaboration** - Shared dashboards, role-based access
+- **Advanced Reporting** - Scheduled reports, automated delivery
 
 ---
 
@@ -270,6 +276,8 @@ src/
 
 | Document | Purpose | Location |
 |----------|---------|----------|
+| **Phase 5 Implementation** | Advanced analytics & personalization guide | `PHASE5_IMPLEMENTATION_GUIDE.md` |
+| **Phase 5 Visual Design** | Comprehensive visual specifications | `PHASE5_VISUAL_DESIGN.md` |
 | **Task Assignments** | Complete task breakdown (87 tasks) | `docs/guides/DASHBOARD_TASK_ASSIGNMENTS.md` |
 | **Frontend Plan** | React/TypeScript patterns | `docs/guides/DASHBOARD_FRONTEND_PLAN.md` |
 | **Execution Plan** | Task sequencing & coordination | `docs/guides/DASHBOARD_EXECUTION_PLAN.md` |

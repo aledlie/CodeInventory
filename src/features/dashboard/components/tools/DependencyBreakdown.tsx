@@ -44,10 +44,12 @@ function categorizeDepencies(deps: string[]) {
 }
 
 export function DependencyBreakdown({
-  dependencies,
+  dependencies: _dependencies,
   externalDeps,
   internalDeps
 }: DependencyBreakdownProps) {
+  // Note: dependencies prop reserved for combined view
+  void _dependencies;
   const { stdlib, thirdParty } = categorizeDepencies(externalDeps);
 
   const hasLowImpact = thirdParty.length === 0 && internalDeps.length <= 3;

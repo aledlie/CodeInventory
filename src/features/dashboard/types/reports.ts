@@ -27,9 +27,10 @@ export type ReportType =
   | 'custom';      // User-defined custom report
 
 /**
- * Export format
+ * Report export format (Phase 3)
+ * Note: Different from Phase 4C visualizations ReportExportFormat
  */
-export type ExportFormat =
+export type ReportExportFormat =
   | 'pdf'          // Portable Document Format
   | 'html'         // Self-contained HTML
   | 'markdown'     // GitHub-friendly Markdown
@@ -155,7 +156,7 @@ export interface ReportConfig {
   /** Report title */
   title: string;
   /** Export format */
-  format: ExportFormat;
+  format: ReportExportFormat;
   /** Sections to include */
   sections: ReportSectionConfig[];
   /** Data sources */
@@ -415,7 +416,7 @@ export interface CompoundContent {
 /**
  * PDF export options
  */
-export interface PDFExportOptions {
+export interface PDFReportExportOptions {
   /** Page size */
   pageSize: 'A4' | 'Letter' | 'Legal';
   /** Page orientation */
@@ -448,7 +449,7 @@ export interface PDFExportOptions {
 /**
  * HTML export options
  */
-export interface HTMLExportOptions {
+export interface HTMLReportExportOptions {
   /** Include CSS inline */
   inlineCSS: boolean;
   /** Include JavaScript inline */
@@ -466,7 +467,7 @@ export interface HTMLExportOptions {
 /**
  * Markdown export options
  */
-export interface MarkdownExportOptions {
+export interface MarkdownReportExportOptions {
   /** Markdown flavor */
   flavor: 'github' | 'commonmark' | 'gfm';
   /** Include table of contents */
@@ -482,7 +483,7 @@ export interface MarkdownExportOptions {
 /**
  * JSON export options
  */
-export interface JSONExportOptions {
+export interface JSONReportExportOptions {
   /** Pretty print */
   pretty: boolean;
   /** Indentation spaces */
@@ -496,7 +497,7 @@ export interface JSONExportOptions {
 /**
  * CSV export options
  */
-export interface CSVExportOptions {
+export interface CSVReportExportOptions {
   /** Delimiter */
   delimiter: ',' | ';' | '\t';
   /** Include headers */
@@ -514,12 +515,12 @@ export interface CSVExportOptions {
 /**
  * Union type for all export options
  */
-export type ExportOptions =
-  | PDFExportOptions
-  | HTMLExportOptions
-  | MarkdownExportOptions
-  | JSONExportOptions
-  | CSVExportOptions;
+export type ReportExportOptions =
+  | PDFReportExportOptions
+  | HTMLReportExportOptions
+  | MarkdownReportExportOptions
+  | JSONReportExportOptions
+  | CSVReportExportOptions;
 
 // ============================================================================
 // Component Props
@@ -562,13 +563,13 @@ export interface ExportButtonProps {
   /** Report configuration */
   config: ReportConfig;
   /** Available formats */
-  formats: ExportFormat[];
+  formats: ReportExportFormat[];
   /** Default format */
-  defaultFormat?: ExportFormat;
+  defaultFormat?: ReportExportFormat;
   /** Export options by format */
-  exportOptions?: Partial<Record<ExportFormat, ExportOptions>>;
+  exportOptions?: Partial<Record<ReportExportFormat, ReportExportOptions>>;
   /** Export callback */
-  onExport: (format: ExportFormat, options?: ExportOptions) => Promise<Blob>;
+  onExport: (format: ReportExportFormat, options?: ReportExportOptions) => Promise<Blob>;
   /** Loading state */
   loading?: boolean;
   /** Disabled state */
@@ -598,7 +599,7 @@ export interface ReportTemplatesProps {
  */
 export type PDFGenerator = (
   config: ReportConfig,
-  options?: PDFExportOptions
+  options?: PDFReportExportOptions
 ) => Promise<Blob>;
 
 /**
@@ -606,7 +607,7 @@ export type PDFGenerator = (
  */
 export type HTMLGenerator = (
   config: ReportConfig,
-  options?: HTMLExportOptions
+  options?: HTMLReportExportOptions
 ) => Promise<string>;
 
 /**
@@ -614,7 +615,7 @@ export type HTMLGenerator = (
  */
 export type MarkdownGenerator = (
   config: ReportConfig,
-  options?: MarkdownExportOptions
+  options?: MarkdownReportExportOptions
 ) => Promise<string>;
 
 /**
@@ -622,7 +623,7 @@ export type MarkdownGenerator = (
  */
 export type JSONGenerator = (
   config: ReportConfig,
-  options?: JSONExportOptions
+  options?: JSONReportExportOptions
 ) => Promise<string>;
 
 /**
@@ -630,7 +631,7 @@ export type JSONGenerator = (
  */
 export type CSVGenerator = (
   config: ReportConfig,
-  options?: CSVExportOptions
+  options?: CSVReportExportOptions
 ) => Promise<Map<string, string>>; // filename -> CSV content
 
 // ============================================================================

@@ -6,9 +6,9 @@
  * Supports both local development and CI environments.
  */
 
-const { execSync } = require('child_process');
-const { existsSync } = require('fs');
-const { join } = require('path');
+import { execSync } from 'child_process';
+import { existsSync } from 'fs';
+import { join } from 'path';
 
 const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
 const projectRoot = process.cwd();
@@ -21,6 +21,7 @@ console.log(`Project Root: ${projectRoot}`);
 console.log('');
 
 let hasErrors = false;
+let pythonCmd = 'python3';  // Will be updated if venv is found
 
 // Check Node.js
 try {
@@ -45,29 +46,38 @@ const venvPython = join(projectRoot, '.venv', 'bin', 'python3');
 const venvPythonAlt = join(projectRoot, 'venv', 'bin', 'python3');
 let pythonPackagesOk = false;
 
+const requiredPackages = ['pydantic', 'tqdm', 'coverage'];
+
 // Try venv first (local dev)
 for (const venv of [venvPython, venvPythonAlt]) {
   if (existsSync(venv)) {
     try {
-      execSync(`"${venv}" -c "import pydantic; import tqdm"`, { stdio: 'ignore' });
+      const importCmd = requiredPackages.map(p => `import ${p}`).join('; ');
+      execSync(`"${venv}" -c "${importCmd}"`, { stdio: 'ignore' });
       console.log(`✅ Python packages (venv: ${venv})`);
       pythonPackagesOk = true;
+      pythonCmd = `"${venv}"`;  // Use this venv for subsequent checks
       break;
-    } catch {}
+    } catch {
+      // Try next venv location
+    }
   }
 }
 
 // Fallback to system Python (CI or global install)
 if (!pythonPackagesOk) {
   try {
-    execSync('python3 -c "import pydantic; import tqdm"', { stdio: 'ignore' });
+    const importCmd = requiredPackages.map(p => `import ${p}`).join('; ');
+    execSync(`python3 -c "${importCmd}"`, { stdio: 'ignore' });
     console.log(`✅ Python packages (${isCI ? 'CI global' : 'system'})`);
     pythonPackagesOk = true;
-  } catch {}
+  } catch {
+    // Python packages not found
+  }
 }
 
 if (!pythonPackagesOk) {
-  console.log('❌ Python packages not found (pydantic, tqdm)');
+  console.log(`❌ Python packages not found (${requiredPackages.join(', ')})`);
   console.log(isCI
     ? '   Run: pip install -r requirements.txt'
     : '   Run: python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt'
@@ -78,14 +88,12 @@ if (!pythonPackagesOk) {
 // Check ast-grep (multiple locations)
 const astGrepLocations = [
   join(projectRoot, 'node_modules', '.bin', 'ast-grep'),  // 1. Local npm (preferred)
-  'npx ast-grep',                                          // 2. Via npx
-  'ast-grep',                                              // 3. In PATH (brew, system)
-  '/opt/homebrew/bin/ast-grep',                           // 4. macOS Homebrew (Apple Silicon)
-  '/usr/local/bin/ast-grep',                              // 5. Linux/Intel Mac
+  'ast-grep',                                              // 2. In PATH (brew, system)
+  '/opt/homebrew/bin/ast-grep',                           // 3. macOS Homebrew (Apple Silicon)
+  '/usr/local/bin/ast-grep',                              // 4. Linux/Intel Mac
 ];
 
 let astGrepFound = false;
-let astGrepLocation = '';
 
 for (const loc of astGrepLocations) {
   try {
@@ -96,7 +104,6 @@ for (const loc of astGrepLocations) {
     }).trim();
     console.log(`✅ ast-grep ${version} (${loc})`);
     astGrepFound = true;
-    astGrepLocation = loc;
     break;
   } catch {
     continue;
@@ -106,15 +113,14 @@ for (const loc of astGrepLocations) {
 if (!astGrepFound) {
   console.log('❌ ast-grep not found');
   console.log('   Install with one of:');
-  console.log('   - npm install (uses devDependency)');
   console.log('   - brew install ast-grep (macOS)');
   console.log('   - cargo install ast-grep (cross-platform)');
   hasErrors = true;
 }
 
-// Check pytest
+// Check pytest (using the detected Python)
 try {
-  const pytestVersion = execSync('python3 -m pytest --version', {
+  const pytestVersion = execSync(`${pythonCmd} -m pytest --version`, {
     encoding: 'utf-8',
     stdio: ['pipe', 'pipe', 'ignore']
   }).split('\n')[0];
@@ -125,11 +131,46 @@ try {
   hasErrors = true;
 }
 
+// Check coverage (using the detected Python)
+try {
+  const coverageVersion = execSync(`${pythonCmd} -c "import coverage; print(f'coverage {coverage.__version__}')"`, {
+    encoding: 'utf-8',
+    stdio: ['pipe', 'pipe', 'ignore']
+  }).trim();
+  console.log(`✅ ${coverageVersion}`);
+} catch (e) {
+  console.log('❌ coverage not found');
+  console.log('   Run: pip install coverage');
+  hasErrors = true;
+}
+
+// Check pydantic version (using the detected Python)
+try {
+  const pydanticVersion = execSync(`${pythonCmd} -c "import pydantic; print(f'pydantic {pydantic.__version__}')"`, {
+    encoding: 'utf-8',
+    stdio: ['pipe', 'pipe', 'ignore']
+  }).trim();
+  console.log(`✅ ${pydanticVersion}`);
+} catch (e) {
+  console.log('❌ pydantic not found');
+  console.log('   Run: pip install pydantic');
+  hasErrors = true;
+}
+
 console.log('');
 console.log('================================================================================');
 
 if (hasErrors) {
   console.log('❌ Some checks failed. Please install missing dependencies.');
+  console.log('');
+  console.log('Quick setup commands:');
+  if (isCI) {
+    console.log('  npm ci');
+    console.log('  pip install -r requirements.txt');
+  } else {
+    console.log('  npm install');
+    console.log('  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt');
+  }
   process.exit(1);
 } else {
   console.log('✅ All checks passed! Environment is ready.');

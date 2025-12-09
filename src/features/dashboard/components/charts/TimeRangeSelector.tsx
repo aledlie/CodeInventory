@@ -1,24 +1,24 @@
 /**
- * TimeRangeSelector Component
+ * ChartTimeRangeSelector Component
  *
  * Toggle button group for selecting time range filter.
  */
 
 import { ToggleButtonGroup, ToggleButton, Box } from '@mui/material';
-import type { TimeRange } from '../../types/charts';
+import type { ChartTimeRange } from '../../types/charts';
 
-interface TimeRangeSelectorProps {
-  value: TimeRange;
-  onChange: (value: TimeRange) => void;
+interface ChartTimeRangeSelectorProps {
+  value: ChartTimeRange;
+  onChange: (value: ChartTimeRange) => void;
   disabled?: boolean;
 }
 
-export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
+export const ChartTimeRangeSelector: React.FC<ChartTimeRangeSelectorProps> = ({
   value,
   onChange,
   disabled = false,
 }) => {
-  const handleChange = (_event: React.MouseEvent<HTMLElement>, newValue: TimeRange | null) => {
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, newValue: ChartTimeRange | null) => {
     if (newValue !== null) {
       onChange(newValue);
     }
@@ -51,4 +51,4 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
   );
 };
 
-export default TimeRangeSelector;
+export default ChartTimeRangeSelector;

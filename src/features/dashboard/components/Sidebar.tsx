@@ -34,6 +34,9 @@ import {
   Hub as GraphIcon,
   CompareArrows as CompareIcon,
   Description as ReportsIcon,
+  AutoAwesome as InsightsIcon,
+  Timeline as PredictionsIcon,
+  Analytics as AnalyticsIcon,
 } from '@mui/icons-material';
 
 /**
@@ -105,6 +108,21 @@ const navigationItems: NavItem[] = [
     label: 'Reports',
     path: '/dashboard/reports',
     icon: <ReportsIcon />,
+  },
+  {
+    label: 'AI Insights',
+    path: '/dashboard/insights',
+    icon: <InsightsIcon />,
+  },
+  {
+    label: 'Predictions',
+    path: '/dashboard/predictions',
+    icon: <PredictionsIcon />,
+  },
+  {
+    label: 'Analytics',
+    path: '/dashboard/analytics',
+    icon: <AnalyticsIcon />,
   },
   {
     label: 'Settings',

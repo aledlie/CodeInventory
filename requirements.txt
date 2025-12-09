@@ -20,6 +20,11 @@ tqdm>=4.60.0
 pydantic>=2.0.0  # Runtime data validation with type hints
 mypy>=1.0.0      # Static type checking
 
+# Testing dependencies
+pytest>=7.0.0    # Test framework
+pytest-cov>=4.0.0  # Coverage plugin for pytest
+coverage>=7.0.0  # Code coverage measurement
+
 # Git operations for incremental analysis (for future Phase 3)
 # Uncomment to enable git-aware analysis:
 # gitpython>=3.1.0

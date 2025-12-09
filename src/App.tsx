@@ -1,8 +1,7 @@
 import React from 'react';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { ThemeProvider, CssBaseline } from '@mui/material';
 import { QueryProvider } from '@/features/dashboard/providers/QueryProvider';
-import { dashboardTheme } from '@/theme';
+import { ThemeProvider } from '@/theme';
 
 // Import the generated route tree
 // Note: TanStack Router CLI generates this file from your route files
@@ -31,13 +30,13 @@ declare module '@tanstack/react-router' {
  * Main App Component
  *
  * Provides the application context with:
- * - MUI ThemeProvider for consistent styling
+ * - ThemeProvider for MUI styling with dark mode support (Phase 5C)
  * - TanStack Query for data fetching and caching
  * - TanStack Router for navigation
  *
  * Provider Hierarchy:
  * ```
- * ThemeProvider (MUI styling)
+ * ThemeProvider (MUI styling + dark mode)
  *   └─ QueryProvider (data fetching)
  *      └─ RouterProvider (navigation)
  *         └─ Routes (your components)
@@ -48,10 +47,7 @@ declare module '@tanstack/react-router' {
  */
 export const App: React.FC = () => {
   return (
-    <ThemeProvider theme={dashboardTheme}>
-      {/* CssBaseline provides consistent baseline styles across browsers */}
-      <CssBaseline />
-
+    <ThemeProvider>
       {/* QueryProvider for TanStack Query with React Query DevTools */}
       <QueryProvider>
         {/* RouterProvider for TanStack Router navigation */}

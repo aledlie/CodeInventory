@@ -21,7 +21,6 @@ import {
 } from '@mui/material';
 import {
   Code as CodeIcon,
-  Inventory2 as PackageIcon,
   ExpandMore as ExpandMoreIcon,
   ContentCopy as CopyIcon,
   Download as DownloadIcon,

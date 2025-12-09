@@ -80,31 +80,47 @@ Inventory/
 
 ## 🎉 Latest Update (2025-12-09)
 
-**DASHBOARD VISUALIZATION PHASE 2 COMPLETE!**
+**PHASE 5B: DASHBOARD PERSONALIZATION - IN PROGRESS!**
 
-The Code Inventory now includes a full-featured React dashboard with data visualization:
+Phase 5B adds comprehensive dashboard customization with personalization features:
 
-### Dashboard Features (New!)
+### Phase 5B Features (In Progress)
+- **Widget Library** (`WidgetLibrary.tsx`): Widget catalog with category filtering and search
+- **Saved Views** (`SavedViewsDropdown.tsx`): Dashboard view management with CRUD operations
+- **Notification Preferences** (`NotificationPreferences.tsx`): Per-widget alert configuration
+- **Dashboard Editor** (`DashboardEditor.tsx`): Drag-and-drop layout using @dnd-kit
+- **Settings Route** (`/dashboard/settings`): Central settings page with 3 tabs
+- **Zustand Store** (`dashboardStore.ts`): State management with undo/redo and localStorage persistence
+- **Personalization API** (`personalizationApi.ts`): Full CRUD for views and preferences
+- **React Query Hooks** (`usePersonalization.ts`): Data fetching with caching
+
+### Phase 4 Features (Complete)
+- **AI Insights** (`/dashboard/insights`): InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
+- **Predictions** (`/dashboard/predictions`): PredictiveDashboard with prediction cards
+- **Visualization Builder**: Interactive chart and graph creation tools
+- **Team Collaboration Hub**: Real-time collaboration features
+- **Smart Notifications**: Alert triggers and notification management
+
+### Phase 5A Infrastructure (Complete)
+- **Dependencies**: @dnd-kit/core, @dnd-kit/sortable for drag-and-drop; zustand for state management; framer-motion; immer
+- **APIs**: analyticsApi.ts, visualizationApi.ts
+- **Hooks**: useAnalytics.ts, useVisualization.ts
+- **Types**: analytics.ts, visualizations.ts, personalization.ts
+
+### Dashboard Features
 - **React 18 + TypeScript** with MUI v7 components
-- **Three detail pages**: Code Quality, Test Coverage, Dependencies
-- **Real-time data** from Python analysis pipeline
+- **12 dashboard routes**: Overview, Quality, Coverage, Dependencies, Trends, Graph, Tools, Compare, Reports, Insights, Predictions, Settings
+- **Historical metrics comparison** with DateRangeSelector and trend indicators
+- **Custom report generation** with PDF, HTML, JSON, CSV, and Markdown export
+- **Dependency graph visualization** with interactive canvas
+- **Trend charts** for quality score evolution over time
 - **TanStack Router** for file-based routing
 - **TanStack Query** for data fetching with caching
 
-### Recent Commits
-
-| Commit | Date | Description |
-|--------|------|-------------|
-| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
-| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
-| `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
-| `aceed99` | 2025-12-09 | feat(dashboard): add trends and dependency graph pages |
-| `40cb3b3` | 2025-12-09 | feat(tools): add tools & utility modules visualization components |
-| `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
-| `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
-| `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
-| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
-| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
+### CI/CD Pipeline
+- **GitHub Actions** with matrix testing (Python 3.11, 3.12)
+- **Environment verification**: `npm run verify` checks all dependencies
+- **Test coverage**: 97 tests passing, coverage reporting enabled
 
 ### Start the Dashboard
 ```bash
@@ -466,22 +482,20 @@ See the individual integration guides for detailed usage instructions and exampl
 
 **Branch:** feature/dashboard-visualization
 
-### Commit History (Last 12)
+### Commit History (Last 10)
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
-| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
-| `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
-| `aceed99` | 2025-12-09 | feat(dashboard): add trends and dependency graph pages |
-| `40cb3b3` | 2025-12-09 | feat(tools): add tools & utility modules visualization components |
-| `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
-| `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
-| `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
-| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
-| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
-| `8ce00a2` | 2025-12-09 | docs(tools): add tools & utility modules design and implementation |
-| `c2b0566` | 2025-12-09 | docs: add recent git activity to documentation |
+| `3f2a876` | 2025-12-09 | docs: update project documentation with phase 5b implementation status |
+| `b3fd19c` | 2025-12-09 | test(dashboard): add orphaned components detection test |
+| `af649a8` | 2025-12-09 | chore(exports): add phase 3 component and type exports |
+| `a2f889a` | 2025-12-09 | chore(exports): add phase 3 api exports for trends, graph, and tools |
+| `1728bb3` | 2025-12-09 | chore(exports): add tools and force simulation hooks exports |
+| `ca3d5c3` | 2025-12-09 | chore(routes): regenerate route tree with settings route |
+| `fa58da6` | 2025-12-09 | feat(routes): add dashboard settings route for phase 5b personalization |
+| `49a67d0` | 2025-12-09 | feat(components): add personalization components for phase 5b dashboard |
+| `254f58d` | 2025-12-09 | feat(store): add zustand dashboard store for phase 5b personalization |
+| `93ddabc` | 2025-12-09 | feat(hooks): add personalization hooks for phase 5b dashboard management |
 
 ---
 *Last updated: 2025-12-09 | Originally generated on 2025-11-01*

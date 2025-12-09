@@ -352,3 +352,51 @@ export interface LoadReportsResult {
   data: PythonAnalyzerData;
   errors: ReportLoadError[];
 }
+
+// ============================================================================
+// Phase 3 Type Exports
+// ============================================================================
+
+// Phase 3: Trends & Charts
+export * from './charts';
+
+// Phase 3: Dependency Graph
+export * from './graph';
+
+// Phase 3: Historical Comparison
+export * from './comparison';
+
+// Phase 3: Report Generation
+export * from './reports';
+
+// Phase 3: Tools & Utilities
+export * from './tools';
+
+// ============================================================================
+// Phase 4 Type Exports
+// ============================================================================
+
+// Phase 4A: AI-Powered Insights
+export * from './insights';
+
+// Phase 4B: Predictive Analytics
+export * from './predictions';
+
+// Phase 4C: Custom Visualizations
+export * from './visualizations';
+
+// Phase 4D: Team Collaboration
+export * from './collaboration';
+
+// Phase 4E: Smart Notifications
+export * from './notifications';
+
+// ============================================================================
+// Phase 5 Type Exports
+// ============================================================================
+
+// Phase 5A: Advanced Analytics
+export * from './analytics';
+
+// Phase 5B: Dashboard Personalization
+export * from './personalization';
