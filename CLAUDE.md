@@ -394,40 +394,59 @@ def dfs(node, path, visited, rec_stack):
 
 This correctly identifies all cycles without false positives from DAG structures.
 
-## Directory Structure Conventions
+## Directory Structure (29 directories, 88 files)
 
 ```
-src/
-├── analyzers/        # Analysis modules (read-only, generate reports)
-├── generators/       # Content generation (schemas, dashboard, RSS)
-├── validators/       # Validation modules (schema.org, JSON-LD)
-└── utils/           # Shared utilities (git, logging)
-
-scripts/             # Executable orchestration scripts
-tests/
-├── unit/           # Isolated unit tests for each module
-├── integration/    # End-to-end pipeline tests
-├── performance/    # Performance benchmarking tests
-└── fixtures/       # Sample code for testing
-
-outputs/             # All generated outputs (gitignored)
-├── schemas/        # Generated schema files
-├── quality/        # Code quality reports
-├── coverage/       # Test coverage reports
-├── dependencies/   # Dependency analysis reports
-├── dashboards/     # Interactive HTML dashboards
-└── rss/           # RSS feed files
-
-docs/               # Organized documentation
-├── guides/         # How-to guides and implementations
-├── summaries/      # Project phase summaries
-├── testing/        # Test documentation
-├── integrations/   # Integration guides (Sentry, Doppler)
-├── refactoring/    # Refactoring plans
-├── examples/       # Code examples
-└── archive/        # Historical documentation
-
-ast-grep-rules/     # Custom ast-grep pattern definitions
+Inventory/
+├── src/                          # Source code modules
+│   ├── analyzers/                # Code analysis modules
+│   │   ├── analyzer_optimizer.py # Parallel processing & caching
+│   │   ├── code_quality.py       # Code quality and best practices
+│   │   ├── dependencies.py       # Dependency analysis
+│   │   └── test_coverage.py      # Test coverage tracking
+│   ├── generators/               # Content generation modules
+│   │   ├── schema.py             # Enhanced schema generator
+│   │   ├── schema_optimizer.py   # Schema optimization utilities
+│   │   ├── dashboard.py          # HTML dashboard generator
+│   │   └── rss.py                # RSS feed generator
+│   ├── validators/               # Validation modules
+│   │   └── schema.py             # Schema.org validator
+│   ├── cache/                    # Caching utilities
+│   │   └── analysis_cache.py     # Analysis result caching
+│   └── utils/                    # Utility modules
+│       ├── git_operations.py     # Git automation
+│       ├── logging_config.py     # Centralized logging
+│       └── performance_monitor.py # Performance tracking
+├── scripts/                      # Executable scripts
+│   ├── run_analysis.py           # Analysis orchestrator
+│   ├── run_tests.py              # Test runner
+│   ├── run_with_doppler.sh       # Doppler secret injection
+│   ├── enhance_docs.py           # Documentation enhancer
+│   └── push_changes.sh           # Git push automation
+├── tests/                        # Test suite
+│   ├── unit/                     # Unit tests (7 test files)
+│   ├── integration/              # Integration tests (4 test files)
+│   ├── performance/              # Benchmarking tests
+│   └── fixtures/                 # Sample code for testing
+├── docs/                         # Documentation
+│   ├── guides/                   # How-to guides (5 files)
+│   ├── summaries/                # Phase summaries (9 files)
+│   ├── testing/                  # Test documentation (3 files)
+│   ├── integrations/             # Integration guides (2 files)
+│   ├── archive/                  # Historical docs (6 files)
+│   ├── examples/                 # Code examples
+│   └── refactoring/              # Refactoring plans
+├── ast-grep-rules/               # Custom ast-grep patterns
+│   ├── python-best-practices.yml
+│   ├── typescript-best-practices.yml
+│   └── security-checks.yml
+└── outputs/                      # Generated files (gitignored)
+    ├── schemas/                  # Schema JSON files
+    ├── quality/                  # Quality reports
+    ├── coverage/                 # Coverage reports
+    ├── dependencies/             # Dependency reports
+    ├── dashboards/               # HTML dashboards
+    └── rss/                      # RSS feeds
 ```
 
 ### Skipped Directories
