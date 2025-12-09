@@ -1,0 +1,329 @@
+{
+  "summary": {
+    "total": 8,
+    "by_type": {
+      "improvement": 3,
+      "concern": 2,
+      "recommendation": 2,
+      "prediction": 1
+    },
+    "by_severity": {
+      "critical": 1,
+      "high": 2,
+      "medium": 3,
+      "low": 2
+    },
+    "unacknowledged": 5,
+    "overall_confidence": 85,
+    "headline": "Your codebase quality has improved by 18% over the past 30 days, driven primarily by increased test coverage and resolution of 12 high-severity issues.",
+    "last_updated": "2025-12-09T10:30:00Z"
+  },
+  "insights": [
+    {
+      "id": "insight-001",
+      "type": "improvement",
+      "severity": "high",
+      "title": "Test Coverage Increased in Critical Files",
+      "explanation": "You've added 23 new test cases covering authentication and payment processing modules. This reduces risk of production bugs by an estimated 35%.",
+      "confidence": 92,
+      "metrics": [
+        {
+          "name": "Coverage",
+          "current": 78,
+          "previous": 72,
+          "change": 6,
+          "change_percent": 8.3,
+          "trend": "up",
+          "unit": "%"
+        }
+      ],
+      "affected_files": [
+        {
+          "path": "src/auth/login.ts",
+          "percentage": 94,
+          "previous_percentage": 87
+        },
+        {
+          "path": "src/payments/checkout.ts",
+          "percentage": 89,
+          "previous_percentage": 72
+        },
+        {
+          "path": "src/api/userService.ts",
+          "percentage": 78,
+          "previous_percentage": 65
+        }
+      ],
+      "recommendations": [
+        "Continue improving coverage in the auth module",
+        "Consider adding integration tests for payment flows"
+      ],
+      "created_at": "2025-12-09T08:00:00Z",
+      "category": "testing"
+    },
+    {
+      "id": "insight-002",
+      "type": "concern",
+      "severity": "critical",
+      "title": "Potential Memory Leak Detected",
+      "explanation": "Static analysis detected a potential memory leak in the data processor module. Event listeners are being added without proper cleanup in useEffect hooks.",
+      "confidence": 88,
+      "metrics": [
+        {
+          "name": "Affected Files",
+          "current": 3,
+          "previous": 1,
+          "change": 2,
+          "change_percent": 200,
+          "trend": "up"
+        }
+      ],
+      "affected_files": [
+        {
+          "path": "src/processors/DataProcessor.tsx",
+          "line": 145,
+          "snippet": "useEffect(() => { window.addEventListener('resize', handleResize); }, []);"
+        },
+        {
+          "path": "src/hooks/useWebSocket.ts",
+          "line": 67
+        }
+      ],
+      "recommendations": [
+        "Add cleanup function to remove event listeners",
+        "Use AbortController for async operations",
+        "Consider using a state management library for complex subscriptions"
+      ],
+      "created_at": "2025-12-09T07:30:00Z",
+      "category": "performance"
+    },
+    {
+      "id": "insight-003",
+      "type": "improvement",
+      "severity": "medium",
+      "title": "Code Quality Score Improved",
+      "explanation": "Overall code quality score increased from 82 to 87 points. This improvement was driven by resolving 12 code smell warnings and improving documentation coverage.",
+      "confidence": 95,
+      "metrics": [
+        {
+          "name": "Quality Score",
+          "current": 87,
+          "previous": 82,
+          "change": 5,
+          "change_percent": 6.1,
+          "trend": "up",
+          "unit": "pts"
+        },
+        {
+          "name": "Issues Resolved",
+          "current": 33,
+          "previous": 45,
+          "change": -12,
+          "change_percent": -26.7,
+          "trend": "down"
+        }
+      ],
+      "affected_files": [],
+      "recommendations": [],
+      "created_at": "2025-12-09T06:00:00Z",
+      "category": "quality",
+      "acknowledged_at": "2025-12-09T09:00:00Z",
+      "acknowledged_by": "developer@example.com"
+    },
+    {
+      "id": "insight-004",
+      "type": "concern",
+      "severity": "high",
+      "title": "Circular Dependency Detected",
+      "explanation": "A circular dependency chain was detected between 3 modules. This can cause runtime issues and makes the codebase harder to maintain.",
+      "confidence": 100,
+      "metrics": [
+        {
+          "name": "Circular Chains",
+          "current": 2,
+          "previous": 1,
+          "change": 1,
+          "change_percent": 100,
+          "trend": "up"
+        }
+      ],
+      "affected_files": [
+        {
+          "path": "src/services/authService.ts"
+        },
+        {
+          "path": "src/services/userService.ts"
+        },
+        {
+          "path": "src/services/tokenService.ts"
+        }
+      ],
+      "recommendations": [
+        "Refactor to use dependency injection",
+        "Create a shared types module",
+        "Consider using a service locator pattern"
+      ],
+      "created_at": "2025-12-08T14:00:00Z",
+      "category": "architecture"
+    },
+    {
+      "id": "insight-005",
+      "type": "recommendation",
+      "severity": "medium",
+      "title": "Consider Upgrading Dependencies",
+      "explanation": "5 npm packages have major version updates available. Upgrading could bring performance improvements and security fixes.",
+      "confidence": 75,
+      "metrics": [
+        {
+          "name": "Outdated Packages",
+          "current": 5,
+          "previous": 3,
+          "change": 2,
+          "change_percent": 66.7,
+          "trend": "up"
+        }
+      ],
+      "affected_files": [
+        {
+          "path": "package.json"
+        }
+      ],
+      "recommendations": [
+        "Update react to 18.3.0",
+        "Update @tanstack/react-query to 5.60.0",
+        "Update typescript to 5.7.0",
+        "Run npm audit to check for vulnerabilities"
+      ],
+      "created_at": "2025-12-08T10:00:00Z",
+      "category": "dependencies"
+    },
+    {
+      "id": "insight-006",
+      "type": "recommendation",
+      "severity": "low",
+      "title": "Improve Error Handling Coverage",
+      "explanation": "Several async functions lack proper error handling. Adding try-catch blocks and error boundaries will improve reliability.",
+      "confidence": 80,
+      "metrics": [
+        {
+          "name": "Functions Missing Error Handling",
+          "current": 8,
+          "previous": 12,
+          "change": -4,
+          "change_percent": -33.3,
+          "trend": "down"
+        }
+      ],
+      "affected_files": [
+        {
+          "path": "src/api/fetchUsers.ts",
+          "line": 23
+        },
+        {
+          "path": "src/api/submitForm.ts",
+          "line": 45
+        }
+      ],
+      "recommendations": [
+        "Add try-catch blocks to async functions",
+        "Implement global error boundary",
+        "Use react-error-boundary package"
+      ],
+      "created_at": "2025-12-07T16:00:00Z",
+      "category": "reliability",
+      "acknowledged_at": "2025-12-08T08:00:00Z",
+      "acknowledged_by": "lead@example.com"
+    },
+    {
+      "id": "insight-007",
+      "type": "improvement",
+      "severity": "low",
+      "title": "Documentation Coverage Improved",
+      "explanation": "JSDoc coverage increased from 45% to 62%. Functions and components are now better documented for team collaboration.",
+      "confidence": 90,
+      "metrics": [
+        {
+          "name": "Documentation Coverage",
+          "current": 62,
+          "previous": 45,
+          "change": 17,
+          "change_percent": 37.8,
+          "trend": "up",
+          "unit": "%"
+        }
+      ],
+      "affected_files": [],
+      "recommendations": [],
+      "created_at": "2025-12-07T12:00:00Z",
+      "category": "documentation",
+      "acknowledged_at": "2025-12-07T14:00:00Z",
+      "acknowledged_by": "developer@example.com"
+    },
+    {
+      "id": "insight-008",
+      "type": "prediction",
+      "severity": "medium",
+      "title": "Projected to Reach 90% Quality by March",
+      "explanation": "Based on current improvement trends, your codebase is projected to reach 90% quality score by mid-March 2025. Maintaining current velocity will help achieve this goal.",
+      "confidence": 78,
+      "metrics": [
+        {
+          "name": "Current Quality",
+          "current": 87,
+          "previous": 82,
+          "change": 5,
+          "change_percent": 6.1,
+          "trend": "up",
+          "unit": "pts"
+        },
+        {
+          "name": "Projected Quality",
+          "current": 90,
+          "previous": 87,
+          "change": 3,
+          "change_percent": 3.4,
+          "trend": "up",
+          "unit": "pts"
+        }
+      ],
+      "affected_files": [],
+      "recommendations": [
+        "Maintain current issue resolution rate",
+        "Focus on high-severity issues first",
+        "Schedule regular code review sessions"
+      ],
+      "created_at": "2025-12-09T08:30:00Z",
+      "category": "forecast"
+    }
+  ],
+  "key_metrics": [
+    {
+      "name": "Quality Score",
+      "current": 87,
+      "previous": 82,
+      "change": 5,
+      "change_percent": 6.1,
+      "trend": "up",
+      "unit": "pts"
+    },
+    {
+      "name": "Test Coverage",
+      "current": 78,
+      "previous": 72,
+      "change": 6,
+      "change_percent": 8.3,
+      "trend": "up",
+      "unit": "%"
+    },
+    {
+      "name": "Open Issues",
+      "current": 33,
+      "previous": 45,
+      "change": -12,
+      "change_percent": -26.7,
+      "trend": "down"
+    }
+  ],
+  "analyzer_version": "1.0.0",
+  "generated_at": "2025-12-09T10:30:00Z"
+}
