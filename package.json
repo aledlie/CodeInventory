@@ -12,6 +12,15 @@
     "test": "python3 scripts/run_tests.py",
     "test:unit": "python3 scripts/run_tests.py --unit-only",
     "test:integration": "python3 scripts/run_tests.py --integration-only",
+    "test:e2e": "python3 scripts/run_tests.py --e2e-only",
+    "test:browser": "npx playwright test",
+    "test:browser:chrome": "npx playwright test --project=chromium",
+    "test:browser:firefox": "npx playwright test --project=firefox",
+    "test:browser:webkit": "npx playwright test --project=webkit",
+    "test:browser:all": "npx playwright test --project=chromium --project=firefox --project=webkit",
+    "test:browser:mobile": "npx playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:browser:install": "npx playwright install",
+    "test:browser:report": "npx playwright show-report",
     "verify": "node scripts/verify-environment.js",
     "ast-grep": "ast-grep"
   },
@@ -41,6 +50,7 @@
     "zustand": "^4.5.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@rollup/rollup-darwin-arm64": "^4.53.3",
     "@tanstack/router-cli": "^1.93.0",
     "@types/react": "^18.3.18",

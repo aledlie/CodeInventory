@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Test Runner - Runs all tests and generates coverage report
+
+Supports both unittest and pytest style tests.
 """
 
 import unittest
@@ -10,7 +12,7 @@ from pathlib import Path
 import subprocess
 import json
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -25,13 +27,61 @@ class TestRunner:
         self.coverage_enabled = coverage_enabled
         # Script is now in scripts/, so go up one level to find tests
         self.test_dir = Path(__file__).parent.parent / 'tests'
+        self.exclude_dirs: List[str] = []
         self.results = {}
+        self.use_pytest = True  # Use pytest by default for better compatibility
+
+    def _run_pytest(self) -> tuple[bool, int, int, int]:
+        """Run tests using pytest"""
+        import pytest
+
+        # Build pytest arguments
+        args = [str(self.test_dir), '-v', '--tb=short']
+
+        if self.exclude_dirs:
+            for exclude_dir in self.exclude_dirs:
+                args.extend(['--ignore', str(self.test_dir / exclude_dir)])
+
+        # Collect test results
+        class ResultCollector:
+            def __init__(self):
+                self.passed = 0
+                self.failed = 0
+                self.errors = 0
+                self.skipped = 0
+
+            def pytest_runtest_logreport(self, report):
+                if report.when == 'call':
+                    if report.passed:
+                        self.passed += 1
+                    elif report.failed:
+                        self.failed += 1
+                elif report.when == 'setup' and report.failed:
+                    self.errors += 1
+                if report.skipped:
+                    self.skipped += 1
+
+        collector = ResultCollector()
+        exit_code = pytest.main(args, plugins=[collector])
+
+        total = collector.passed + collector.failed + collector.errors
+        return exit_code == 0, total, collector.passed, collector.failed
 
     def discover_tests(self):
-        """Discover all test files"""
+        """Discover all test files using unittest"""
         loader = unittest.TestLoader()
-        suite = loader.discover(str(self.test_dir), pattern='test_*.py')
-        return suite
+
+        if self.exclude_dirs:
+            # Custom discovery that excludes specific directories
+            suite = unittest.TestSuite()
+            for subdir in self.test_dir.iterdir():
+                if subdir.is_dir() and subdir.name not in self.exclude_dirs and not subdir.name.startswith('_'):
+                    subdir_suite = loader.discover(str(subdir), pattern='test_*.py', top_level_dir=str(self.test_dir))
+                    suite.addTests(subdir_suite)
+            return suite
+        else:
+            suite = loader.discover(str(self.test_dir), pattern='test_*.py')
+            return suite
 
     def _print_test_header(self):
         """Print test suite header"""
@@ -42,7 +92,7 @@ class TestRunner:
         logger.info(f"Coverage enabled: {self.coverage_enabled}\n")
 
     def _execute_test_suite(self, suite):
-        """Execute the test suite"""
+        """Execute the test suite using unittest"""
         test_count = suite.countTestCases()
         logger.info(f"Found {test_count} tests\n")
 
@@ -52,7 +102,7 @@ class TestRunner:
         return result, test_count
 
     def _calculate_results(self, result, test_count):
-        """Calculate test results statistics"""
+        """Calculate test results statistics from unittest result"""
         self.results = {
             'total': test_count,
             'passed': test_count - len(result.failures) - len(result.errors),
@@ -62,15 +112,30 @@ class TestRunner:
             'success_rate': ((test_count - len(result.failures) - len(result.errors)) / test_count * 100) if test_count > 0 else 0
         }
 
+    def _calculate_pytest_results(self, total: int, passed: int, failed: int):
+        """Calculate test results statistics from pytest result"""
+        self.results = {
+            'total': total,
+            'passed': passed,
+            'failed': failed,
+            'errors': 0,
+            'skipped': 0,
+            'success_rate': (passed / total * 100) if total > 0 else 0
+        }
+
     def run_tests(self):
         """Run all tests and collect results"""
         self._print_test_header()
 
-        suite = self.discover_tests()
-        result, test_count = self._execute_test_suite(suite)
-        self._calculate_results(result, test_count)
-
-        return result.wasSuccessful()
+        if self.use_pytest:
+            success, total, passed, failed = self._run_pytest()
+            self._calculate_pytest_results(total, passed, failed)
+            return success
+        else:
+            suite = self.discover_tests()
+            result, test_count = self._execute_test_suite(suite)
+            self._calculate_results(result, test_count)
+            return result.wasSuccessful()
 
     def _check_coverage_available(self):
         """Check if coverage module is available"""
@@ -225,6 +290,9 @@ def _parse_arguments():
     parser.add_argument('--no-coverage', action='store_true', help='Disable coverage analysis')
     parser.add_argument('--unit-only', action='store_true', help='Run only unit tests')
     parser.add_argument('--integration-only', action='store_true', help='Run only integration tests')
+    parser.add_argument('--e2e-only', action='store_true', help='Run only end-to-end tests')
+    parser.add_argument('--performance-only', action='store_true', help='Run only performance tests')
+    parser.add_argument('--exclude-e2e', action='store_true', help='Run all tests except e2e')
 
     return parser.parse_args()
 
@@ -236,6 +304,15 @@ def _configure_test_directory(runner, args):
     elif args.integration_only:
         logger.info("Running integration tests only...")
         runner.test_dir = runner.test_dir / 'integration'
+    elif args.e2e_only:
+        logger.info("Running end-to-end tests only...")
+        runner.test_dir = runner.test_dir / 'e2e'
+    elif args.performance_only:
+        logger.info("Running performance tests only...")
+        runner.test_dir = runner.test_dir / 'performance'
+    elif args.exclude_e2e:
+        logger.info("Running all tests except e2e...")
+        runner.exclude_dirs = ['e2e', 'performance', 'fixtures']
 
 def _run_test_pipeline(runner, args):
     """Run the complete test pipeline"""
