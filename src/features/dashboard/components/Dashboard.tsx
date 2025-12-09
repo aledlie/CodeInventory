@@ -130,25 +130,22 @@ function formatNumber(value: number): string {
  * - Gracefully handles null reports with default values
  * - Displays 0 values when reports are unavailable
  */
-export const Dashboard: React.FC<DashboardProps> = ({ outputsPath = '/outputs' }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ outputsPath = '/data' }) => {
   // Suspend until data is loaded (no loading state needed)
-  const { data } = useDashboardData(outputsPath);
+  const { data: result } = useDashboardData(outputsPath);
+
+  // Extract reports from result (result has .data and .errors)
+  const reports = result.data;
 
   // Calculate aggregated metrics from reports
   const metrics = calculateDashboardMetrics(
-    data.quality,
-    data.coverage,
-    data.dependencies
+    reports.quality,
+    reports.coverage,
+    reports.dependencies
   );
 
-  // Determine last generated timestamp (use most recent report)
-  const lastGenerated = data.quality?.timestamp
-    ? new Date(data.quality.timestamp)
-    : data.coverage?.timestamp
-    ? new Date(data.coverage.timestamp)
-    : data.dependencies?.timestamp
-    ? new Date(data.dependencies.timestamp)
-    : new Date();
+  // Determine last generated timestamp - using current time since Python reports don't include timestamps
+  const lastGenerated = new Date();
 
   // Configure metric cards for MetricGrid
   const metricCards = [
