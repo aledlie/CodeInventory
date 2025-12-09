@@ -23,13 +23,8 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install ast-grep
-      run: |
-        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
-        unzip ast-grep.zip
-        sudo mv sg /usr/local/bin/
-        chmod +x /usr/local/bin/sg
-        sg --version
+    - name: Setup ast-grep
+      uses: ./.github/actions/setup-ast-grep
 
     - name: Install dependencies
       run: |
@@ -70,12 +65,8 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install ast-grep
-      run: |
-        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
-        unzip ast-grep.zip
-        sudo mv sg /usr/local/bin/
-        chmod +x /usr/local/bin/sg
+    - name: Setup ast-grep
+      uses: ./.github/actions/setup-ast-grep
 
     - name: Install dependencies
       run: |
@@ -107,12 +98,8 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install ast-grep
-      run: |
-        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
-        unzip ast-grep.zip
-        sudo mv sg /usr/local/bin/
-        chmod +x /usr/local/bin/sg
+    - name: Setup ast-grep
+      uses: ./.github/actions/setup-ast-grep
 
     - name: Install dependencies
       run: |
@@ -165,12 +152,8 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install ast-grep
-      run: |
-        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
-        unzip ast-grep.zip
-        sudo mv sg /usr/local/bin/
-        chmod +x /usr/local/bin/sg
+    - name: Setup ast-grep
+      uses: ./.github/actions/setup-ast-grep
 
     - name: Install dependencies
       run: |
