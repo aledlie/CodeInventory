@@ -51,16 +51,6 @@
         color: #666;
       }
     </style>
-    <!-- SPA redirect handler for GitHub Pages -->
-    <script>
-      (function() {
-        const redirect = sessionStorage.getItem('spa-redirect');
-        if (redirect) {
-          sessionStorage.removeItem('spa-redirect');
-          window.history.replaceState(null, '', redirect);
-        }
-      })();
-    </script>
   </head>
   <body>
     <!-- Root element for React app -->
