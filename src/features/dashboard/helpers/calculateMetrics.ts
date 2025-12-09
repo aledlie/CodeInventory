@@ -3,47 +3,20 @@
  *
  * Calculates aggregated metrics from analysis reports for dashboard visualization.
  * Handles missing or corrupted data gracefully with sensible defaults.
+ *
+ * Uses the transformed PythonAnalyzerData types from the dashboardApi.
  */
 
-/**
- * Quality report structure from code quality analyzer
- */
-export interface QualityReport {
-  timestamp: string;
-  total_issues: number;
-  by_severity: {
-    critical: number;
-    high: number;
-    medium: number;
-    low: number;
-  };
-  issues: Array<{
-    file: string;
-    line: number;
-    severity: string;
-    message: string;
-  }>;
-}
+import type {
+  PythonQualityReport,
+  PythonCoverageReport,
+  PythonDependencyReport,
+} from '../types';
 
-/**
- * Coverage report structure from test coverage analyzer
- */
-export interface CoverageReport {
-  timestamp: string;
-  coverage_percentage: number;
-  total_functions: number;
-  tested_functions: number;
-  untested_functions: number;
-}
-
-/**
- * Dependency report structure from dependency analyzer
- */
-export interface DependencyReport {
-  timestamp: string;
-  total_files: number;
-  circular_dependencies: string[][];
-}
+// Re-export types for backward compatibility
+export type QualityReport = PythonQualityReport;
+export type CoverageReport = PythonCoverageReport;
+export type DependencyReport = PythonDependencyReport;
 
 /**
  * Aggregated metrics for dashboard display
@@ -65,29 +38,28 @@ export type HealthStatus = 'error' | 'warning' | 'success';
 /**
  * Calculate overall quality score from quality report
  *
- * Score calculation:
+ * Score calculation based on Python analyzer severity levels:
  * - Base score: 100
- * - Critical issues: -10 points each
- * - High severity: -5 points each
- * - Medium severity: -2 points each
- * - Low severity: -1 point each
+ * - Error severity: -10 points each (critical)
+ * - Warning severity: -3 points each
+ * - Info severity: -1 point each
  * - Minimum score: 0
  *
  * @param report - Quality report from code quality analyzer
  * @returns Quality score between 0-100
  */
 export function calculateQualityScore(report: QualityReport | null): number {
-  if (!report || !report.by_severity) {
+  if (!report || !report.issues_by_severity) {
     return 0;
   }
 
-  const { critical = 0, high = 0, medium = 0, low = 0 } = report.by_severity;
+  // Python analyzer uses: error, warning, info (not critical/high/medium/low)
+  const { error = 0, warning = 0, info = 0 } = report.issues_by_severity;
 
   const score = 100
-    - (critical * 10)
-    - (high * 5)
-    - (medium * 2)
-    - (low * 1);
+    - (error * 10)     // Errors are critical
+    - (warning * 3)    // Warnings are significant
+    - (info * 1);      // Info is minor
 
   return Math.max(0, Math.min(100, score));
 }
@@ -134,6 +106,11 @@ export function calculateHealthStatus(metrics: DashboardMetrics): HealthStatus {
  * - Missing coverage report: 0% coverage, 0 untested functions
  * - Missing dependency report: 0 files, 0 circular dependencies
  *
+ * Uses field names from transformed Python reports:
+ * - Quality: total_files_scanned, issues_by_severity (error/warning/info)
+ * - Coverage: coverage_percentage, untested_functions
+ * - Dependencies: total_dependencies, circular_dependencies
+ *
  * @param quality - Quality report (may be null)
  * @param coverage - Coverage report (may be null)
  * @param dependencies - Dependency report (may be null)
@@ -144,8 +121,8 @@ export function calculateDashboardMetrics(
   coverage: CoverageReport | null,
   dependencies: DependencyReport | null
 ): DashboardMetrics {
-  // Extract total files from dependency report (most reliable source)
-  const totalFiles = dependencies?.total_files ?? 0;
+  // Extract total files from quality report (most reliable source for file count)
+  const totalFiles = quality?.total_files_scanned ?? 0;
 
   // Calculate quality score
   const qualityScore = calculateQualityScore(quality);
@@ -153,8 +130,8 @@ export function calculateDashboardMetrics(
   // Extract coverage percentage
   const coveragePercentage = coverage?.coverage_percentage ?? 0;
 
-  // Extract critical issues count
-  const criticalIssues = quality?.by_severity?.critical ?? 0;
+  // Extract critical issues count (Python uses 'error' severity for critical)
+  const criticalIssues = quality?.issues_by_severity?.error ?? 0;
 
   // Extract circular dependencies count
   const circularDeps = dependencies?.circular_dependencies?.length ?? 0;
@@ -186,10 +163,10 @@ export function isValidQualityReport(report: unknown): report is QualityReport {
   const r = report as Partial<QualityReport>;
 
   return !!(
-    r.timestamp &&
+    typeof r.total_files_scanned === 'number' &&
     typeof r.total_issues === 'number' &&
-    r.by_severity &&
-    typeof r.by_severity === 'object' &&
+    r.issues_by_severity &&
+    typeof r.issues_by_severity === 'object' &&
     Array.isArray(r.issues)
   );
 }
@@ -208,7 +185,6 @@ export function isValidCoverageReport(report: unknown): report is CoverageReport
   const r = report as Partial<CoverageReport>;
 
   return !!(
-    r.timestamp &&
     typeof r.coverage_percentage === 'number' &&
     typeof r.total_functions === 'number' &&
     typeof r.tested_functions === 'number' &&
@@ -230,8 +206,7 @@ export function isValidDependencyReport(report: unknown): report is DependencyRe
   const r = report as Partial<DependencyReport>;
 
   return !!(
-    r.timestamp &&
-    typeof r.total_files === 'number' &&
+    typeof r.total_dependencies === 'number' &&
     Array.isArray(r.circular_dependencies)
   );
 }

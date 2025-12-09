@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { dashboardApi } from '../api/dashboardApi';
-import type { DashboardData } from '../types/dashboard';
+import type { LoadReportsResult } from '../types';
 
 /**
  * Main dashboard data hook using Suspense for data fetching
@@ -20,7 +20,7 @@ import type { DashboardData } from '../types/dashboard';
  * ```
  */
 export const useDashboardData = (outputsPath: string) => {
-  return useSuspenseQuery<DashboardData>({
+  return useSuspenseQuery<LoadReportsResult>({
     queryKey: ['dashboard', outputsPath],
     queryFn: () => dashboardApi.loadAllReports(outputsPath),
     staleTime: 5 * 60 * 1000, // 5 minutes - data is considered fresh

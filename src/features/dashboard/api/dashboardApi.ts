@@ -4,10 +4,13 @@
  * Handles loading JSON report files from the Python analyzers.
  * Provides type-safe access to quality, coverage, and dependency reports.
  *
+ * The Python analyzers output reports with a nested 'summary' structure,
+ * which this API transforms into the flat TypeScript interface format.
+ *
  * Expected file structure:
- * - outputs/quality/quality_report.json
- * - outputs/coverage/coverage_report.json
- * - outputs/dependencies/dependency_report.json
+ * - /data/quality/quality_report.json (served from public/)
+ * - /data/coverage/coverage_report.json
+ * - /data/dependencies/dependency_report.json
  */
 
 import type {
@@ -17,7 +20,93 @@ import type {
   PythonAnalyzerData,
   ReportLoadError,
   LoadReportsResult,
+  PythonQualityIssue,
+  PythonFunctionInfo,
+  PythonDependencyInfo,
 } from '../types';
+
+// ============================================================================
+// Raw Python Output Types (with nested summary)
+// ============================================================================
+
+interface RawQualityReport {
+  summary: {
+    total_files_scanned: number;
+    total_issues: number;
+    issues_by_severity: Record<string, number>;
+    issues_by_category: Record<string, number>;
+  };
+  issues: PythonQualityIssue[];
+}
+
+interface RawCoverageReport {
+  summary: {
+    source_directory: string;
+    test_directory: string;
+    total_functions: number;
+    tested_functions: number;
+    untested_functions: number;
+    coverage_percentage: number;
+  };
+  functions: PythonFunctionInfo[];
+  untested_by_file?: Record<string, PythonFunctionInfo[]>;
+}
+
+interface RawDependencyReport {
+  summary: {
+    root_directory: string;
+    total_dependencies: number;
+    external_dependencies: number;
+    internal_dependencies: number;
+    files_analyzed: number;
+    circular_dependencies_count: number;
+  };
+  dependencies_by_file: Record<string, PythonDependencyInfo[]>;
+  dependency_graph?: Record<string, string[]>;
+  circular_dependencies: string[][];
+  unused_dependencies?: string[];
+}
+
+// ============================================================================
+// Transform Functions (Raw -> TypeScript Interface)
+// ============================================================================
+
+function transformQualityReport(raw: RawQualityReport): PythonQualityReport {
+  return {
+    total_files_scanned: raw.summary.total_files_scanned,
+    total_issues: raw.summary.total_issues,
+    issues_by_severity: raw.summary.issues_by_severity,
+    issues_by_category: raw.summary.issues_by_category,
+    issues: raw.issues,
+  };
+}
+
+function transformCoverageReport(raw: RawCoverageReport): PythonCoverageReport {
+  return {
+    total_functions: raw.summary.total_functions,
+    tested_functions: raw.summary.tested_functions,
+    untested_functions: raw.summary.untested_functions,
+    coverage_percentage: raw.summary.coverage_percentage,
+    functions: raw.functions,
+    untested_by_file: raw.untested_by_file || {},
+  };
+}
+
+function transformDependencyReport(raw: RawDependencyReport): PythonDependencyReport {
+  return {
+    total_dependencies: raw.summary.total_dependencies,
+    external_dependencies: raw.summary.external_dependencies,
+    internal_dependencies: raw.summary.internal_dependencies,
+    dependencies_by_file: raw.dependencies_by_file,
+    dependency_graph: raw.dependency_graph || {},
+    circular_dependencies: raw.circular_dependencies,
+    unused_dependencies: raw.unused_dependencies || [],
+  };
+}
+
+// ============================================================================
+// Validation Functions
+// ============================================================================
 
 /**
  * Parse JSON with proper error handling
@@ -31,56 +120,65 @@ function parseJSON<T>(text: string, reportType: string): T {
 }
 
 /**
- * Validate that required fields exist in the report
+ * Validate raw quality report structure (with nested summary)
  */
-function validateQualityReport(data: unknown): data is PythonQualityReport {
+function validateRawQualityReport(data: unknown): data is RawQualityReport {
   if (typeof data !== 'object' || data === null) {
     return false;
   }
-  const report = data as Partial<PythonQualityReport>;
+  const report = data as { summary?: unknown; issues?: unknown };
+  if (typeof report.summary !== 'object' || report.summary === null) {
+    return false;
+  }
+  const summary = report.summary as Record<string, unknown>;
   return (
-    typeof report.total_files_scanned === 'number' &&
-    typeof report.total_issues === 'number' &&
-    typeof report.issues_by_severity === 'object' &&
-    typeof report.issues_by_category === 'object' &&
+    typeof summary.total_files_scanned === 'number' &&
+    typeof summary.total_issues === 'number' &&
+    typeof summary.issues_by_severity === 'object' &&
+    typeof summary.issues_by_category === 'object' &&
     Array.isArray(report.issues)
   );
 }
 
 /**
- * Validate coverage report structure
+ * Validate raw coverage report structure (with nested summary)
  */
-function validateCoverageReport(data: unknown): data is PythonCoverageReport {
+function validateRawCoverageReport(data: unknown): data is RawCoverageReport {
   if (typeof data !== 'object' || data === null) {
     return false;
   }
-  const report = data as Partial<PythonCoverageReport>;
+  const report = data as { summary?: unknown; functions?: unknown };
+  if (typeof report.summary !== 'object' || report.summary === null) {
+    return false;
+  }
+  const summary = report.summary as Record<string, unknown>;
   return (
-    typeof report.total_functions === 'number' &&
-    typeof report.tested_functions === 'number' &&
-    typeof report.untested_functions === 'number' &&
-    typeof report.coverage_percentage === 'number' &&
-    Array.isArray(report.functions) &&
-    typeof report.untested_by_file === 'object'
+    typeof summary.total_functions === 'number' &&
+    typeof summary.tested_functions === 'number' &&
+    typeof summary.untested_functions === 'number' &&
+    typeof summary.coverage_percentage === 'number' &&
+    Array.isArray(report.functions)
   );
 }
 
 /**
- * Validate dependency report structure
+ * Validate raw dependency report structure (with nested summary)
  */
-function validateDependencyReport(data: unknown): data is PythonDependencyReport {
+function validateRawDependencyReport(data: unknown): data is RawDependencyReport {
   if (typeof data !== 'object' || data === null) {
     return false;
   }
-  const report = data as Partial<PythonDependencyReport>;
+  const report = data as { summary?: unknown; dependencies_by_file?: unknown; circular_dependencies?: unknown };
+  if (typeof report.summary !== 'object' || report.summary === null) {
+    return false;
+  }
+  const summary = report.summary as Record<string, unknown>;
   return (
-    typeof report.total_dependencies === 'number' &&
-    typeof report.external_dependencies === 'number' &&
-    typeof report.internal_dependencies === 'number' &&
+    typeof summary.total_dependencies === 'number' &&
+    typeof summary.external_dependencies === 'number' &&
+    typeof summary.internal_dependencies === 'number' &&
     typeof report.dependencies_by_file === 'object' &&
-    typeof report.dependency_graph === 'object' &&
-    Array.isArray(report.circular_dependencies) &&
-    Array.isArray(report.unused_dependencies)
+    Array.isArray(report.circular_dependencies)
   );
 }
 
@@ -91,7 +189,7 @@ export const dashboardApi = {
   /**
    * Load quality report from file system
    *
-   * @param outputsPath - Base path to outputs directory (e.g., '/path/to/outputs')
+   * @param outputsPath - Base path to data directory (e.g., '/data')
    * @returns Quality report or null if file doesn't exist
    * @throws Error if file exists but is invalid
    */
@@ -99,32 +197,7 @@ export const dashboardApi = {
     const path = `${outputsPath}/quality/quality_report.json`;
 
     try {
-      // In Node.js environment (for testing/local dev)
-      if (typeof window === 'undefined') {
-        const fs = await import('fs/promises');
-        const filePath = await import('path');
-        const fullPath = filePath.resolve(path);
-
-        try {
-          const content = await fs.readFile(fullPath, 'utf-8');
-          const data = parseJSON<PythonQualityReport>(content, 'quality report');
-
-          if (!validateQualityReport(data)) {
-            throw new Error('Quality report has invalid structure');
-          }
-
-          console.log(`[dashboardApi] Loaded quality report: ${data.total_issues} issues from ${data.total_files_scanned} files`);
-          return data;
-        } catch (error) {
-          if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-            console.warn(`[dashboardApi] Quality report not found at ${fullPath}`);
-            return null;
-          }
-          throw error;
-        }
-      }
-
-      // In browser environment
+      // In browser environment - fetch from public folder
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
@@ -135,12 +208,14 @@ export const dashboardApi = {
       }
 
       const text = await response.text();
-      const data = parseJSON<PythonQualityReport>(text, 'quality report');
+      const rawData = parseJSON<RawQualityReport>(text, 'quality report');
 
-      if (!validateQualityReport(data)) {
+      if (!validateRawQualityReport(rawData)) {
         throw new Error('Quality report has invalid structure');
       }
 
+      // Transform raw Python output to TypeScript interface format
+      const data = transformQualityReport(rawData);
       console.log(`[dashboardApi] Loaded quality report: ${data.total_issues} issues from ${data.total_files_scanned} files`);
       return data;
     } catch (error) {
@@ -152,7 +227,7 @@ export const dashboardApi = {
   /**
    * Load coverage report from file system
    *
-   * @param outputsPath - Base path to outputs directory
+   * @param outputsPath - Base path to data directory (e.g., '/data')
    * @returns Coverage report or null if file doesn't exist
    * @throws Error if file exists but is invalid
    */
@@ -160,32 +235,7 @@ export const dashboardApi = {
     const path = `${outputsPath}/coverage/coverage_report.json`;
 
     try {
-      // In Node.js environment (for testing/local dev)
-      if (typeof window === 'undefined') {
-        const fs = await import('fs/promises');
-        const filePath = await import('path');
-        const fullPath = filePath.resolve(path);
-
-        try {
-          const content = await fs.readFile(fullPath, 'utf-8');
-          const data = parseJSON<PythonCoverageReport>(content, 'coverage report');
-
-          if (!validateCoverageReport(data)) {
-            throw new Error('Coverage report has invalid structure');
-          }
-
-          console.log(`[dashboardApi] Loaded coverage report: ${data.coverage_percentage.toFixed(1)}% coverage (${data.tested_functions}/${data.total_functions} functions)`);
-          return data;
-        } catch (error) {
-          if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-            console.warn(`[dashboardApi] Coverage report not found at ${fullPath}`);
-            return null;
-          }
-          throw error;
-        }
-      }
-
-      // In browser environment
+      // In browser environment - fetch from public folder
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
@@ -196,12 +246,14 @@ export const dashboardApi = {
       }
 
       const text = await response.text();
-      const data = parseJSON<PythonCoverageReport>(text, 'coverage report');
+      const rawData = parseJSON<RawCoverageReport>(text, 'coverage report');
 
-      if (!validateCoverageReport(data)) {
+      if (!validateRawCoverageReport(rawData)) {
         throw new Error('Coverage report has invalid structure');
       }
 
+      // Transform raw Python output to TypeScript interface format
+      const data = transformCoverageReport(rawData);
       console.log(`[dashboardApi] Loaded coverage report: ${data.coverage_percentage.toFixed(1)}% coverage (${data.tested_functions}/${data.total_functions} functions)`);
       return data;
     } catch (error) {
@@ -213,7 +265,7 @@ export const dashboardApi = {
   /**
    * Load dependency report from file system
    *
-   * @param outputsPath - Base path to outputs directory
+   * @param outputsPath - Base path to data directory (e.g., '/data')
    * @returns Dependency report or null if file doesn't exist
    * @throws Error if file exists but is invalid
    */
@@ -221,32 +273,7 @@ export const dashboardApi = {
     const path = `${outputsPath}/dependencies/dependency_report.json`;
 
     try {
-      // In Node.js environment (for testing/local dev)
-      if (typeof window === 'undefined') {
-        const fs = await import('fs/promises');
-        const filePath = await import('path');
-        const fullPath = filePath.resolve(path);
-
-        try {
-          const content = await fs.readFile(fullPath, 'utf-8');
-          const data = parseJSON<PythonDependencyReport>(content, 'dependency report');
-
-          if (!validateDependencyReport(data)) {
-            throw new Error('Dependency report has invalid structure');
-          }
-
-          console.log(`[dashboardApi] Loaded dependency report: ${data.total_dependencies} dependencies (${data.circular_dependencies.length} circular)`);
-          return data;
-        } catch (error) {
-          if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-            console.warn(`[dashboardApi] Dependency report not found at ${fullPath}`);
-            return null;
-          }
-          throw error;
-        }
-      }
-
-      // In browser environment
+      // In browser environment - fetch from public folder
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
@@ -257,12 +284,14 @@ export const dashboardApi = {
       }
 
       const text = await response.text();
-      const data = parseJSON<PythonDependencyReport>(text, 'dependency report');
+      const rawData = parseJSON<RawDependencyReport>(text, 'dependency report');
 
-      if (!validateDependencyReport(data)) {
+      if (!validateRawDependencyReport(rawData)) {
         throw new Error('Dependency report has invalid structure');
       }
 
+      // Transform raw Python output to TypeScript interface format
+      const data = transformDependencyReport(rawData);
       console.log(`[dashboardApi] Loaded dependency report: ${data.total_dependencies} dependencies (${data.circular_dependencies.length} circular)`);
       return data;
     } catch (error) {
