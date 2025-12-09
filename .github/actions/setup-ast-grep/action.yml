@@ -13,7 +13,8 @@ runs:
       shell: bash
       run: |
         echo "Installing ast-grep..."
-        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/ast-grep-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
+        # Note: ast-grep releases changed asset naming from 'ast-grep-*' to 'app-*'
+        curl -L https://github.com/ast-grep/ast-grep/releases/latest/download/app-x86_64-unknown-linux-gnu.zip -o ast-grep.zip
         unzip -o ast-grep.zip
         sudo mv sg /usr/local/bin/ast-grep
         chmod +x /usr/local/bin/ast-grep
