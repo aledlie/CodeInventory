@@ -12,11 +12,13 @@ interface CodePreviewProps {
 
 export function CodePreview({
   code,
-  language = 'python',
+  language: _language = 'python',
   startLine = 1,
   highlightLines = [],
   maxHeight = 400
 }: CodePreviewProps) {
+  // Note: language prop reserved for future syntax highlighting implementation
+  void _language;
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {

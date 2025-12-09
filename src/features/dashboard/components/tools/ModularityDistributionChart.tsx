@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Chip } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import type { ModularityScore } from '../../types/tools';
 
 interface ModularityDistributionChartProps {

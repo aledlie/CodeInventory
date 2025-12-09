@@ -6,7 +6,7 @@ interface ExtractionPotentialBarProps {
   height?: number;
 }
 
-function getExtractionColor(value: number): string {
+function getExtractionColor(value: number): 'success' | 'info' | 'warning' {
   if (value >= 0.8) return 'success';
   if (value >= 0.5) return 'info';
   return 'warning';
