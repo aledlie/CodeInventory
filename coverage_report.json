@@ -261,6 +261,27 @@
       "is_tested": false
     },
     {
+      "name": "generate_html",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_dashboard",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 666,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 676,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "get_recent_commits",
       "file_path": "src/generators/rss.py",
       "line_number": 33,
@@ -292,27 +313,6 @@
       "name": "main",
       "file_path": "src/generators/rss.py",
       "line_number": 254,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_html",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 73,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_dashboard",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 666,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 676,
       "is_async": false,
       "is_tested": true
     },

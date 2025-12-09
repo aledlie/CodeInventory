@@ -66,6 +66,7 @@ Thumbs.db
 
 # Python
 __pycache__/
+.mypy_cache/
 *.py[cod]
 *$py.class
 *.so
@@ -105,6 +106,7 @@ pre_migration_tests.txt
 
 # Generated documentation (auto-created by tools)
 README_ENHANCED.md
+**/README_ENHANCED.md
 docs/generated/
 
 # Special output directories

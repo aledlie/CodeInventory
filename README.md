@@ -21,38 +21,61 @@
 
 This directory contains a comprehensive code analysis and documentation system enhanced with ast-grep MCP and Schema.org MCP integrations.
 
-## 📁 Repository Structure
+## Repository Structure
 
-The project follows a clean, organized structure for maintainability:
+The project follows a clean, organized structure for maintainability (29 directories, 88 files):
 
 ```
 Inventory/
-├── src/                    # All source code modules
-│   ├── analyzers/         # Code analysis modules
-│   │   ├── code_quality.py      # Code quality and best practices
-│   │   ├── dependencies.py      # Dependency analysis
-│   │   └── test_coverage.py     # Test coverage tracking
-│   ├── generators/        # Content generation modules
-│   │   ├── schema.py            # Enhanced schema generator
-│   │   ├── dashboard.py         # HTML dashboard generator
-│   │   └── rss.py              # RSS feed generator
-│   ├── validators/        # Validation modules
-│   │   └── schema.py            # Schema.org validator
-│   └── utils/            # Utility modules
-│       └── git_operations.py    # Git automation
-├── scripts/              # Executable scripts
-│   ├── run_tests.py           # Test runner
-│   ├── run_analysis.py        # Analysis orchestrator
-│   ├── enhance_docs.py        # Documentation enhancer
-│   └── push_changes.sh        # Git push automation
-├── tests/               # Test suite
-│   ├── unit/           # Unit tests
-│   ├── integration/    # Integration tests
-│   └── fixtures/       # Test fixtures
-├── docs/               # Documentation
-│   └── [8 guide files]
-├── ast-grep-rules/     # Custom ast-grep patterns
-└── outputs/            # Generated files (gitignored)
+├── src/                          # Source code modules
+│   ├── analyzers/                # Code analysis modules
+│   │   ├── analyzer_optimizer.py # Parallel processing & caching
+│   │   ├── code_quality.py       # Code quality and best practices
+│   │   ├── dependencies.py       # Dependency analysis
+│   │   └── test_coverage.py      # Test coverage tracking
+│   ├── generators/               # Content generation modules
+│   │   ├── schema.py             # Enhanced schema generator
+│   │   ├── schema_optimizer.py   # Schema optimization utilities
+│   │   ├── dashboard.py          # HTML dashboard generator
+│   │   └── rss.py                # RSS feed generator
+│   ├── validators/               # Validation modules
+│   │   └── schema.py             # Schema.org validator
+│   ├── cache/                    # Caching utilities
+│   │   └── analysis_cache.py     # Analysis result caching
+│   └── utils/                    # Utility modules
+│       ├── git_operations.py     # Git automation
+│       ├── logging_config.py     # Centralized logging
+│       └── performance_monitor.py # Performance tracking
+├── scripts/                      # Executable scripts
+│   ├── run_analysis.py           # Analysis orchestrator
+│   ├── run_tests.py              # Test runner
+│   ├── run_with_doppler.sh       # Doppler secret injection
+│   ├── enhance_docs.py           # Documentation enhancer
+│   └── push_changes.sh           # Git push automation
+├── tests/                        # Test suite
+│   ├── unit/                     # Unit tests (7 test files)
+│   ├── integration/              # Integration tests (4 test files)
+│   ├── performance/              # Benchmarking tests
+│   └── fixtures/                 # Sample code for testing
+├── docs/                         # Documentation
+│   ├── guides/                   # How-to guides (5 files)
+│   ├── summaries/                # Phase summaries (9 files)
+│   ├── testing/                  # Test documentation (3 files)
+│   ├── integrations/             # Integration guides (2 files)
+│   ├── archive/                  # Historical docs (6 files)
+│   ├── examples/                 # Code examples
+│   └── refactoring/              # Refactoring plans
+├── ast-grep-rules/               # Custom ast-grep patterns
+│   ├── python-best-practices.yml
+│   ├── typescript-best-practices.yml
+│   └── security-checks.yml
+└── outputs/                      # Generated files (gitignored)
+    ├── schemas/                  # Schema JSON files
+    ├── quality/                  # Quality reports
+    ├── coverage/                 # Coverage reports
+    ├── dependencies/             # Dependency reports
+    ├── dashboards/               # HTML dashboards
+    └── rss/                      # RSS feeds
 ```
 
 ## 🎉 Latest Update (2025-11-19)
@@ -173,12 +196,7 @@ The Code Inventory system has been completely enhanced with powerful new analysi
    - Lists of repositories with git remotes
    - Usage instructions for regenerating schemas
 
-5. **PUSH_SUCCESS.md** (1.9 KB)
-   - Report of successful GitHub push operations
-   - Final commit hashes and repository status
-   - Confirmation that PersonalSite and InventoryAI were pushed successfully
-
-6. **docs/TEST_CASES.md** (58 KB)
+5. **docs/TEST_CASES.md** (58 KB)
    - Comprehensive test cases for all session updates
    - 48 test cases across 11 test suites
    - Covers schema generation, README generation, git operations, server configuration, RSS integration
@@ -187,24 +205,24 @@ The Code Inventory system has been completely enhanced with powerful new analysi
 
 ### RSS Feed
 
-7. **rss.xml** (0.4 KB)
+6. **rss.xml** (0.4 KB)
    - RSS/Atom feed template for Burnt Orange Nation
    - Integrated into PersonalSite navigation
    - Accessible at /rss/ on PersonalSite
 
-8. **docs/RSS_FEED_TEST_CASES.md** (34 KB)
+7. **docs/RSS_FEED_TEST_CASES.md** (34 KB)
    - Comprehensive test cases for RSS feed integration
    - Covers feed validation, structure, and integration testing
 
 ### MCP Integration
 
-9. **SCHEMA_ORG_MCP_INTEGRATION.md**
+8. **docs/SCHEMA_ORG_MCP_INTEGRATION.md**
     - Integration guide for Schema.org MCP Server
     - Provides structured data and semantic markup capabilities
     - Tools for schema types, properties, and JSON-LD generation
     - Performance testing and schema impact analysis
 
-10. **AST_GREP_MCP_INTEGRATION.md**
+9. **docs/AST_GREP_MCP_INTEGRATION.md**
     - Integration guide for ast-grep MCP Server
     - Structural code search using Abstract Syntax Tree patterns
     - Tools for code analysis, refactoring, and pattern matching
@@ -212,19 +230,13 @@ The Code Inventory system has been completely enhanced with powerful new analysi
 
 ### Schema.org Structured Data
 
-11. **schema.org.jsonld**
-    - Complete schema.org markup for the repository
-    - Includes SoftwareSourceCode, Dataset, TechArticle, DataFeed schemas
-    - Machine-readable metadata for SEO and AI understanding
-    - Validates against schema.org standards
-
-12. **SCHEMA_ORG_EXAMPLES.md**
+10. **docs/SCHEMA_ORG_EXAMPLES.md**
     - Comprehensive schema.org examples and patterns
     - Usage guides for different schema types
     - Validation instructions and best practices
     - Integration examples for HTML and documentation
 
-13. **rss-enhanced.xml**
+11. **rss-enhanced.xml** (generated in outputs/)
     - RSS feed enhanced with schema.org DataFeed markup
     - Includes structured metadata for feed items
     - Template for adding Article/BlogPosting schemas
