@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Code Inventory Dashboard - Comprehensive code analysis and metrics visualization" />
+
+    <title>Code Inventory Dashboard</title>
+
+    <!-- Preconnect to fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Roboto font for Material-UI -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+
+    <!-- Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <!-- Reset default margin/padding -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      /* Loading fallback */
+      .app-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: 'Roboto', sans-serif;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Root element for React app -->
+    <div id="root">
+      <!-- Fallback content while app loads -->
+      <div class="app-loading">
+        <div>Loading Code Inventory Dashboard...</div>
+      </div>
+    </div>
+
+    <!-- Main application script -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

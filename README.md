@@ -78,7 +78,42 @@ Inventory/
     └── rss/                      # RSS feeds
 ```
 
-## 🎉 Latest Update (2025-11-19)
+## 🎉 Latest Update (2025-12-09)
+
+**DASHBOARD VISUALIZATION PHASE 2 COMPLETE!**
+
+The Code Inventory now includes a full-featured React dashboard with data visualization:
+
+### Dashboard Features (New!)
+- **React 18 + TypeScript** with MUI v7 components
+- **Three detail pages**: Code Quality, Test Coverage, Dependencies
+- **Real-time data** from Python analysis pipeline
+- **TanStack Router** for file-based routing
+- **TanStack Query** for data fetching with caching
+
+### Recent Commits
+
+| Commit | Date | Description |
+|--------|------|-------------|
+| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
+| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | 2025-12-09 | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | 2025-12-09 | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
+| `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
+
+### Start the Dashboard
+```bash
+npm run dev  # http://localhost:5173/dashboard
+```
+
+---
+
+## Previous Update (2025-11-19)
 
 **REPOSITORY REORGANIZATION COMPLETE!**
 
@@ -426,4 +461,27 @@ Both MCPs are pre-configured in Claude Desktop. To activate:
 See the individual integration guides for detailed usage instructions and examples.
 
 ---
-*Generated on 2025-11-01 during automated code inventory session*
+
+## Recent Git Activity
+
+**Branch:** feature/dashboard-visualization
+
+### Commit History (Last 12)
+
+| Commit | Date | Description |
+|--------|------|-------------|
+| `d632264` | 2025-12-09 | chore: update project configuration and generated files |
+| `bd7dd19` | 2025-12-09 | feat(analyzer): add identify_tools python analyzer |
+| `098b1bd` | 2025-12-09 | feat(routes): add phase 3 routes for trends, graph, and tools |
+| `aceed99` | 2025-12-09 | feat(dashboard): add trends and dependency graph pages |
+| `40cb3b3` | 2025-12-09 | feat(tools): add tools & utility modules visualization components |
+| `183ebea` | 2025-12-09 | feat(graph): add dependency graph visualization components |
+| `36fc699` | 2025-12-09 | feat(charts): add trend chart components for phase 3 |
+| `decfb25` | 2025-12-09 | feat(hooks): add phase 3 data and visualization hooks |
+| `b47a4f1` | 2025-12-09 | feat(api): add phase 3 data fetching apis |
+| `630fdbc` | 2025-12-09 | feat(types): add phase 3 visualization and tools type definitions |
+| `8ce00a2` | 2025-12-09 | docs(tools): add tools & utility modules design and implementation |
+| `c2b0566` | 2025-12-09 | docs: add recent git activity to documentation |
+
+---
+*Last updated: 2025-12-09 | Originally generated on 2025-11-01*

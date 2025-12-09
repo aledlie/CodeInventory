@@ -119,9 +119,138 @@ class CodeQualityAnalyzer:
             'category': 'security',
             'message': 'Potential hardcoded credential',
             'suggestion': 'Use environment variables or secure credential storage',
-            'check': lambda code: any(word in code.lower()
-                                    for word in ['password', 'secret', 'api_key', 'token'])
+            'check': self._is_likely_hardcoded_credential
         }
+
+    def _is_likely_hardcoded_credential(self, code: str) -> bool:
+        """
+        Check if code snippet is likely a hardcoded credential.
+        Returns False for common false positive patterns.
+        """
+        code_lower = code.lower()
+
+        # Must contain a credential-related keyword
+        credential_keywords = ['password', 'secret', 'api_key', 'apikey', 'token', 'credential']
+        if not any(word in code_lower for word in credential_keywords):
+            return False
+
+        # ===== FALSE POSITIVE EXCLUSIONS =====
+
+        # 1. Enum values (e.g., TOKEN_USAGE = "token_usage")
+        # Pattern: VAR_NAME = "var_name" where both contain the keyword
+        if self._is_enum_style_assignment(code):
+            return False
+
+        # 2. Environment variable references
+        env_patterns = [
+            'process.env',
+            'os.getenv',
+            'os.environ',
+            'env[',
+            'getenv(',
+            'environ.get',
+        ]
+        if any(pattern in code for pattern in env_patterns):
+            return False
+
+        # 3. Configuration key names (not actual values)
+        # e.g., PASSWORD_KEY = "password_key", SECRET_NAME = "my_secret"
+        config_key_patterns = [
+            '_key"',
+            '_name"',
+            '_field"',
+            '_column"',
+            '_type"',
+            '_usage"',
+            '_event"',
+        ]
+        if any(pattern in code_lower for pattern in config_key_patterns):
+            return False
+
+        # 4. Test file patterns (fake credentials in tests are expected)
+        test_patterns = [
+            'fake',
+            'mock',
+            'test',
+            'dummy',
+            'example',
+            'invalid',
+            'wrong',
+            'placeholder',
+        ]
+        # Only exclude if it looks like a test value
+        value_match = self._extract_string_value(code)
+        if value_match and any(pattern in value_match.lower() for pattern in test_patterns):
+            return False
+
+        # 5. URL patterns (oauth URLs, token endpoints are not credentials)
+        url_patterns = [
+            'http://',
+            'https://',
+            '/oauth/',
+            '/token',
+            '/auth/',
+        ]
+        if any(pattern in code_lower for pattern in url_patterns):
+            return False
+
+        # 6. Schema/type definitions (not actual values)
+        schema_patterns = [
+            'schema',
+            'typedef',
+            'interface',
+            'type =',
+            'enum',
+            'class ',
+        ]
+        if any(pattern in code_lower for pattern in schema_patterns):
+            return False
+
+        # 7. Constants that are clearly labels/identifiers, not secrets
+        # Pattern: ALL_CAPS = "matching_value"
+        if self._is_constant_label(code):
+            return False
+
+        # 8. Documentation strings
+        if '"""' in code or "'''" in code or '* @' in code or '// ' in code:
+            return False
+
+        # If we get here, it's likely a real hardcoded credential
+        return True
+
+    def _is_enum_style_assignment(self, code: str) -> bool:
+        """Check if code looks like an enum assignment (VAR = 'var' or VAR = 'different_but_descriptive')"""
+        import re
+        # Match patterns like: TOKEN_USAGE = "token_usage" or PASSWORD = "password"
+        match = re.search(r'(\w+)\s*=\s*["\']([^"\']+)["\']', code)
+        if match:
+            var_name = match.group(1).lower().replace('_', '')
+            value = match.group(2).lower().replace('_', '')
+            # If variable name and value are very similar, it's likely an enum
+            if var_name == value or var_name in value or value in var_name:
+                return True
+        return False
+
+    def _is_constant_label(self, code: str) -> bool:
+        """Check if this is a constant label definition, not a secret"""
+        import re
+        # Match CONSTANT_NAME = "value" patterns
+        match = re.search(r'^([A-Z][A-Z0-9_]+)\s*=\s*["\']([^"\']+)["\']', code.strip())
+        if match:
+            const_name = match.group(1)
+            value = match.group(2)
+            # If the constant name describes what it IS (not what it HOLDS), it's likely a label
+            # e.g., TOKEN_USAGE = "token_usage" vs API_KEY = "sk-abc123..."
+            descriptive_suffixes = ['_USAGE', '_TYPE', '_NAME', '_EVENT', '_ACTION', '_STATUS', '_STATE']
+            if any(const_name.endswith(suffix) for suffix in descriptive_suffixes):
+                return True
+        return False
+
+    def _extract_string_value(self, code: str) -> Optional[str]:
+        """Extract the string value from an assignment"""
+        import re
+        match = re.search(r'=\s*["\']([^"\']+)["\']', code)
+        return match.group(1) if match else None
 
     def _create_many_parameters_rule(self) -> Dict[str, Any]:
         """Create rule for detecting functions with too many parameters"""
@@ -265,19 +394,50 @@ class CodeQualityAnalyzer:
         matches = self._run_astgrep_rule(file_path, rule['pattern'], language)
 
         for match in matches:
-            if self._should_skip_match(match, rule):
+            if self._should_skip_match(match, rule, file_path):
                 continue
 
             issue = self._create_issue_from_match(match, rule, file_path)
             self._record_issue(issue, rule)
 
-    def _should_skip_match(self, match: Dict[str, Any], rule: Dict[str, Any]) -> bool:
+    def _should_skip_match(self, match: Dict[str, Any], rule: Dict[str, Any],
+                           file_path: Optional[Path] = None) -> bool:
         """Check if a match should be skipped based on additional checks"""
+        # Skip security checks in test files (test credentials are expected)
+        if rule.get('category') == 'security' and file_path:
+            if self._is_test_or_example_file(file_path):
+                return True
+
         if 'check' not in rule:
             return False
 
         code_text = match.get('text', '')
         return not rule['check'](code_text)
+
+    def _is_test_or_example_file(self, file_path: Path) -> bool:
+        """Check if file is a test, example, or fixture file"""
+        path_str = str(file_path).lower()
+
+        # Test directories and files
+        test_patterns = [
+            '/tests/',
+            '/test/',
+            '/__tests__/',
+            '/spec/',
+            '/fixtures/',
+            '/examples/',
+            '/example/',
+            '/mocks/',
+            '/mock/',
+            '.test.',
+            '.spec.',
+            '_test.',
+            '_spec.',
+            'test_',
+            'spec_',
+        ]
+
+        return any(pattern in path_str for pattern in test_patterns)
 
     def _create_issue_from_match(self, match: Dict[str, Any], rule: Dict[str, Any],
                                  file_path: Path) -> QualityIssue:
@@ -306,12 +466,43 @@ class CodeQualityAnalyzer:
     def analyze_directory(self, directory: Path, skip_dirs: Optional[Set[str]] = None) -> None:
         """Analyze all files in a directory recursively"""
         if skip_dirs is None:
-            skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
-                        '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
+            skip_dirs = {
+                # Version control
+                '.git',
+                # Package managers / dependencies
+                'node_modules', '__pycache__', '.next', 'dist', 'build',
+                # Virtual environments
+                '.venv', 'venv', 'env', 'virtualenv',
+                # Build outputs
+                '_site', '.cache', 'coverage', 'htmlcov',
+                # Third-party code directories
+                'vendor', 'third_party', 'third-party', 'external',
+                # Ruby gems (common false positive source)
+                'gems', 'ruby', 'bundler',
+                # Python site-packages
+                'site-packages', 'lib', 'lib64',
+                # IDE directories
+                '.idea', '.vscode',
+            }
+
+        # Additional path patterns to skip (partial matches)
+        skip_path_patterns = [
+            '/site-packages/',
+            '/gems/',
+            '/vendor/',
+            '/third_party/',
+            '/external/',
+            '/lib/ruby/',
+            '/code-env/',
+        ]
 
         for root, dirs, files in os.walk(directory):
             # Skip excluded directories
             dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
+
+            # Skip if path matches any skip pattern
+            if any(pattern in root for pattern in skip_path_patterns):
+                continue
 
             for file_name in files:
                 file_path = Path(root) / file_name
