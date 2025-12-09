@@ -201,5 +201,129 @@ try {
         scanned_files = [issue.file_path for issue in self.analyzer.report.issues]
         self.assertFalse(any('node_modules' in f for f in scanned_files))
 
+
+class TestHardcodedCredentialDetection(unittest.TestCase):
+    """Test false positive exclusions for hardcoded credential detection"""
+
+    def setUp(self):
+        """Set up test fixtures"""
+        self.temp_dir = tempfile.mkdtemp()
+        self.analyzer = CodeQualityAnalyzer(Path(self.temp_dir))
+
+    def tearDown(self):
+        """Clean up test fixtures"""
+        import shutil
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_enum_style_assignment_excluded(self):
+        """Test that enum-style assignments are not flagged as credentials"""
+        # This is an enum value, not a credential
+        code = 'TOKEN_USAGE = "token_usage"'
+        result = self.analyzer._is_likely_hardcoded_credential(code)
+        self.assertFalse(result, "Enum-style TOKEN_USAGE should not be flagged")
+
+    def test_process_env_excluded(self):
+        """Test that process.env references are not flagged"""
+        code = 'const secret = process.env.MY_SECRET'
+        result = self.analyzer._is_likely_hardcoded_credential(code)
+        self.assertFalse(result, "process.env references should not be flagged")
+
+    def test_os_getenv_excluded(self):
+        """Test that os.getenv references are not flagged"""
+        code = 'secret = os.getenv("MY_SECRET")'
+        result = self.analyzer._is_likely_hardcoded_credential(code)
+        self.assertFalse(result, "os.getenv references should not be flagged")
+
+    def test_url_patterns_excluded(self):
+        """Test that OAuth URLs are not flagged as credentials"""
+        code = 'oauth_url = "https://apis.example.com/oauth/v2/token"'
+        result = self.analyzer._is_likely_hardcoded_credential(code)
+        self.assertFalse(result, "OAuth URLs should not be flagged")
+
+    def test_test_values_excluded(self):
+        """Test that fake/mock/test values are not flagged"""
+        test_cases = [
+            'password = "fake_password"',
+            'token = "mock_token_123"',
+            'api_key = "test_api_key"',
+            'secret = "dummy_secret"',
+            'credential = "invalid_credential"',
+        ]
+        for code in test_cases:
+            result = self.analyzer._is_likely_hardcoded_credential(code)
+            self.assertFalse(result, f"Test value should not be flagged: {code}")
+
+    def test_config_key_names_excluded(self):
+        """Test that configuration key names are not flagged"""
+        test_cases = [
+            'PASSWORD_KEY = "password_key"',
+            'SECRET_NAME = "my_secret_name"',
+            'TOKEN_TYPE = "bearer"',
+        ]
+        for code in test_cases:
+            result = self.analyzer._is_likely_hardcoded_credential(code)
+            self.assertFalse(result, f"Config key name should not be flagged: {code}")
+
+    def test_real_hardcoded_credential_flagged(self):
+        """Test that actual hardcoded credentials ARE flagged"""
+        # These should be flagged as real credentials
+        test_cases = [
+            'api_key = "sk-abc123xyz789"',
+            'password = "MyR3alP@ssword!"',
+            'secret = "a1b2c3d4e5f6g7h8i9j0"',
+        ]
+        for code in test_cases:
+            result = self.analyzer._is_likely_hardcoded_credential(code)
+            self.assertTrue(result, f"Real credential should be flagged: {code}")
+
+    def test_is_enum_style_assignment(self):
+        """Test enum-style assignment detection"""
+        # Should be detected as enum
+        self.assertTrue(self.analyzer._is_enum_style_assignment('TOKEN_USAGE = "token_usage"'))
+        self.assertTrue(self.analyzer._is_enum_style_assignment('PASSWORD = "password"'))
+
+        # Should NOT be detected as enum (different value)
+        self.assertFalse(self.analyzer._is_enum_style_assignment('API_KEY = "sk-abc123"'))
+
+    def test_is_test_or_example_file(self):
+        """Test detection of test/example files"""
+        # Should be detected as test files
+        test_paths = [
+            Path('/project/tests/test_auth.py'),
+            Path('/project/__tests__/auth.test.ts'),
+            Path('/project/spec/auth_spec.rb'),
+            Path('/project/examples/demo.py'),
+            Path('/project/fixtures/test_data.py'),
+        ]
+        for path in test_paths:
+            self.assertTrue(
+                self.analyzer._is_test_or_example_file(path),
+                f"Should be detected as test file: {path}"
+            )
+
+        # Should NOT be detected as test files
+        regular_paths = [
+            Path('/project/src/auth.py'),
+            Path('/project/lib/utils.ts'),
+            Path('/project/app/main.py'),
+        ]
+        for path in regular_paths:
+            self.assertFalse(
+                self.analyzer._is_test_or_example_file(path),
+                f"Should NOT be detected as test file: {path}"
+            )
+
+    def test_constant_label_detection(self):
+        """Test detection of constant labels vs secrets"""
+        # These are labels (descriptive constants)
+        self.assertTrue(self.analyzer._is_constant_label('TOKEN_USAGE = "token_usage"'))
+        self.assertTrue(self.analyzer._is_constant_label('EVENT_TYPE = "auth_event"'))
+        self.assertTrue(self.analyzer._is_constant_label('SECRET_NAME = "my_secret"'))
+
+        # These are NOT labels (actual values)
+        self.assertFalse(self.analyzer._is_constant_label('API_KEY = "sk-abc123"'))
+        self.assertFalse(self.analyzer._is_constant_label('password = "secret123"'))
+
+
 if __name__ == '__main__':
     unittest.main()

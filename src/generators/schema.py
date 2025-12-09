@@ -27,6 +27,43 @@ except ImportError:
     logger = logging.getLogger(__name__)
 
 
+def convert_git_url_to_https(url: str) -> str:
+    """
+    Convert SSH git URLs to HTTPS URLs for Schema.org compliance.
+
+    Schema.org codeRepository expects a valid HTTP/HTTPS URL.
+    Converts: git@github.com:user/repo.git -> https://github.com/user/repo
+    """
+    if not url:
+        return url
+
+    # Already an HTTPS URL
+    if url.startswith('https://') or url.startswith('http://'):
+        # Remove .git suffix if present
+        if url.endswith('.git'):
+            url = url[:-4]
+        return url
+
+    # SSH URL format: git@github.com:user/repo.git
+    ssh_pattern = r'^git@([^:]+):(.+?)(?:\.git)?$'
+    match = re.match(ssh_pattern, url)
+    if match:
+        host = match.group(1)
+        path = match.group(2)
+        return f"https://{host}/{path}"
+
+    # Git protocol: git://github.com/user/repo.git
+    git_pattern = r'^git://([^/]+)/(.+?)(?:\.git)?$'
+    match = re.match(git_pattern, url)
+    if match:
+        host = match.group(1)
+        path = match.group(2)
+        return f"https://{host}/{path}"
+
+    # Return as-is if we can't parse it
+    return url
+
+
 # Top-level worker function for parallel processing (must be picklable)
 def process_single_file(file_path: Path, use_astgrep: bool = True) -> Optional[Dict[str, Any]]:
     """
@@ -688,7 +725,7 @@ class EnhancedSchemaGenerator:
                     timeout=5
                 )
                 if result.returncode == 0:
-                    schema.git_remote = result.stdout.strip()
+                    schema.git_remote = convert_git_url_to_https(result.stdout.strip())
             except Exception:
                 pass
 
@@ -845,7 +882,7 @@ class EnhancedSchemaGenerator:
                             timeout=5
                         )
                         if result.returncode == 0:
-                            schema.git_remote = result.stdout.strip()
+                            schema.git_remote = convert_git_url_to_https(result.stdout.strip())
                     except Exception:
                         pass
 
@@ -1134,7 +1171,7 @@ def main() -> Tuple[List[str], List[Tuple[str, str]]]:
     else:
         _run_scanner(generator)
 
-    schema_json_path = _get_output_path(root)
+    schema_json_path = _get_output_path(root, args)
     generator.save_schemas_json(schema_json_path, include_schema_org=not args.no_schema_org)
     logger.info("")
 
@@ -1151,6 +1188,7 @@ def _parse_arguments() -> Any:
     import os
     parser = argparse.ArgumentParser(description='Enhanced Schema Generator with optimization features')
     parser.add_argument('--root', default='/Users/alyshialedlie/code', help='Root directory to scan')
+    parser.add_argument('--output', help='Output file path for schemas JSON (default: root/outputs/schemas/schemas_enhanced.json)')
     parser.add_argument('--no-astgrep', action='store_true', help='Disable ast-grep (use regex fallback)')
     parser.add_argument('--no-schema-org', action='store_true', help='Disable schema.org markup in READMEs')
     parser.add_argument('--quality-report', action='store_true', help='Generate code quality report')
@@ -1185,14 +1223,16 @@ def _run_scanner(generator: 'EnhancedSchemaGenerator') -> None:
     generator.scan_all_directories()
     logger.info(f"✅ Found {len(generator.schemas)} directories to process\n")
 
-def _get_output_path(root: Path) -> Path:
+def _get_output_path(root: Path, args: Any = None) -> Path:
     """Determine output path for schemas.json"""
-    # Always use outputs/schemas directory for consistency
-    if root.name == 'Inventory':
-        output_dir = root / 'outputs' / 'schemas'
-    else:
-        output_dir = root / 'outputs' / 'schemas'
+    # Use explicit output path if provided
+    if args and args.output:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        return output_path
 
+    # Default: use outputs/schemas directory
+    output_dir = root / 'outputs' / 'schemas'
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir / 'schemas_enhanced.json'
 

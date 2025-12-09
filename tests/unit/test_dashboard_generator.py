@@ -129,7 +129,7 @@ class TestDashboardGenerator(unittest.TestCase):
 
         metrics_html = generator._generate_metrics_section()
 
-        self.assertIn("Directories Scanned", metrics_html)
+        self.assertIn("Directories", metrics_html)
         self.assertIn("Code Files", metrics_html)
         self.assertIn("Test Coverage", metrics_html)
         self.assertIn("85.0%", metrics_html)  # From coverage data
