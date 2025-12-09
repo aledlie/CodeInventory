@@ -27,6 +27,43 @@ except ImportError:
     logger = logging.getLogger(__name__)
 
 
+def convert_git_url_to_https(url: str) -> str:
+    """
+    Convert SSH git URLs to HTTPS URLs for Schema.org compliance.
+
+    Schema.org codeRepository expects a valid HTTP/HTTPS URL.
+    Converts: git@github.com:user/repo.git -> https://github.com/user/repo
+    """
+    if not url:
+        return url
+
+    # Already an HTTPS URL
+    if url.startswith('https://') or url.startswith('http://'):
+        # Remove .git suffix if present
+        if url.endswith('.git'):
+            url = url[:-4]
+        return url
+
+    # SSH URL format: git@github.com:user/repo.git
+    ssh_pattern = r'^git@([^:]+):(.+?)(?:\.git)?$'
+    match = re.match(ssh_pattern, url)
+    if match:
+        host = match.group(1)
+        path = match.group(2)
+        return f"https://{host}/{path}"
+
+    # Git protocol: git://github.com/user/repo.git
+    git_pattern = r'^git://([^/]+)/(.+?)(?:\.git)?$'
+    match = re.match(git_pattern, url)
+    if match:
+        host = match.group(1)
+        path = match.group(2)
+        return f"https://{host}/{path}"
+
+    # Return as-is if we can't parse it
+    return url
+
+
 # Top-level worker function for parallel processing (must be picklable)
 def process_single_file(file_path: Path, use_astgrep: bool = True) -> Optional[Dict[str, Any]]:
     """
@@ -688,7 +725,7 @@ class EnhancedSchemaGenerator:
                     timeout=5
                 )
                 if result.returncode == 0:
-                    schema.git_remote = result.stdout.strip()
+                    schema.git_remote = convert_git_url_to_https(result.stdout.strip())
             except Exception:
                 pass
 
@@ -845,7 +882,7 @@ class EnhancedSchemaGenerator:
                             timeout=5
                         )
                         if result.returncode == 0:
-                            schema.git_remote = result.stdout.strip()
+                            schema.git_remote = convert_git_url_to_https(result.stdout.strip())
                     except Exception:
                         pass
 
