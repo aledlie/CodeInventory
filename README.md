@@ -80,9 +80,19 @@ Inventory/
 
 ## 🎉 Latest Update (2025-12-09)
 
-**PHASE 4: AI INSIGHTS & PREDICTIONS - COMPLETE!**
+**PHASE 5B: DASHBOARD PERSONALIZATION - IN PROGRESS!**
 
-Phase 4 adds AI-powered intelligence to the dashboard with comprehensive features:
+Phase 5B adds comprehensive dashboard customization with personalization features:
+
+### Phase 5B Features (In Progress)
+- **Widget Library** (`WidgetLibrary.tsx`): Widget catalog with category filtering and search
+- **Saved Views** (`SavedViewsDropdown.tsx`): Dashboard view management with CRUD operations
+- **Notification Preferences** (`NotificationPreferences.tsx`): Per-widget alert configuration
+- **Dashboard Editor** (`DashboardEditor.tsx`): Drag-and-drop layout using @dnd-kit
+- **Settings Route** (`/dashboard/settings`): Central settings page with 3 tabs
+- **Zustand Store** (`dashboardStore.ts`): State management with undo/redo and localStorage persistence
+- **Personalization API** (`personalizationApi.ts`): Full CRUD for views and preferences
+- **React Query Hooks** (`usePersonalization.ts`): Data fetching with caching
 
 ### Phase 4 Features (Complete)
 - **AI Insights** (`/dashboard/insights`): InsightsPage, InsightCard, InsightsCategoryTabs, InsightsSummaryCard
@@ -90,19 +100,16 @@ Phase 4 adds AI-powered intelligence to the dashboard with comprehensive feature
 - **Visualization Builder**: Interactive chart and graph creation tools
 - **Team Collaboration Hub**: Real-time collaboration features
 - **Smart Notifications**: Alert triggers and notification management
-- **Full API Suite**: insightsApi, predictionsApi, visualizationApi, collaborationApi, notificationsApi
-- **Complete Hooks**: useInsights, usePredictions, useVisualization, useCollaboration, useNotifications
-- **TypeScript Types**: insights.ts, predictions.ts, visualizations.ts, collaboration.ts, notifications.ts
 
-### Phase 5a Infrastructure (Ready)
-- **Dependencies**: @dnd-kit/core, @dnd-kit/sortable for drag-and-drop; zustand for state management
+### Phase 5A Infrastructure (Complete)
+- **Dependencies**: @dnd-kit/core, @dnd-kit/sortable for drag-and-drop; zustand for state management; framer-motion; immer
 - **APIs**: analyticsApi.ts, visualizationApi.ts
 - **Hooks**: useAnalytics.ts, useVisualization.ts
-- **Types**: analytics.ts, visualizations.ts
+- **Types**: analytics.ts, visualizations.ts, personalization.ts
 
 ### Dashboard Features
 - **React 18 + TypeScript** with MUI v7 components
-- **11 dashboard routes**: Overview, Quality, Coverage, Dependencies, Trends, Graph, Tools, Compare, Reports, Insights, Predictions
+- **12 dashboard routes**: Overview, Quality, Coverage, Dependencies, Trends, Graph, Tools, Compare, Reports, Insights, Predictions, Settings
 - **Historical metrics comparison** with DateRangeSelector and trend indicators
 - **Custom report generation** with PDF, HTML, JSON, CSV, and Markdown export
 - **Dependency graph visualization** with interactive canvas
@@ -475,22 +482,20 @@ See the individual integration guides for detailed usage instructions and exampl
 
 **Branch:** feature/dashboard-visualization
 
-### Commit History (Last 12)
+### Commit History (Last 10)
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `f69cbfe` | 2025-12-09 | feat(phase4): complete AI insights, predictions, visualization, collaboration, notifications |
-| `6203c6d` | 2025-12-09 | feat(dashboard): export phase 4e notification features |
-| `9773460` | 2025-12-09 | feat(deps): add phase 5a ui libraries for drag-and-drop and state |
-| `dca70ea` | 2025-12-09 | docs: condense CLAUDE.md to functional reference only |
-| `08ca9e2` | 2025-12-09 | docs: update project documentation for phase 5a |
-| `76ea1f8` | 2025-12-09 | chore(ci): update workflow and environment verification for phase 5a |
-| `3747eae` | 2025-12-09 | chore(deps): add phase 5a analytics dependencies |
-| `ddce838` | 2025-12-09 | chore(routes): regenerate route tree for phase 5a analytics route |
-| `e33051b` | 2025-12-09 | feat(dashboard): update exports and navigation for phase 5a |
-| `25fc31b` | 2025-12-09 | feat(routes): add phase 5a analytics dashboard page |
-| `c0d789e` | 2025-12-09 | feat(components): add phase 5a predictive analytics components |
-| `dc728a6` | 2025-12-09 | feat(analytics): add phase 5a predictive analytics api and hooks |
+| `3f2a876` | 2025-12-09 | docs: update project documentation with phase 5b implementation status |
+| `b3fd19c` | 2025-12-09 | test(dashboard): add orphaned components detection test |
+| `af649a8` | 2025-12-09 | chore(exports): add phase 3 component and type exports |
+| `a2f889a` | 2025-12-09 | chore(exports): add phase 3 api exports for trends, graph, and tools |
+| `1728bb3` | 2025-12-09 | chore(exports): add tools and force simulation hooks exports |
+| `ca3d5c3` | 2025-12-09 | chore(routes): regenerate route tree with settings route |
+| `fa58da6` | 2025-12-09 | feat(routes): add dashboard settings route for phase 5b personalization |
+| `49a67d0` | 2025-12-09 | feat(components): add personalization components for phase 5b dashboard |
+| `254f58d` | 2025-12-09 | feat(store): add zustand dashboard store for phase 5b personalization |
+| `93ddabc` | 2025-12-09 | feat(hooks): add personalization hooks for phase 5b dashboard management |
 
 ---
 *Last updated: 2025-12-09 | Originally generated on 2025-11-01*
