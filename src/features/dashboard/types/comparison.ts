@@ -717,3 +717,85 @@ export type SparklineMatrixGenerator = (
   runs: AnalysisRun[],
   count?: number
 ) => SparklineMatrixData;
+
+// ============================================================================
+// Simple Snapshot Types (for API)
+// ============================================================================
+
+/**
+ * Simple snapshot for quick comparisons
+ */
+export interface Snapshot {
+  date: string;
+  timestamp: string;
+  metrics: {
+    quality: {
+      score: number;
+      issues: {
+        critical: number;
+        major: number;
+        minor: number;
+      };
+      maintainabilityIndex: number;
+      technicalDebt: number;
+    };
+    coverage: {
+      overall: number;
+      unit: number;
+      integration: number;
+      e2e: number;
+      untestedFiles: number;
+    };
+    dependencies: {
+      total: number;
+      outdated: number;
+      vulnerable: number;
+      circular: number;
+    };
+  };
+}
+
+/**
+ * Simple metric diff for comparison cards
+ */
+export interface MetricDiff {
+  current: number;
+  previous: number;
+  change: number;
+  percentChange: number;
+  trend: 'up' | 'down' | 'stable';
+}
+
+/**
+ * Simple comparison result for the comparison page
+ */
+export interface SimpleComparisonResult {
+  currentDate: string;
+  previousDate: string;
+  quality: {
+    score: MetricDiff;
+    criticalIssues: MetricDiff;
+    majorIssues: MetricDiff;
+    minorIssues: MetricDiff;
+    maintainabilityIndex: MetricDiff;
+    technicalDebt: MetricDiff;
+  };
+  coverage: {
+    overall: MetricDiff;
+    unit: MetricDiff;
+    integration: MetricDiff;
+    e2e: MetricDiff;
+    untestedFiles: MetricDiff;
+  };
+  dependencies: {
+    total: MetricDiff;
+    outdated: MetricDiff;
+    vulnerable: MetricDiff;
+    circular: MetricDiff;
+  };
+}
+
+/**
+ * Comparison time range presets
+ */
+export type ComparisonPreset = 'day' | 'week' | 'month' | 'quarter' | 'custom';
