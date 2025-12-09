@@ -198,6 +198,7 @@ class SchemaValidator:
             for file_entry in dir_data.get('files', []):
                 if '@type' in file_entry:
                     file_context = f"{file_path}[{dir_name}/{file_entry.get('path', 'unknown')}]"
+                    # File entries just need valid @type, not full validation
                     if file_entry['@type'] not in self.valid_types:
                         self.warnings.append(f"{file_context}: Uncommon @type '{file_entry['@type']}'")
 

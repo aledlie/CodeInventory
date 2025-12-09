@@ -1,8 +1,15 @@
-# Integration Test Failures
+# Integration Test Failures - RESOLVED
 
 **Date**: 2025-12-08
 **Branch**: `type-everything`
-**Test Results**: 42 passed, 6 failed (87.5% pass rate)
+**Original Test Results**: 42 passed, 6 failed (87.5% pass rate)
+**Final Test Results**: 47 passed, 1 unrelated flaky test (97.9% pass rate)
+
+## Resolution Summary
+
+All 6 original failures have been **RESOLVED**. The fixes were applied to:
+- `src/analyzers/test_coverage.py` (2 issues fixed)
+- `src/validators/schema.py` (1 issue fixed)
 
 ---
 
@@ -223,20 +230,72 @@ The parallel analyzer cache is not storing results despite processing items succ
 
 ---
 
-## Recommended Fix Order
+## FIXES APPLIED (2025-12-08)
 
-1. **Fix function extraction** (High Priority)
-   - This will resolve 4 out of 6 failures
-   - Debug `TestCoverageAnalyzer._extract_functions_from_file()`
-   - Verify ast-grep integration
+### Fix 1: `_is_test_file()` Pattern Matching Bug
+**File**: `src/analyzers/test_coverage.py:175-193`
 
-2. **Fix cache storage** (Medium Priority)
-   - Debug `ParallelAnalyzer` cache logic
-   - Verify test mock functions
+**Problem**: The `_is_test_file()` method used naive substring matching (`pattern in path_str`), causing ALL files under directories like `test_project/` to be incorrectly filtered as test files because `test_` appeared in the path.
 
-3. **Fix schema validation** (Medium Priority)
-   - May be a test expectation issue rather than a bug
-   - Review what schema format the validator expects
+**Root Cause**: Test fixtures create temporary directories named `test_project/`. The pattern `test_` matched anywhere in the path, filtering out legitimate source files.
+
+**Solution**: Rewrote `_is_test_file()` to use proper pattern matching:
+- Filename prefix matching for `test_` (must start with `test_`)
+- Filename suffix matching for `_test.py`, `_spec.ts`, `_spec.js`
+- Substring matching only for `.test.` and `.spec.` in filename
+- Directory name matching for `tests` and `__tests__` as path segments
+
+### Fix 2: ast-grep Pattern Too Restrictive
+**File**: `src/analyzers/test_coverage.py` (worker function + class methods)
+
+**Problem**: Python function patterns like `def $NAME($$$): $$$` only matched 2 functions instead of 92+ because they didn't handle functions with return type annotations (e.g., `-> List[Dict]:`)
+
+**Root Cause**: The pattern requires the body `$$$` to follow immediately after `:`, but Python functions with return type annotations break this expectation.
+
+**Solution**: Simplified patterns to match just the function signature:
+- Old: `def $NAME($$$): $$$`
+- New: `def $NAME($$$)`
+
+Applied same fix to TypeScript/JavaScript patterns.
+
+### Fix 3: Schema Validator Inventory Format
+**File**: `src/validators/schema.py:165-205`
+
+**Problem**: The validator expected standard JSON-LD with root-level `@type`, but the inventory schema format uses a custom structure with `directories` containing embedded `schema_org` entries.
+
+**Root Cause**: `validate_json_file()` called `validate_schema()` directly on the root object, which failed the `@type` check.
+
+**Solution**: Added `_validate_inventory_schema()` method to detect and properly validate the inventory schema format by:
+- Checking for `directories` key at root level
+- Validating embedded `schema_org` entries within each directory
+- Validating file-level `@type` entries
+
+---
+
+## Test Results After Fixes
+
+```
+All 6 originally failing tests: PASSED ✅
+
+tests/integration/test_full_pipeline.py::test_coverage_analysis_pipeline PASSED
+tests/integration/test_full_pipeline.py::test_schema_validation_pipeline PASSED
+tests/integration/test_optimized_pipeline.py::test_test_coverage_optimized_completes PASSED
+tests/integration/test_optimized_pipeline.py::test_optimizations_can_be_disabled PASSED
+tests/integration/test_optimized_pipeline.py::test_graceful_fallback_when_optimizer_unavailable PASSED
+tests/integration/test_parallel_analyzers.py::test_parallel_analyzer_with_cache_enabled PASSED
+```
+
+## Remaining Issues
+
+### Pre-existing Flaky Test (Not Part of Original Failures)
+**Test**: `test_cache_speeds_up_subsequent_runs`
+**Issue**: Test doesn't properly use `temp_cache_dir` fixture, so cache persists from previous tests
+**Impact**: Low - timing-based assertion sometimes fails
+**Recommendation**: Update test to pass cache directory to `DependencyAnalyzer` constructor
+
+---
+
+## Original Recommended Fix Order (Completed)
 
 ---
 
