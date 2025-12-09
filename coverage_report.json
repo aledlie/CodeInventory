@@ -86,48 +86,6 @@
       "is_tested": true
     },
     {
-      "name": "format",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "init_sentry",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 70,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "setup_logging",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 145,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_logger",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 223,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "log_exception",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 263,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "log_performance_metric",
-      "file_path": "src/utils/logging_config.py",
-      "line_number": 297,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "load_cache_statistics",
       "file_path": "src/utils/performance_monitor.py",
       "line_number": 44,
@@ -168,6 +126,48 @@
       "line_number": 251,
       "is_async": false,
       "is_tested": true
+    },
+    {
+      "name": "format",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "init_sentry",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 70,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "setup_logging",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 145,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_logger",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 223,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_exception",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 263,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "log_performance_metric",
+      "file_path": "src/utils/logging_config.py",
+      "line_number": 297,
+      "is_async": false,
+      "is_tested": false
     },
     {
       "name": "getStoredMode",
@@ -1381,6 +1381,34 @@
       "is_tested": false
     },
     {
+      "name": "generateId",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getStoredVisualizations",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "saveToStorage",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "createDefaultConfig",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 56,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "fetchToolsReport",
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 6,
@@ -1413,34 +1441,6 @@
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 41,
       "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "generateId",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 22,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getStoredVisualizations",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "saveToStorage",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "createDefaultConfig",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 56,
-      "is_async": false,
       "is_tested": false
     },
     {
@@ -2830,20 +2830,6 @@
       "is_tested": false
     },
     {
-      "name": "getMetricStatus",
-      "file_path": "src/features/dashboard/components/Dashboard.tsx",
-      "line_number": 73,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatNumber",
-      "file_path": "src/features/dashboard/components/Dashboard.tsx",
-      "line_number": 112,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "handleSettingsClick",
       "file_path": "src/features/dashboard/components/HeaderExample.tsx",
       "line_number": 38,
@@ -2855,6 +2841,20 @@
       "file_path": "src/features/dashboard/components/HeaderExample.tsx",
       "line_number": 46,
       "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "getMetricStatus",
+      "file_path": "src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatNumber",
+      "file_path": "src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 112,
+      "is_async": false,
       "is_tested": false
     },
     {
@@ -3397,48 +3397,6 @@
       "is_tested": false
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 103,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "QuickPdfExportButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 376,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleClick",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 128,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleClose",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 132,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleCloseNotification",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 172,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "renderButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 177,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "WidgetNotificationCard",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 72,
@@ -3505,6 +3463,48 @@
       "name": "handleWidgetNotificationChange",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 311,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 103,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "QuickPdfExportButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 376,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleClick",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 128,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleClose",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleCloseNotification",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 172,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "renderButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 177,
       "is_async": false,
       "is_tested": false
     },
@@ -3698,20 +3698,6 @@
       "is_tested": false
     },
     {
-      "name": "BuilderSidebar",
-      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
-      "line_number": 82,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleSectionChange",
-      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
-      "line_number": 96,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "BuilderSkeleton",
       "file_path": "src/features/dashboard/components/visualizations/VisualizationBuilder.tsx",
       "line_number": 52,
@@ -3736,6 +3722,20 @@
       "name": "VisualizationBuilder",
       "file_path": "src/features/dashboard/components/visualizations/VisualizationBuilder.tsx",
       "line_number": 329,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "BuilderSidebar",
+      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
+      "line_number": 82,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleSectionChange",
+      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
+      "line_number": 96,
       "is_async": false,
       "is_tested": false
     },
@@ -4244,27 +4244,6 @@
       "is_tested": false
     },
     {
-      "name": "getTrendIcon",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getChangeColor",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ComparisonCard",
-      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
-      "line_number": 67,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "useToolsReport",
       "file_path": "src/features/dashboard/hooks/useToolsData.ts",
       "line_number": 13,
@@ -4349,6 +4328,27 @@
       "is_tested": false
     },
     {
+      "name": "getTrendIcon",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getChangeColor",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 61,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ComparisonCard",
+      "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
+      "line_number": 67,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "useSavedVisualizations",
       "file_path": "src/features/dashboard/hooks/useVisualization.ts",
       "line_number": 18,
@@ -4408,83 +4408,6 @@
       "name": "useAvailableChartTypes",
       "file_path": "src/features/dashboard/hooks/useVisualization.ts",
       "line_number": 154,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useCollaborationSummary",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 28,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useActivities",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 39,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useIssues",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 50,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useTeamMembers",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useSprintGoals",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 72,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useComments",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 83,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useAssignIssue",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 94,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useUpdateIssueStatus",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 112,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useAddComment",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 129,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useMarkActivityAsRead",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 145,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useCollaborationHub",
-      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
-      "line_number": 161,
       "is_async": false,
       "is_tested": false
     },
@@ -4639,6 +4562,83 @@
       "name": "toggleWidgetVisibility",
       "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
       "line_number": 347,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useCollaborationSummary",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 28,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useActivities",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useIssues",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 50,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useTeamMembers",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 61,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useSprintGoals",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 72,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useComments",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useAssignIssue",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 94,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateIssueStatus",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useAddComment",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 129,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useMarkActivityAsRead",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 145,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useCollaborationHub",
+      "file_path": "src/features/dashboard/hooks/useCollaboration.ts",
+      "line_number": 161,
       "is_async": false,
       "is_tested": false
     },
@@ -4825,6 +4825,41 @@
       "is_tested": false
     },
     {
+      "name": "distance",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 41,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "initializePositions",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 50,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "simulationStep",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 74,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "runSimulation",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 152,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useForceSimulation",
+      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
+      "line_number": 168,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "useNotifications",
       "file_path": "src/features/dashboard/hooks/useNotifications.ts",
       "line_number": 27,
@@ -4912,41 +4947,6 @@
       "name": "useAlertTriggersManager",
       "file_path": "src/features/dashboard/hooks/useNotifications.ts",
       "line_number": 205,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "distance",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 41,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "initializePositions",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 50,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "simulationStep",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 74,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "runSimulation",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 152,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useForceSimulation",
-      "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
-      "line_number": 168,
       "is_async": false,
       "is_tested": false
     },
@@ -5154,6 +5154,28 @@
         "is_async": false
       }
     ],
+    "src/utils/performance_monitor.py": [
+      {
+        "name": "load_cache_statistics",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "calculate_cache_hit_rate",
+        "line_number": 78,
+        "is_async": false
+      },
+      {
+        "name": "analyze_performance",
+        "line_number": 84,
+        "is_async": false
+      },
+      {
+        "name": "print_report",
+        "line_number": 207,
+        "is_async": false
+      }
+    ],
     "src/utils/logging_config.py": [
       {
         "name": "init_sentry",
@@ -5178,28 +5200,6 @@
       {
         "name": "log_performance_metric",
         "line_number": 297,
-        "is_async": false
-      }
-    ],
-    "src/utils/performance_monitor.py": [
-      {
-        "name": "load_cache_statistics",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "calculate_cache_hit_rate",
-        "line_number": 78,
-        "is_async": false
-      },
-      {
-        "name": "analyze_performance",
-        "line_number": 84,
-        "is_async": false
-      },
-      {
-        "name": "print_report",
-        "line_number": 207,
         "is_async": false
       }
     ],
@@ -5855,6 +5855,28 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/api/visualizationApi.ts": [
+      {
+        "name": "generateId",
+        "line_number": 22,
+        "is_async": false
+      },
+      {
+        "name": "getStoredVisualizations",
+        "line_number": 29,
+        "is_async": false
+      },
+      {
+        "name": "saveToStorage",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "createDefaultConfig",
+        "line_number": 56,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/api/toolsApi.ts": [
       {
         "name": "fetchToolsReport",
@@ -5880,28 +5902,6 @@
         "name": "fetchToolsStatistics",
         "line_number": 41,
         "is_async": true
-      }
-    ],
-    "src/features/dashboard/api/visualizationApi.ts": [
-      {
-        "name": "generateId",
-        "line_number": 22,
-        "is_async": false
-      },
-      {
-        "name": "getStoredVisualizations",
-        "line_number": 29,
-        "is_async": false
-      },
-      {
-        "name": "saveToStorage",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "createDefaultConfig",
-        "line_number": 56,
-        "is_async": false
       }
     ],
     "src/features/dashboard/api/comparisonApi.ts": [
@@ -6899,18 +6899,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/Dashboard.tsx": [
-      {
-        "name": "getMetricStatus",
-        "line_number": 73,
-        "is_async": false
-      },
-      {
-        "name": "formatNumber",
-        "line_number": 112,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/HeaderExample.tsx": [
       {
         "name": "handleSettingsClick",
@@ -6921,6 +6909,18 @@
         "name": "handleExportClick",
         "line_number": 46,
         "is_async": true
+      }
+    ],
+    "src/features/dashboard/components/Dashboard.tsx": [
+      {
+        "name": "getMetricStatus",
+        "line_number": 73,
+        "is_async": false
+      },
+      {
+        "name": "formatNumber",
+        "line_number": 112,
+        "is_async": false
       }
     ],
     "src/features/dashboard/components/ReportsPage.tsx": [
@@ -7340,38 +7340,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/export/ExportButton.tsx": [
-      {
-        "name": "ExportButton",
-        "line_number": 103,
-        "is_async": false
-      },
-      {
-        "name": "QuickPdfExportButton",
-        "line_number": 376,
-        "is_async": false
-      },
-      {
-        "name": "handleClick",
-        "line_number": 128,
-        "is_async": false
-      },
-      {
-        "name": "handleClose",
-        "line_number": 132,
-        "is_async": false
-      },
-      {
-        "name": "handleCloseNotification",
-        "line_number": 172,
-        "is_async": false
-      },
-      {
-        "name": "renderButton",
-        "line_number": 177,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/personalization/NotificationPreferences.tsx": [
       {
         "name": "WidgetNotificationCard",
@@ -7421,6 +7389,38 @@
       {
         "name": "handleWidgetNotificationChange",
         "line_number": 311,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/components/export/ExportButton.tsx": [
+      {
+        "name": "ExportButton",
+        "line_number": 103,
+        "is_async": false
+      },
+      {
+        "name": "QuickPdfExportButton",
+        "line_number": 376,
+        "is_async": false
+      },
+      {
+        "name": "handleClick",
+        "line_number": 128,
+        "is_async": false
+      },
+      {
+        "name": "handleClose",
+        "line_number": 132,
+        "is_async": false
+      },
+      {
+        "name": "handleCloseNotification",
+        "line_number": 172,
+        "is_async": false
+      },
+      {
+        "name": "renderButton",
+        "line_number": 177,
         "is_async": false
       }
     ],
@@ -7591,18 +7591,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/visualizations/BuilderSidebar.tsx": [
-      {
-        "name": "BuilderSidebar",
-        "line_number": 82,
-        "is_async": false
-      },
-      {
-        "name": "handleSectionChange",
-        "line_number": 96,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/visualizations/VisualizationBuilder.tsx": [
       {
         "name": "BuilderSkeleton",
@@ -7622,6 +7610,18 @@
       {
         "name": "VisualizationBuilder",
         "line_number": 329,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/components/visualizations/BuilderSidebar.tsx": [
+      {
+        "name": "BuilderSidebar",
+        "line_number": 82,
+        "is_async": false
+      },
+      {
+        "name": "handleSectionChange",
+        "line_number": 96,
         "is_async": false
       }
     ],
@@ -8013,23 +8013,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/comparison/ComparisonCard.tsx": [
-      {
-        "name": "getTrendIcon",
-        "line_number": 29,
-        "is_async": false
-      },
-      {
-        "name": "getChangeColor",
-        "line_number": 61,
-        "is_async": false
-      },
-      {
-        "name": "ComparisonCard",
-        "line_number": 67,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/hooks/useToolsData.ts": [
       {
         "name": "useToolsReport",
@@ -8096,6 +8079,23 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/comparison/ComparisonCard.tsx": [
+      {
+        "name": "getTrendIcon",
+        "line_number": 29,
+        "is_async": false
+      },
+      {
+        "name": "getChangeColor",
+        "line_number": 61,
+        "is_async": false
+      },
+      {
+        "name": "ComparisonCard",
+        "line_number": 67,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/useVisualization.ts": [
       {
         "name": "useSavedVisualizations",
@@ -8140,63 +8140,6 @@
       {
         "name": "useAvailableChartTypes",
         "line_number": 154,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/hooks/useCollaboration.ts": [
-      {
-        "name": "useCollaborationSummary",
-        "line_number": 28,
-        "is_async": false
-      },
-      {
-        "name": "useActivities",
-        "line_number": 39,
-        "is_async": false
-      },
-      {
-        "name": "useIssues",
-        "line_number": 50,
-        "is_async": false
-      },
-      {
-        "name": "useTeamMembers",
-        "line_number": 61,
-        "is_async": false
-      },
-      {
-        "name": "useSprintGoals",
-        "line_number": 72,
-        "is_async": false
-      },
-      {
-        "name": "useComments",
-        "line_number": 83,
-        "is_async": false
-      },
-      {
-        "name": "useAssignIssue",
-        "line_number": 94,
-        "is_async": false
-      },
-      {
-        "name": "useUpdateIssueStatus",
-        "line_number": 112,
-        "is_async": false
-      },
-      {
-        "name": "useAddComment",
-        "line_number": 129,
-        "is_async": false
-      },
-      {
-        "name": "useMarkActivityAsRead",
-        "line_number": 145,
-        "is_async": false
-      },
-      {
-        "name": "useCollaborationHub",
-        "line_number": 161,
         "is_async": false
       }
     ],
@@ -8309,6 +8252,63 @@
       {
         "name": "toggleWidgetVisibility",
         "line_number": 347,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useCollaboration.ts": [
+      {
+        "name": "useCollaborationSummary",
+        "line_number": 28,
+        "is_async": false
+      },
+      {
+        "name": "useActivities",
+        "line_number": 39,
+        "is_async": false
+      },
+      {
+        "name": "useIssues",
+        "line_number": 50,
+        "is_async": false
+      },
+      {
+        "name": "useTeamMembers",
+        "line_number": 61,
+        "is_async": false
+      },
+      {
+        "name": "useSprintGoals",
+        "line_number": 72,
+        "is_async": false
+      },
+      {
+        "name": "useComments",
+        "line_number": 83,
+        "is_async": false
+      },
+      {
+        "name": "useAssignIssue",
+        "line_number": 94,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateIssueStatus",
+        "line_number": 112,
+        "is_async": false
+      },
+      {
+        "name": "useAddComment",
+        "line_number": 129,
+        "is_async": false
+      },
+      {
+        "name": "useMarkActivityAsRead",
+        "line_number": 145,
+        "is_async": false
+      },
+      {
+        "name": "useCollaborationHub",
+        "line_number": 161,
         "is_async": false
       }
     ],
@@ -8446,6 +8446,33 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/hooks/useForceSimulation.ts": [
+      {
+        "name": "distance",
+        "line_number": 41,
+        "is_async": false
+      },
+      {
+        "name": "initializePositions",
+        "line_number": 50,
+        "is_async": false
+      },
+      {
+        "name": "simulationStep",
+        "line_number": 74,
+        "is_async": false
+      },
+      {
+        "name": "runSimulation",
+        "line_number": 152,
+        "is_async": false
+      },
+      {
+        "name": "useForceSimulation",
+        "line_number": 168,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/useNotifications.ts": [
       {
         "name": "useNotifications",
@@ -8510,33 +8537,6 @@
       {
         "name": "useAlertTriggersManager",
         "line_number": 205,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/hooks/useForceSimulation.ts": [
-      {
-        "name": "distance",
-        "line_number": 41,
-        "is_async": false
-      },
-      {
-        "name": "initializePositions",
-        "line_number": 50,
-        "is_async": false
-      },
-      {
-        "name": "simulationStep",
-        "line_number": 74,
-        "is_async": false
-      },
-      {
-        "name": "runSimulation",
-        "line_number": 152,
-        "is_async": false
-      },
-      {
-        "name": "useForceSimulation",
-        "line_number": 168,
         "is_async": false
       }
     ],
