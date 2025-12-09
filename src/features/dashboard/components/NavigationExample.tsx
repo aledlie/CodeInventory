@@ -7,9 +7,10 @@
  * DO NOT USE IN PRODUCTION - This is for reference only.
  */
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { Box, AppBar, Toolbar, Typography } from '@mui/material';
-import { Sidebar, MobileMenuButton, MobileMenu } from './index';
+import { Sidebar, MobileMenuButton } from './index';
 
 /**
  * Example Dashboard Layout with Navigation
@@ -32,7 +33,7 @@ import { Sidebar, MobileMenuButton, MobileMenu } from './index';
  * }
  * ```
  */
-export const NavigationExample: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function NavigationExample({ children }: { children?: ReactNode }) {
   const [currentPath, setCurrentPath] = useState('/dashboard');
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
