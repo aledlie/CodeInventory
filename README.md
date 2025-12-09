@@ -479,18 +479,18 @@ See the individual integration guides for detailed usage instructions and exampl
 
 | Commit | Date | Description |
 |--------|------|-------------|
-| `586594a` | 2025-12-09 | chore: update dependencies and project configuration |
-| `a3f5adf` | 2025-12-09 | docs(phase3): update completion documentation and quick reference |
-| `eb14b67` | 2025-12-09 | docs: update project documentation with phase 4 implementation status |
-| `e54c25d` | 2025-12-09 | docs(phase4-5): add planning and implementation guides |
-| `193a6e0` | 2025-12-09 | feat(sidebar): add phase 4 navigation for insights and predictions |
-| `18d2d96` | 2025-12-09 | feat: export phase 4 insight and prediction APIs and hooks |
-| `ccf2f3d` | 2025-12-09 | chore: regenerate route tree after phase 4 route additions |
-| `6d30432` | 2025-12-09 | feat(phase4): add AI insights UI components |
-| `8209d4b` | 2025-12-09 | feat(phase4): add AI insights and predictions infrastructure |
-| `01d1d54` | 2025-12-09 | docs(phase4-5): add planning documents for advanced dashboard features |
-| `ff00ba0` | 2025-12-09 | fix(tools): correct MetricGrid usage and update type exports |
-| `0762663` | 2025-12-09 | fix(typescript): resolve unused variables in tools components |
+| `f69cbfe` | 2025-12-09 | feat(phase4): complete AI insights, predictions, visualization, collaboration, notifications |
+| `6203c6d` | 2025-12-09 | feat(dashboard): export phase 4e notification features |
+| `9773460` | 2025-12-09 | feat(deps): add phase 5a ui libraries for drag-and-drop and state |
+| `dca70ea` | 2025-12-09 | docs: condense CLAUDE.md to functional reference only |
+| `08ca9e2` | 2025-12-09 | docs: update project documentation for phase 5a |
+| `76ea1f8` | 2025-12-09 | chore(ci): update workflow and environment verification for phase 5a |
+| `3747eae` | 2025-12-09 | chore(deps): add phase 5a analytics dependencies |
+| `ddce838` | 2025-12-09 | chore(routes): regenerate route tree for phase 5a analytics route |
+| `e33051b` | 2025-12-09 | feat(dashboard): update exports and navigation for phase 5a |
+| `25fc31b` | 2025-12-09 | feat(routes): add phase 5a analytics dashboard page |
+| `c0d789e` | 2025-12-09 | feat(components): add phase 5a predictive analytics components |
+| `dc728a6` | 2025-12-09 | feat(analytics): add phase 5a predictive analytics api and hooks |
 
 ---
 *Last updated: 2025-12-09 | Originally generated on 2025-11-01*
