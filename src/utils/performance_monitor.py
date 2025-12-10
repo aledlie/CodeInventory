@@ -40,6 +40,11 @@ class PerformanceMonitor:
     """Monitor and analyze analyzer performance"""
 
     def __init__(self, cache_dir: Optional[Path] = None):
+        """Initialize the performance monitor.
+
+        Args:
+            cache_dir: Directory containing analyzer cache files. Defaults to .analyzer_cache
+        """
         self.cache_dir = cache_dir or Path.cwd() / '.analyzer_cache'
         self.metrics: List[PerformanceMetric] = []
 

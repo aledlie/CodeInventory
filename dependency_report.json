@@ -1,9 +1,9 @@
 {
   "summary": {
     "root_directory": "src",
-    "total_dependencies": 161,
+    "total_dependencies": 162,
     "external_dependencies": 0,
-    "internal_dependencies": 161,
+    "internal_dependencies": 162,
     "files_analyzed": 19,
     "circular_dependencies_count": 0
   },
@@ -170,7 +170,7 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 253,
+        "line_number": 258,
         "is_external": false
       },
       {
@@ -308,13 +308,13 @@
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 610,
+        "line_number": 622,
         "is_external": false
       },
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 698,
+        "line_number": 710,
         "is_external": false
       },
       {
@@ -364,7 +364,7 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 266,
+        "line_number": 273,
         "is_external": false
       },
       {
@@ -482,13 +482,13 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 1185,
+        "line_number": 1196,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 1186,
+        "line_number": 1197,
         "is_external": false
       },
       {
@@ -524,13 +524,13 @@
       {
         "package": "src.generators.schema_optimizer",
         "import_type": "static",
-        "line_number": 377,
+        "line_number": 388,
         "is_external": false
       },
       {
         "package": "functools",
         "import_type": "static",
-        "line_number": 828,
+        "line_number": 839,
         "is_external": false
       }
     ],
@@ -688,7 +688,7 @@
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 417,
+        "line_number": 423,
         "is_external": false
       },
       {
@@ -730,7 +730,33 @@
       {
         "package": "src.analyzers.analyzer_optimizer",
         "import_type": "static",
-        "line_number": 799,
+        "line_number": 805,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/__init__.py": [
+      {
+        "package": ".code_quality",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": ".dependencies",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".test_coverage",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      },
+      {
+        "package": ".identify_tools",
+        "import_type": "static",
+        "line_number": 4,
         "is_external": false
       }
     ],
@@ -768,25 +794,25 @@
       {
         "package": "re",
         "import_type": "static",
-        "line_number": 408,
+        "line_number": 414,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 556,
+        "line_number": 562,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 613,
+        "line_number": 619,
         "is_external": false
       },
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 693,
+        "line_number": 699,
         "is_external": false
       },
       {
@@ -828,39 +854,13 @@
       {
         "package": "src.analyzers.analyzer_optimizer",
         "import_type": "static",
-        "line_number": 1008,
+        "line_number": 1014,
         "is_external": false
       },
       {
         "package": "pathlib",
         "import_type": "static",
-        "line_number": 1009,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/__init__.py": [
-      {
-        "package": ".code_quality",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".dependencies",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".test_coverage",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      },
-      {
-        "package": ".identify_tools",
-        "import_type": "static",
-        "line_number": 4,
+        "line_number": 1015,
         "is_external": false
       }
     ],
@@ -928,7 +928,7 @@
       {
         "package": "datetime",
         "import_type": "static",
-        "line_number": 1225,
+        "line_number": 1230,
         "is_external": false
       }
     ],
@@ -972,19 +972,25 @@
       {
         "package": "re",
         "import_type": "static",
-        "line_number": 221,
+        "line_number": 104,
         "is_external": false
       },
       {
         "package": "re",
         "import_type": "static",
-        "line_number": 234,
+        "line_number": 251,
         "is_external": false
       },
       {
         "package": "re",
         "import_type": "static",
-        "line_number": 249,
+        "line_number": 264,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 279,
         "is_external": false
       },
       {

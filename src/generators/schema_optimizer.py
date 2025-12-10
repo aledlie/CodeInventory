@@ -80,7 +80,13 @@ class CacheMetadata:
 
 class SchemaCache:
     """Cache manager for schema generation"""
+
     def __init__(self, cache_dir: Path):
+        """Initialize the schema cache.
+
+        Args:
+            cache_dir: Directory to store cache files
+        """
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.cache_file = self.cache_dir / 'schema_cache.json'

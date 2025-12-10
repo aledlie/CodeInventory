@@ -174,7 +174,13 @@ def _analyze_file_dependencies_worker(file_path: Path) -> List[Dict[str, Any]]:
 
 class DependencyAnalyzer:
     """Analyzes project dependencies"""
+
     def __init__(self, root_dir: Path):
+        """Initialize the dependency analyzer.
+
+        Args:
+            root_dir: Root directory of the project to analyze
+        """
         self.root_dir = root_dir
         self.report = DependencyReport()
 

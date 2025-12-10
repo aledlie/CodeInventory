@@ -236,6 +236,12 @@ class TestCoverageAnalyzer:
     __test__ = False  # Prevent pytest from collecting this as a test class
 
     def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):
+        """Initialize the test coverage analyzer.
+
+        Args:
+            src_dir: Root directory containing source files to analyze
+            test_dir: Directory containing test files. Defaults to src_dir/tests
+        """
         self.src_dir = src_dir
         self.test_dir = test_dir or src_dir / 'tests'
         self.report = CoverageReport()

@@ -19,10 +19,22 @@ if not logger.handlers:
 
 class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
+
     def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,
                  coverage_path: Optional[Path] = None, dependency_path: Optional[Path] = None,
                  cache_dir: Optional[Path] = None, files_processed: int = 0,
                  elapsed_time: float = 0):
+        """Initialize the dashboard generator.
+
+        Args:
+            schemas_path: Path to the schemas JSON file
+            quality_path: Optional path to quality report JSON
+            coverage_path: Optional path to coverage report JSON
+            dependency_path: Optional path to dependency report JSON
+            cache_dir: Directory for analyzer cache. Defaults to .analyzer_cache
+            files_processed: Number of files processed in analysis
+            elapsed_time: Time taken for analysis in seconds
+        """
         self.schemas_path = schemas_path
         self.quality_path = quality_path
         self.coverage_path = coverage_path

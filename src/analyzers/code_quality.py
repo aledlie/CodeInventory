@@ -45,7 +45,13 @@ class QualityReport:
 
 class CodeQualityAnalyzer:
     """Analyzes code quality using ast-grep patterns"""
+
     def __init__(self, root_path: Path):
+        """Initialize the code quality analyzer.
+
+        Args:
+            root_path: Root directory of the codebase to analyze
+        """
         self.root_path = root_path
         self.report = QualityReport()
 
@@ -84,8 +90,32 @@ class CodeQualityAnalyzer:
             'severity': 'info',
             'category': 'documentation',
             'message': 'Function missing docstring',
-            'suggestion': 'Add docstring describing purpose, args, and return value'
+            'suggestion': 'Add docstring describing purpose, args, and return value',
+            'check': self._has_no_docstring
         }
+
+    def _has_no_docstring(self, code: str) -> bool:
+        """Check if code snippet lacks a docstring.
+
+        Returns True if the function is MISSING a docstring (should be flagged).
+        Returns False if the function HAS a docstring (should be skipped).
+        """
+        # Look for docstring patterns following the function definition
+        # Docstrings can be on the same line or next line after the colon
+        import re
+
+        # Match the function body after the def line
+        # Look for triple quotes at the start of the body
+        body_match = re.search(r':\s*\n?\s*("""|\'\'\')' , code)
+        if body_match:
+            return False  # Has docstring, skip this match
+
+        # Also check for single-line docstrings like: def foo(): """doc"""
+        inline_docstring = re.search(r':\s*("""|\'\'\')' , code)
+        if inline_docstring:
+            return False  # Has inline docstring, skip
+
+        return True  # No docstring found, flag this
 
     def _create_bare_except_rule(self) -> Dict[str, Any]:
         """Create rule for detecting bare except clauses"""

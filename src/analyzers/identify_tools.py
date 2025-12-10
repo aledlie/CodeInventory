@@ -158,6 +158,11 @@ class ToolIdentifier:
     """Identifies standalone, modular functionality in codebases"""
 
     def __init__(self, root_dir: Path):
+        """Initialize the tool identifier.
+
+        Args:
+            root_dir: Root directory of the codebase to analyze
+        """
         self.root_dir = root_dir
         self.report = ToolIdentificationReport()
 
