@@ -20,3 +20,5 @@ export type {
   DashboardMetrics,
   HealthStatus
 } from './calculateMetrics';
+
+export { logger } from './logger';

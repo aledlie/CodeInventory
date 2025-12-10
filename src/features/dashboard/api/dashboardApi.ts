@@ -25,6 +25,8 @@ import type {
   PythonDependencyInfo,
 } from '../types';
 
+import { logger } from '../helpers/logger';
+
 // ============================================================================
 // Raw Python Output Types (with nested summary)
 // ============================================================================
@@ -201,7 +203,7 @@ export const dashboardApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[dashboardApi] Quality report not found at ${path}`);
+          logger.warn('dashboardApi', `Quality report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -216,10 +218,10 @@ export const dashboardApi = {
 
       // Transform raw Python output to TypeScript interface format
       const data = transformQualityReport(rawData);
-      console.log(`[dashboardApi] Loaded quality report: ${data.total_issues} issues from ${data.total_files_scanned} files`);
+      logger.info('dashboardApi', `Loaded quality report: ${data.total_issues} issues from ${data.total_files_scanned} files`);
       return data;
     } catch (error) {
-      console.error(`[dashboardApi] Error loading quality report from ${path}:`, error);
+      logger.error('dashboardApi', `Error loading quality report from ${path}`, error);
       throw error;
     }
   },
@@ -239,7 +241,7 @@ export const dashboardApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[dashboardApi] Coverage report not found at ${path}`);
+          logger.warn('dashboardApi', `Coverage report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -254,10 +256,10 @@ export const dashboardApi = {
 
       // Transform raw Python output to TypeScript interface format
       const data = transformCoverageReport(rawData);
-      console.log(`[dashboardApi] Loaded coverage report: ${data.coverage_percentage.toFixed(1)}% coverage (${data.tested_functions}/${data.total_functions} functions)`);
+      logger.info('dashboardApi', `Loaded coverage report: ${data.coverage_percentage.toFixed(1)}% coverage (${data.tested_functions}/${data.total_functions} functions)`);
       return data;
     } catch (error) {
-      console.error(`[dashboardApi] Error loading coverage report from ${path}:`, error);
+      logger.error('dashboardApi', `Error loading coverage report from ${path}`, error);
       throw error;
     }
   },
@@ -277,7 +279,7 @@ export const dashboardApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[dashboardApi] Dependency report not found at ${path}`);
+          logger.warn('dashboardApi', `Dependency report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -292,10 +294,10 @@ export const dashboardApi = {
 
       // Transform raw Python output to TypeScript interface format
       const data = transformDependencyReport(rawData);
-      console.log(`[dashboardApi] Loaded dependency report: ${data.total_dependencies} dependencies (${data.circular_dependencies.length} circular)`);
+      logger.info('dashboardApi', `Loaded dependency report: ${data.total_dependencies} dependencies (${data.circular_dependencies.length} circular)`);
       return data;
     } catch (error) {
-      console.error(`[dashboardApi] Error loading dependency report from ${path}:`, error);
+      logger.error('dashboardApi', `Error loading dependency report from ${path}`, error);
       throw error;
     }
   },
@@ -363,9 +365,9 @@ export const dashboardApi = {
 
     // Log summary
     const loaded = [quality, coverage, dependencies].filter(r => r !== null).length;
-    console.log(`[dashboardApi] Loaded ${loaded}/3 reports successfully`);
+    logger.info('dashboardApi', `Loaded ${loaded}/3 reports successfully`);
     if (errors.length > 0) {
-      console.warn(`[dashboardApi] ${errors.length} errors encountered:`, errors);
+      logger.warn('dashboardApi', `${errors.length} errors encountered`, { errors });
     }
 
     return { data, errors };
