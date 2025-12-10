@@ -9,7 +9,6 @@
  * - WCAG AA accessible focus indicators
  */
 
-import React from 'react';
 import {
   Drawer,
   List,
@@ -154,12 +153,12 @@ const navigationItems: NavItem[] = [
  * />
  * ```
  */
-export const Sidebar: React.FC<SidebarProps> = ({
+export function Sidebar({
   currentPath = '/dashboard',
   onNavigate,
   isMobileOpen = false,
   onMobileClose,
-}) => {
+}: SidebarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md')); // <768px
 
@@ -365,7 +364,7 @@ export interface MobileMenuButtonProps {
   onClick?: () => void;
 }
 
-export const MobileMenuButton: React.FC<MobileMenuButtonProps> = ({ onClick }) => {
+export function MobileMenuButton({ onClick }: MobileMenuButtonProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md')); // <768px
 

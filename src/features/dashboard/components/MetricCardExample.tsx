@@ -9,7 +9,7 @@
  * - Responsive behavior
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Grid, Container, Typography } from '@mui/material';
 import {
   Assessment as AssessmentIcon,
@@ -27,7 +27,7 @@ import { MetricCard } from './MetricCard';
  * Shows various MetricCard configurations in a grid layout.
  * All examples are responsive and accessible.
  */
-export const MetricCardExample: React.FC = () => {
+export function MetricCardExample() {
   const [clickedCard, setClickedCard] = useState<string | null>(null);
 
   const handleCardClick = (cardName: string) => {

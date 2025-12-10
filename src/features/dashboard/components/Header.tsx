@@ -18,7 +18,7 @@
  * - Mobile (< 768px): Stacked layout with hamburger menu for actions
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -90,11 +90,11 @@ const formatTimestamp = (date: Date): string => {
  *                 [Timestamp]
  *                 Drawer: [Settings] [Export]
  */
-export const Header: React.FC<HeaderProps> = ({
+export function Header({
   lastGenerated,
   onSettingsClick,
   onExportClick,
-}) => {
+}: HeaderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

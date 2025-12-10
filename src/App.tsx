@@ -1,4 +1,3 @@
-import React from 'react';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { QueryProvider } from '@/features/dashboard/providers/QueryProvider';
 import { ThemeProvider } from '@/theme';
@@ -45,7 +44,7 @@ declare module '@tanstack/react-router' {
  * The router will render the appropriate route component based on the URL,
  * starting with __root.tsx which contains the ErrorBoundary.
  */
-export const App: React.FC = () => {
+export function App() {
   return (
     <ThemeProvider>
       {/* QueryProvider for TanStack Query with React Query DevTools */}

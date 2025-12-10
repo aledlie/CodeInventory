@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Skeleton, Container, Paper } from '@mui/material';
 
 /**
@@ -20,7 +19,7 @@ import { Box, Skeleton, Container, Paper } from '@mui/material';
  * </Suspense>
  * ```
  */
-export const SuspenseLoader: React.FC = () => {
+export function SuspenseLoader() {
   return (
     <Box
       sx={{

@@ -30,12 +30,12 @@ interface CircularDepsChartProps {
   height?: number;
 }
 
-export const CircularDepsChart: React.FC<CircularDepsChartProps> = ({
+export function CircularDepsChart({
   runs,
   loading,
   error,
   height = 300,
-}) => {
+}: CircularDepsChartProps) {
   const { colors } = useChartTheme();
   const baseOptions = useChartOptions('bar');
 
