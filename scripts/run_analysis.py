@@ -381,14 +381,27 @@ class AnalysisRunner:
         coverage_output = coverage_dir / f'coverage_report_{self.timestamp}.json'
         coverage_text = coverage_dir / f'coverage_report_{self.timestamp}.txt'
 
+        # Determine test directory - look for tests/ at project root (parent of src/)
+        # If root_dir is /project/src, tests are likely at /project/tests
+        test_dir = self.root_dir.parent / 'tests'
+        if not test_dir.exists():
+            # Fallback to root_dir/tests if project root tests/ doesn't exist
+            test_dir = self.root_dir / 'tests'
+
+        cmd = [
+            'python3', '-m', 'src.analyzers.test_coverage',
+            str(self.root_dir),
+            '--json', str(coverage_output),
+            '--text', str(coverage_text)
+        ]
+
+        # Add test-dir if it exists
+        if test_dir.exists():
+            cmd.extend(['--test-dir', str(test_dir)])
+
         return self.run_command(
             'coverage_analysis',
-            [
-                'python3', '-m', 'src.analyzers.test_coverage',
-                str(self.root_dir),
-                '--json', str(coverage_output),
-                '--text', str(coverage_text)
-            ],
+            cmd,
             'Test Coverage Analysis'
         )
 
