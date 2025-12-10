@@ -86,6 +86,62 @@
         "is_external": false
       }
     ],
+    "src/utils/performance_monitor.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "statistics",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 236,
+        "is_external": false
+      },
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 252,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "datetime",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      }
+    ],
     "src/utils/logging_config.py": [
       {
         "package": "logging",
@@ -145,62 +201,6 @@
         "package": "sentry_sdk.integrations.logging",
         "import_type": "static",
         "line_number": 26,
-        "is_external": false
-      }
-    ],
-    "src/utils/performance_monitor.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "statistics",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 236,
-        "is_external": false
-      },
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 252,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "datetime",
-        "import_type": "static",
-        "line_number": 13,
         "is_external": false
       }
     ],

@@ -224,9 +224,9 @@ function CategoryBreakdown({ issuesByCategory, total }: {
                 fontWeight: 500,
                 fontSize: 'var(--font-size-small, 12px)',
                 borderColor: 'rgba(0, 0, 0, 0.23)',
-                color: '#1a1a1a',
+                color: '#000000',
                 '& .MuiChip-label': {
-                  color: '#1a1a1a',
+                  color: '#000000',
                 },
                 '& .MuiChip-icon': {
                   color: '#0066cc',
