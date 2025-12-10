@@ -362,7 +362,18 @@ class SchemaOrgGenerator:
         return f'<script type="application/ld+json">\n{json_str}\n</script>'
 
 class EnhancedSchemaGenerator:
+    """Generates Schema.org structured data for codebases with parallel processing support."""
+
     def __init__(self, root_path: str, use_astgrep: bool = True, use_parallel: bool = False, use_cache: bool = False, max_workers: Optional[int] = None):
+        """Initialize the enhanced schema generator.
+
+        Args:
+            root_path: Root directory path to analyze
+            use_astgrep: Whether to use ast-grep for enhanced parsing
+            use_parallel: Whether to use parallel processing
+            use_cache: Whether to use caching for incremental analysis
+            max_workers: Maximum number of parallel workers
+        """
         self.root_path = Path(root_path)
         self.schemas: Dict[str, DirectorySchema] = {}
         self.skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
