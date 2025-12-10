@@ -1,11 +1,11 @@
 {
   "summary": {
     "source_directory": "/Users/alyshialedlie/code/Inventory/src",
-    "test_directory": "/Users/alyshialedlie/code/Inventory/src/tests",
+    "test_directory": "/Users/alyshialedlie/code/Inventory/tests",
     "total_functions": 760,
-    "tested_functions": 10,
-    "untested_functions": 750,
-    "coverage_percentage": 1.32
+    "tested_functions": 72,
+    "untested_functions": 688,
+    "coverage_percentage": 9.47
   },
   "functions": [
     {
@@ -13,49 +13,49 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/App.tsx",
       "line_number": 47,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_python_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 277,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_typescript_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 659,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 917,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_directory",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 925,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generate_report_text",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 1079,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_report_json",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 1215,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_report_html",
@@ -76,49 +76,49 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 1943,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
       "line_number": 400,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_directory",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
       "line_number": 495,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generate_report_text",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
       "line_number": 541,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_report_json",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
       "line_number": 638,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "main",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
       "line_number": 682,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "update",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
       "line_number": 49,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "set_description",
@@ -139,7 +139,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
       "line_number": 169,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "is_cached",
@@ -167,7 +167,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
       "line_number": 217,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "process_items_parallel",
@@ -195,7 +195,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
       "line_number": 404,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "batch_items_by_attribute",
@@ -209,7 +209,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 83,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "run_astgrep",
@@ -230,28 +230,28 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 219,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_typescript_imports",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 263,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 365,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_directory",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 391,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_directory_optimized",
@@ -265,7 +265,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 533,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "dfs",
@@ -279,21 +279,21 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 557,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_report_json",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 722,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "main",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
       "line_number": 768,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_cache",
@@ -342,7 +342,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
       "line_number": 273,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_cache_stats",
@@ -482,7 +482,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx",
       "line_number": 48,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "QueryProvider",
@@ -1091,7 +1091,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx",
       "line_number": 93,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleMenuToggle",
@@ -1133,7 +1133,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx",
       "line_number": 156,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "MobileMenuButton",
@@ -1210,7 +1210,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx",
       "line_number": 27,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "NavigationExample",
@@ -4682,7 +4682,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py",
       "line_number": 54,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "init_sentry",
@@ -4718,6 +4718,48 @@
       "line_number": 296,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "load_cache_statistics",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "calculate_cache_hit_rate",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 85,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_performance",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 91,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "save_report",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 199,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "print_report",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "get_git_repos_with_remotes",
@@ -4759,7 +4801,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/git_operations.py",
       "line_number": 77,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "SuspenseLoader",
@@ -4801,7 +4843,7 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/theme/ThemeContext.tsx",
       "line_number": 150,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "ThemeProvider",
@@ -4836,35 +4878,315 @@
       "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
       "line_number": 32,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "validate_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
       "line_number": 122,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "validate_json_file",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
       "line_number": 164,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generate_report",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
       "line_number": 228,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "main",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/validators/schema.py",
       "line_number": 274,
       "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_recent_commits",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 52,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_commit_changes",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 102,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_rss_xml",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 151,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_rss",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 263,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
+      "line_number": 273,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_html",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 88,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_dashboard",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 700,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
+      "line_number": 710,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "update",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "set_description",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 47,
+      "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "save_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 129,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_file_hash",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 159,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "is_file_cached",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 171,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_cached_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 197,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "update_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 204,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_git_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "get_changed_files_since_commit",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 233,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "process_files_parallel",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 280,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "invalidate_cache_for_files",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 380,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 392,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "batch_files_by_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
+      "line_number": 402,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "convert_git_url_to_https",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 30,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "process_single_file",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 68,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "check_available",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 203,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_executable",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 208,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_pattern",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 216,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_meta_var",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 266,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_with_rule",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 280,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_software_source_code",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 325,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_jsonld_script",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 359,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_python_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 412,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_typescript_schema_astgrep",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 495,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "extract_typescript_schema_regex",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 618,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_typescript_schema",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 714,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "scan_directory",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 721,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "scan_all_directories",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 773,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "scan_all_directories_optimized",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 813,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_readme",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 938,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_schemas_json",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 1071,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
+      "line_number": 1151,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "ToolsOverviewPageContent",
@@ -5005,369 +5327,10 @@
       "line_number": 365,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "load_cache_statistics",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 51,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "calculate_cache_hit_rate",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 85,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "analyze_performance",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 91,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_report",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 199,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "print_report",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 214,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "main",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 257,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_recent_commits",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 52,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "analyze_commit_changes",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 102,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_rss_xml",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 151,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_rss",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 263,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "main",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 273,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_html",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
-      "line_number": 88,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_dashboard",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
-      "line_number": 700,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "main",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
-      "line_number": 710,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "update",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "set_description",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_cache",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 129,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_file_hash",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 159,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "is_file_cached",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 171,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_cached_schema",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 197,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "update_cache",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 204,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_git_commit",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 214,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_changed_files_since_commit",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 233,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "process_files_parallel",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 280,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "invalidate_cache_for_files",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 380,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "clear_cache",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 392,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "batch_files_by_directory",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 402,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "convert_git_url_to_https",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 30,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "process_single_file",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 68,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "check_available",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 203,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_executable",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 208,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "find_pattern",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 216,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "get_meta_var",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 266,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "find_with_rule",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 280,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_software_source_code",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 325,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_jsonld_script",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 359,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_python_schema",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 412,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_typescript_schema_astgrep",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 495,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_typescript_schema_regex",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 618,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_typescript_schema",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 714,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "scan_directory",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 721,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "scan_all_directories",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 773,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "scan_all_directories_optimized",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 813,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_readme",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 938,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "save_schemas_json",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 1071,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "main",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 1151,
-      "is_async": false,
-      "is_tested": false
     }
   ],
   "untested_by_file": {
-    "/Users/alyshialedlie/code/Inventory/src/App.tsx": [
-      {
-        "name": "App",
-        "line_number": 47,
-        "is_async": false
-      }
-    ],
     "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py": [
-      {
-        "name": "analyze_python_file",
-        "line_number": 277,
-        "is_async": false
-      },
-      {
-        "name": "analyze_typescript_file",
-        "line_number": 659,
-        "is_async": false
-      },
-      {
-        "name": "analyze_file",
-        "line_number": 917,
-        "is_async": false
-      },
-      {
-        "name": "analyze_directory",
-        "line_number": 925,
-        "is_async": false
-      },
-      {
-        "name": "generate_report_text",
-        "line_number": 1079,
-        "is_async": false
-      },
-      {
-        "name": "save_report_json",
-        "line_number": 1215,
-        "is_async": false
-      },
       {
         "name": "save_report_html",
         "line_number": 1222,
@@ -5377,46 +5340,9 @@
         "name": "pct",
         "line_number": 1255,
         "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 1943,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py": [
-      {
-        "name": "analyze_file",
-        "line_number": 400,
-        "is_async": false
-      },
-      {
-        "name": "analyze_directory",
-        "line_number": 495,
-        "is_async": false
-      },
-      {
-        "name": "generate_report_text",
-        "line_number": 541,
-        "is_async": false
-      },
-      {
-        "name": "save_report_json",
-        "line_number": 638,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 682,
-        "is_async": false
       }
     ],
     "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py": [
-      {
-        "name": "update",
-        "line_number": 49,
-        "is_async": false
-      },
       {
         "name": "set_description",
         "line_number": 52,
@@ -5425,11 +5351,6 @@
       {
         "name": "save_cache",
         "line_number": 137,
-        "is_async": false
-      },
-      {
-        "name": "calculate_hash",
-        "line_number": 169,
         "is_async": false
       },
       {
@@ -5448,11 +5369,6 @@
         "is_async": false
       },
       {
-        "name": "clear_cache",
-        "line_number": 217,
-        "is_async": false
-      },
-      {
         "name": "process_items_parallel",
         "line_number": 256,
         "is_async": false
@@ -5468,22 +5384,12 @@
         "is_async": false
       },
       {
-        "name": "get_file_key",
-        "line_number": 404,
-        "is_async": false
-      },
-      {
         "name": "batch_items_by_attribute",
         "line_number": 409,
         "is_async": false
       }
     ],
     "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py": [
-      {
-        "name": "is_external",
-        "line_number": 83,
-        "is_async": false
-      },
       {
         "name": "run_astgrep",
         "line_number": 89,
@@ -5495,53 +5401,13 @@
         "is_async": false
       },
       {
-        "name": "analyze_python_imports",
-        "line_number": 219,
-        "is_async": false
-      },
-      {
-        "name": "analyze_typescript_imports",
-        "line_number": 263,
-        "is_async": false
-      },
-      {
-        "name": "analyze_file",
-        "line_number": 365,
-        "is_async": false
-      },
-      {
-        "name": "analyze_directory",
-        "line_number": 391,
-        "is_async": false
-      },
-      {
         "name": "analyze_directory_optimized",
         "line_number": 409,
         "is_async": false
       },
       {
-        "name": "find_circular_dependencies",
-        "line_number": 533,
-        "is_async": false
-      },
-      {
         "name": "dfs",
         "line_number": 535,
-        "is_async": false
-      },
-      {
-        "name": "generate_report_text",
-        "line_number": 557,
-        "is_async": false
-      },
-      {
-        "name": "save_report_json",
-        "line_number": 722,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 768,
         "is_async": false
       }
     ],
@@ -5574,11 +5440,6 @@
       {
         "name": "update_file_cache",
         "line_number": 255,
-        "is_async": false
-      },
-      {
-        "name": "clear_cache",
-        "line_number": 273,
         "is_async": false
       },
       {
@@ -5680,11 +5541,6 @@
       }
     ],
     "/Users/alyshialedlie/code/Inventory/src/features/dashboard/providers/QueryProvider.tsx": [
-      {
-        "name": "App",
-        "line_number": 48,
-        "is_async": false
-      },
       {
         "name": "QueryProvider",
         "line_number": 57,
@@ -6138,11 +5994,6 @@
     ],
     "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Header.tsx": [
       {
-        "name": "Header",
-        "line_number": 93,
-        "is_async": false
-      },
-      {
         "name": "handleMenuToggle",
         "line_number": 105,
         "is_async": false
@@ -6169,11 +6020,6 @@
       }
     ],
     "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/Sidebar.tsx": [
-      {
-        "name": "Sidebar",
-        "line_number": 156,
-        "is_async": false
-      },
       {
         "name": "MobileMenuButton",
         "line_number": 371,
@@ -6230,11 +6076,6 @@
       }
     ],
     "/Users/alyshialedlie/code/Inventory/src/features/dashboard/components/NavigationExample.tsx": [
-      {
-        "name": "App",
-        "line_number": 27,
-        "is_async": false
-      },
       {
         "name": "NavigationExample",
         "line_number": 36,
@@ -8839,11 +8680,6 @@
     ],
     "/Users/alyshialedlie/code/Inventory/src/utils/logging_config.py": [
       {
-        "name": "format",
-        "line_number": 54,
-        "is_async": false
-      },
-      {
         "name": "init_sentry",
         "line_number": 69,
         "is_async": false
@@ -8866,6 +8702,28 @@
       {
         "name": "log_performance_metric",
         "line_number": 296,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py": [
+      {
+        "name": "load_cache_statistics",
+        "line_number": 51,
+        "is_async": false
+      },
+      {
+        "name": "calculate_cache_hit_rate",
+        "line_number": 85,
+        "is_async": false
+      },
+      {
+        "name": "analyze_performance",
+        "line_number": 91,
+        "is_async": false
+      },
+      {
+        "name": "print_report",
+        "line_number": 214,
         "is_async": false
       }
     ],
@@ -8893,11 +8751,6 @@
       {
         "name": "git_push",
         "line_number": 63,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 77,
         "is_async": false
       }
     ],
@@ -8930,11 +8783,6 @@
         "is_async": false
       },
       {
-        "name": "App",
-        "line_number": 150,
-        "is_async": false
-      },
-      {
         "name": "ThemeProvider",
         "line_number": 159,
         "is_async": false
@@ -8955,30 +8803,102 @@
         "is_async": false
       }
     ],
-    "/Users/alyshialedlie/code/Inventory/src/validators/schema.py": [
+    "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py": [
       {
-        "name": "validate_schema",
-        "line_number": 32,
+        "name": "set_description",
+        "line_number": 47,
         "is_async": false
       },
       {
-        "name": "validate_file",
-        "line_number": 122,
+        "name": "save_cache",
+        "line_number": 129,
         "is_async": false
       },
       {
-        "name": "validate_json_file",
-        "line_number": 164,
+        "name": "get_file_hash",
+        "line_number": 159,
         "is_async": false
       },
       {
-        "name": "generate_report",
-        "line_number": 228,
+        "name": "is_file_cached",
+        "line_number": 171,
         "is_async": false
       },
       {
-        "name": "main",
-        "line_number": 274,
+        "name": "get_cached_schema",
+        "line_number": 197,
+        "is_async": false
+      },
+      {
+        "name": "update_cache",
+        "line_number": 204,
+        "is_async": false
+      },
+      {
+        "name": "get_git_commit",
+        "line_number": 214,
+        "is_async": false
+      },
+      {
+        "name": "get_changed_files_since_commit",
+        "line_number": 233,
+        "is_async": false
+      },
+      {
+        "name": "process_files_parallel",
+        "line_number": 280,
+        "is_async": false
+      },
+      {
+        "name": "invalidate_cache_for_files",
+        "line_number": 380,
+        "is_async": false
+      },
+      {
+        "name": "batch_files_by_directory",
+        "line_number": 402,
+        "is_async": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/generators/schema.py": [
+      {
+        "name": "convert_git_url_to_https",
+        "line_number": 30,
+        "is_async": false
+      },
+      {
+        "name": "process_single_file",
+        "line_number": 68,
+        "is_async": false
+      },
+      {
+        "name": "get_executable",
+        "line_number": 208,
+        "is_async": false
+      },
+      {
+        "name": "get_meta_var",
+        "line_number": 266,
+        "is_async": false
+      },
+      {
+        "name": "find_with_rule",
+        "line_number": 280,
+        "is_async": false
+      },
+      {
+        "name": "extract_typescript_schema_astgrep",
+        "line_number": 495,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories",
+        "line_number": 773,
+        "is_async": false
+      },
+      {
+        "name": "scan_all_directories_optimized",
+        "line_number": 813,
         "is_async": false
       }
     ],
@@ -9087,246 +9007,6 @@
       {
         "name": "handleTabChange",
         "line_number": 365,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py": [
-      {
-        "name": "load_cache_statistics",
-        "line_number": 51,
-        "is_async": false
-      },
-      {
-        "name": "calculate_cache_hit_rate",
-        "line_number": 85,
-        "is_async": false
-      },
-      {
-        "name": "analyze_performance",
-        "line_number": 91,
-        "is_async": false
-      },
-      {
-        "name": "save_report",
-        "line_number": 199,
-        "is_async": false
-      },
-      {
-        "name": "print_report",
-        "line_number": 214,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 257,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/generators/rss.py": [
-      {
-        "name": "get_recent_commits",
-        "line_number": 52,
-        "is_async": false
-      },
-      {
-        "name": "analyze_commit_changes",
-        "line_number": 102,
-        "is_async": false
-      },
-      {
-        "name": "generate_rss_xml",
-        "line_number": 151,
-        "is_async": false
-      },
-      {
-        "name": "save_rss",
-        "line_number": 263,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 273,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py": [
-      {
-        "name": "generate_html",
-        "line_number": 88,
-        "is_async": false
-      },
-      {
-        "name": "save_dashboard",
-        "line_number": 700,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 710,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py": [
-      {
-        "name": "update",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "set_description",
-        "line_number": 47,
-        "is_async": false
-      },
-      {
-        "name": "save_cache",
-        "line_number": 129,
-        "is_async": false
-      },
-      {
-        "name": "get_file_hash",
-        "line_number": 159,
-        "is_async": false
-      },
-      {
-        "name": "is_file_cached",
-        "line_number": 171,
-        "is_async": false
-      },
-      {
-        "name": "get_cached_schema",
-        "line_number": 197,
-        "is_async": false
-      },
-      {
-        "name": "update_cache",
-        "line_number": 204,
-        "is_async": false
-      },
-      {
-        "name": "get_git_commit",
-        "line_number": 214,
-        "is_async": false
-      },
-      {
-        "name": "get_changed_files_since_commit",
-        "line_number": 233,
-        "is_async": false
-      },
-      {
-        "name": "process_files_parallel",
-        "line_number": 280,
-        "is_async": false
-      },
-      {
-        "name": "invalidate_cache_for_files",
-        "line_number": 380,
-        "is_async": false
-      },
-      {
-        "name": "clear_cache",
-        "line_number": 392,
-        "is_async": false
-      },
-      {
-        "name": "batch_files_by_directory",
-        "line_number": 402,
-        "is_async": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/generators/schema.py": [
-      {
-        "name": "convert_git_url_to_https",
-        "line_number": 30,
-        "is_async": false
-      },
-      {
-        "name": "process_single_file",
-        "line_number": 68,
-        "is_async": false
-      },
-      {
-        "name": "check_available",
-        "line_number": 203,
-        "is_async": false
-      },
-      {
-        "name": "get_executable",
-        "line_number": 208,
-        "is_async": false
-      },
-      {
-        "name": "find_pattern",
-        "line_number": 216,
-        "is_async": false
-      },
-      {
-        "name": "get_meta_var",
-        "line_number": 266,
-        "is_async": false
-      },
-      {
-        "name": "find_with_rule",
-        "line_number": 280,
-        "is_async": false
-      },
-      {
-        "name": "generate_software_source_code",
-        "line_number": 325,
-        "is_async": false
-      },
-      {
-        "name": "generate_jsonld_script",
-        "line_number": 359,
-        "is_async": false
-      },
-      {
-        "name": "extract_python_schema",
-        "line_number": 412,
-        "is_async": false
-      },
-      {
-        "name": "extract_typescript_schema_astgrep",
-        "line_number": 495,
-        "is_async": false
-      },
-      {
-        "name": "extract_typescript_schema_regex",
-        "line_number": 618,
-        "is_async": false
-      },
-      {
-        "name": "extract_typescript_schema",
-        "line_number": 714,
-        "is_async": false
-      },
-      {
-        "name": "scan_directory",
-        "line_number": 721,
-        "is_async": false
-      },
-      {
-        "name": "scan_all_directories",
-        "line_number": 773,
-        "is_async": false
-      },
-      {
-        "name": "scan_all_directories_optimized",
-        "line_number": 813,
-        "is_async": false
-      },
-      {
-        "name": "generate_readme",
-        "line_number": 938,
-        "is_async": false
-      },
-      {
-        "name": "save_schemas_json",
-        "line_number": 1071,
-        "is_async": false
-      },
-      {
-        "name": "main",
-        "line_number": 1151,
         "is_async": false
       }
     ]
