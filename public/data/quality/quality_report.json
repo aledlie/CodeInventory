@@ -1,14 +1,13 @@
 {
   "summary": {
     "total_files_scanned": 198,
-    "total_issues": 42,
+    "total_issues": 28,
     "issues_by_severity": {
       "warning": 27,
-      "info": 15
+      "info": 1
     },
     "issues_by_category": {
       "code_smell": 14,
-      "documentation": 14,
       "best_practice": 14
     }
   },
@@ -20,18 +19,8 @@
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/test_coverage.py",
       "line_number": 237,
-      "code_snippet": "def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):\n        self.src_dir = src_dir\n ",
+      "code_snippet": "def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):\n        \"\"\"Initialize the test c",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/test_coverage.py",
-      "line_number": 237,
-      "code_snippet": "def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):\n        self.src_dir = src_dir\n ",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -40,18 +29,8 @@
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
       "line_number": 159,
-      "code_snippet": "def __init__(self, root_dir: Path):\n        self.root_dir = root_dir\n        self.report = ToolIdent",
+      "code_snippet": "def __init__(self, root_dir: Path):\n        \"\"\"Initialize the tool identifier.\n\n        Args:\n      ",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py",
-      "line_number": 159,
-      "code_snippet": "def __init__(self, root_dir: Path):\n        self.root_dir = root_dir\n        self.report = ToolIdent",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -59,19 +38,9 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
-      "line_number": 47,
-      "code_snippet": "def __init__(self, root_path: Path):\n        self.root_path = root_path\n        self.report = Qualit",
+      "line_number": 48,
+      "code_snippet": "def __init__(self, root_path: Path):\n        \"\"\"Initialize the code quality analyzer.\n\n        Args:",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py",
-      "line_number": 47,
-      "code_snippet": "def __init__(self, root_path: Path):\n        self.root_path = root_path\n        self.report = Qualit",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -92,26 +61,6 @@
       "line_number": 225,
       "code_snippet": "def __init__(\n        self,\n        analyzer_name: str,\n        max_workers: Optional[int] = None,\n ",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
-      "line_number": 88,
-      "code_snippet": "def __init__(self, analyzer_name: str, cache_dir: Path):\n        \"\"\"\n        Initialize cache for a ",
-      "suggestion": "Add docstring describing purpose, args, and return value"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py",
-      "line_number": 225,
-      "code_snippet": "def __init__(\n        self,\n        analyzer_name: str,\n        max_workers: Optional[int] = None,\n ",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -129,19 +78,9 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
-      "line_number": 176,
-      "code_snippet": "def __init__(self, root_dir: Path):\n        self.root_dir = root_dir\n        self.report = Dependenc",
+      "line_number": 177,
+      "code_snippet": "def __init__(self, root_dir: Path):\n        \"\"\"Initialize the dependency analyzer.\n\n        Args:\n  ",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py",
-      "line_number": 176,
-      "code_snippet": "def __init__(self, root_dir: Path):\n        self.root_dir = root_dir\n        self.report = Dependenc",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -162,26 +101,6 @@
       "line_number": 327,
       "code_snippet": "def __init__(self, root_dir: Path, checkpoint_file: Optional[Path] = None):\n        \"\"\"\n        Init",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
-      "line_number": 47,
-      "code_snippet": "def __init__(self, root_dir: Path, cache_file: Optional[Path] = None):\n        \"\"\"\n        Initializ",
-      "suggestion": "Add docstring describing purpose, args, and return value"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py",
-      "line_number": 327,
-      "code_snippet": "def __init__(self, root_dir: Path, checkpoint_file: Optional[Path] = None):\n        \"\"\"\n        Init",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -320,18 +239,8 @@
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
       "line_number": 41,
-      "code_snippet": "def __init__(self, cache_dir: Optional[Path] = None):\n        self.cache_dir = cache_dir or Path.cwd",
+      "code_snippet": "def __init__(self, cache_dir: Optional[Path] = None):\n        \"\"\"Initialize the performance monitor.",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py",
-      "line_number": 41,
-      "code_snippet": "def __init__(self, cache_dir: Optional[Path] = None):\n        self.cache_dir = cache_dir or Path.cwd",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -339,19 +248,9 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 24,
-      "code_snippet": "def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):\n        self.schemas_path =",
+      "line_number": 25,
+      "code_snippet": "def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):\n        \"\"\"Initialize the R",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/rss.py",
-      "line_number": 24,
-      "code_snippet": "def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):\n        self.schemas_path =",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     },
     {
       "severity": "warning",
@@ -359,28 +258,8 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
-      "line_number": 21,
+      "line_number": 22,
       "code_snippet": "def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,\n                 coverag",
-      "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/dashboard.py",
-      "line_number": 21,
-      "code_snippet": "def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,\n                 coverag",
-      "suggestion": "Add docstring describing purpose, args, and return value"
-    },
-    {
-      "severity": "warning",
-      "category": "code_smell",
-      "rule_id": "long-function",
-      "message": "Function may be too long (consider breaking down)",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 82,
-      "code_snippet": "def __init__(self, cache_dir: Path):\n        self.cache_dir = cache_dir\n        self.cache_dir.mkdir",
       "suggestion": "Break down into smaller, focused functions"
     },
     {
@@ -389,29 +268,19 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 251,
-      "code_snippet": "def __init__(self, max_workers: Optional[int] = None, use_cache: bool = True, cache_dir: Optional[Pa",
+      "line_number": 83,
+      "code_snippet": "def __init__(self, cache_dir: Path):\n        \"\"\"Initialize the schema cache.\n\n        Args:\n        ",
       "suggestion": "Break down into smaller, focused functions"
     },
     {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
+      "severity": "warning",
+      "category": "code_smell",
+      "rule_id": "long-function",
+      "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 82,
-      "code_snippet": "def __init__(self, cache_dir: Path):\n        self.cache_dir = cache_dir\n        self.cache_dir.mkdir",
-      "suggestion": "Add docstring describing purpose, args, and return value"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema_optimizer.py",
-      "line_number": 251,
+      "line_number": 257,
       "code_snippet": "def __init__(self, max_workers: Optional[int] = None, use_cache: bool = True, cache_dir: Optional[Pa",
-      "suggestion": "Add docstring describing purpose, args, and return value"
+      "suggestion": "Break down into smaller, focused functions"
     },
     {
       "severity": "warning",
@@ -419,19 +288,9 @@
       "rule_id": "long-function",
       "message": "Function may be too long (consider breaking down)",
       "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 364,
+      "line_number": 366,
       "code_snippet": "def __init__(self, root_path: str, use_astgrep: bool = True, use_parallel: bool = False, use_cache: ",
       "suggestion": "Break down into smaller, focused functions"
-    },
-    {
-      "severity": "info",
-      "category": "documentation",
-      "rule_id": "missing-docstring",
-      "message": "Function missing docstring",
-      "file_path": "/Users/alyshialedlie/code/Inventory/src/generators/schema.py",
-      "line_number": 364,
-      "code_snippet": "def __init__(self, root_path: str, use_astgrep: bool = True, use_parallel: bool = False, use_cache: ",
-      "suggestion": "Add docstring describing purpose, args, and return value"
     }
   ]
 }

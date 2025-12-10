@@ -1,13 +1,117 @@
 {
   "summary": {
     "root_directory": "/Users/alyshialedlie/code/Inventory/src",
-    "total_dependencies": 161,
+    "total_dependencies": 162,
     "external_dependencies": 0,
-    "internal_dependencies": 161,
+    "internal_dependencies": 162,
     "files_analyzed": 19,
     "circular_dependencies_count": 0
   },
   "dependencies_by_file": {
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/test_coverage.py": [
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 124,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 414,
+        "is_external": false
+      },
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 562,
+        "is_external": false
+      },
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 619,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 699,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "collections",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      },
+      {
+        "package": "src.utils.logging_config",
+        "import_type": "static",
+        "line_number": 18,
+        "is_external": false
+      },
+      {
+        "package": "src.analyzers.analyzer_optimizer",
+        "import_type": "static",
+        "line_number": 31,
+        "is_external": false
+      },
+      {
+        "package": "src.analyzers.analyzer_optimizer",
+        "import_type": "static",
+        "line_number": 1014,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 1015,
+        "is_external": false
+      }
+    ],
     "/Users/alyshialedlie/code/Inventory/src/analyzers/identify_tools.py": [
       {
         "package": "argparse",
@@ -72,7 +176,7 @@
       {
         "package": "datetime",
         "import_type": "static",
-        "line_number": 1225,
+        "line_number": 1230,
         "is_external": false
       }
     ],
@@ -99,6 +203,284 @@
         "package": ".identify_tools",
         "import_type": "static",
         "line_number": 4,
+        "is_external": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py": [
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "tempfile",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 104,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 251,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 264,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 279,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "collections",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py": [
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 17,
+        "is_external": false
+      },
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 18,
+        "is_external": false
+      },
+      {
+        "package": "hashlib",
+        "import_type": "static",
+        "line_number": 19,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 20,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 59,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 21,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 22,
+        "is_external": false
+      },
+      {
+        "package": "concurrent.futures",
+        "import_type": "static",
+        "line_number": 23,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 24,
+        "is_external": false
+      },
+      {
+        "package": "tqdm",
+        "import_type": "static",
+        "line_number": 28,
+        "is_external": false
+      },
+      {
+        "package": "src.utils.logging_config",
+        "import_type": "static",
+        "line_number": 56,
+        "is_external": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py": [
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 423,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 15,
+        "is_external": false
+      },
+      {
+        "package": "collections",
+        "import_type": "static",
+        "line_number": 16,
+        "is_external": false
+      },
+      {
+        "package": "src.utils.logging_config",
+        "import_type": "static",
+        "line_number": 20,
+        "is_external": false
+      },
+      {
+        "package": "src.analyzers.analyzer_optimizer",
+        "import_type": "static",
+        "line_number": 33,
+        "is_external": false
+      },
+      {
+        "package": "src.analyzers.analyzer_optimizer",
+        "import_type": "static",
+        "line_number": 805,
+        "is_external": false
+      }
+    ],
+    "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "hashlib",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 18,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 15,
+        "is_external": false
+      },
+      {
+        "package": "datetime",
+        "import_type": "static",
+        "line_number": 16,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 17,
         "is_external": false
       }
     ],
@@ -284,382 +666,6 @@
         "is_external": false
       }
     ],
-    "/Users/alyshialedlie/code/Inventory/src/analyzers/code_quality.py": [
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 6,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "os",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "tempfile",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 221,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 234,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 249,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      },
-      {
-        "package": "collections",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/analyzers/test_coverage.py": [
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 124,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 408,
-        "is_external": false
-      },
-      {
-        "package": "os",
-        "import_type": "static",
-        "line_number": 556,
-        "is_external": false
-      },
-      {
-        "package": "os",
-        "import_type": "static",
-        "line_number": 613,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 693,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      },
-      {
-        "package": "collections",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      },
-      {
-        "package": "src.utils.logging_config",
-        "import_type": "static",
-        "line_number": 18,
-        "is_external": false
-      },
-      {
-        "package": "src.analyzers.analyzer_optimizer",
-        "import_type": "static",
-        "line_number": 31,
-        "is_external": false
-      },
-      {
-        "package": "src.analyzers.analyzer_optimizer",
-        "import_type": "static",
-        "line_number": 1008,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 1009,
-        "is_external": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/analyzers/analyzer_optimizer.py": [
-      {
-        "package": "os",
-        "import_type": "static",
-        "line_number": 17,
-        "is_external": false
-      },
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 18,
-        "is_external": false
-      },
-      {
-        "package": "hashlib",
-        "import_type": "static",
-        "line_number": 19,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 20,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 59,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 21,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 22,
-        "is_external": false
-      },
-      {
-        "package": "concurrent.futures",
-        "import_type": "static",
-        "line_number": 23,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 24,
-        "is_external": false
-      },
-      {
-        "package": "tqdm",
-        "import_type": "static",
-        "line_number": 28,
-        "is_external": false
-      },
-      {
-        "package": "src.utils.logging_config",
-        "import_type": "static",
-        "line_number": 56,
-        "is_external": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/analyzers/dependencies.py": [
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "os",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 417,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 15,
-        "is_external": false
-      },
-      {
-        "package": "collections",
-        "import_type": "static",
-        "line_number": 16,
-        "is_external": false
-      },
-      {
-        "package": "src.utils.logging_config",
-        "import_type": "static",
-        "line_number": 20,
-        "is_external": false
-      },
-      {
-        "package": "src.analyzers.analyzer_optimizer",
-        "import_type": "static",
-        "line_number": 33,
-        "is_external": false
-      },
-      {
-        "package": "src.analyzers.analyzer_optimizer",
-        "import_type": "static",
-        "line_number": 799,
-        "is_external": false
-      }
-    ],
-    "/Users/alyshialedlie/code/Inventory/src/cache/analysis_cache.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "hashlib",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 18,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 15,
-        "is_external": false
-      },
-      {
-        "package": "datetime",
-        "import_type": "static",
-        "line_number": 16,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 17,
-        "is_external": false
-      }
-    ],
     "/Users/alyshialedlie/code/Inventory/src/utils/performance_monitor.py": [
       {
         "package": "json",
@@ -682,7 +688,7 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 253,
+        "line_number": 258,
         "is_external": false
       },
       {
@@ -744,7 +750,7 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 266,
+        "line_number": 273,
         "is_external": false
       },
       {
@@ -794,13 +800,13 @@
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 610,
+        "line_number": 622,
         "is_external": false
       },
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 698,
+        "line_number": 710,
         "is_external": false
       },
       {
@@ -960,13 +966,13 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 1185,
+        "line_number": 1196,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 1186,
+        "line_number": 1197,
         "is_external": false
       },
       {
@@ -1002,13 +1008,13 @@
       {
         "package": "src.generators.schema_optimizer",
         "import_type": "static",
-        "line_number": 377,
+        "line_number": 388,
         "is_external": false
       },
       {
         "package": "functools",
         "import_type": "static",
-        "line_number": 828,
+        "line_number": 839,
         "is_external": false
       }
     ]
