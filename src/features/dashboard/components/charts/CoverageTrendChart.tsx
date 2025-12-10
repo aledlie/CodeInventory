@@ -16,11 +16,11 @@ interface CoverageTrendChartProps {
   error?: string | null;
 }
 
-export const CoverageTrendChart: React.FC<CoverageTrendChartProps> = ({
+export function CoverageTrendChart({
   trendData,
   loading,
   error,
-}) => {
+}: CoverageTrendChartProps) {
   const { colors } = useChartTheme();
 
   const chartData: ChartData<'line'> = useMemo(

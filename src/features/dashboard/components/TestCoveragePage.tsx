@@ -11,7 +11,8 @@
  * Aesthetic: Precise metrics with clear call-to-action styling
  */
 
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 import {
   Box,
   Paper,
@@ -56,11 +57,11 @@ type ViewMode = 'list' | 'grouped';
 /**
  * Coverage gauge component - circular progress indicator
  */
-const CoverageGauge: React.FC<{
+function CoverageGauge({ percentage, testedFunctions, totalFunctions }: {
   percentage: number;
   testedFunctions: number;
   totalFunctions: number;
-}> = ({ percentage, testedFunctions, totalFunctions }) => {
+}) {
   // Determine color based on coverage
   const getColor = (pct: number) => {
     if (pct >= 80) return 'var(--color-success, #28a745)';
@@ -179,10 +180,10 @@ const CoverageGauge: React.FC<{
 /**
  * Action card for untested functions summary
  */
-const ActionCard: React.FC<{
+function ActionCard({ untestedCount, topFiles }: {
   untestedCount: number;
   topFiles: { file: string; count: number }[];
-}> = ({ untestedCount, topFiles }) => {
+}) {
   return (
     <Paper
       elevation={0}
@@ -290,9 +291,9 @@ const ActionCard: React.FC<{
 /**
  * Function row component
  */
-const FunctionRow: React.FC<{
+function FunctionRow({ func }: {
   func: PythonFunctionInfo;
-}> = ({ func }) => {
+}) {
   return (
     <TableRow
       hover
@@ -427,7 +428,7 @@ const FunctionRow: React.FC<{
 /**
  * Test Coverage Page Component
  */
-export const TestCoveragePage: React.FC = () => {
+export function TestCoveragePage() {
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const coverageReport = result.data.coverage;
@@ -496,14 +497,14 @@ export const TestCoveragePage: React.FC = () => {
   }, [filteredFunctions, page, rowsPerPage]);
 
   // Handlers
-  const handleFilterChange = useCallback((_: React.MouseEvent<HTMLElement>, newValue: FilterMode | null) => {
+  const handleFilterChange = useCallback((_: MouseEvent<HTMLElement>, newValue: FilterMode | null) => {
     if (newValue) {
       setFilterMode(newValue);
       setPage(0);
     }
   }, []);
 
-  const handleViewModeChange = useCallback((_: React.MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
+  const handleViewModeChange = useCallback((_: MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
     if (newValue) {
       setViewMode(newValue);
     }
@@ -513,7 +514,7 @@ export const TestCoveragePage: React.FC = () => {
     setPage(newPage);
   }, []);
 
-  const handleRowsPerPageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }, []);

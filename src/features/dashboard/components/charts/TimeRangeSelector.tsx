@@ -4,6 +4,7 @@
  * Toggle button group for selecting time range filter.
  */
 
+import type { MouseEvent } from 'react';
 import { ToggleButtonGroup, ToggleButton, Box } from '@mui/material';
 import type { ChartTimeRange } from '../../types/charts';
 
@@ -13,12 +14,12 @@ interface ChartTimeRangeSelectorProps {
   disabled?: boolean;
 }
 
-export const ChartTimeRangeSelector: React.FC<ChartTimeRangeSelectorProps> = ({
+export function ChartTimeRangeSelector({
   value,
   onChange,
   disabled = false,
-}) => {
-  const handleChange = (_event: React.MouseEvent<HTMLElement>, newValue: ChartTimeRange | null) => {
+}: ChartTimeRangeSelectorProps) {
+  const handleChange = (_event: MouseEvent<HTMLElement>, newValue: ChartTimeRange | null) => {
     if (newValue !== null) {
       onChange(newValue);
     }

@@ -11,7 +11,8 @@
  * Aesthetic: Technical precision with subtle depth and smooth animations
  */
 
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 import {
   Box,
   Paper,
@@ -96,10 +97,10 @@ type ViewMode = 'list' | 'grouped';
 /**
  * Severity breakdown card component
  */
-const SeverityBreakdown: React.FC<{
+function SeverityBreakdown({ issuesBySeverity, total }: {
   issuesBySeverity: Record<string, number>;
   total: number;
-}> = ({ issuesBySeverity, total }) => {
+}) {
   return (
     <Paper
       elevation={0}
@@ -178,10 +179,10 @@ const SeverityBreakdown: React.FC<{
 /**
  * Category breakdown card component
  */
-const CategoryBreakdown: React.FC<{
+function CategoryBreakdown({ issuesByCategory, total }: {
   issuesByCategory: Record<string, number>;
   total: number;
-}> = ({ issuesByCategory, total }) => {
+}) {
   return (
     <Paper
       elevation={0}
@@ -235,11 +236,11 @@ const CategoryBreakdown: React.FC<{
 /**
  * Expandable issue row component
  */
-const IssueRow: React.FC<{
+function IssueRow({ issue, isExpanded, onToggle }: {
   issue: PythonQualityIssue;
   isExpanded: boolean;
   onToggle: () => void;
-}> = ({ issue, isExpanded, onToggle }) => {
+}) {
   const severityConfig = SEVERITY_CONFIG[issue.severity];
   const categoryConfig = CATEGORY_CONFIG[issue.category as keyof typeof CATEGORY_CONFIG];
 
@@ -494,7 +495,7 @@ const IssueRow: React.FC<{
 /**
  * Code Quality Page Component
  */
-export const CodeQualityPage: React.FC = () => {
+export function CodeQualityPage() {
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const qualityReport = result.data.quality;
@@ -551,14 +552,14 @@ export const CodeQualityPage: React.FC = () => {
   }, [filteredIssues, page, rowsPerPage]);
 
   // Handlers
-  const handleSeverityChange = useCallback((_: React.MouseEvent<HTMLElement>, newValue: SeverityFilter | null) => {
+  const handleSeverityChange = useCallback((_: MouseEvent<HTMLElement>, newValue: SeverityFilter | null) => {
     if (newValue) {
       setSeverityFilter(newValue);
       setPage(0);
     }
   }, []);
 
-  const handleViewModeChange = useCallback((_: React.MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
+  const handleViewModeChange = useCallback((_: MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
     if (newValue) {
       setViewMode(newValue);
     }
@@ -573,7 +574,7 @@ export const CodeQualityPage: React.FC = () => {
     setExpandedRow(null);
   }, []);
 
-  const handleRowsPerPageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }, []);

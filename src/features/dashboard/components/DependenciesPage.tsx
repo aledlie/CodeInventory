@@ -11,7 +11,8 @@
  * Aesthetic: Technical depth with interactive exploration
  */
 
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 import {
   Box,
   Paper,
@@ -55,10 +56,10 @@ import { useDashboardData } from '../hooks/useDashboardData';
 /**
  * Circular dependency chain visualization
  */
-const CircularDependencyCard: React.FC<{
+function CircularDependencyCard({ chain, index }: {
   chain: readonly string[];
   index: number;
-}> = ({ chain, index }) => {
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -267,12 +268,12 @@ const CircularDependencyCard: React.FC<{
 /**
  * Dependency statistics card
  */
-const DependencyStats: React.FC<{
+function DependencyStats({ totalDependencies, externalDeps, internalDeps, circularCount }: {
   totalDependencies: number;
   externalDeps: number;
   internalDeps: number;
   circularCount: number;
-}> = ({ totalDependencies, externalDeps, internalDeps, circularCount }) => {
+}) {
   const externalPercentage = totalDependencies > 0 ? (externalDeps / totalDependencies) * 100 : 0;
   const internalPercentage = totalDependencies > 0 ? (internalDeps / totalDependencies) * 100 : 0;
 
@@ -447,13 +448,13 @@ const DependencyStats: React.FC<{
 /**
  * File dependency row with expandable details
  */
-const FileDependencyRow: React.FC<{
+function FileDependencyRow({ filePath, imports, isExpanded, onToggle, inCircular }: {
   filePath: string;
   imports: string[];
   isExpanded: boolean;
   onToggle: () => void;
   inCircular: boolean;
-}> = ({ filePath, imports, isExpanded, onToggle, inCircular }) => {
+}) {
   const fileName = filePath.split('/').pop() || filePath;
 
   return (
@@ -589,7 +590,7 @@ type ViewMode = 'circular' | 'all';
 /**
  * Dependencies Page Component
  */
-export const DependenciesPage: React.FC = () => {
+export function DependenciesPage() {
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const dependencyReport = result.data.dependencies;
@@ -644,7 +645,7 @@ export const DependenciesPage: React.FC = () => {
   }, [fileDependencies, page, rowsPerPage]);
 
   // Handlers
-  const handleViewModeChange = useCallback((_: React.MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
+  const handleViewModeChange = useCallback((_: MouseEvent<HTMLElement>, newValue: ViewMode | null) => {
     if (newValue) {
       setViewMode(newValue);
     }
@@ -659,7 +660,7 @@ export const DependenciesPage: React.FC = () => {
     setExpandedRow(null);
   }, []);
 
-  const handleRowsPerPageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }, []);

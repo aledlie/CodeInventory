@@ -16,11 +16,11 @@ interface QualityTrendChartProps {
   error?: string | null;
 }
 
-export const QualityTrendChart: React.FC<QualityTrendChartProps> = ({
+export function QualityTrendChart({
   trendData,
   loading,
   error,
-}) => {
+}: QualityTrendChartProps) {
   const { colors } = useChartTheme();
 
   const chartData: ChartData<'line'> = useMemo(

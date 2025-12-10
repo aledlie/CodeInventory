@@ -38,7 +38,7 @@ interface TrendChartProps extends LineChartProps {
   trendIndicator?: string;
 }
 
-export const TrendChart: React.FC<TrendChartProps> = ({
+export function TrendChart({
   title,
   subtitle,
   data,
@@ -49,7 +49,7 @@ export const TrendChart: React.FC<TrendChartProps> = ({
   animated = true,
   ariaLabel,
   trendIndicator,
-}) => {
+}: TrendChartProps) {
   const chartOptions = useChartOptions('line', {
     plugins: {
       legend: { display: showLegend },

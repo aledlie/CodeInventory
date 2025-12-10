@@ -29,7 +29,6 @@
  * ```
  */
 
-import React from 'react';
 import { Box } from '@mui/material';
 import {
   Assessment as AssessmentIcon,
@@ -130,7 +129,7 @@ function formatNumber(value: number): string {
  * - Gracefully handles null reports with default values
  * - Displays 0 values when reports are unavailable
  */
-export const Dashboard: React.FC<DashboardProps> = ({ outputsPath = '/data' }) => {
+export function Dashboard({ outputsPath = '/data' }: DashboardProps) {
   // Suspend until data is loaded (no loading state needed)
   const { data: result } = useDashboardData(outputsPath);
 

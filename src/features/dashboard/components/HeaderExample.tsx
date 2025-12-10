@@ -5,7 +5,7 @@
  * Shows integration with theme provider, state management, and callbacks.
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Container, Typography, Paper } from '@mui/material';
@@ -15,7 +15,7 @@ import { Header } from './Header';
 /**
  * Example dashboard application showing Header integration
  */
-export const HeaderExample: React.FC = () => {
+export function HeaderExample() {
   // Track last generated timestamp
   const [lastGenerated, setLastGenerated] = useState<Date>(new Date());
   const [dataRefreshing, setDataRefreshing] = useState(false);

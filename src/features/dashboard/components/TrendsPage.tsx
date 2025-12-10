@@ -92,7 +92,7 @@ function TrendsLoadingSkeleton() {
 /**
  * Main TrendsPage component
  */
-export const TrendsPage: React.FC = () => {
+export function TrendsPage() {
   const [timeRange, setTimeRange] = useState<ChartTimeRange>('30d');
 
   return (

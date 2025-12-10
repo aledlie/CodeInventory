@@ -18,12 +18,12 @@ interface IssueVelocityChartProps {
   height?: number;
 }
 
-export const IssueVelocityChart: React.FC<IssueVelocityChartProps> = ({
+export function IssueVelocityChart({
   runs,
   loading,
   error,
   height = 300,
-}) => {
+}: IssueVelocityChartProps) {
   const severityColors = useSeverityColors();
   const baseOptions = useChartOptions('line');
 
