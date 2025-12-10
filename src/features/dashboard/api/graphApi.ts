@@ -53,11 +53,21 @@ function getNodeType(filePath: string): NodeType {
 
 /**
  * Extract short label from file path
+ * For common names like __init__ or schema, include parent directory for disambiguation
  */
 function getNodeLabel(filePath: string): string {
   const parts = filePath.split('/');
   const fileName = parts[parts.length - 1];
-  return fileName.replace(/\.(py|ts|tsx|js|jsx)$/, '');
+  const baseName = fileName.replace(/\.(py|ts|tsx|js|jsx)$/, '');
+
+  // For common/ambiguous names, include parent directory
+  const ambiguousNames = ['__init__', 'index', 'schema', 'utils', 'config', 'types', 'constants'];
+  if (ambiguousNames.includes(baseName) && parts.length >= 2) {
+    const parentDir = parts[parts.length - 2];
+    return `${parentDir}/${baseName}`;
+  }
+
+  return baseName;
 }
 
 /**
@@ -75,7 +85,9 @@ function getModule(filePath: string, rootDir: string): string {
 function transformToGraph(report: PythonDependencyReport): DependencyGraph {
   const nodeMap = new Map<string, GraphNode>();
   const edges: GraphEdge[] = [];
-  const rootDir = ''; // Root dir not available in report
+  // Extract root directory from summary, stripping trailing /src if present
+  const summaryRoot = report.summary?.root_directory || '';
+  const rootDir = summaryRoot.endsWith('/src') ? summaryRoot.slice(0, -4) : summaryRoot;
 
   // First pass: create nodes for all files
   Object.keys(report.dependencies_by_file).forEach((filePath) => {

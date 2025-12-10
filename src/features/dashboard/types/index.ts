@@ -316,17 +316,30 @@ export interface PythonDependencyInfo {
 }
 
 /**
+ * Summary section of dependency report
+ */
+export interface PythonDependencyReportSummary {
+  root_directory: string;
+  total_dependencies: number;
+  external_dependencies: number;
+  internal_dependencies: number;
+  files_analyzed: number;
+  circular_dependencies_count: number;
+}
+
+/**
  * Dependency report from Python analyzer (dependencies.py)
  * Maps to DependencyReport dataclass
  */
 export interface PythonDependencyReport {
-  total_dependencies: number;
-  external_dependencies: number;
-  internal_dependencies: number;
+  summary?: PythonDependencyReportSummary;
+  total_dependencies?: number;
+  external_dependencies?: number;
+  internal_dependencies?: number;
   dependencies_by_file: Record<string, PythonDependencyInfo[]>;
-  dependency_graph: Record<string, string[]>;
+  dependency_graph?: Record<string, string[]>;
   circular_dependencies: string[][];
-  unused_dependencies: string[];
+  unused_dependencies?: string[];
 }
 
 /**
