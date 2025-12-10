@@ -786,97 +786,6 @@
       "is_tested": false
     },
     {
-      "name": "is_external",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 83,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "run_astgrep",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 89,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "extract_package",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 105,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "analyze_python_imports",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 214,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_typescript_imports",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 258,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_file",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 360,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_directory",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 386,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_directory_optimized",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 404,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "find_circular_dependencies",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 528,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "dfs",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 530,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "generate_report_text",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 552,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_report_json",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 717,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/analyzers/dependencies.py",
-      "line_number": 763,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "update",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 49,
@@ -966,6 +875,97 @@
       "line_number": 411,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "is_external",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 83,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "run_astgrep",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 89,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "extract_package",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 105,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "analyze_python_imports",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 214,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_typescript_imports",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 258,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_file",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 360,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 386,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory_optimized",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 404,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "find_circular_dependencies",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 528,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "dfs",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 530,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "generate_report_text",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 552,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_report_json",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 717,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/analyzers/dependencies.py",
+      "line_number": 763,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "analyze_python_file",
@@ -1381,34 +1381,6 @@
       "is_tested": false
     },
     {
-      "name": "generateId",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 22,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "getStoredVisualizations",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "saveToStorage",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "createDefaultConfig",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 56,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "fetchToolsReport",
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 6,
@@ -1441,6 +1413,34 @@
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 41,
       "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "generateId",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 22,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "getStoredVisualizations",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "saveToStorage",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "createDefaultConfig",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 56,
+      "is_async": false,
       "is_tested": false
     },
     {
@@ -4489,97 +4489,6 @@
       "is_tested": false
     },
     {
-      "name": "InsightsPage",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsReport",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 37,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ConcernsList",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsights",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ImprovementsList",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 82,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsByType",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 88,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "InsightsSummaryCard",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 108,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightsSummary",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 114,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "InsightCard",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 130,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useAcknowledgeInsight",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 144,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "RegenerateButton",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 171,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useRegenerateInsights",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 182,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useInsightCounts",
-      "file_path": "src/features/dashboard/hooks/useInsights.ts",
-      "line_number": 203,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "useSavedViews",
       "file_path": "src/features/dashboard/hooks/usePersonalization.ts",
       "line_number": 42,
@@ -4734,93 +4643,93 @@
       "is_tested": false
     },
     {
-      "name": "PredictiveDashboard",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "name": "InsightsPage",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
       "line_number": 31,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "usePredictionsReport",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "name": "useInsightsReport",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
       "line_number": 37,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "QualityForecast",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 56,
+      "name": "ConcernsList",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 55,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "usePrediction",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 62,
+      "name": "useInsights",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 61,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "CriticalRisks",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 84,
+      "name": "ImprovementsList",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 82,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useRisks",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 90,
+      "name": "useInsightsByType",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 88,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "ScenarioComparator",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 110,
+      "name": "InsightsSummaryCard",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 108,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useScenarios",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 122,
+      "name": "useInsightsSummary",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 114,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "usePredictionsSummary",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 137,
+      "name": "InsightCard",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 130,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "ScenarioBuilder",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 153,
+      "name": "useAcknowledgeInsight",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 144,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useUpdateScenario",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 169,
+      "name": "RegenerateButton",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 171,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useRiskCounts",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 193,
+      "name": "useRegenerateInsights",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 182,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useAllPredictions",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 221,
+      "name": "useInsightCounts",
+      "file_path": "src/features/dashboard/hooks/useInsights.ts",
+      "line_number": 203,
       "is_async": false,
       "is_tested": false
     },
@@ -4916,31 +4825,94 @@
       "is_tested": false
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 59,
+      "name": "PredictiveDashboard",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 31,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "useExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 77,
+      "name": "usePredictionsReport",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 37,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "formatBytes",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 348,
+      "name": "QualityForecast",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 56,
       "is_async": false,
       "is_tested": false
     },
     {
-      "name": "handleExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "name": "usePrediction",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
       "line_number": 62,
-      "is_async": true,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "CriticalRisks",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useRisks",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 90,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ScenarioComparator",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useScenarios",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "usePredictionsSummary",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ScenarioBuilder",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 153,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useUpdateScenario",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useRiskCounts",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 193,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useAllPredictions",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 221,
+      "is_async": false,
       "is_tested": false
     },
     {
@@ -4990,6 +4962,34 @@
       "file_path": "src/features/dashboard/hooks/useChartTheme.ts",
       "line_number": 161,
       "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 59,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatBytes",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 348,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 62,
+      "is_async": true,
       "is_tested": false
     },
     {
@@ -5544,28 +5544,6 @@
         "is_async": false
       }
     ],
-    "src/analyzers/dependencies.py": [
-      {
-        "name": "run_astgrep",
-        "line_number": 89,
-        "is_async": false
-      },
-      {
-        "name": "extract_package",
-        "line_number": 105,
-        "is_async": false
-      },
-      {
-        "name": "analyze_directory_optimized",
-        "line_number": 404,
-        "is_async": false
-      },
-      {
-        "name": "dfs",
-        "line_number": 530,
-        "is_async": false
-      }
-    ],
     "src/analyzers/analyzer_optimizer.py": [
       {
         "name": "set_description",
@@ -5610,6 +5588,28 @@
       {
         "name": "batch_items_by_attribute",
         "line_number": 411,
+        "is_async": false
+      }
+    ],
+    "src/analyzers/dependencies.py": [
+      {
+        "name": "run_astgrep",
+        "line_number": 89,
+        "is_async": false
+      },
+      {
+        "name": "extract_package",
+        "line_number": 105,
+        "is_async": false
+      },
+      {
+        "name": "analyze_directory_optimized",
+        "line_number": 404,
+        "is_async": false
+      },
+      {
+        "name": "dfs",
+        "line_number": 530,
         "is_async": false
       }
     ],
@@ -5855,28 +5855,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/visualizationApi.ts": [
-      {
-        "name": "generateId",
-        "line_number": 22,
-        "is_async": false
-      },
-      {
-        "name": "getStoredVisualizations",
-        "line_number": 29,
-        "is_async": false
-      },
-      {
-        "name": "saveToStorage",
-        "line_number": 44,
-        "is_async": false
-      },
-      {
-        "name": "createDefaultConfig",
-        "line_number": 56,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/toolsApi.ts": [
       {
         "name": "fetchToolsReport",
@@ -5902,6 +5880,28 @@
         "name": "fetchToolsStatistics",
         "line_number": 41,
         "is_async": true
+      }
+    ],
+    "src/features/dashboard/api/visualizationApi.ts": [
+      {
+        "name": "generateId",
+        "line_number": 22,
+        "is_async": false
+      },
+      {
+        "name": "getStoredVisualizations",
+        "line_number": 29,
+        "is_async": false
+      },
+      {
+        "name": "saveToStorage",
+        "line_number": 44,
+        "is_async": false
+      },
+      {
+        "name": "createDefaultConfig",
+        "line_number": 56,
+        "is_async": false
       }
     ],
     "src/features/dashboard/api/comparisonApi.ts": [
@@ -8200,73 +8200,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useInsights.ts": [
-      {
-        "name": "InsightsPage",
-        "line_number": 31,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsReport",
-        "line_number": 37,
-        "is_async": false
-      },
-      {
-        "name": "ConcernsList",
-        "line_number": 55,
-        "is_async": false
-      },
-      {
-        "name": "useInsights",
-        "line_number": 61,
-        "is_async": false
-      },
-      {
-        "name": "ImprovementsList",
-        "line_number": 82,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsByType",
-        "line_number": 88,
-        "is_async": false
-      },
-      {
-        "name": "InsightsSummaryCard",
-        "line_number": 108,
-        "is_async": false
-      },
-      {
-        "name": "useInsightsSummary",
-        "line_number": 114,
-        "is_async": false
-      },
-      {
-        "name": "InsightCard",
-        "line_number": 130,
-        "is_async": false
-      },
-      {
-        "name": "useAcknowledgeInsight",
-        "line_number": 144,
-        "is_async": false
-      },
-      {
-        "name": "RegenerateButton",
-        "line_number": 171,
-        "is_async": false
-      },
-      {
-        "name": "useRegenerateInsights",
-        "line_number": 182,
-        "is_async": false
-      },
-      {
-        "name": "useInsightCounts",
-        "line_number": 203,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/hooks/usePersonalization.ts": [
       {
         "name": "useSavedViews",
@@ -8379,70 +8312,70 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/usePredictions.ts": [
+    "src/features/dashboard/hooks/useInsights.ts": [
       {
-        "name": "PredictiveDashboard",
+        "name": "InsightsPage",
         "line_number": 31,
         "is_async": false
       },
       {
-        "name": "usePredictionsReport",
+        "name": "useInsightsReport",
         "line_number": 37,
         "is_async": false
       },
       {
-        "name": "QualityForecast",
-        "line_number": 56,
+        "name": "ConcernsList",
+        "line_number": 55,
         "is_async": false
       },
       {
-        "name": "usePrediction",
-        "line_number": 62,
+        "name": "useInsights",
+        "line_number": 61,
         "is_async": false
       },
       {
-        "name": "CriticalRisks",
-        "line_number": 84,
+        "name": "ImprovementsList",
+        "line_number": 82,
         "is_async": false
       },
       {
-        "name": "useRisks",
-        "line_number": 90,
+        "name": "useInsightsByType",
+        "line_number": 88,
         "is_async": false
       },
       {
-        "name": "ScenarioComparator",
-        "line_number": 110,
+        "name": "InsightsSummaryCard",
+        "line_number": 108,
         "is_async": false
       },
       {
-        "name": "useScenarios",
-        "line_number": 122,
+        "name": "useInsightsSummary",
+        "line_number": 114,
         "is_async": false
       },
       {
-        "name": "usePredictionsSummary",
-        "line_number": 137,
+        "name": "InsightCard",
+        "line_number": 130,
         "is_async": false
       },
       {
-        "name": "ScenarioBuilder",
-        "line_number": 153,
+        "name": "useAcknowledgeInsight",
+        "line_number": 144,
         "is_async": false
       },
       {
-        "name": "useUpdateScenario",
-        "line_number": 169,
+        "name": "RegenerateButton",
+        "line_number": 171,
         "is_async": false
       },
       {
-        "name": "useRiskCounts",
-        "line_number": 193,
+        "name": "useRegenerateInsights",
+        "line_number": 182,
         "is_async": false
       },
       {
-        "name": "useAllPredictions",
-        "line_number": 221,
+        "name": "useInsightCounts",
+        "line_number": 203,
         "is_async": false
       }
     ],
@@ -8513,26 +8446,71 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useExport.ts": [
+    "src/features/dashboard/hooks/usePredictions.ts": [
       {
-        "name": "ExportButton",
-        "line_number": 59,
+        "name": "PredictiveDashboard",
+        "line_number": 31,
         "is_async": false
       },
       {
-        "name": "useExport",
-        "line_number": 77,
+        "name": "usePredictionsReport",
+        "line_number": 37,
         "is_async": false
       },
       {
-        "name": "formatBytes",
-        "line_number": 348,
+        "name": "QualityForecast",
+        "line_number": 56,
         "is_async": false
       },
       {
-        "name": "handleExport",
+        "name": "usePrediction",
         "line_number": 62,
-        "is_async": true
+        "is_async": false
+      },
+      {
+        "name": "CriticalRisks",
+        "line_number": 84,
+        "is_async": false
+      },
+      {
+        "name": "useRisks",
+        "line_number": 90,
+        "is_async": false
+      },
+      {
+        "name": "ScenarioComparator",
+        "line_number": 110,
+        "is_async": false
+      },
+      {
+        "name": "useScenarios",
+        "line_number": 122,
+        "is_async": false
+      },
+      {
+        "name": "usePredictionsSummary",
+        "line_number": 137,
+        "is_async": false
+      },
+      {
+        "name": "ScenarioBuilder",
+        "line_number": 153,
+        "is_async": false
+      },
+      {
+        "name": "useUpdateScenario",
+        "line_number": 169,
+        "is_async": false
+      },
+      {
+        "name": "useRiskCounts",
+        "line_number": 193,
+        "is_async": false
+      },
+      {
+        "name": "useAllPredictions",
+        "line_number": 221,
+        "is_async": false
       }
     ],
     "src/features/dashboard/hooks/useForceSimulation.ts": [
@@ -8572,6 +8550,28 @@
         "name": "useSeverityColors",
         "line_number": 161,
         "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useExport.ts": [
+      {
+        "name": "ExportButton",
+        "line_number": 59,
+        "is_async": false
+      },
+      {
+        "name": "useExport",
+        "line_number": 77,
+        "is_async": false
+      },
+      {
+        "name": "formatBytes",
+        "line_number": 348,
+        "is_async": false
+      },
+      {
+        "name": "handleExport",
+        "line_number": 62,
+        "is_async": true
       }
     ],
     "src/features/dashboard/hooks/useAnalytics.ts": [
