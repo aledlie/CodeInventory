@@ -218,12 +218,18 @@ function CategoryBreakdown({ issuesByCategory, total }: {
               icon={config?.icon}
               label={`${config?.label || category}: ${count} (${percentage}%)`}
               variant="outlined"
+              color="default"
               sx={{
                 borderRadius: 'var(--radius-sm, 8px)',
                 fontWeight: 500,
                 fontSize: 'var(--font-size-small, 12px)',
+                borderColor: 'rgba(0, 0, 0, 0.23)',
+                color: '#1a1a1a',
+                '& .MuiChip-label': {
+                  color: '#1a1a1a',
+                },
                 '& .MuiChip-icon': {
-                  color: 'var(--color-primary, #0066cc)',
+                  color: '#0066cc',
                 },
               }}
             />
