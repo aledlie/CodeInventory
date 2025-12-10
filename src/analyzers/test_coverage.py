@@ -233,7 +233,6 @@ def _extract_functions_astgrep(file_path: Path, language: str, patterns: List[st
 
 class TestCoverageAnalyzer:
     """Analyzes test coverage by matching functions with test cases"""
-
     __test__ = False  # Prevent pytest from collecting this as a test class
 
     def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):

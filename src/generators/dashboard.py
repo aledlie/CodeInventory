@@ -19,7 +19,6 @@ if not logger.handlers:
 
 class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
-
     def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,
                  coverage_path: Optional[Path] = None, dependency_path: Optional[Path] = None,
                  cache_dir: Optional[Path] = None, files_processed: int = 0,
