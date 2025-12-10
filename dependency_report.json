@@ -148,20 +148,6 @@
         "is_external": false
       }
     ],
-    "src/utils/__init__.py": [
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      }
-    ],
     "src/utils/performance_monitor.py": [
       {
         "package": "json",
@@ -215,6 +201,20 @@
         "package": "datetime",
         "import_type": "static",
         "line_number": 13,
+        "is_external": false
+      }
+    ],
+    "src/utils/__init__.py": [
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 3,
         "is_external": false
       }
     ],
@@ -734,6 +734,32 @@
         "is_external": false
       }
     ],
+    "src/analyzers/__init__.py": [
+      {
+        "package": ".code_quality",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": ".dependencies",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".test_coverage",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      },
+      {
+        "package": ".identify_tools",
+        "import_type": "static",
+        "line_number": 4,
+        "is_external": false
+      }
+    ],
     "src/analyzers/test_coverage.py": [
       {
         "package": "argparse",
@@ -835,32 +861,6 @@
         "package": "pathlib",
         "import_type": "static",
         "line_number": 1010,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/__init__.py": [
-      {
-        "package": ".code_quality",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".dependencies",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".test_coverage",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      },
-      {
-        "package": ".identify_tools",
-        "import_type": "static",
-        "line_number": 4,
         "is_external": false
       }
     ],

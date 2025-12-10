@@ -2088,48 +2088,6 @@
       "is_tested": false
     },
     {
-      "name": "calculateQualityScore",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 51,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateHealthStatus",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 78,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateDashboardMetrics",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 119,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidQualityReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 158,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidCoverageReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 180,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidDependencyReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 201,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "useDashboardMetrics",
       "file_path": "src/features/dashboard/helpers/usage-example.tsx",
       "line_number": 22,
@@ -2184,6 +2142,48 @@
       "line_number": 265,
       "is_async": false,
       "is_tested": false
+    },
+    {
+      "name": "calculateQualityScore",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateHealthStatus",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 78,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateDashboardMetrics",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 119,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidQualityReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 158,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidCoverageReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 180,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidDependencyReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 201,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "DashboardLayoutExample",
@@ -3042,14 +3042,14 @@
     {
       "name": "IssueRow",
       "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 240,
+      "line_number": 246,
       "is_async": false,
       "is_tested": false
     },
     {
       "name": "CodeQualityPage",
       "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 499,
+      "line_number": 505,
       "is_async": false,
       "is_tested": false
     },
@@ -3453,6 +3453,76 @@
       "is_tested": false
     },
     {
+      "name": "WidgetNotificationCard",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 72,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "NotificationPreferencesSkeleton",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 234,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "NotificationPreferences",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 252,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleGlobalToggle",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 273,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleSoundToggle",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 278,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleDesktopToggle",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 282,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleQuietHoursToggle",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 287,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleQuietHoursChange",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 294,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleDigestModeChange",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 304,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleWidgetNotificationChange",
+      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
+      "line_number": 311,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "SortableWidget",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 117,
@@ -3540,76 +3610,6 @@
       "name": "handleResizeWidget",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 566,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "WidgetNotificationCard",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 72,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "NotificationPreferencesSkeleton",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 234,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "NotificationPreferences",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 252,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleGlobalToggle",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 273,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleSoundToggle",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 278,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleDesktopToggle",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 282,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleQuietHoursToggle",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 287,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleQuietHoursChange",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 294,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleDigestModeChange",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 304,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleWidgetNotificationChange",
-      "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
-      "line_number": 311,
       "is_async": false,
       "is_tested": false
     },
@@ -5105,34 +5105,6 @@
       "is_tested": false
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 59,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 77,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatBytes",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 348,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 62,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
       "name": "distance",
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 41,
@@ -5165,6 +5137,34 @@
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 168,
       "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 59,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatBytes",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 348,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 62,
+      "is_async": true,
       "is_tested": false
     },
     {
@@ -7235,12 +7235,12 @@
       },
       {
         "name": "IssueRow",
-        "line_number": 240,
+        "line_number": 246,
         "is_async": false
       },
       {
         "name": "CodeQualityPage",
-        "line_number": 499,
+        "line_number": 505,
         "is_async": false
       }
     ],
@@ -7553,6 +7553,58 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/personalization/NotificationPreferences.tsx": [
+      {
+        "name": "WidgetNotificationCard",
+        "line_number": 72,
+        "is_async": false
+      },
+      {
+        "name": "NotificationPreferencesSkeleton",
+        "line_number": 234,
+        "is_async": false
+      },
+      {
+        "name": "NotificationPreferences",
+        "line_number": 252,
+        "is_async": false
+      },
+      {
+        "name": "handleGlobalToggle",
+        "line_number": 273,
+        "is_async": false
+      },
+      {
+        "name": "handleSoundToggle",
+        "line_number": 278,
+        "is_async": false
+      },
+      {
+        "name": "handleDesktopToggle",
+        "line_number": 282,
+        "is_async": false
+      },
+      {
+        "name": "handleQuietHoursToggle",
+        "line_number": 287,
+        "is_async": false
+      },
+      {
+        "name": "handleQuietHoursChange",
+        "line_number": 294,
+        "is_async": false
+      },
+      {
+        "name": "handleDigestModeChange",
+        "line_number": 304,
+        "is_async": false
+      },
+      {
+        "name": "handleWidgetNotificationChange",
+        "line_number": 311,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/components/personalization/DashboardEditor.tsx": [
       {
         "name": "SortableWidget",
@@ -7617,58 +7669,6 @@
       {
         "name": "handleResizeWidget",
         "line_number": 566,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/personalization/NotificationPreferences.tsx": [
-      {
-        "name": "WidgetNotificationCard",
-        "line_number": 72,
-        "is_async": false
-      },
-      {
-        "name": "NotificationPreferencesSkeleton",
-        "line_number": 234,
-        "is_async": false
-      },
-      {
-        "name": "NotificationPreferences",
-        "line_number": 252,
-        "is_async": false
-      },
-      {
-        "name": "handleGlobalToggle",
-        "line_number": 273,
-        "is_async": false
-      },
-      {
-        "name": "handleSoundToggle",
-        "line_number": 278,
-        "is_async": false
-      },
-      {
-        "name": "handleDesktopToggle",
-        "line_number": 282,
-        "is_async": false
-      },
-      {
-        "name": "handleQuietHoursToggle",
-        "line_number": 287,
-        "is_async": false
-      },
-      {
-        "name": "handleQuietHoursChange",
-        "line_number": 294,
-        "is_async": false
-      },
-      {
-        "name": "handleDigestModeChange",
-        "line_number": 304,
-        "is_async": false
-      },
-      {
-        "name": "handleWidgetNotificationChange",
-        "line_number": 311,
         "is_async": false
       }
     ],
@@ -8829,28 +8829,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useExport.ts": [
-      {
-        "name": "ExportButton",
-        "line_number": 59,
-        "is_async": false
-      },
-      {
-        "name": "useExport",
-        "line_number": 77,
-        "is_async": false
-      },
-      {
-        "name": "formatBytes",
-        "line_number": 348,
-        "is_async": false
-      },
-      {
-        "name": "handleExport",
-        "line_number": 62,
-        "is_async": true
-      }
-    ],
     "src/features/dashboard/hooks/useForceSimulation.ts": [
       {
         "name": "distance",
@@ -8876,6 +8854,28 @@
         "name": "useForceSimulation",
         "line_number": 168,
         "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useExport.ts": [
+      {
+        "name": "ExportButton",
+        "line_number": 59,
+        "is_async": false
+      },
+      {
+        "name": "useExport",
+        "line_number": 77,
+        "is_async": false
+      },
+      {
+        "name": "formatBytes",
+        "line_number": 348,
+        "is_async": false
+      },
+      {
+        "name": "handleExport",
+        "line_number": 62,
+        "is_async": true
       }
     ],
     "src/features/dashboard/hooks/useChartTheme.ts": [
