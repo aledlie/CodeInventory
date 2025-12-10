@@ -325,5 +325,97 @@ class TestHardcodedCredentialDetection(unittest.TestCase):
         self.assertFalse(self.analyzer._is_constant_label('password = "secret123"'))
 
 
+class TestDocstringDetection(unittest.TestCase):
+    """Test the _has_no_docstring method to prevent false positives"""
+
+    def setUp(self):
+        """Set up test fixtures"""
+        self.temp_dir = tempfile.mkdtemp()
+        self.analyzer = CodeQualityAnalyzer(Path(self.temp_dir))
+
+    def tearDown(self):
+        """Clean up test fixtures"""
+        import shutil
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_function_with_docstring_not_flagged(self):
+        """Test that functions WITH docstrings are NOT flagged"""
+        # Standard docstring on next line
+        code_with_docstring = '''def my_function(arg1, arg2):
+    """This is a docstring."""
+    return arg1 + arg2'''
+        result = self.analyzer._has_no_docstring(code_with_docstring)
+        self.assertFalse(result, "Function with docstring should NOT be flagged")
+
+    def test_function_with_multiline_docstring_not_flagged(self):
+        """Test that functions with multiline docstrings are NOT flagged"""
+        code_with_multiline = '''def __init__(self, root_dir: Path):
+        """
+        Initialize the analyzer.
+
+        Args:
+            root_dir: Root directory to analyze
+        """
+        self.root_dir = root_dir'''
+        result = self.analyzer._has_no_docstring(code_with_multiline)
+        self.assertFalse(result, "Function with multiline docstring should NOT be flagged")
+
+    def test_function_with_single_quotes_docstring_not_flagged(self):
+        """Test that functions with single-quote docstrings are NOT flagged"""
+        code_with_single_quotes = """def my_function():
+    '''Single quote docstring.'''
+    pass"""
+        result = self.analyzer._has_no_docstring(code_with_single_quotes)
+        self.assertFalse(result, "Function with single-quote docstring should NOT be flagged")
+
+    def test_function_without_docstring_flagged(self):
+        """Test that functions WITHOUT docstrings ARE flagged"""
+        code_without_docstring = '''def my_function(arg1, arg2):
+    return arg1 + arg2'''
+        result = self.analyzer._has_no_docstring(code_without_docstring)
+        self.assertTrue(result, "Function without docstring SHOULD be flagged")
+
+    def test_init_with_docstring_not_flagged(self):
+        """Test __init__ with docstring is NOT flagged (regression test)"""
+        # This was the false positive case - multiline __init__ with docstring
+        code = '''def __init__(self, analyzer_name: str, cache_dir: Path):
+        """
+        Initialize cache for a specific analyzer
+
+        Args:
+            analyzer_name: Name of the analyzer
+            cache_dir: Directory to store cache files
+        """
+        self.analyzer_name = analyzer_name'''
+        result = self.analyzer._has_no_docstring(code)
+        self.assertFalse(result, "__init__ with docstring should NOT be flagged")
+
+    def test_multiarg_init_with_docstring_not_flagged(self):
+        """Test multi-argument __init__ with docstring is NOT flagged"""
+        code = '''def __init__(
+        self,
+        analyzer_name: str,
+        max_workers: Optional[int] = None,
+        use_cache: bool = True
+    ):
+        """
+        Initialize parallel analyzer
+
+        Args:
+            analyzer_name: Name of the analyzer
+            max_workers: Maximum number of workers
+            use_cache: Whether to use caching
+        """
+        self.analyzer_name = analyzer_name'''
+        result = self.analyzer._has_no_docstring(code)
+        self.assertFalse(result, "Multi-arg __init__ with docstring should NOT be flagged")
+
+    def test_inline_docstring_not_flagged(self):
+        """Test inline docstring is NOT flagged"""
+        code = 'def simple(): """Inline doc.""" pass'
+        result = self.analyzer._has_no_docstring(code)
+        self.assertFalse(result, "Inline docstring should NOT be flagged")
+
+
 if __name__ == '__main__':
     unittest.main()
