@@ -31,6 +31,7 @@ import {
 } from '@mui/icons-material';
 import { createFileRoute } from '@tanstack/react-router';
 import { ErrorBoundary } from 'react-error-boundary';
+import { logger } from '../../../features/dashboard/helpers/logger';
 
 // Components
 import { RiskHeatmap } from '../../../features/dashboard/components/analytics/RiskHeatmap';
@@ -129,7 +130,7 @@ function RiskSection() {
 
   const handleRiskClick = (risk: RiskData) => {
     // Could open a detail dialog or navigate
-    console.log('Selected risk:', risk);
+    logger.info('analytics', 'Selected risk', { risk });
   };
 
   return (
@@ -267,7 +268,7 @@ function InsightsSection() {
 
   const handleView = (insight: AnalyticsInsight) => {
     // Could navigate to detail page or open modal
-    console.log('View insight:', insight);
+    logger.info('analytics', 'View insight', { insight });
   };
 
   if (insights.length === 0) {

@@ -11,6 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Container, Typography, Paper } from '@mui/material';
 import { dashboardTheme } from '../../../theme/dashboardTheme';
 import { Header } from './Header';
+import { logger } from '../helpers/logger';
 
 /**
  * Example dashboard application showing Header integration
@@ -25,7 +26,7 @@ export function HeaderExample() {
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log('Auto-refreshing dashboard data...');
+      logger.info('HeaderExample', 'Auto-refreshing dashboard data...');
       setLastGenerated(new Date());
     }, 30000); // 30 seconds
 
@@ -36,7 +37,7 @@ export function HeaderExample() {
    * Handle settings button click
    */
   const handleSettingsClick = () => {
-    console.log('Settings button clicked');
+    logger.info('HeaderExample', 'Settings button clicked');
     alert('Settings modal would open here');
   };
 
@@ -44,7 +45,7 @@ export function HeaderExample() {
    * Handle export button click
    */
   const handleExportClick = async () => {
-    console.log('Export button clicked');
+    logger.info('HeaderExample', 'Export button clicked');
     setDataRefreshing(true);
 
     // Simulate data export
@@ -69,7 +70,7 @@ export function HeaderExample() {
       URL.revokeObjectURL(url);
 
       setDataRefreshing(false);
-      console.log('Export completed');
+      logger.info('HeaderExample', 'Export completed');
     }, 1000);
   };
 

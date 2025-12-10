@@ -16,6 +16,7 @@ import type {
   PredictionFactor,
   GoalMarker,
 } from '../types';
+import { logger } from '../helpers/logger';
 
 // ============================================================================
 // Raw Python Output Types
@@ -299,7 +300,7 @@ export const predictionsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[predictionsApi] Predictions report not found at ${path}`);
+          logger.warn('predictionsApi', `Predictions report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -312,10 +313,10 @@ export const predictionsApi = {
       }
 
       const data = transformPredictionsReport(rawData);
-      console.log(`[predictionsApi] Loaded predictions report: ${data.risks.length} risks`);
+      logger.info('predictionsApi', `Loaded predictions report: ${data.risks.length} risks`);
       return data;
     } catch (error) {
-      console.error(`[predictionsApi] Error loading predictions report from ${path}:`, error);
+      logger.error('predictionsApi', `Error loading predictions report from ${path}`, error instanceof Error ? error : undefined);
       throw error;
     }
   },
@@ -413,7 +414,7 @@ export const predictionsApi = {
     scenario: ScenarioConfig
   ): Promise<ScenarioResult | null> {
     // Placeholder - in production, this would call the analyzer
-    console.log('[predictionsApi] Calculating custom scenario:', scenario);
+    logger.info('predictionsApi', 'Calculating custom scenario', { scenario });
 
     const report = await this.loadPredictionsReport(dataPath);
     if (!report) {

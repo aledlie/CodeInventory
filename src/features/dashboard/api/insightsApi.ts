@@ -15,6 +15,7 @@ import type {
   RegenerateResponse,
   MetricSnapshot,
 } from '../types';
+import { logger } from '../helpers/logger';
 
 // ============================================================================
 // Raw Python Output Types
@@ -213,7 +214,7 @@ export const insightsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[insightsApi] Insights report not found at ${path}`);
+          logger.warn('insightsApi', `Insights report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -226,10 +227,10 @@ export const insightsApi = {
       }
 
       const data = transformInsightsReport(rawData);
-      console.log(`[insightsApi] Loaded insights report: ${data.summary.total} insights`);
+      logger.info('insightsApi', `Loaded insights report: ${data.summary.total} insights`);
       return data;
     } catch (error) {
-      console.error(`[insightsApi] Error loading insights report from ${path}:`, error);
+      logger.error('insightsApi', `Error loading insights report from ${path}`, error instanceof Error ? error : undefined);
       throw error;
     }
   },
@@ -297,7 +298,7 @@ export const insightsApi = {
     userId: string
   ): Promise<AcknowledgeResponse> {
     // Placeholder - in production, this would POST to a backend
-    console.log(`[insightsApi] Acknowledging insight ${insightId} by user ${userId}`);
+    logger.info('insightsApi', `Acknowledging insight ${insightId} by user ${userId}`);
 
     return {
       success: true,
@@ -328,7 +329,7 @@ export const insightsApi = {
    */
   async regenerateInsights(): Promise<RegenerateResponse> {
     // Placeholder - in production, this would trigger analysis
-    console.log('[insightsApi] Regenerating insights...');
+    logger.info('insightsApi', 'Regenerating insights...');
 
     return {
       success: true,

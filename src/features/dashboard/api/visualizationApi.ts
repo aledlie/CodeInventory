@@ -12,6 +12,7 @@ import type {
   ChartType,
   VisualizationMetric,
 } from '../types/visualizations';
+import { logger } from '../helpers/logger';
 
 // Storage key for localStorage
 const STORAGE_KEY = 'code-inventory-visualizations';
@@ -33,7 +34,7 @@ function getStoredVisualizations(): Map<string, VisualizationConfig> {
     const parsed = JSON.parse(stored) as Record<string, VisualizationConfig>;
     return new Map(Object.entries(parsed));
   } catch {
-    console.warn('[visualizationApi] Failed to load from localStorage');
+    logger.warn('visualizationApi', 'Failed to load from localStorage');
     return new Map();
   }
 }
@@ -46,7 +47,7 @@ function saveToStorage(visualizations: Map<string, VisualizationConfig>): void {
     const obj = Object.fromEntries(visualizations);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
   } catch (error) {
-    console.error('[visualizationApi] Failed to save to localStorage:', error);
+    logger.error('visualizationApi', 'Failed to save to localStorage', error instanceof Error ? error : undefined);
   }
 }
 
@@ -178,7 +179,7 @@ export const visualizationApi = {
 
     // For image/PDF formats, would need to use html2canvas or similar
     // Placeholder implementation
-    console.log('[visualizationApi] Export requested:', { id, options });
+    logger.info('visualizationApi', 'Export requested', { id, options });
     return null;
   },
 
