@@ -206,10 +206,12 @@ export function Sidebar({
     <List
       component="nav"
       aria-label="Primary navigation"
+      data-testid="sidebar-navigation"
       sx={{ width: 240, height: '100%', pt: 2 }}
     >
       {navigationItems.map((item) => {
         const active = isActive(item.path);
+        const testId = `nav-item-${item.path.replace(/\//g, '-').replace(/^-/, '')}`;
 
         return (
           <ListItem
@@ -221,6 +223,7 @@ export function Sidebar({
               onClick={() => handleNavigationClick(item.path)}
               onKeyDown={(e) => handleKeyDown(e, item.path)}
               aria-current={active ? 'page' : undefined}
+              data-testid={testId}
               sx={{
                 borderLeft: active ? '4px solid var(--color-primary, #0066cc)' : '4px solid transparent',
                 pl: 2,
@@ -276,6 +279,7 @@ export function Sidebar({
     return (
       <Box
         component="aside"
+        data-testid="sidebar"
         sx={{
           width: 240,
           flexShrink: 0,
