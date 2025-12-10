@@ -730,9 +730,9 @@ export function DependenciesPage() {
           }}
         >
           <DependencyStats
-            totalDependencies={dependencyReport.total_dependencies}
-            externalDeps={dependencyReport.external_dependencies}
-            internalDeps={dependencyReport.internal_dependencies}
+            totalDependencies={dependencyReport.summary?.total_dependencies ?? dependencyReport.total_dependencies ?? 0}
+            externalDeps={dependencyReport.summary?.external_dependencies ?? dependencyReport.external_dependencies ?? 0}
+            internalDeps={dependencyReport.summary?.internal_dependencies ?? dependencyReport.internal_dependencies ?? 0}
             circularCount={dependencyReport.circular_dependencies?.length || 0}
           />
 
