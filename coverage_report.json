@@ -1759,48 +1759,6 @@
       "is_tested": false
     },
     {
-      "name": "transformQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 74,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "transformCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "transformDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 95,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "validateRawQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 125,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "validateRawCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "validateRawDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 167,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "createDefaultWidgetConfig",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 190,
@@ -1937,6 +1895,48 @@
       "name": "getDefaultLayout",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 607,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "transformQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 74,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "transformCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "transformDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 95,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateRawQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 125,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateRawCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "validateRawDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 167,
       "is_async": false,
       "is_tested": false
     },
@@ -2515,6 +2515,13 @@
       "is_tested": false
     },
     {
+      "name": "MetricGrid",
+      "file_path": "src/features/dashboard/components/MetricGrid.tsx",
+      "line_number": 70,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "TabPanel",
       "file_path": "src/features/dashboard/components/SettingsPage.tsx",
       "line_number": 52,
@@ -2651,13 +2658,6 @@
       "name": "handleTabChange",
       "file_path": "src/features/dashboard/components/SettingsPage.tsx",
       "line_number": 314,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "MetricGrid",
-      "file_path": "src/features/dashboard/components/MetricGrid.tsx",
-      "line_number": 70,
       "is_async": false,
       "is_tested": false
     },
@@ -4916,34 +4916,6 @@
       "is_tested": false
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 59,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 77,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "formatBytes",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 348,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleExport",
-      "file_path": "src/features/dashboard/hooks/useExport.ts",
-      "line_number": 62,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
       "name": "distance",
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 41,
@@ -4976,6 +4948,34 @@
       "file_path": "src/features/dashboard/hooks/useForceSimulation.ts",
       "line_number": 168,
       "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 59,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 77,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "formatBytes",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 348,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleExport",
+      "file_path": "src/features/dashboard/hooks/useExport.ts",
+      "line_number": 62,
+      "is_async": true,
       "is_tested": false
     },
     {
@@ -6139,38 +6139,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/api/dashboardApi.ts": [
-      {
-        "name": "transformQualityReport",
-        "line_number": 74,
-        "is_async": false
-      },
-      {
-        "name": "transformCoverageReport",
-        "line_number": 84,
-        "is_async": false
-      },
-      {
-        "name": "transformDependencyReport",
-        "line_number": 95,
-        "is_async": false
-      },
-      {
-        "name": "validateRawQualityReport",
-        "line_number": 125,
-        "is_async": false
-      },
-      {
-        "name": "validateRawCoverageReport",
-        "line_number": 146,
-        "is_async": false
-      },
-      {
-        "name": "validateRawDependencyReport",
-        "line_number": 167,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/api/personalizationApi.ts": [
       {
         "name": "createDefaultWidgetConfig",
@@ -6270,6 +6238,38 @@
       {
         "name": "getDefaultLayout",
         "line_number": 607,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/api/dashboardApi.ts": [
+      {
+        "name": "transformQualityReport",
+        "line_number": 74,
+        "is_async": false
+      },
+      {
+        "name": "transformCoverageReport",
+        "line_number": 84,
+        "is_async": false
+      },
+      {
+        "name": "transformDependencyReport",
+        "line_number": 95,
+        "is_async": false
+      },
+      {
+        "name": "validateRawQualityReport",
+        "line_number": 125,
+        "is_async": false
+      },
+      {
+        "name": "validateRawCoverageReport",
+        "line_number": 146,
+        "is_async": false
+      },
+      {
+        "name": "validateRawDependencyReport",
+        "line_number": 167,
         "is_async": false
       }
     ],
@@ -6672,6 +6672,13 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/MetricGrid.tsx": [
+      {
+        "name": "MetricGrid",
+        "line_number": 70,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/components/SettingsPage.tsx": [
       {
         "name": "TabPanel",
@@ -6771,13 +6778,6 @@
       {
         "name": "handleTabChange",
         "line_number": 314,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/MetricGrid.tsx": [
-      {
-        "name": "MetricGrid",
-        "line_number": 70,
         "is_async": false
       }
     ],
@@ -8513,28 +8513,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/hooks/useExport.ts": [
-      {
-        "name": "ExportButton",
-        "line_number": 59,
-        "is_async": false
-      },
-      {
-        "name": "useExport",
-        "line_number": 77,
-        "is_async": false
-      },
-      {
-        "name": "formatBytes",
-        "line_number": 348,
-        "is_async": false
-      },
-      {
-        "name": "handleExport",
-        "line_number": 62,
-        "is_async": true
-      }
-    ],
     "src/features/dashboard/hooks/useForceSimulation.ts": [
       {
         "name": "distance",
@@ -8560,6 +8538,28 @@
         "name": "useForceSimulation",
         "line_number": 168,
         "is_async": false
+      }
+    ],
+    "src/features/dashboard/hooks/useExport.ts": [
+      {
+        "name": "ExportButton",
+        "line_number": 59,
+        "is_async": false
+      },
+      {
+        "name": "useExport",
+        "line_number": 77,
+        "is_async": false
+      },
+      {
+        "name": "formatBytes",
+        "line_number": 348,
+        "is_async": false
+      },
+      {
+        "name": "handleExport",
+        "line_number": 62,
+        "is_async": true
       }
     ],
     "src/features/dashboard/hooks/useChartTheme.ts": [
