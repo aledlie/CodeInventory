@@ -338,7 +338,6 @@ function PredictiveDashboardContent({ dataPath = '/data' }: PredictiveDashboardP
               data={currentPrediction}
               height={350}
               showLegend
-              showConfidenceBand
             />
           </Paper>
         </Grid>

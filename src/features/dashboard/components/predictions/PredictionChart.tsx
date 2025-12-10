@@ -4,7 +4,6 @@
  * Displays prediction timeline with:
  * - Historical data (solid line)
  * - Predicted trend (dashed line)
- * - Confidence bands (shaded area)
  * - Goal markers
  */
 
@@ -47,8 +46,6 @@ export interface PredictionChartProps {
   height?: number;
   /** Show legend */
   showLegend?: boolean;
-  /** Show confidence band */
-  showConfidenceBand?: boolean;
   /** Title for the chart */
   title?: string;
 }
@@ -79,7 +76,6 @@ export function PredictionChart({
   data,
   height = 300,
   showLegend = true,
-  showConfidenceBand = true,
   title,
 }: PredictionChartProps) {
   const theme = useTheme();
@@ -104,17 +100,6 @@ export function PredictionChart({
       ...Array(data.historical.length - 1).fill(null),
       data.historical[data.historical.length - 1]?.value, // Connection point
       ...data.predicted.map((d) => d.value),
-    ];
-
-    // Confidence bands (only for prediction period)
-    const upperBand = [
-      ...Array(data.historical.length).fill(null),
-      ...data.confidenceBands.upper.map((d) => d.value),
-    ];
-
-    const lowerBand = [
-      ...Array(data.historical.length).fill(null),
-      ...data.confidenceBands.lower.map((d) => d.value),
     ];
 
     const datasets = [
@@ -143,39 +128,15 @@ export function PredictionChart({
       },
     ];
 
-    // Add confidence band if enabled
-    if (showConfidenceBand) {
-      datasets.push(
-        {
-          label: 'Upper Confidence',
-          data: upperBand,
-          borderColor: 'transparent',
-          backgroundColor: `${theme.palette.primary.light}30`,
-          borderWidth: 0,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          tension: 0.3,
-          fill: true,
-        },
-        {
-          label: 'Lower Confidence',
-          data: lowerBand,
-          borderColor: 'transparent',
-          backgroundColor: 'transparent',
-          borderWidth: 0,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          tension: 0.3,
-          fill: false,
-        }
-      );
-    }
+    // Confidence band disabled - Chart.js fill between datasets
+    // requires complex configuration that doesn't work reliably
+    // TODO: Re-implement with proper Chart.js area fill plugin if needed
 
     return {
       labels: allLabels,
       datasets,
     };
-  }, [data, theme, showConfidenceBand]);
+  }, [data, theme]);
 
   const options = useMemo(
     () => ({
@@ -265,7 +226,7 @@ export function PredictionChart({
 
   return (
     <Box sx={{ height, position: 'relative' }}>
-      {/* "Today" marker */}
+      {/* "Today" marker - vertical line indicating current date */}
       {data.historical.length > 0 && (
         <Box
           sx={{
@@ -273,7 +234,7 @@ export function PredictionChart({
             left: `${(data.historical.length / (data.historical.length + data.predicted.length)) * 100}%`,
             top: 0,
             bottom: 30,
-            width: 1,
+            width: '1px',
             bgcolor: 'warning.main',
             zIndex: 1,
             '&::after': {
