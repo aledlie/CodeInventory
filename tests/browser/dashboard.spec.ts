@@ -17,7 +17,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should display main navigation', async ({ page }) => {
-    const sidebar = page.locator('[data-testid="sidebar"]').or(page.locator('nav'));
+    const sidebar = page.locator('[data-testid="sidebar"]');
     await expect(sidebar).toBeVisible();
   });
 
@@ -37,55 +37,27 @@ test.describe('Dashboard', () => {
   });
 
   test('should navigate to quality page', async ({ page }) => {
-    // Try multiple selectors for quality link
-    const qualityLink = page.locator('a[href*="quality"]').first();
-
-    // Skip test if link not found (sidebar may not be fully implemented)
-    const linkCount = await qualityLink.count();
-    if (linkCount === 0) {
-      test.skip();
-      return;
-    }
-
-    await qualityLink.click({ timeout: 10000 });
-    // Wait for navigation with longer timeout
-    await page.waitForURL(/\/dashboard\/quality/, { timeout: 10000 }).catch(() => {
-      // Navigation may not complete in CI - verify link was at least clickable
-    });
+    // Use data-testid for reliable selection
+    const qualityButton = page.locator('[data-testid="nav-item-dashboard-quality"]');
+    await qualityButton.click({ timeout: 10000 });
+    await page.waitForURL(/\/dashboard\/quality/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/dashboard\/quality/);
   });
 
   test('should navigate to coverage page', async ({ page }) => {
-    // Try multiple selectors for coverage link
-    const coverageLink = page.locator('a[href*="coverage"]').first();
-
-    // Skip test if link not found
-    const linkCount = await coverageLink.count();
-    if (linkCount === 0) {
-      test.skip();
-      return;
-    }
-
-    await coverageLink.click({ timeout: 10000 });
-    await page.waitForURL(/\/dashboard\/coverage/, { timeout: 10000 }).catch(() => {
-      // Navigation may not complete in CI
-    });
+    // Use data-testid for reliable selection
+    const coverageButton = page.locator('[data-testid="nav-item-dashboard-coverage"]');
+    await coverageButton.click({ timeout: 10000 });
+    await page.waitForURL(/\/dashboard\/coverage/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/dashboard\/coverage/);
   });
 
   test('should navigate to dependencies page', async ({ page }) => {
-    // Try multiple selectors for dependencies link
-    const depsLink = page.locator('a[href*="dependencies"]').first();
-
-    // Skip test if link not found
-    const linkCount = await depsLink.count();
-    if (linkCount === 0) {
-      test.skip();
-      return;
-    }
-
-    await depsLink.click({ timeout: 10000 });
-    await page.waitForURL(/\/dashboard\/dependencies/, { timeout: 10000 }).catch(() => {
-      // Navigation may not complete in CI
-    });
+    // Use data-testid for reliable selection
+    const depsButton = page.locator('[data-testid="nav-item-dashboard-dependencies"]');
+    await depsButton.click({ timeout: 10000 });
+    await page.waitForURL(/\/dashboard\/dependencies/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/dashboard\/dependencies/);
   });
 });
 
