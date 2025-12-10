@@ -38,6 +38,7 @@ import {
   Loop as LoopIcon,
   Code as CodeIcon,
 } from '@mui/icons-material';
+import { useNavigate } from '@tanstack/react-router';
 
 // Component imports
 import { DashboardLayout } from './DashboardLayout';
@@ -130,6 +131,9 @@ function formatNumber(value: number): string {
  * - Displays 0 values when reports are unavailable
  */
 export function Dashboard({ outputsPath = '/data' }: DashboardProps) {
+  // Navigation hook for sidebar links
+  const navigate = useNavigate();
+
   // Suspend until data is loaded (no loading state needed)
   const { data: result } = useDashboardData(outputsPath);
 
@@ -201,6 +205,7 @@ export function Dashboard({ outputsPath = '/data' }: DashboardProps) {
     <DashboardLayout
       lastGenerated={lastGenerated}
       currentPath="/dashboard"
+      onNavigate={(path) => navigate({ to: path })}
     >
       {/* Main dashboard content area */}
       <Box

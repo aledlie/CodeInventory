@@ -1,5 +1,5 @@
 import { Suspense, useState, useMemo } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import {
   Box,
   Paper,
@@ -25,6 +25,7 @@ export const Route = createFileRoute('/dashboard/tools/')({
 });
 
 function ToolsOverviewPageContent() {
+  const navigate = useNavigate();
   const { data: report } = useToolsReport();
   const { data: stats } = useToolsStatistics();
 
@@ -88,7 +89,7 @@ function ToolsOverviewPageContent() {
   );
 
   return (
-    <DashboardLayout>
+    <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
       <Box sx={{ mb: 3 }}>
         <Typography variant="h4" gutterBottom>
           Tools & Utility Modules

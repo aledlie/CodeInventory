@@ -8,6 +8,7 @@
 import { useState, Suspense } from 'react';
 import { Box, Typography, Grid2 as Grid, Skeleton, Paper } from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { DashboardLayout } from './DashboardLayout';
 import {
   QualityTrendChart,
@@ -93,10 +94,11 @@ function TrendsLoadingSkeleton() {
  * Main TrendsPage component
  */
 export function TrendsPage() {
+  const navigate = useNavigate();
   const [timeRange, setTimeRange] = useState<ChartTimeRange>('30d');
 
   return (
-    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/trends">
+    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/trends" onNavigate={(path) => navigate({ to: path })}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* Page Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 2 }}>

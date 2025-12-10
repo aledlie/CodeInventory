@@ -47,7 +47,7 @@ function CandidateDetailPageContent() {
 
   if (!candidate) {
     return (
-      <DashboardLayout>
+      <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
         <Typography variant="h5" color="error">
           Tool candidate not found: {candidateName}
         </Typography>
@@ -86,7 +86,7 @@ function CandidateDetailPageContent() {
   };
 
   return (
-    <DashboardLayout>
+    <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
       {/* Breadcrumbs */}
       <Breadcrumbs sx={{ mb: 2 }}>
         <Link

@@ -48,6 +48,7 @@ import {
   ViewList as ListIcon,
   ArrowForward as ArrowIcon,
 } from '@mui/icons-material';
+import { useNavigate } from '@tanstack/react-router';
 
 // Layout and data imports
 import { DashboardLayout } from './DashboardLayout';
@@ -591,6 +592,8 @@ type ViewMode = 'circular' | 'all';
  * Dependencies Page Component
  */
 export function DependenciesPage() {
+  const navigate = useNavigate();
+
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const dependencyReport = result.data.dependencies;
@@ -668,7 +671,7 @@ export function DependenciesPage() {
   // Handle no data state
   if (!dependencyReport) {
     return (
-      <DashboardLayout currentPath="/dashboard/dependencies">
+      <DashboardLayout currentPath="/dashboard/dependencies" onNavigate={(path) => navigate({ to: path })}>
         <Box sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h3" color="text.secondary">
             No dependency report available
@@ -682,7 +685,7 @@ export function DependenciesPage() {
   }
 
   return (
-    <DashboardLayout currentPath="/dashboard/dependencies">
+    <DashboardLayout currentPath="/dashboard/dependencies" onNavigate={(path) => navigate({ to: path })}>
       <Box
         sx={{
           display: 'flex',

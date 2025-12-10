@@ -534,14 +534,6 @@
         "is_external": false
       }
     ],
-    "src/cache/__init__.py": [
-      {
-        "package": ".analysis_cache",
-        "import_type": "static",
-        "line_number": 4,
-        "is_external": false
-      }
-    ],
     "src/cache/analysis_cache.py": [
       {
         "package": "json",
@@ -583,6 +575,14 @@
         "package": "typing",
         "import_type": "static",
         "line_number": 17,
+        "is_external": false
+      }
+    ],
+    "src/cache/__init__.py": [
+      {
+        "package": ".analysis_cache",
+        "import_type": "static",
+        "line_number": 4,
         "is_external": false
       }
     ],

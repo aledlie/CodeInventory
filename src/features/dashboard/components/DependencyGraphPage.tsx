@@ -8,6 +8,7 @@
 import { useState, Suspense, useRef, useEffect } from 'react';
 import { Box, Typography, Paper, Skeleton } from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { DashboardLayout } from './DashboardLayout';
 import { DependencyGraphCanvas, NodeDetailPanel } from './graph';
 import { graphApi } from '../api/graphApi';
@@ -97,6 +98,7 @@ function GraphLoadingSkeleton() {
  * Main DependencyGraphPage component
  */
 export function DependencyGraphPage() {
+  const navigate = useNavigate();
   const [graphStats, setGraphStats] = useState<{
     nodes: number;
     edges: number;
@@ -112,7 +114,7 @@ export function DependencyGraphPage() {
   };
 
   return (
-    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/graph">
+    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/graph" onNavigate={(path) => navigate({ to: path })}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* Page Header */}
         <Box>

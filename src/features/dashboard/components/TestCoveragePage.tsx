@@ -45,6 +45,7 @@ import {
   TrendingUp as TrendingUpIcon,
   Warning as WarningIcon,
 } from '@mui/icons-material';
+import { useNavigate } from '@tanstack/react-router';
 
 // Layout and data imports
 import { DashboardLayout } from './DashboardLayout';
@@ -429,6 +430,8 @@ function FunctionRow({ func }: {
  * Test Coverage Page Component
  */
 export function TestCoveragePage() {
+  const navigate = useNavigate();
+
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const coverageReport = result.data.coverage;
@@ -522,7 +525,7 @@ export function TestCoveragePage() {
   // Handle no data state
   if (!coverageReport) {
     return (
-      <DashboardLayout currentPath="/dashboard/coverage">
+      <DashboardLayout currentPath="/dashboard/coverage" onNavigate={(path) => navigate({ to: path })}>
         <Box sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h3" color="text.secondary">
             No coverage report available
@@ -536,7 +539,7 @@ export function TestCoveragePage() {
   }
 
   return (
-    <DashboardLayout currentPath="/dashboard/coverage">
+    <DashboardLayout currentPath="/dashboard/coverage" onNavigate={(path) => navigate({ to: path })}>
       <Box
         sx={{
           display: 'flex',
