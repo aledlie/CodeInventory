@@ -7,14 +7,16 @@ Generates performance reports with recommendations for tuning.
 """
 
 import json
-import logging
+import time
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
 from datetime import datetime
 import statistics
 
-logger = logging.getLogger(__name__)
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 @dataclass
 class PerformanceMetric:
@@ -205,47 +207,46 @@ class PerformanceMonitor:
         logger.info(f"✅ Performance report saved to {output_path}")
 
     def print_report(self, report: PerformanceReport) -> None:
-        """Print performance report to console"""
-        print("\n" + "="*80)
-        print("PERFORMANCE MONITORING REPORT")
-        print("="*80 + "\n")
+        """Print performance report to console using Sentry-integrated logger"""
+        logger.info("=" * 80)
+        logger.info("PERFORMANCE MONITORING REPORT")
+        logger.info("=" * 80)
 
-        print(f"Generated: {report.timestamp}\n")
+        logger.info(f"Generated: {report.timestamp}")
 
         # Summary
-        print("📊 SUMMARY")
-        print("-" * 80)
-        print(f"Total Analyzers: {report.summary['total_analyzers']}")
-        print(f"Total Cached Files: {report.summary['total_cached_files']}")
-        print(f"Caching Enabled: {report.summary['cache_enabled']}")
+        logger.info("📊 SUMMARY")
+        logger.info("-" * 80)
+        logger.info(f"Total Analyzers: {report.summary['total_analyzers']}")
+        logger.info(f"Total Cached Files: {report.summary['total_cached_files']}")
+        logger.info(f"Caching Enabled: {report.summary['cache_enabled']}")
 
         if 'benchmark_speedup' in report.summary:
-            print("\n⚡ SPEEDUP RATIOS")
-            print("-" * 80)
+            logger.info("⚡ SPEEDUP RATIOS")
+            logger.info("-" * 80)
             for key, value in report.summary['benchmark_speedup'].items():
                 name = key.replace('_', ' ').title()
-                print(f"{name}: {value:.2f}x")
+                logger.info(f"{name}: {value:.2f}x")
 
         # Cache Statistics
-        print("\n📦 CACHE STATISTICS")
-        print("-" * 80)
+        logger.info("📦 CACHE STATISTICS")
+        logger.info("-" * 80)
         for analyzer, stats in report.cache_statistics.items():
-            print(f"\n{analyzer.upper()} Analyzer:")
-            print(f"  Cached Files: {stats['total_cached_files']}")
-            print(f"  Version: {stats['version']}")
+            logger.info(f"{analyzer.upper()} Analyzer:")
+            logger.info(f"  Cached Files: {stats['total_cached_files']}")
+            logger.info(f"  Version: {stats['version']}")
             if stats['last_update']:
-                import time
                 last_update = time.strftime('%Y-%m-%d %H:%M:%S',
                                           time.localtime(stats['last_update']))
-                print(f"  Last Update: {last_update}")
+                logger.info(f"  Last Update: {last_update}")
 
         # Recommendations
-        print("\n💡 RECOMMENDATIONS")
-        print("-" * 80)
+        logger.info("💡 RECOMMENDATIONS")
+        logger.info("-" * 80)
         for i, rec in enumerate(report.recommendations, 1):
-            print(f"{i}. {rec}")
+            logger.info(f"{i}. {rec}")
 
-        print("\n" + "="*80 + "\n")
+        logger.info("=" * 80)
 
 
 def main() -> None:

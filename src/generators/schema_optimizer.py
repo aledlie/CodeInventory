@@ -80,7 +80,6 @@ class CacheMetadata:
 
 class SchemaCache:
     """Cache manager for schema generation"""
-
     def __init__(self, cache_dir: Path):
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -250,7 +249,6 @@ class SchemaCache:
 
 class ParallelSchemaProcessor:
     """Process files in parallel for schema generation"""
-
     def __init__(self, max_workers: Optional[int] = None, use_cache: bool = True, cache_dir: Optional[Path] = None):
         """
         Initialize parallel processor

@@ -86,7 +86,6 @@ class CacheMetadata:
 
 class AnalyzerCache:
     """Generic cache manager for any analyzer"""
-
     def __init__(self, analyzer_name: str, cache_dir: Path):
         """
         Initialize cache for a specific analyzer
@@ -224,7 +223,6 @@ class AnalyzerCache:
 
 class ParallelAnalyzer:
     """Generic parallel processor for any analyzer"""
-
     def __init__(
         self,
         analyzer_name: str,

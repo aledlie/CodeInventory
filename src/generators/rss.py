@@ -22,7 +22,6 @@ if not logger.handlers:
 
 class RSSGenerator:
     """Generates RSS feeds from code changes"""
-
     def __init__(self, schemas_path: Path, git_repo: Optional[Path] = None):
         self.schemas_path = schemas_path
         self.git_repo = git_repo

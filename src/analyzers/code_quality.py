@@ -45,7 +45,6 @@ class QualityReport:
 
 class CodeQualityAnalyzer:
     """Analyzes code quality using ast-grep patterns"""
-
     def __init__(self, root_path: Path):
         self.root_path = root_path
         self.report = QualityReport()

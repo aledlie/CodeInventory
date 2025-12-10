@@ -86,62 +86,6 @@
         "is_external": false
       }
     ],
-    "src/utils/performance_monitor.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "statistics",
-        "import_type": "static",
-        "line_number": 14,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 236,
-        "is_external": false
-      },
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 252,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "datetime",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      }
-    ],
     "src/utils/logging_config.py": [
       {
         "package": "logging",
@@ -201,6 +145,62 @@
         "package": "sentry_sdk.integrations.logging",
         "import_type": "static",
         "line_number": 26,
+        "is_external": false
+      }
+    ],
+    "src/utils/performance_monitor.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "statistics",
+        "import_type": "static",
+        "line_number": 14,
+        "is_external": false
+      },
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 253,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "datetime",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "src.utils.logging_config",
+        "import_type": "static",
+        "line_number": 16,
         "is_external": false
       }
     ],
@@ -292,50 +292,6 @@
         "is_external": false
       }
     ],
-    "src/generators/dashboard.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 6,
-        "is_external": false
-      },
-      {
-        "package": "time",
-        "import_type": "static",
-        "line_number": 611,
-        "is_external": false
-      },
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 699,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "datetime",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      }
-    ],
     "src/generators/rss.py": [
       {
         "package": "json",
@@ -364,7 +320,7 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 267,
+        "line_number": 266,
         "is_external": false
       },
       {
@@ -395,6 +351,50 @@
         "package": "xml.etree.ElementTree",
         "import_type": "static",
         "line_number": 11,
+        "is_external": false
+      }
+    ],
+    "src/generators/dashboard.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "time",
+        "import_type": "static",
+        "line_number": 610,
+        "is_external": false
+      },
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 698,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "datetime",
+        "import_type": "static",
+        "line_number": 9,
         "is_external": false
       }
     ],
@@ -482,13 +482,13 @@
       {
         "package": "argparse",
         "import_type": "static",
-        "line_number": 1186,
+        "line_number": 1185,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 1187,
+        "line_number": 1186,
         "is_external": false
       },
       {
@@ -524,13 +524,13 @@
       {
         "package": "src.generators.schema_optimizer",
         "import_type": "static",
-        "line_number": 378,
+        "line_number": 377,
         "is_external": false
       },
       {
         "package": "functools",
         "import_type": "static",
-        "line_number": 829,
+        "line_number": 828,
         "is_external": false
       }
     ],
@@ -688,7 +688,7 @@
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 418,
+        "line_number": 417,
         "is_external": false
       },
       {
@@ -730,33 +730,7 @@
       {
         "package": "src.analyzers.analyzer_optimizer",
         "import_type": "static",
-        "line_number": 800,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/__init__.py": [
-      {
-        "package": ".code_quality",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".dependencies",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".test_coverage",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      },
-      {
-        "package": ".identify_tools",
-        "import_type": "static",
-        "line_number": 4,
+        "line_number": 799,
         "is_external": false
       }
     ],
@@ -794,25 +768,25 @@
       {
         "package": "re",
         "import_type": "static",
-        "line_number": 409,
+        "line_number": 408,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 557,
+        "line_number": 556,
         "is_external": false
       },
       {
         "package": "os",
         "import_type": "static",
-        "line_number": 614,
+        "line_number": 613,
         "is_external": false
       },
       {
         "package": "time",
         "import_type": "static",
-        "line_number": 694,
+        "line_number": 693,
         "is_external": false
       },
       {
@@ -854,93 +828,39 @@
       {
         "package": "src.analyzers.analyzer_optimizer",
         "import_type": "static",
-        "line_number": 1009,
+        "line_number": 1008,
         "is_external": false
       },
       {
         "package": "pathlib",
         "import_type": "static",
-        "line_number": 1010,
+        "line_number": 1009,
         "is_external": false
       }
     ],
-    "src/analyzers/code_quality.py": [
+    "src/analyzers/__init__.py": [
       {
-        "package": "argparse",
+        "package": ".code_quality",
         "import_type": "static",
-        "line_number": 5,
+        "line_number": 1,
         "is_external": false
       },
       {
-        "package": "json",
+        "package": ".dependencies",
         "import_type": "static",
-        "line_number": 6,
+        "line_number": 2,
         "is_external": false
       },
       {
-        "package": "logging",
+        "package": ".test_coverage",
         "import_type": "static",
-        "line_number": 7,
+        "line_number": 3,
         "is_external": false
       },
       {
-        "package": "os",
+        "package": ".identify_tools",
         "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "tempfile",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 222,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 235,
-        "is_external": false
-      },
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 250,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      },
-      {
-        "package": "collections",
-        "import_type": "static",
-        "line_number": 14,
+        "line_number": 4,
         "is_external": false
       }
     ],
@@ -1009,6 +929,86 @@
         "package": "datetime",
         "import_type": "static",
         "line_number": 1225,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/code_quality.py": [
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "os",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "tempfile",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 221,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 234,
+        "is_external": false
+      },
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 249,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      },
+      {
+        "package": "collections",
+        "import_type": "static",
+        "line_number": 14,
         "is_external": false
       }
     ]

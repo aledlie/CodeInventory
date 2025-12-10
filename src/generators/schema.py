@@ -321,7 +321,6 @@ class AstGrepHelper:
 
 class SchemaOrgGenerator:
     """Generate schema.org JSON-LD markup"""
-
     @staticmethod
     def generate_software_source_code(dir_schema: DirectorySchema, dir_name: str) -> Dict[str, Any]:
         """Generate SoftwareSourceCode schema"""

@@ -45,7 +45,6 @@ class AnalysisCache:
         }
     }
     """
-
     def __init__(self, root_dir: Path, cache_file: Optional[Path] = None):
         """
         Initialize analysis cache
@@ -326,7 +325,6 @@ class CheckpointManager:
         }
     }
     """
-
     def __init__(self, root_dir: Path, checkpoint_file: Optional[Path] = None):
         """
         Initialize checkpoint manager
