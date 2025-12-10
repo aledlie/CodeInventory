@@ -51,6 +51,7 @@ import {
   Lightbulb as LightbulbIcon,
   ContentCopy as CopyIcon,
 } from '@mui/icons-material';
+import { useNavigate } from '@tanstack/react-router';
 
 // Layout and data imports
 import { DashboardLayout } from './DashboardLayout';
@@ -496,6 +497,8 @@ function IssueRow({ issue, isExpanded, onToggle }: {
  * Code Quality Page Component
  */
 export function CodeQualityPage() {
+  const navigate = useNavigate();
+
   // Fetch data using Suspense-enabled hook
   const { data: result } = useDashboardData('/data');
   const qualityReport = result.data.quality;
@@ -582,7 +585,7 @@ export function CodeQualityPage() {
   // Handle no data state
   if (!qualityReport) {
     return (
-      <DashboardLayout currentPath="/dashboard/quality">
+      <DashboardLayout currentPath="/dashboard/quality" onNavigate={(path) => navigate({ to: path })}>
         <Box sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h3" color="text.secondary">
             No quality report available
@@ -596,7 +599,7 @@ export function CodeQualityPage() {
   }
 
   return (
-    <DashboardLayout currentPath="/dashboard/quality">
+    <DashboardLayout currentPath="/dashboard/quality" onNavigate={(path) => navigate({ to: path })}>
       <Box
         sx={{
           display: 'flex',

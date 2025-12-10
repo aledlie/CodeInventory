@@ -25,6 +25,7 @@ import {
   Error as ErrorIcon,
 } from '@mui/icons-material';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { DashboardLayout } from './DashboardLayout';
 import { ComparisonCard, DateRangeSelector } from './comparison';
 import { comparisonApi } from '../api/comparisonApi';
@@ -339,6 +340,7 @@ function ComparisonLoadingSkeleton() {
  * Main ComparisonPage component
  */
 export function ComparisonPage() {
+  const navigate = useNavigate();
   const [preset, setPreset] = useState<ComparisonPreset>('week');
   const [customDates, setCustomDates] = useState<[string, string] | null>(null);
 
@@ -358,7 +360,7 @@ export function ComparisonPage() {
   };
 
   return (
-    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/compare">
+    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/compare" onNavigate={(path) => navigate({ to: path })}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* Page Header */}
         <Box>

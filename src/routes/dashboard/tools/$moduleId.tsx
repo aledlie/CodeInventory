@@ -49,7 +49,7 @@ function ModuleDetailPageContent() {
 
   if (!module) {
     return (
-      <DashboardLayout>
+      <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
         <Typography variant="h5" color="error">
           Module not found: {decodedPath}
         </Typography>
@@ -67,7 +67,7 @@ function ModuleDetailPageContent() {
   };
 
   return (
-    <DashboardLayout>
+    <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
       {/* Breadcrumbs */}
       <Breadcrumbs sx={{ mb: 2 }}>
         <Link

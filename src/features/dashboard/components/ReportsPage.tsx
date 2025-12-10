@@ -43,6 +43,7 @@ import {
   DragIndicator as DragIcon,
   CheckCircle as CheckIcon,
 } from '@mui/icons-material';
+import { useNavigate } from '@tanstack/react-router';
 import { DashboardLayout } from './DashboardLayout';
 import { reportsApi, AVAILABLE_SECTIONS } from '../api/reportsApi';
 import type {
@@ -109,6 +110,7 @@ const EXPORT_FORMATS: Array<{
  * Main ReportsPage component
  */
 export function ReportsPage() {
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<ReportType | null>(null);
   const [config, setConfig] = useState<ReportConfig | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -202,7 +204,7 @@ export function ReportsPage() {
   }, []);
 
   return (
-    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/reports">
+    <DashboardLayout lastGenerated={new Date()} currentPath="/dashboard/reports" onNavigate={(path) => navigate({ to: path })}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {/* Page Header */}
         <Box>
