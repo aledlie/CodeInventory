@@ -1209,3 +1209,981 @@ describe('Edge Cases', () => {
     );
   });
 });
+
+// ============================================================================
+// Error Handling Tests
+// ============================================================================
+
+describe('Error Handling', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = createTestQueryClient();
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
+  describe('Query Error States (Non-Suspense)', () => {
+    // Note: useSuspenseQuery hooks (useSavedViews, useSavedView, usePreferences,
+    // useWidgetMetadata, useWidgetsByCategory) throw errors to React error boundaries
+    // instead of exposing them on the result object. They're designed to be used
+    // with React Suspense and error boundaries.
+
+    // useActiveViewId uses regular useQuery, so it exposes error state
+    it('useActiveViewId should track loading state', async () => {
+      let resolvePromise: (value: string | null) => void;
+      const pendingPromise = new Promise<string | null>((resolve) => {
+        resolvePromise = resolve;
+      });
+      vi.mocked(personalizationApi.getActiveViewId).mockReturnValue(pendingPromise);
+
+      const { result } = renderHook(() => useActiveViewId(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      expect(result.current.isLoading).toBe(true);
+      expect(result.current.isFetching).toBe(true);
+
+      await act(async () => {
+        resolvePromise!('view-1');
+      });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+      });
+
+      expect(result.current.data).toBe('view-1');
+    });
+
+    it('useActiveViewId should use staleTime Infinity', async () => {
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-1');
+
+      const { result, rerender } = renderHook(() => useActiveViewId(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.data).toBe('view-1');
+      });
+
+      // Clear mock call count
+      vi.mocked(personalizationApi.getActiveViewId).mockClear();
+
+      // Rerender - should not refetch due to staleTime: Infinity
+      rerender();
+
+      await waitFor(() => {
+        expect(result.current.data).toBe('view-1');
+      });
+
+      // Should not have been called again due to staleTime: Infinity
+      expect(personalizationApi.getActiveViewId).not.toHaveBeenCalled();
+    });
+
+    it('useActiveViewId should expose isSuccess on successful fetch', async () => {
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-123');
+
+      const { result } = renderHook(() => useActiveViewId(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toBe('view-123');
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.isFetching).toBe(false);
+    });
+  });
+
+  describe('Mutation Error States', () => {
+    it('useCreateSavedView should handle creation errors', async () => {
+      const error = new Error('Failed to create view');
+      vi.mocked(personalizationApi.createSavedView).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useCreateSavedView(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate({
+          name: 'Test View',
+          layout: mockLayout,
+          isDefault: false,
+          isShared: false,
+          createdBy: 'user-1',
+        });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+
+    it('useUpdateSavedView should handle update errors', async () => {
+      const error = new Error('View not found');
+      vi.mocked(personalizationApi.updateSavedView).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useUpdateSavedView(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate({ viewId: 'invalid-id', updates: { name: 'New Name' } });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+
+    it('useDeleteSavedView should handle deletion errors', async () => {
+      const error = new Error('Cannot delete the last view');
+      vi.mocked(personalizationApi.deleteSavedView).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useDeleteSavedView(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate('last-view-id');
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+
+    it('useSetActiveView should handle errors', async () => {
+      const error = new Error('Failed to set active view');
+      vi.mocked(personalizationApi.setActiveView).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useSetActiveView(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate('invalid-view-id');
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+
+    it('useUpdatePreferences should handle update errors', async () => {
+      const error = new Error('Failed to update preferences');
+      vi.mocked(personalizationApi.updatePreferences).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useUpdatePreferences(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate({ theme: 'dark' });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+
+    it('useUpdateNotificationSettings should handle update errors', async () => {
+      const error = new Error('Failed to update notifications');
+      vi.mocked(personalizationApi.updateNotificationSettings).mockRejectedValue(error);
+
+      const { result } = renderHook(() => useUpdateNotificationSettings(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await act(async () => {
+        result.current.mutate({ enabled: false });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toEqual(error);
+    });
+  });
+});
+
+// ============================================================================
+// Mutation State Tests
+// ============================================================================
+
+describe('Mutation States', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = createTestQueryClient();
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
+  it('useCreateSavedView should track pending state', async () => {
+    let resolvePromise: (value: SavedView) => void;
+    const pendingPromise = new Promise<SavedView>((resolve) => {
+      resolvePromise = resolve;
+    });
+    vi.mocked(personalizationApi.createSavedView).mockReturnValue(pendingPromise);
+
+    const { result } = renderHook(() => useCreateSavedView(), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.isPending).toBe(false);
+
+    act(() => {
+      result.current.mutate({
+        name: 'Test View',
+        layout: mockLayout,
+        isDefault: false,
+        isShared: false,
+        createdBy: 'user-1',
+      });
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(true);
+    });
+
+    await act(async () => {
+      resolvePromise!(mockSavedView);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(false);
+      expect(result.current.isSuccess).toBe(true);
+    });
+  });
+
+  it('useUpdateSavedView should track pending state', async () => {
+    let resolvePromise: (value: SavedView) => void;
+    const pendingPromise = new Promise<SavedView>((resolve) => {
+      resolvePromise = resolve;
+    });
+    vi.mocked(personalizationApi.updateSavedView).mockReturnValue(pendingPromise);
+
+    const { result } = renderHook(() => useUpdateSavedView(), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.isPending).toBe(false);
+
+    act(() => {
+      result.current.mutate({ viewId: 'view-1', updates: { name: 'Updated' } });
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(true);
+    });
+
+    await act(async () => {
+      resolvePromise!(mockSavedView);
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(false);
+    });
+  });
+
+  it('useDeleteSavedView should track pending state', async () => {
+    let resolvePromise: () => void;
+    const pendingPromise = new Promise<void>((resolve) => {
+      resolvePromise = resolve;
+    });
+    vi.mocked(personalizationApi.deleteSavedView).mockReturnValue(pendingPromise);
+
+    const { result } = renderHook(() => useDeleteSavedView(), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.isPending).toBe(false);
+
+    act(() => {
+      result.current.mutate('view-1');
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(true);
+    });
+
+    await act(async () => {
+      resolvePromise!();
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(false);
+    });
+  });
+
+  it('useSetActiveView should track pending state', async () => {
+    let resolvePromise: () => void;
+    const pendingPromise = new Promise<void>((resolve) => {
+      resolvePromise = resolve;
+    });
+    vi.mocked(personalizationApi.setActiveView).mockReturnValue(pendingPromise);
+
+    const { result } = renderHook(() => useSetActiveView(), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.isPending).toBe(false);
+
+    act(() => {
+      result.current.mutate('view-2');
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(true);
+    });
+
+    await act(async () => {
+      resolvePromise!();
+    });
+
+    await waitFor(() => {
+      expect(result.current.isPending).toBe(false);
+    });
+  });
+});
+
+// ============================================================================
+// findNextAvailablePosition Helper Tests
+// ============================================================================
+
+describe('findNextAvailablePosition (via useLayoutOperations)', () => {
+  it('should find first position in empty layout', () => {
+    const emptyLayout: DashboardLayout = {
+      ...mockLayout,
+      widgets: [],
+    };
+
+    const onLayoutChange = vi.fn();
+    const mockWidgetConfig = {
+      instanceId: 'new-widget',
+      widgetId: 'quality-score' as const,
+      visible: true,
+      size: 'small' as const,
+      position: { row: 0, column: 0 },
+      settings: {},
+    };
+
+    vi.mocked(personalizationApi.createWidgetInstance).mockReturnValue(
+      mockWidgetConfig
+    );
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(emptyLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.addWidget('quality-score');
+    });
+
+    expect(personalizationApi.createWidgetInstance).toHaveBeenCalledWith(
+      'quality-score',
+      { row: 0, column: 0 }
+    );
+  });
+
+  it('should find position in sparse layout', () => {
+    const sparseLayout: DashboardLayout = {
+      ...mockLayout,
+      grid: { ...mockLayout.grid, columns: 3 },
+      widgets: [
+        {
+          instanceId: 'w1',
+          widgetId: 'quality-score',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 0 },
+          settings: {},
+        },
+        {
+          instanceId: 'w2',
+          widgetId: 'coverage-summary',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 2 },
+          settings: {},
+        },
+      ],
+    };
+
+    const onLayoutChange = vi.fn();
+    const mockWidgetConfig = {
+      instanceId: 'new-widget',
+      widgetId: 'dependency-health' as const,
+      visible: true,
+      size: 'small' as const,
+      position: { row: 0, column: 1 },
+      settings: {},
+    };
+
+    vi.mocked(personalizationApi.createWidgetInstance).mockReturnValue(
+      mockWidgetConfig
+    );
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(sparseLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.addWidget('dependency-health');
+    });
+
+    // Should find the gap at column 1
+    expect(personalizationApi.createWidgetInstance).toHaveBeenCalledWith(
+      'dependency-health',
+      { row: 0, column: 1 }
+    );
+  });
+
+  it('should wrap to next row when columns are full', () => {
+    const fullRowLayout: DashboardLayout = {
+      ...mockLayout,
+      grid: { ...mockLayout.grid, columns: 2 },
+      widgets: [
+        {
+          instanceId: 'w1',
+          widgetId: 'quality-score',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 0 },
+          settings: {},
+        },
+        {
+          instanceId: 'w2',
+          widgetId: 'coverage-summary',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 1 },
+          settings: {},
+        },
+      ],
+    };
+
+    const onLayoutChange = vi.fn();
+    const mockWidgetConfig = {
+      instanceId: 'new-widget',
+      widgetId: 'dependency-health' as const,
+      visible: true,
+      size: 'small' as const,
+      position: { row: 1, column: 0 },
+      settings: {},
+    };
+
+    vi.mocked(personalizationApi.createWidgetInstance).mockReturnValue(
+      mockWidgetConfig
+    );
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(fullRowLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.addWidget('dependency-health');
+    });
+
+    expect(personalizationApi.createWidgetInstance).toHaveBeenCalledWith(
+      'dependency-health',
+      { row: 1, column: 0 }
+    );
+  });
+
+  it('should handle multiple full rows', () => {
+    const multiRowLayout: DashboardLayout = {
+      ...mockLayout,
+      grid: { ...mockLayout.grid, columns: 2 },
+      widgets: [
+        {
+          instanceId: 'w1',
+          widgetId: 'quality-score',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 0 },
+          settings: {},
+        },
+        {
+          instanceId: 'w2',
+          widgetId: 'coverage-summary',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 1 },
+          settings: {},
+        },
+        {
+          instanceId: 'w3',
+          widgetId: 'dependency-health',
+          visible: true,
+          size: 'small',
+          position: { row: 1, column: 0 },
+          settings: {},
+        },
+        {
+          instanceId: 'w4',
+          widgetId: 'critical-issues',
+          visible: true,
+          size: 'small',
+          position: { row: 1, column: 1 },
+          settings: {},
+        },
+      ],
+    };
+
+    const onLayoutChange = vi.fn();
+    const mockWidgetConfig = {
+      instanceId: 'new-widget',
+      widgetId: 'recent-trends' as const,
+      visible: true,
+      size: 'small' as const,
+      position: { row: 2, column: 0 },
+      settings: {},
+    };
+
+    vi.mocked(personalizationApi.createWidgetInstance).mockReturnValue(
+      mockWidgetConfig
+    );
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(multiRowLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.addWidget('recent-trends');
+    });
+
+    expect(personalizationApi.createWidgetInstance).toHaveBeenCalledWith(
+      'recent-trends',
+      { row: 2, column: 0 }
+    );
+  });
+});
+
+// ============================================================================
+// Combined Hooks Advanced Tests
+// ============================================================================
+
+describe('Combined Hooks Advanced', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = createTestQueryClient();
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
+  describe('useSavedViewsManager advanced scenarios', () => {
+    it('should handle activeView when view not found in list', async () => {
+      const viewsResponse: SavedViewsResponse = {
+        views: [mockSavedView],
+        defaultViewId: 'view-1',
+      };
+      vi.mocked(personalizationApi.fetchSavedViews).mockResolvedValue(viewsResponse);
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('non-existent-view');
+
+      const { result } = renderHook(() => useSavedViewsManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.views).toBeDefined();
+      });
+
+      // activeView should be undefined because 'non-existent-view' is not in views
+      expect(result.current.activeView).toBeUndefined();
+    });
+
+    it('should expose loading states correctly', async () => {
+      let resolveCreate: (value: SavedView) => void;
+      const createPromise = new Promise<SavedView>((resolve) => {
+        resolveCreate = resolve;
+      });
+
+      vi.mocked(personalizationApi.fetchSavedViews).mockResolvedValue(mockSavedViewsResponse);
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-1');
+      vi.mocked(personalizationApi.createSavedView).mockReturnValue(createPromise);
+
+      const { result } = renderHook(() => useSavedViewsManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.views).toBeDefined();
+      });
+
+      expect(result.current.isCreating).toBe(false);
+
+      act(() => {
+        result.current.createView({
+          name: 'New View',
+          layout: mockLayout,
+          isDefault: false,
+          isShared: false,
+          createdBy: 'user-1',
+        });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isCreating).toBe(true);
+      });
+
+      await act(async () => {
+        resolveCreate!(mockSavedView);
+      });
+
+      await waitFor(() => {
+        expect(result.current.isCreating).toBe(false);
+      });
+    });
+
+    it('should call updateView with correct mutation signature', async () => {
+      const updatedView = { ...mockSavedView, name: 'Updated' };
+      vi.mocked(personalizationApi.fetchSavedViews).mockResolvedValue(mockSavedViewsResponse);
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-1');
+      vi.mocked(personalizationApi.updateSavedView).mockResolvedValue(updatedView);
+
+      const { result } = renderHook(() => useSavedViewsManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.views).toBeDefined();
+      });
+
+      await act(async () => {
+        result.current.updateView({ viewId: 'view-1', updates: { name: 'Updated' } });
+      });
+
+      await waitFor(() => {
+        expect(personalizationApi.updateSavedView).toHaveBeenCalledWith(
+          'view-1',
+          { name: 'Updated' }
+        );
+      });
+    });
+
+    it('should call deleteView correctly', async () => {
+      vi.mocked(personalizationApi.fetchSavedViews).mockResolvedValue(mockSavedViewsResponse);
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-1');
+      vi.mocked(personalizationApi.deleteSavedView).mockResolvedValue(undefined);
+
+      const { result } = renderHook(() => useSavedViewsManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.views).toBeDefined();
+      });
+
+      await act(async () => {
+        result.current.deleteView('view-1');
+      });
+
+      await waitFor(() => {
+        expect(personalizationApi.deleteSavedView).toHaveBeenCalledWith('view-1');
+      });
+    });
+
+    it('should call selectView correctly', async () => {
+      vi.mocked(personalizationApi.fetchSavedViews).mockResolvedValue(mockSavedViewsResponse);
+      vi.mocked(personalizationApi.getActiveViewId).mockResolvedValue('view-1');
+      vi.mocked(personalizationApi.setActiveView).mockResolvedValue(undefined);
+
+      const { result } = renderHook(() => useSavedViewsManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.views).toBeDefined();
+      });
+
+      await act(async () => {
+        result.current.selectView('view-2');
+      });
+
+      await waitFor(() => {
+        expect(personalizationApi.setActiveView).toHaveBeenCalledWith('view-2');
+      });
+    });
+  });
+
+  describe('usePreferencesManager advanced scenarios', () => {
+    it('should expose loading states correctly', async () => {
+      let resolveUpdate: (value: DashboardPreferences) => void;
+      const updatePromise = new Promise<DashboardPreferences>((resolve) => {
+        resolveUpdate = resolve;
+      });
+
+      vi.mocked(personalizationApi.fetchPreferences).mockResolvedValue(mockPreferencesResponse);
+      vi.mocked(personalizationApi.updatePreferences).mockReturnValue(updatePromise);
+
+      const { result } = renderHook(() => usePreferencesManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.preferences).toBeDefined();
+      });
+
+      expect(result.current.isUpdatingPreferences).toBe(false);
+
+      act(() => {
+        result.current.updatePreferences({ theme: 'dark' });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isUpdatingPreferences).toBe(true);
+      });
+
+      await act(async () => {
+        resolveUpdate!(mockPreferences);
+      });
+
+      await waitFor(() => {
+        expect(result.current.isUpdatingPreferences).toBe(false);
+      });
+    });
+
+    it('should track notification settings update state', async () => {
+      let resolveUpdate: (value: DashboardNotificationSettings) => void;
+      const updatePromise = new Promise<DashboardNotificationSettings>((resolve) => {
+        resolveUpdate = resolve;
+      });
+
+      vi.mocked(personalizationApi.fetchPreferences).mockResolvedValue(mockPreferencesResponse);
+      vi.mocked(personalizationApi.updateNotificationSettings).mockReturnValue(updatePromise);
+
+      const { result } = renderHook(() => usePreferencesManager(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.preferences).toBeDefined();
+      });
+
+      expect(result.current.isUpdatingNotifications).toBe(false);
+
+      act(() => {
+        result.current.updateNotifications({ enabled: false });
+      });
+
+      await waitFor(() => {
+        expect(result.current.isUpdatingNotifications).toBe(true);
+      });
+
+      await act(async () => {
+        resolveUpdate!(mockNotificationSettings);
+      });
+
+      await waitFor(() => {
+        expect(result.current.isUpdatingNotifications).toBe(false);
+      });
+    });
+  });
+
+  describe('useWidgetLibrary advanced scenarios', () => {
+    it('should handle empty widgets list', async () => {
+      vi.mocked(personalizationApi.fetchWidgetMetadata).mockResolvedValue([]);
+
+      const { result } = renderHook(() => useWidgetLibrary(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.widgets).toEqual([]);
+      });
+
+      expect(result.current.categories).toEqual([]);
+      expect(result.current.getWidgetsByCategory('quality')).toEqual([]);
+      expect(result.current.getWidgetById('quality-score')).toBeUndefined();
+    });
+
+    it('should filter correctly for all categories', async () => {
+      vi.mocked(personalizationApi.fetchWidgetMetadata).mockResolvedValue(mockWidgetMetadata);
+
+      const { result } = renderHook(() => useWidgetLibrary(), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        expect(result.current.widgets).toBeDefined();
+      });
+
+      // Test all category filter
+      const allWidgets = result.current.getWidgetsByCategory('all');
+      expect(allWidgets).toHaveLength(mockWidgetMetadata.length);
+
+      // Test quality filter
+      const qualityWidgets = result.current.getWidgetsByCategory('quality');
+      expect(qualityWidgets.every(w => w.category === 'quality')).toBe(true);
+
+      // Test coverage filter
+      const coverageWidgets = result.current.getWidgetsByCategory('coverage');
+      expect(coverageWidgets.every(w => w.category === 'coverage')).toBe(true);
+
+      // Test dependencies filter
+      const depsWidgets = result.current.getWidgetsByCategory('dependencies');
+      expect(depsWidgets.every(w => w.category === 'dependencies')).toBe(true);
+    });
+  });
+});
+
+// ============================================================================
+// Layout Operations Advanced Tests
+// ============================================================================
+
+describe('Layout Operations Advanced', () => {
+  it('should update widget settings correctly', () => {
+    const onLayoutChange = vi.fn();
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(mockLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.updateWidget('widget-1', {
+        settings: { customSetting: 'value' }
+      });
+    });
+
+    expect(onLayoutChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        widgets: expect.arrayContaining([
+          expect.objectContaining({
+            instanceId: 'widget-1',
+            settings: { customSetting: 'value' },
+          }),
+        ]),
+      })
+    );
+  });
+
+  it('should handle updating non-existent widget gracefully', () => {
+    const onLayoutChange = vi.fn();
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(mockLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.updateWidget('non-existent', { size: 'large' });
+    });
+
+    // Should still call onLayoutChange, but widget won't be found/modified
+    expect(onLayoutChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        widgets: mockLayout.widgets,
+      })
+    );
+  });
+
+  it('should handle removing non-existent widget', () => {
+    const onLayoutChange = vi.fn();
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(mockLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.removeWidget('non-existent');
+    });
+
+    // Should call onLayoutChange with original widgets (nothing removed)
+    expect(onLayoutChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        widgets: mockLayout.widgets,
+      })
+    );
+  });
+
+  it('should preserve other widget properties when updating', () => {
+    const onLayoutChange = vi.fn();
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(mockLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.updateWidget('widget-1', { visible: false });
+    });
+
+    const callArg = onLayoutChange.mock.calls[0][0];
+    const updatedWidget = callArg.widgets.find((w: { instanceId: string }) => w.instanceId === 'widget-1');
+
+    // Original properties should be preserved
+    expect(updatedWidget.widgetId).toBe('quality-score');
+    expect(updatedWidget.size).toBe('small');
+    expect(updatedWidget.position).toEqual({ row: 0, column: 0 });
+    // Updated property
+    expect(updatedWidget.visible).toBe(false);
+  });
+
+  it('should handle layout with single column grid', () => {
+    const singleColumnLayout: DashboardLayout = {
+      ...mockLayout,
+      grid: { ...mockLayout.grid, columns: 1 },
+      widgets: [
+        {
+          instanceId: 'w1',
+          widgetId: 'quality-score',
+          visible: true,
+          size: 'small',
+          position: { row: 0, column: 0 },
+          settings: {},
+        },
+      ],
+    };
+
+    const onLayoutChange = vi.fn();
+    const mockWidgetConfig = {
+      instanceId: 'new-widget',
+      widgetId: 'coverage-summary' as const,
+      visible: true,
+      size: 'small' as const,
+      position: { row: 1, column: 0 },
+      settings: {},
+    };
+
+    vi.mocked(personalizationApi.createWidgetInstance).mockReturnValue(
+      mockWidgetConfig
+    );
+
+    const { result } = renderHook(() =>
+      useLayoutOperations(singleColumnLayout, onLayoutChange)
+    );
+
+    act(() => {
+      result.current.addWidget('coverage-summary');
+    });
+
+    // With single column, next available position should be row 1, column 0
+    expect(personalizationApi.createWidgetInstance).toHaveBeenCalledWith(
+      'coverage-summary',
+      { row: 1, column: 0 }
+    );
+  });
+});
