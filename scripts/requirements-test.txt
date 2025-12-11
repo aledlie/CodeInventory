@@ -1,0 +1,17 @@
+# Test dependencies for Code Inventory
+
+# Testing framework
+unittest-xml-reporting>=3.2.0
+
+# Coverage analysis
+coverage>=7.0.0
+
+# Optional: Enhanced testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-html>=3.2.0
+
+# Optional: Code quality
+flake8>=6.0.0
+pylint>=2.17.0
+mypy>=1.0.0
