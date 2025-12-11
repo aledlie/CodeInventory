@@ -1,161 +1,71 @@
 {
-  "utility_modules": [
+  "summary": {
+    "total_tools": 6,
+    "by_category": {
+      "analyzers": 3,
+      "generators": 3
+    },
+    "last_updated": "2025-12-10T22:25:06.000000Z"
+  },
+  "tools": [
     {
-      "file_path": "src/analyzers/code_quality.py",
-      "function_count": 12,
-      "class_count": 2,
-      "external_dependencies": ["ast_grep_py", "pydantic", "pathlib"],
-      "internal_dependencies": ["src.utils.cache", "src.validators.schema"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.92
+      "name": "Code Quality Analyzer",
+      "path": "src/analyzers/code_quality.py",
+      "category": "analyzers",
+      "description": "Analyzes code for quality issues using ast-grep patterns",
+      "status": "active"
     },
     {
-      "file_path": "src/analyzers/test_coverage.py",
-      "function_count": 8,
-      "class_count": 1,
-      "external_dependencies": ["ast_grep_py", "json", "pathlib"],
-      "internal_dependencies": ["src.utils.cache"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.88
+      "name": "Test Coverage Analyzer",
+      "path": "src/analyzers/test_coverage.py",
+      "category": "analyzers",
+      "description": "Analyzes test coverage across the codebase",
+      "status": "active"
     },
     {
-      "file_path": "src/analyzers/dependencies.py",
-      "function_count": 15,
-      "class_count": 3,
-      "external_dependencies": ["ast_grep_py", "networkx", "pathlib"],
-      "internal_dependencies": ["src.utils.cache", "src.utils.graph"],
-      "modularity_score": "modular",
-      "extraction_potential": 0.75
+      "name": "Dependency Analyzer",
+      "path": "src/analyzers/dependencies.py",
+      "category": "analyzers",
+      "description": "Analyzes module dependencies and detects circular imports",
+      "status": "active"
     },
     {
-      "file_path": "src/generators/schema.py",
-      "function_count": 10,
-      "class_count": 2,
-      "external_dependencies": ["json", "pathlib", "typing"],
-      "internal_dependencies": ["src.analyzers.code_quality"],
-      "modularity_score": "modular",
-      "extraction_potential": 0.71
+      "name": "Schema Generator",
+      "path": "src/generators/schema.py",
+      "category": "generators",
+      "description": "Generates Schema.org structured data from code analysis",
+      "status": "active"
     },
     {
-      "file_path": "src/generators/dashboard.py",
-      "function_count": 6,
-      "class_count": 1,
-      "external_dependencies": ["jinja2", "json", "pathlib"],
-      "internal_dependencies": ["src.analyzers", "src.generators.schema"],
-      "modularity_score": "semi_modular",
-      "extraction_potential": 0.55
+      "name": "Dashboard Generator",
+      "path": "src/generators/dashboard.py",
+      "category": "generators",
+      "description": "Generates interactive HTML dashboards from reports",
+      "status": "active"
     },
     {
-      "file_path": "src/utils/cache.py",
-      "function_count": 5,
-      "class_count": 1,
-      "external_dependencies": ["hashlib", "json", "pathlib"],
-      "internal_dependencies": [],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.95
-    },
-    {
-      "file_path": "src/utils/graph.py",
-      "function_count": 4,
-      "class_count": 0,
-      "external_dependencies": ["networkx"],
-      "internal_dependencies": [],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.90
-    },
-    {
-      "file_path": "src/validators/schema.py",
-      "function_count": 8,
-      "class_count": 2,
-      "external_dependencies": ["pydantic", "json"],
-      "internal_dependencies": [],
-      "modularity_score": "modular",
-      "extraction_potential": 0.78
-    },
-    {
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "function_count": 7,
-      "class_count": 0,
-      "external_dependencies": ["@tanstack/react-query"],
-      "internal_dependencies": ["types"],
-      "modularity_score": "semi_modular",
-      "extraction_potential": 0.60
-    },
-    {
-      "file_path": "src/features/dashboard/components/MetricGrid.tsx",
-      "function_count": 1,
-      "class_count": 0,
-      "external_dependencies": ["@mui/material", "react"],
-      "internal_dependencies": ["theme"],
-      "modularity_score": "coupled",
-      "extraction_potential": 0.35
+      "name": "RSS Generator",
+      "path": "src/generators/rss.py",
+      "category": "generators",
+      "description": "Generates RSS feeds from code changes",
+      "status": "active"
     }
   ],
-  "tool_candidates": [
+  "utilities": [
     {
-      "name": "CodeQualityAnalyzer",
-      "type": "class",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 15,
-      "description": "Analyzes code quality metrics using ast-grep patterns",
-      "dependencies": ["ast_grep_py", "pydantic"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.92,
-      "extraction_complexity": "trivial",
-      "suggested_package_name": "code-quality-analyzer",
-      "rationale": "Pure analysis logic with minimal dependencies, easily extractable as standalone CLI tool"
+      "name": "run_analysis.py",
+      "path": "scripts/run_analysis.py",
+      "description": "Master script to run all analysis tools"
     },
     {
-      "name": "CacheManager",
-      "type": "class",
-      "file_path": "src/utils/cache.py",
-      "line_number": 8,
-      "description": "Content-based caching with SHA-256 hashing",
-      "dependencies": ["hashlib", "json", "pathlib"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.95,
-      "extraction_complexity": "trivial",
-      "suggested_package_name": "content-cache",
-      "rationale": "Zero internal dependencies, stdlib only, perfect for standalone package"
+      "name": "run_tests.py",
+      "path": "scripts/run_tests.py",
+      "description": "Test runner with coverage reporting"
     },
     {
-      "name": "build_dependency_graph",
-      "type": "function",
-      "file_path": "src/utils/graph.py",
-      "line_number": 22,
-      "description": "Builds a NetworkX graph from dependency data",
-      "dependencies": ["networkx"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.90,
-      "extraction_complexity": "trivial",
-      "suggested_package_name": "dependency-graph-builder",
-      "rationale": "Single external dependency, pure function with clear interface"
-    },
-    {
-      "name": "TestCoverageAnalyzer",
-      "type": "class",
-      "file_path": "src/analyzers/test_coverage.py",
-      "line_number": 12,
-      "description": "Analyzes test coverage and identifies gaps",
-      "dependencies": ["ast_grep_py", "json"],
-      "modularity_score": "highly_modular",
-      "extraction_potential": 0.88,
-      "extraction_complexity": "moderate",
-      "suggested_package_name": "test-coverage-analyzer",
-      "rationale": "Self-contained analysis module with well-defined output format"
-    },
-    {
-      "name": "SchemaValidator",
-      "type": "class",
-      "file_path": "src/validators/schema.py",
-      "line_number": 25,
-      "description": "Validates Schema.org compliance for code documentation",
-      "dependencies": ["pydantic", "json"],
-      "modularity_score": "modular",
-      "extraction_potential": 0.78,
-      "extraction_complexity": "moderate",
-      "suggested_package_name": "schema-validator",
-      "rationale": "Generic validation logic, could be reused across projects"
+      "name": "verify-environment.js",
+      "path": "scripts/verify-environment.js",
+      "description": "Environment verification for dependencies"
     }
   ]
 }
