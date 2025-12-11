@@ -1,71 +1,9 @@
 {
   "summary": {
-    "total_tools": 6,
-    "by_category": {
-      "analyzers": 3,
-      "generators": 3
-    },
-    "last_updated": "2025-12-10T22:25:06.000000Z"
+    "total_tools": 0,
+    "by_category": {},
+    "last_updated": "2025-12-10T23:05:42.874034Z"
   },
-  "tools": [
-    {
-      "name": "Code Quality Analyzer",
-      "path": "src/analyzers/code_quality.py",
-      "category": "analyzers",
-      "description": "Analyzes code for quality issues using ast-grep patterns",
-      "status": "active"
-    },
-    {
-      "name": "Test Coverage Analyzer",
-      "path": "src/analyzers/test_coverage.py",
-      "category": "analyzers",
-      "description": "Analyzes test coverage across the codebase",
-      "status": "active"
-    },
-    {
-      "name": "Dependency Analyzer",
-      "path": "src/analyzers/dependencies.py",
-      "category": "analyzers",
-      "description": "Analyzes module dependencies and detects circular imports",
-      "status": "active"
-    },
-    {
-      "name": "Schema Generator",
-      "path": "src/generators/schema.py",
-      "category": "generators",
-      "description": "Generates Schema.org structured data from code analysis",
-      "status": "active"
-    },
-    {
-      "name": "Dashboard Generator",
-      "path": "src/generators/dashboard.py",
-      "category": "generators",
-      "description": "Generates interactive HTML dashboards from reports",
-      "status": "active"
-    },
-    {
-      "name": "RSS Generator",
-      "path": "src/generators/rss.py",
-      "category": "generators",
-      "description": "Generates RSS feeds from code changes",
-      "status": "active"
-    }
-  ],
-  "utilities": [
-    {
-      "name": "run_analysis.py",
-      "path": "scripts/run_analysis.py",
-      "description": "Master script to run all analysis tools"
-    },
-    {
-      "name": "run_tests.py",
-      "path": "scripts/run_tests.py",
-      "description": "Test runner with coverage reporting"
-    },
-    {
-      "name": "verify-environment.js",
-      "path": "scripts/verify-environment.js",
-      "description": "Environment verification for dependencies"
-    }
-  ]
+  "tools": [],
+  "utilities": []
 }

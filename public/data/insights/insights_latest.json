@@ -1,131 +1,81 @@
 {
   "summary": {
-    "total": 4,
+    "total": 3,
     "by_type": {
       "concern": 1,
-      "recommendation": 2,
+      "recommendation": 1,
       "improvement": 1
     },
     "by_severity": {
       "high": 1,
       "medium": 1,
-      "low": 2
+      "low": 1
     },
-    "unacknowledged": 3,
-    "overall_confidence": 92,
-    "headline": "Analysis complete: 349 quality issues, 15.8% test coverage, 0 circular dependencies across 238 files.",
-    "last_updated": "2025-12-10T22:25:06.000000Z"
+    "unacknowledged": 2,
+    "overall_confidence": 94,
+    "headline": "Analysis: 56 issues, 25.4% coverage, 0 circular deps",
+    "last_updated": "2025-12-10T23:05:42.874034Z"
   },
   "insights": [
     {
-      "id": "insight-771710c8",
+      "id": "insight-ea157edf",
       "type": "concern",
       "severity": "high",
       "title": "Test Coverage Below Target",
-      "explanation": "Test coverage is at 15.8%, well below the recommended 70% minimum. 657 functions remain untested.",
+      "explanation": "Test coverage is at 25.4%, below the recommended 70% minimum.",
       "confidence": 95,
       "metrics": [
         {
           "name": "Coverage",
-          "current": 15.77,
-          "previous": 25.4,
-          "change": -9.63,
-          "change_percent": -37.9,
-          "trend": "down",
+          "current": 25.4,
           "unit": "%"
         }
       ],
-      "affected_files": [],
       "recommendations": [
-        "Prioritize adding tests for critical business logic",
-        "Focus on untested functions in core modules",
-        "Consider adopting TDD for new features"
+        "Prioritize adding tests for critical business logic"
       ],
-      "created_at": "2025-12-10T22:25:06.000000Z",
-      "updated_at": "2025-12-10T22:25:06.000000Z",
+      "created_at": "2025-12-10T23:05:42.874034Z",
       "acknowledged": false
     },
     {
-      "id": "insight-8dcbd1cc",
+      "id": "insight-b4684b12",
       "type": "recommendation",
       "severity": "medium",
       "title": "Code Quality Issues Detected",
-      "explanation": "Found 349 code quality issues across 238 files. 307 are warnings that should be addressed.",
+      "explanation": "Found 56 code quality issues. 21 are warnings.",
       "confidence": 88,
       "metrics": [
         {
           "name": "Issues",
-          "current": 349,
-          "previous": 56,
-          "change": 293,
-          "change_percent": 523.2,
-          "trend": "up",
+          "current": 56,
           "unit": "issues"
         }
       ],
-      "affected_files": [],
       "recommendations": [
-        "Address warning-level issues in critical paths first",
-        "Consider automated linting in CI/CD pipeline",
-        "Review documentation coverage"
+        "Address warning-level issues in critical paths first"
       ],
-      "created_at": "2025-12-10T22:25:06.000000Z",
-      "updated_at": "2025-12-10T22:25:06.000000Z",
+      "created_at": "2025-12-10T23:05:42.874034Z",
       "acknowledged": false
     },
     {
-      "id": "insight-3a67e724",
+      "id": "insight-b53c8f45",
       "type": "improvement",
       "severity": "low",
       "title": "No Circular Dependencies",
-      "explanation": "The codebase has no circular dependencies across the analyzed files.",
+      "explanation": "The codebase has no circular dependencies.",
       "confidence": 100,
       "metrics": [
         {
           "name": "Circular Deps",
           "current": 0,
-          "previous": 0,
-          "change": 0,
-          "change_percent": 0,
-          "trend": "stable",
           "unit": "deps"
         }
       ],
-      "affected_files": [],
       "recommendations": [
         "Maintain current architectural discipline"
       ],
-      "created_at": "2025-12-10T22:25:06.000000Z",
-      "updated_at": "2025-12-10T22:25:06.000000Z",
+      "created_at": "2025-12-10T23:05:42.874034Z",
       "acknowledged": true
-    },
-    {
-      "id": "insight-02e1cd0f",
-      "type": "recommendation",
-      "severity": "low",
-      "title": "Best Practice Improvements Available",
-      "explanation": "71 best practice improvements can be made to enhance code maintainability.",
-      "confidence": 85,
-      "metrics": [
-        {
-          "name": "Best Practices",
-          "current": 71,
-          "previous": 30,
-          "change": 41,
-          "change_percent": 136.7,
-          "trend": "up",
-          "unit": "issues"
-        }
-      ],
-      "affected_files": [],
-      "recommendations": [
-        "Review and apply TypeScript strict mode patterns",
-        "Add JSDoc comments to exported functions",
-        "Use named constants instead of magic numbers"
-      ],
-      "created_at": "2025-12-10T22:25:06.000000Z",
-      "updated_at": "2025-12-10T22:25:06.000000Z",
-      "acknowledged": false
     }
   ]
 }

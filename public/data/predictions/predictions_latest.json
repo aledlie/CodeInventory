@@ -1,124 +1,43 @@
 {
   "summary": {
     "total_predictions": 2,
-    "total_risks": 2,
+    "total_risks": 1,
     "overall_health": "needs_attention",
     "confidence_avg": 78,
-    "last_updated": "2025-12-10T22:25:06.000000Z"
+    "last_updated": "2025-12-10T23:05:42.874034Z"
   },
   "predictions": [
     {
-      "id": "pred-702319eb",
+      "id": "pred-572feb6f",
       "type": "coverage",
       "title": "Coverage Projection",
-      "prediction": "At current pace, 70% coverage target will require significant acceleration",
+      "prediction": "At current pace, 70% coverage target will require acceleration",
       "confidence": 75,
-      "timeframe": "180+ days",
-      "current_value": 15.77,
+      "current_value": 25.4,
       "predicted_value": 70,
-      "factors": [
-        {
-          "name": "Current rate",
-          "impact": "positive",
-          "weight": 0.4
-        },
-        {
-          "name": "Untested functions",
-          "impact": "negative",
-          "weight": 0.3
-        },
-        {
-          "name": "Team velocity",
-          "impact": "positive",
-          "weight": 0.3
-        }
-      ],
-      "created_at": "2025-12-10T22:25:06.000000Z"
+      "created_at": "2025-12-10T23:05:42.874034Z"
     },
     {
-      "id": "pred-591e96b8",
+      "id": "pred-196673e4",
       "type": "quality",
       "title": "Quality Trend",
-      "prediction": "Quality issues expected to decrease by 10% over next sprint with focused refactoring",
+      "prediction": "Quality issues expected to decrease by 15% over next sprint",
       "confidence": 80,
-      "timeframe": "14 days",
-      "current_value": 349,
-      "predicted_value": 314,
-      "factors": [
-        {
-          "name": "Issue resolution rate",
-          "impact": "positive",
-          "weight": 0.5
-        },
-        {
-          "name": "New code additions",
-          "impact": "negative",
-          "weight": 0.3
-        },
-        {
-          "name": "Refactoring effort",
-          "impact": "positive",
-          "weight": 0.2
-        }
-      ],
-      "created_at": "2025-12-10T22:25:06.000000Z"
+      "current_value": 56,
+      "predicted_value": 47,
+      "created_at": "2025-12-10T23:05:42.874034Z"
     }
   ],
   "risks": [
     {
-      "id": "risk-cf07bdd1",
+      "id": "risk-e2a6f771",
       "category": "testing",
       "severity": "high",
       "title": "Low Test Coverage Risk",
-      "description": "With 15.8% coverage, there's elevated risk of undetected bugs in production.",
-      "probability": 0.8,
-      "impact": 0.9,
-      "mitigation": "Implement test coverage gates in CI/CD"
-    },
-    {
-      "id": "risk-2dc519e6",
-      "category": "maintainability",
-      "severity": "medium",
-      "title": "Technical Debt Accumulation",
-      "description": "307 warning-level issues may slow future development.",
+      "description": "With 25.4% coverage, elevated risk of undetected bugs.",
       "probability": 0.7,
-      "impact": 0.6,
-      "mitigation": "Allocate 20% sprint time to technical debt"
+      "impact": 0.8
     }
   ],
-  "scenarios": [
-    {
-      "id": "scenario-optimistic",
-      "name": "Optimistic",
-      "description": "Team maintains current velocity with focus on testing",
-      "probability": 0.3,
-      "outcomes": {
-        "coverage": 25.77,
-        "issues": 280,
-        "timeframe": "30 days"
-      }
-    },
-    {
-      "id": "scenario-baseline",
-      "name": "Baseline",
-      "description": "Current trends continue without major changes",
-      "probability": 0.5,
-      "outcomes": {
-        "coverage": 20.77,
-        "issues": 330,
-        "timeframe": "30 days"
-      }
-    },
-    {
-      "id": "scenario-pessimistic",
-      "name": "Pessimistic",
-      "description": "Increased feature pressure reduces quality focus",
-      "probability": 0.2,
-      "outcomes": {
-        "coverage": 15.77,
-        "issues": 400,
-        "timeframe": "30 days"
-      }
-    }
-  ]
+  "scenarios": []
 }
