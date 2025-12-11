@@ -518,7 +518,7 @@ export const analyticsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[analyticsApi] Analytics report not found at ${path}, using mock data`);
+          logger.warn('analyticsApi', 'Analytics report not found, using mock data', { path });
           return generateMockAnalyticsReport();
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);

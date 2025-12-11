@@ -38,7 +38,14 @@ export async function fetchModuleToolCandidates(modulePath: string): Promise<Too
 /**
  * Calculate aggregate statistics for the overview page
  */
-export async function fetchToolsStatistics() {
+export async function fetchToolsStatistics(): Promise<{
+  totalModules: number;
+  avgExtractionPotential: number;
+  modularityDistribution: Record<string, number>;
+  highPotentialCount: number;
+  highPotentialCandidates: number;
+  totalCandidates: number;
+}> {
   const report = await fetchToolsReport();
 
   const totalModules = report.utility_modules.length;
