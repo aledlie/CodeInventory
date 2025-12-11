@@ -87,11 +87,9 @@ env/
 ENV/
 
 # Analysis outputs (temporary)
-test_results.json
-test_results.txt
+test_results/
 analysis_reports/
 outputs/
-coverage.json
 
 # Generated schemas and reports (DO NOT COMMIT)
 schemas.json

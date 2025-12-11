@@ -13,6 +13,9 @@
     "test:unit": "python3 scripts/run_tests.py --unit-only",
     "test:integration": "python3 scripts/run_tests.py --integration-only",
     "test:e2e": "python3 scripts/run_tests.py --e2e-only",
+    "test:react": "vitest run",
+    "test:react:watch": "vitest",
+    "test:react:coverage": "vitest run --coverage",
     "test:browser": "npx playwright test",
     "test:browser:chrome": "npx playwright test --project=chromium",
     "test:browser:firefox": "npx playwright test --project=firefox",
@@ -51,12 +54,17 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
+    "@rollup/rollup-darwin-arm64": "^4.53.3",
     "@tanstack/router-cli": "^1.93.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.1",
     "typescript": "^5.7.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
   },
   "optionalDependencies": {
     "@rollup/rollup-darwin-arm64": "^4.53.3"
