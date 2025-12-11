@@ -4,33 +4,33 @@
     "total_risks": 1,
     "overall_health": "needs_attention",
     "confidence_avg": 78,
-    "last_updated": "2025-12-10T23:05:42.874034Z"
+    "last_updated": "2025-12-10T23:13:04.812152Z"
   },
   "predictions": [
     {
-      "id": "pred-572feb6f",
+      "id": "pred-3b9ec057",
       "type": "coverage",
       "title": "Coverage Projection",
       "prediction": "At current pace, 70% coverage target will require acceleration",
       "confidence": 75,
       "current_value": 25.4,
       "predicted_value": 70,
-      "created_at": "2025-12-10T23:05:42.874034Z"
+      "created_at": "2025-12-10T23:13:04.812152Z"
     },
     {
-      "id": "pred-196673e4",
+      "id": "pred-412e87be",
       "type": "quality",
       "title": "Quality Trend",
       "prediction": "Quality issues expected to decrease by 15% over next sprint",
       "confidence": 80,
       "current_value": 56,
       "predicted_value": 47,
-      "created_at": "2025-12-10T23:05:42.874034Z"
+      "created_at": "2025-12-10T23:13:04.812152Z"
     }
   ],
   "risks": [
     {
-      "id": "risk-e2a6f771",
+      "id": "risk-2ee79357",
       "category": "testing",
       "severity": "high",
       "title": "Low Test Coverage Risk",

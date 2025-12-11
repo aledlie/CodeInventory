@@ -20,6 +20,7 @@ from scripts.conditional_regenerate import (
     regenerate,
     detect_changes,
     copy_reports,
+    archive_report,
     generate_derived_reports,
     ChangeDetectionResult,
     PRIMARY_REPORTS,
@@ -27,6 +28,7 @@ from scripts.conditional_regenerate import (
     REPORT_QUALITY,
     REPORT_COVERAGE,
     REPORT_DEPENDENCIES,
+    ARCHIVE_DIR,
 )
 
 
@@ -160,14 +162,17 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
 
     @patch('scripts.conditional_regenerate.OUTPUTS_DIR')
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_copy_reports_creates_directories(self, mock_public, mock_outputs):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_copy_reports_creates_directories(self, mock_archive, mock_public, mock_outputs):
         """Test that copy_reports creates target directories."""
         # Remove target directories
         shutil.rmtree(self.public_data_dir / 'quality')
+        archive_dir = self.public_data_dir / 'archive'
 
         with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
-             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
-            copied = copy_reports({REPORT_QUALITY})
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            copied, archived = copy_reports({REPORT_QUALITY})
 
         self.assertEqual(len(copied), 1)
         self.assertTrue((self.public_data_dir / 'quality').exists())
@@ -177,10 +182,14 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
 
     @patch('scripts.conditional_regenerate.OUTPUTS_DIR')
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_copy_reports_preserves_content(self, mock_public, mock_outputs):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_copy_reports_preserves_content(self, mock_archive, mock_public, mock_outputs):
         """Test that copy_reports preserves file content."""
+        archive_dir = self.public_data_dir / 'archive'
+
         with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
-             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
             copy_reports({REPORT_QUALITY})
 
         src_content = (self.outputs_dir / 'quality' / 'quality_report.json').read_text()
@@ -188,9 +197,38 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
 
         self.assertEqual(src_content, dst_content)
 
+    @patch('scripts.conditional_regenerate.OUTPUTS_DIR')
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_generate_derived_reports_creates_insights(self, mock_public):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_copy_reports_archives_existing(self, mock_archive, mock_public, mock_outputs):
+        """Test that copy_reports archives existing reports."""
+        archive_dir = self.public_data_dir / 'archive'
+
+        # First copy creates the file
+        with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            copied1, archived1 = copy_reports({REPORT_QUALITY})
+
+        self.assertEqual(len(copied1), 1)
+        self.assertEqual(len(archived1), 0)  # No archive on first copy
+
+        # Second copy should archive the first
+        with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            copied2, archived2 = copy_reports({REPORT_QUALITY})
+
+        self.assertEqual(len(copied2), 1)
+        self.assertEqual(len(archived2), 1)
+        self.assertTrue(archive_dir.exists())
+
+    @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_generate_derived_reports_creates_insights(self, mock_archive, mock_public):
         """Test that derived report generation creates insights."""
+        archive_dir = self.public_data_dir / 'archive'
+
         # First copy primary reports to public
         for subdir in ['quality', 'coverage', 'dependencies']:
             src = self.outputs_dir / subdir
@@ -200,8 +238,9 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
                     dst.mkdir(parents=True, exist_ok=True)
                     shutil.copy(f, dst / f.name)
 
-        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
-            success = generate_derived_reports()
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            success, archived = generate_derived_reports()
 
         self.assertTrue(success)
 
@@ -215,8 +254,11 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
         self.assertGreater(len(insights['insights']), 0)
 
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_generate_derived_reports_creates_predictions(self, mock_public):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_generate_derived_reports_creates_predictions(self, mock_archive, mock_public):
         """Test that derived report generation creates predictions."""
+        archive_dir = self.public_data_dir / 'archive'
+
         # Copy primary reports
         for subdir in ['quality', 'coverage', 'dependencies']:
             src = self.outputs_dir / subdir
@@ -226,8 +268,9 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
                     dst.mkdir(parents=True, exist_ok=True)
                     shutil.copy(f, dst / f.name)
 
-        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
-            success = generate_derived_reports()
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            success, archived = generate_derived_reports()
 
         self.assertTrue(success)
 
@@ -240,8 +283,11 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
         self.assertIn('risks', predictions)
 
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_generate_derived_reports_creates_tools(self, mock_public):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_generate_derived_reports_creates_tools(self, mock_archive, mock_public):
         """Test that derived report generation creates tools report."""
+        archive_dir = self.public_data_dir / 'archive'
+
         for subdir in ['quality', 'coverage', 'dependencies']:
             src = self.outputs_dir / subdir
             dst = self.public_data_dir / subdir
@@ -250,8 +296,9 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
                     dst.mkdir(parents=True, exist_ok=True)
                     shutil.copy(f, dst / f.name)
 
-        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
-            success = generate_derived_reports()
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            success, archived = generate_derived_reports()
 
         self.assertTrue(success)
 
@@ -262,6 +309,38 @@ class TestConditionalRegenerateWorkflow(unittest.TestCase):
         self.assertIn('summary', tools)
         self.assertIn('tools', tools)
         self.assertIn('utilities', tools)
+
+    @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_generate_derived_reports_archives_existing(self, mock_archive, mock_public):
+        """Test that derived reports archives existing files."""
+        archive_dir = self.public_data_dir / 'archive'
+
+        # Copy primary reports
+        for subdir in ['quality', 'coverage', 'dependencies']:
+            src = self.outputs_dir / subdir
+            dst = self.public_data_dir / subdir
+            if src.exists():
+                for f in src.iterdir():
+                    dst.mkdir(parents=True, exist_ok=True)
+                    shutil.copy(f, dst / f.name)
+
+        # Generate first time - no archives
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            success1, archived1 = generate_derived_reports()
+
+        self.assertTrue(success1)
+        self.assertEqual(len(archived1), 0)  # No archives on first run
+
+        # Generate second time - should archive previous
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
+            success2, archived2 = generate_derived_reports()
+
+        self.assertTrue(success2)
+        self.assertEqual(len(archived2), 3)  # insights, predictions, tools
+        self.assertTrue(archive_dir.exists())
 
     @patch('scripts.conditional_regenerate.get_changed_files')
     @patch('scripts.conditional_regenerate.run_analysis')
@@ -367,11 +446,15 @@ class TestRegenerationErrorHandling(unittest.TestCase):
         self.assertIn('Analysis failed', result.errors)
 
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_missing_primary_reports_handled(self, mock_public):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_missing_primary_reports_handled(self, mock_archive, mock_public):
         """Test handling when primary reports don't exist."""
-        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir):
+        archive_dir = self.public_data_dir / 'archive'
+
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_data_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', archive_dir):
             # This should handle missing files gracefully
-            success = generate_derived_reports()
+            success, archived = generate_derived_reports()
 
         # Should still succeed with empty/default data
         self.assertTrue(success)

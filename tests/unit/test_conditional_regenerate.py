@@ -23,6 +23,7 @@ from scripts.conditional_regenerate import (
     get_changed_files,
     get_staged_files,
     copy_reports,
+    archive_report,
     generate_derived_reports,
     regenerate,
     _generate_insights,
@@ -37,6 +38,7 @@ from scripts.conditional_regenerate import (
     REPORT_PREDICTIONS,
     REPORT_TOOLS,
     TRIGGER_EXTENSIONS,
+    ARCHIVE_DIR,
 )
 
 
@@ -100,6 +102,7 @@ class TestRegenerationResult(unittest.TestCase):
 
         self.assertTrue(result.success)
         self.assertEqual(result.reports_regenerated, [])
+        self.assertEqual(result.reports_archived, [])
         self.assertEqual(result.errors, [])
         self.assertEqual(result.duration_seconds, 0.0)
 
@@ -112,6 +115,18 @@ class TestRegenerationResult(unittest.TestCase):
 
         self.assertFalse(result.success)
         self.assertEqual(len(result.errors), 2)
+
+    def test_with_archived_reports(self):
+        """Result with archived reports should track them."""
+        result = RegenerationResult(
+            success=True,
+            reports_regenerated=['/path/to/quality_report.json'],
+            reports_archived=['/path/to/archive/quality_report_20240115_120000.json']
+        )
+
+        self.assertTrue(result.success)
+        self.assertEqual(len(result.reports_regenerated), 1)
+        self.assertEqual(len(result.reports_archived), 1)
 
 
 class TestShouldTriggerRegeneration(unittest.TestCase):
@@ -508,14 +523,69 @@ class TestGenerateToolsReport(unittest.TestCase):
         self.assertEqual(len(report['utilities']), 2)
 
 
+class TestArchiveReport(unittest.TestCase):
+    """Tests for archive_report function."""
+
+    def setUp(self):
+        """Set up temp directories."""
+        import shutil
+        self.temp_dir = tempfile.mkdtemp()
+        self.public_dir = Path(self.temp_dir) / 'public' / 'data'
+        self.archive_dir = self.public_dir / 'archive'
+
+        # Create directories
+        (self.public_dir / 'quality').mkdir(parents=True)
+
+    def tearDown(self):
+        """Clean up temp directories."""
+        import shutil
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_archives_existing_report(self):
+        """Should archive existing report with timestamp."""
+        report_path = self.public_dir / 'quality' / 'quality_report.json'
+        report_path.write_text('{"test": "original"}')
+
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', self.archive_dir):
+            result = archive_report(report_path, '20240115_120000')
+
+        self.assertIsNotNone(result)
+        self.assertIn('quality_report_20240115_120000.json', result)
+        archived_path = Path(result)
+        self.assertTrue(archived_path.exists())
+        self.assertEqual(archived_path.read_text(), '{"test": "original"}')
+
+    def test_returns_none_for_missing_file(self):
+        """Should return None if report doesn't exist."""
+        report_path = self.public_dir / 'quality' / 'nonexistent.json'
+
+        result = archive_report(report_path, '20240115_120000')
+
+        self.assertIsNone(result)
+
+    def test_creates_archive_subdirectory(self):
+        """Should create archive subdirectory structure."""
+        report_path = self.public_dir / 'quality' / 'quality_report.json'
+        report_path.write_text('{"test": true}')
+
+        with patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', self.archive_dir):
+            archive_report(report_path, '20240115_120000')
+
+        self.assertTrue((self.archive_dir / 'quality').exists())
+
+
 class TestCopyReports(unittest.TestCase):
     """Tests for copy_reports function."""
 
     def setUp(self):
         """Set up temp directories."""
+        import shutil
         self.temp_dir = tempfile.mkdtemp()
         self.outputs_dir = Path(self.temp_dir) / 'outputs'
         self.public_dir = Path(self.temp_dir) / 'public' / 'data'
+        self.archive_dir = self.public_dir / 'archive'
 
         # Create source directories
         (self.outputs_dir / 'quality').mkdir(parents=True)
@@ -528,22 +598,69 @@ class TestCopyReports(unittest.TestCase):
 
     @patch('scripts.conditional_regenerate.OUTPUTS_DIR')
     @patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR')
-    def test_copies_quality_report(self, mock_public, mock_outputs):
+    @patch('scripts.conditional_regenerate.ARCHIVE_DIR')
+    def test_copies_quality_report(self, mock_archive, mock_public, mock_outputs):
         """Should copy quality report."""
-        mock_outputs.__truediv__ = lambda self, x: self.outputs_dir / x
-        mock_public.__truediv__ = lambda self, x: self.public_dir / x
-
         # Create source file
         src = self.outputs_dir / 'quality' / 'quality_report.json'
         src.write_text('{"test": true}')
 
         with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
-             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir):
-            copied = copy_reports({REPORT_QUALITY})
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', self.archive_dir):
+            copied, archived = copy_reports({REPORT_QUALITY})
 
         self.assertEqual(len(copied), 1)
         dst = self.public_dir / 'quality' / 'quality_report.json'
         self.assertTrue(dst.exists())
+
+    def test_archives_before_overwriting(self):
+        """Should archive existing report before overwriting."""
+        # Create source file
+        src = self.outputs_dir / 'quality' / 'quality_report.json'
+        src.write_text('{"version": "new"}')
+
+        # Create existing destination file
+        dst_dir = self.public_dir / 'quality'
+        dst_dir.mkdir(parents=True)
+        dst = dst_dir / 'quality_report.json'
+        dst.write_text('{"version": "old"}')
+
+        with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', self.archive_dir):
+            copied, archived = copy_reports({REPORT_QUALITY}, archive=True)
+
+        self.assertEqual(len(copied), 1)
+        self.assertEqual(len(archived), 1)
+        # Verify archive was created
+        archive_file = Path(archived[0])
+        self.assertTrue(archive_file.exists())
+        self.assertEqual(archive_file.read_text(), '{"version": "old"}')
+        # Verify new file was copied
+        self.assertEqual(dst.read_text(), '{"version": "new"}')
+
+    def test_no_archive_when_disabled(self):
+        """Should not archive when archive=False."""
+        # Create source file
+        src = self.outputs_dir / 'quality' / 'quality_report.json'
+        src.write_text('{"version": "new"}')
+
+        # Create existing destination file
+        dst_dir = self.public_dir / 'quality'
+        dst_dir.mkdir(parents=True)
+        dst = dst_dir / 'quality_report.json'
+        dst.write_text('{"version": "old"}')
+
+        with patch('scripts.conditional_regenerate.OUTPUTS_DIR', self.outputs_dir), \
+             patch('scripts.conditional_regenerate.PUBLIC_DATA_DIR', self.public_dir), \
+             patch('scripts.conditional_regenerate.ARCHIVE_DIR', self.archive_dir):
+            copied, archived = copy_reports({REPORT_QUALITY}, archive=False)
+
+        self.assertEqual(len(copied), 1)
+        self.assertEqual(len(archived), 0)  # No archives
+        # Verify new file was still copied
+        self.assertEqual(dst.read_text(), '{"version": "new"}')
 
 
 class TestRegenerateFunction(unittest.TestCase):
@@ -578,8 +695,10 @@ class TestRegenerateFunction(unittest.TestCase):
                                     mock_analysis, mock_get_changes):
         """Force should regenerate all reports."""
         mock_analysis.return_value = True
-        mock_copy.return_value = ['quality.json', 'coverage.json', 'deps.json']
-        mock_derived.return_value = True
+        # Return tuple: (copied, archived)
+        mock_copy.return_value = (['quality.json', 'coverage.json', 'deps.json'], [])
+        # Return tuple: (success, archived)
+        mock_derived.return_value = (True, [])
 
         result = regenerate(dry_run=False, force=True)
 
@@ -587,6 +706,27 @@ class TestRegenerateFunction(unittest.TestCase):
         mock_analysis.assert_called_once()
         mock_copy.assert_called_once()
         mock_derived.assert_called_once()
+
+    @patch('scripts.conditional_regenerate.get_changed_files')
+    @patch('scripts.conditional_regenerate.run_analysis')
+    @patch('scripts.conditional_regenerate.copy_reports')
+    @patch('scripts.conditional_regenerate.generate_derived_reports')
+    def test_tracks_archived_reports(self, mock_derived, mock_copy,
+                                      mock_analysis, mock_get_changes):
+        """Should track archived reports in result."""
+        mock_analysis.return_value = True
+        mock_copy.return_value = (
+            ['quality.json'],
+            ['quality_20240115.json']  # Archived file
+        )
+        mock_derived.return_value = (True, ['insights_20240115.json'])
+
+        result = regenerate(dry_run=False, force=True)
+
+        self.assertTrue(result.success)
+        self.assertEqual(len(result.reports_archived), 2)
+        self.assertIn('quality_20240115.json', result.reports_archived)
+        self.assertIn('insights_20240115.json', result.reports_archived)
 
     @patch('scripts.conditional_regenerate.get_changed_files')
     @patch('scripts.conditional_regenerate.run_analysis')
