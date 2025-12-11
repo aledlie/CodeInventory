@@ -47,48 +47,84 @@ import { dashboardApi } from '../../api/dashboardApi';
 import type { DashboardData, QualityReport, CoverageReport, DependencyReport } from '../../types';
 
 // ============================================================================
+// Test Constants
+// ============================================================================
+
+const TEST_OUTPUTS_PATH = '/path/to/outputs';
+const TEST_TIMESTAMP = '2024-01-01T00:00:00Z';
+const TEST_VERSION = '1.0';
+
+// Quality metrics
+const QUALITY_TOTAL_ISSUES = 15;
+const QUALITY_CRITICAL_COUNT = 2;
+const QUALITY_HIGH_COUNT = 5;
+const QUALITY_MEDIUM_COUNT = 8;
+const QUALITY_LOW_COUNT = 0;
+
+// Alternative quality metrics for variation tests
+const ALT_QUALITY_TOTAL_ISSUES = 25;
+const ALT_QUALITY_CRITICAL_COUNT = 3;
+const ALT_QUALITY_HIGH_COUNT = 8;
+const ALT_QUALITY_MEDIUM_COUNT = 14;
+
+// Coverage metrics
+const COVERAGE_PERCENTAGE = 85.5;
+const COVERAGE_TESTED_FUNCTIONS = 156;
+const COVERAGE_UNTESTED_FUNCTIONS = 28;
+const ALT_COVERAGE_PERCENTAGE = 92.6789;
+
+// Dependency metrics
+const DEPENDENCY_TOTAL_FILES = 42;
+const DEPENDENCY_CIRCULAR_COUNT = 3;
+const DEPENDENCY_COUNT = 128;
+const DEPENDENCY_EXTERNAL_COUNT = 25;
+
+// Expected section count for nested suspense
+const EXPECTED_SECTION_COUNT = 3;
+
+// ============================================================================
 // Test Data Fixtures
 // ============================================================================
 
 const mockQualityData: QualityReport = {
   summary: {
-    total_issues: 15,
+    total_issues: QUALITY_TOTAL_ISSUES,
     by_severity: {
-      critical: 2,
-      high: 5,
-      medium: 8,
-      low: 0,
+      critical: QUALITY_CRITICAL_COUNT,
+      high: QUALITY_HIGH_COUNT,
+      medium: QUALITY_MEDIUM_COUNT,
+      low: QUALITY_LOW_COUNT,
     },
     by_category: {},
   },
   issues: [],
-  timestamp: '2024-01-01T00:00:00Z',
-  version: '1.0',
+  timestamp: TEST_TIMESTAMP,
+  version: TEST_VERSION,
 };
 
 const mockCoverageData: CoverageReport = {
   summary: {
-    coverage_percentage: 85.5,
-    tested_functions: 156,
-    untested_functions: 28,
+    coverage_percentage: COVERAGE_PERCENTAGE,
+    tested_functions: COVERAGE_TESTED_FUNCTIONS,
+    untested_functions: COVERAGE_UNTESTED_FUNCTIONS,
     coverage_trend: [],
   },
   coverage_by_file: [],
-  timestamp: '2024-01-01T00:00:00Z',
-  version: '1.0',
+  timestamp: TEST_TIMESTAMP,
+  version: TEST_VERSION,
 };
 
 const mockDependencyData: DependencyReport = {
   summary: {
-    total_files: 42,
-    circular_dependencies: 3,
-    dependency_count: 128,
-    external_deps: 25,
+    total_files: DEPENDENCY_TOTAL_FILES,
+    circular_dependencies: DEPENDENCY_CIRCULAR_COUNT,
+    dependency_count: DEPENDENCY_COUNT,
+    external_deps: DEPENDENCY_EXTERNAL_COUNT,
   },
   dependencies: [],
   circular_deps: [],
-  timestamp: '2024-01-01T00:00:00Z',
-  version: '1.0',
+  timestamp: TEST_TIMESTAMP,
+  version: TEST_VERSION,
 };
 
 const mockDashboardData: DashboardData = {
@@ -162,7 +198,7 @@ function MetricsOverview({ data }: MetricsOverviewProps) {
 }
 
 function DashboardContent() {
-  const { data } = useDashboardData('/path/to/outputs');
+  const { data } = useDashboardData(TEST_OUTPUTS_PATH);
 
   return (
     <div>
@@ -185,7 +221,7 @@ function DashboardApp() {
 }
 
 function QualityDashboard() {
-  const { data: qualityData } = useQualityReport('/path/to/outputs');
+  const { data: qualityData } = useQualityReport(TEST_OUTPUTS_PATH);
 
   return (
     <div data-testid="quality-dashboard">
@@ -198,7 +234,7 @@ function QualityDashboard() {
 }
 
 function CoverageDashboard() {
-  const { data: coverageData } = useCoverageReport('/path/to/outputs');
+  const { data: coverageData } = useCoverageReport(TEST_OUTPUTS_PATH);
 
   return (
     <div data-testid="coverage-dashboard">
@@ -211,7 +247,7 @@ function CoverageDashboard() {
 }
 
 function DependencyDashboard() {
-  const { data: dependencyData } = useDependencyReport('/path/to/outputs');
+  const { data: dependencyData } = useDependencyReport(TEST_OUTPUTS_PATH);
 
   return (
     <div data-testid="dependency-dashboard">
@@ -238,12 +274,11 @@ function RefreshButton() {
 
 function DashboardWithPrefetch() {
   const queryClient = useQueryClient();
-  const outputsPath = '/path/to/outputs';
 
   const handleMouseEnter = () => {
     queryClient.prefetchQuery({
-      queryKey: ['quality-report', outputsPath],
-      queryFn: () => dashboardApi.loadQualityReport(outputsPath),
+      queryKey: ['quality-report', TEST_OUTPUTS_PATH],
+      queryFn: () => dashboardApi.loadQualityReport(TEST_OUTPUTS_PATH),
     });
   };
 
@@ -282,17 +317,17 @@ function DashboardWithErrorRecovery() {
 }
 
 function QualitySection() {
-  const { data } = useQualityReport('/path/to/outputs');
+  const { data } = useQualityReport(TEST_OUTPUTS_PATH);
   return <div data-testid="quality-section">{/* Render quality data */}</div>;
 }
 
 function CoverageSection() {
-  const { data } = useCoverageReport('/path/to/outputs');
+  const { data } = useCoverageReport(TEST_OUTPUTS_PATH);
   return <div data-testid="coverage-section">{/* Render coverage data */}</div>;
 }
 
 function DependencySection() {
-  const { data } = useDependencyReport('/path/to/outputs');
+  const { data } = useDependencyReport(TEST_OUTPUTS_PATH);
   return <div data-testid="dependency-section">{/* Render dependency data */}</div>;
 }
 
@@ -407,9 +442,9 @@ describe('HooksUsage Examples', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('metrics-overview')).toBeInTheDocument();
-        expect(screen.getByTestId('quality-metric')).toHaveTextContent('15');
-        expect(screen.getByTestId('coverage-metric')).toHaveTextContent('85.5%');
-        expect(screen.getByTestId('dependency-metric')).toHaveTextContent('3');
+        expect(screen.getByTestId('quality-metric')).toHaveTextContent(String(QUALITY_TOTAL_ISSUES));
+        expect(screen.getByTestId('coverage-metric')).toHaveTextContent(`${COVERAGE_PERCENTAGE}%`);
+        expect(screen.getByTestId('dependency-metric')).toHaveTextContent(String(DEPENDENCY_CIRCULAR_COUNT));
       });
     });
   });
@@ -435,9 +470,9 @@ describe('HooksUsage Examples', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('quality-dashboard')).toBeInTheDocument();
-        expect(screen.getByText('Total Issues: 15')).toBeInTheDocument();
-        expect(screen.getByText('Critical: 2')).toBeInTheDocument();
-        expect(screen.getByText('High: 5')).toBeInTheDocument();
+        expect(screen.getByText(`Total Issues: ${QUALITY_TOTAL_ISSUES}`)).toBeInTheDocument();
+        expect(screen.getByText(`Critical: ${QUALITY_CRITICAL_COUNT}`)).toBeInTheDocument();
+        expect(screen.getByText(`High: ${QUALITY_HIGH_COUNT}`)).toBeInTheDocument();
       });
     });
 
@@ -447,12 +482,12 @@ describe('HooksUsage Examples', () => {
         ...mockQualityData,
         summary: {
           ...mockQualityData.summary,
-          total_issues: 25,
+          total_issues: ALT_QUALITY_TOTAL_ISSUES,
           by_severity: {
-            critical: 3,
-            high: 8,
-            medium: 14,
-            low: 0,
+            critical: ALT_QUALITY_CRITICAL_COUNT,
+            high: ALT_QUALITY_HIGH_COUNT,
+            medium: ALT_QUALITY_MEDIUM_COUNT,
+            low: QUALITY_LOW_COUNT,
           },
         },
       };
@@ -470,9 +505,9 @@ describe('HooksUsage Examples', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByText('Total Issues: 25')).toBeInTheDocument();
-        expect(screen.getByText('Critical: 3')).toBeInTheDocument();
-        expect(screen.getByText('High: 8')).toBeInTheDocument();
+        expect(screen.getByText(`Total Issues: ${ALT_QUALITY_TOTAL_ISSUES}`)).toBeInTheDocument();
+        expect(screen.getByText(`Critical: ${ALT_QUALITY_CRITICAL_COUNT}`)).toBeInTheDocument();
+        expect(screen.getByText(`High: ${ALT_QUALITY_HIGH_COUNT}`)).toBeInTheDocument();
       });
     });
   });
@@ -493,9 +528,9 @@ describe('HooksUsage Examples', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('coverage-dashboard')).toBeInTheDocument();
-        expect(screen.getByText('Coverage: 85.5%')).toBeInTheDocument();
-        expect(screen.getByText('Tested: 156')).toBeInTheDocument();
-        expect(screen.getByText('Untested: 28')).toBeInTheDocument();
+        expect(screen.getByText(`Coverage: ${COVERAGE_PERCENTAGE}%`)).toBeInTheDocument();
+        expect(screen.getByText(`Tested: ${COVERAGE_TESTED_FUNCTIONS}`)).toBeInTheDocument();
+        expect(screen.getByText(`Untested: ${COVERAGE_UNTESTED_FUNCTIONS}`)).toBeInTheDocument();
       });
     });
 
@@ -504,7 +539,7 @@ describe('HooksUsage Examples', () => {
         ...mockCoverageData,
         summary: {
           ...mockCoverageData.summary,
-          coverage_percentage: 92.6789,
+          coverage_percentage: ALT_COVERAGE_PERCENTAGE,
         },
       };
 
@@ -520,6 +555,7 @@ describe('HooksUsage Examples', () => {
         </Suspense>
       );
 
+      // ALT_COVERAGE_PERCENTAGE (92.6789) formatted to 1 decimal = 92.7
       await waitFor(() => {
         expect(screen.getByText('Coverage: 92.7%')).toBeInTheDocument();
       });
@@ -542,8 +578,8 @@ describe('HooksUsage Examples', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('dependency-dashboard')).toBeInTheDocument();
-        expect(screen.getByText('Total Files: 42')).toBeInTheDocument();
-        expect(screen.getByText('Circular Dependencies: 3')).toBeInTheDocument();
+        expect(screen.getByText(`Total Files: ${DEPENDENCY_TOTAL_FILES}`)).toBeInTheDocument();
+        expect(screen.getByText(`Circular Dependencies: ${DEPENDENCY_CIRCULAR_COUNT}`)).toBeInTheDocument();
       });
     });
   });
@@ -632,7 +668,7 @@ describe('HooksUsage Examples', () => {
 
       await waitFor(() => {
         expect(mockPrefetchQuery).toHaveBeenCalledWith({
-          queryKey: ['quality-report', '/path/to/outputs'],
+          queryKey: ['quality-report', TEST_OUTPUTS_PATH],
           queryFn: expect.any(Function),
         });
       });
@@ -777,7 +813,7 @@ describe('HooksUsage Examples', () => {
 
       expect(screen.getByText('Dashboard')).toBeInTheDocument();
       const skeletons = screen.getAllByTestId('section-skeleton');
-      expect(skeletons).toHaveLength(3);
+      expect(skeletons).toHaveLength(EXPECTED_SECTION_COUNT);
     });
 
     it('should render all three sections when loaded', async () => {
@@ -881,7 +917,7 @@ describe('HooksUsage Examples', () => {
       render(<MetricsOverview data={mockDashboardData} />);
 
       expect(screen.getByText('Code Quality')).toBeInTheDocument();
-      expect(screen.getByText('15')).toBeInTheDocument();
+      expect(screen.getByText(String(QUALITY_TOTAL_ISSUES))).toBeInTheDocument();
       expect(screen.getByText('Total Issues')).toBeInTheDocument();
     });
 
@@ -889,7 +925,7 @@ describe('HooksUsage Examples', () => {
       render(<MetricsOverview data={mockDashboardData} />);
 
       expect(screen.getByText('Test Coverage')).toBeInTheDocument();
-      expect(screen.getByText('85.5%')).toBeInTheDocument();
+      expect(screen.getByText(`${COVERAGE_PERCENTAGE}%`)).toBeInTheDocument();
       expect(screen.getByText('Coverage')).toBeInTheDocument();
     });
 
@@ -901,7 +937,7 @@ describe('HooksUsage Examples', () => {
 
       // Find the div with dependency metric and check for the value
       const depMetric = screen.getByTestId('dependency-metric');
-      expect(depMetric).toHaveTextContent('3');
+      expect(depMetric).toHaveTextContent(String(DEPENDENCY_CIRCULAR_COUNT));
     });
   });
 
