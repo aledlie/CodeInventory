@@ -36,6 +36,7 @@ SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 OUTPUTS_DIR = ROOT_DIR / 'outputs'
 PUBLIC_DATA_DIR = ROOT_DIR / 'public' / 'data'
+ARCHIVE_DIR = PUBLIC_DATA_DIR / 'archive'
 
 # Report types
 REPORT_QUALITY = 'quality'
@@ -99,6 +100,7 @@ class RegenerationResult:
     """Result of regeneration operation."""
     success: bool
     reports_regenerated: List[str] = field(default_factory=list)
+    reports_archived: List[str] = field(default_factory=list)
     errors: List[str] = field(default_factory=list)
     duration_seconds: float = 0.0
 
@@ -253,16 +255,51 @@ def run_analysis() -> bool:
         return False
 
 
-def copy_reports(reports: Set[str]) -> List[str]:
+def archive_report(report_path: Path, timestamp: str) -> Optional[str]:
+    """Archive an existing report with a timestamp.
+
+    Args:
+        report_path: Path to the report file to archive
+        timestamp: Timestamp string for the archive filename
+
+    Returns:
+        Path to the archived file, or None if no file to archive
+    """
+    if not report_path.exists():
+        return None
+
+    # Create archive directory structure matching original
+    relative_path = report_path.relative_to(PUBLIC_DATA_DIR)
+    archive_subdir = ARCHIVE_DIR / relative_path.parent
+
+    # Create timestamped filename
+    stem = report_path.stem
+    suffix = report_path.suffix
+    archive_filename = f"{stem}_{timestamp}{suffix}"
+    archive_path = archive_subdir / archive_filename
+
+    archive_subdir.mkdir(parents=True, exist_ok=True)
+    archive_path.write_text(report_path.read_text())
+
+    logger.info(f"Archived {report_path.name} to {archive_path}")
+    return str(archive_path)
+
+
+def copy_reports(reports: Set[str], archive: bool = True) -> tuple[List[str], List[str]]:
     """Copy generated reports to public/data directory.
 
     Args:
         reports: Set of report types to copy
+        archive: If True, archive existing reports before overwriting
 
     Returns:
-        List of successfully copied report paths
+        Tuple of (copied report paths, archived report paths)
     """
     copied = []
+    archived = []
+
+    # Generate timestamp for this batch of archives
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 
     # Mapping of report type to source and destination
     report_files = {
@@ -279,22 +316,33 @@ def copy_reports(reports: Set[str]) -> List[str]:
 
             if src.exists():
                 dst.parent.mkdir(parents=True, exist_ok=True)
+
+                # Archive existing report before overwriting
+                if archive and dst.exists():
+                    archive_path = archive_report(dst, timestamp)
+                    if archive_path:
+                        archived.append(archive_path)
+
                 dst.write_text(src.read_text())
                 copied.append(str(dst))
                 logger.info(f"Copied {report} report to {dst}")
             else:
                 logger.warning(f"Source file not found: {src}")
 
-    return copied
+    return copied, archived
 
 
-def generate_derived_reports() -> bool:
+def generate_derived_reports(archive: bool = True) -> tuple[bool, List[str]]:
     """Generate insights, predictions, and tools reports from primary data.
 
+    Args:
+        archive: If True, archive existing reports before overwriting
+
     Returns:
-        True if generation succeeded
+        Tuple of (success, list of archived paths)
     """
     logger.info("Generating derived reports...")
+    archived = []
 
     try:
         # Load primary reports
@@ -307,11 +355,16 @@ def generate_derived_reports() -> bool:
         deps = json.loads(deps_path.read_text()) if deps_path.exists() else {}
 
         now = datetime.now().isoformat() + 'Z'
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 
         # Generate insights
         insights = _generate_insights(quality, coverage, deps, now)
         insights_path = PUBLIC_DATA_DIR / 'insights' / 'insights_latest.json'
         insights_path.parent.mkdir(parents=True, exist_ok=True)
+        if archive and insights_path.exists():
+            archive_path = archive_report(insights_path, timestamp)
+            if archive_path:
+                archived.append(archive_path)
         insights_path.write_text(json.dumps(insights, indent=2))
         logger.info(f"Generated insights report: {len(insights.get('insights', []))} insights")
 
@@ -319,6 +372,10 @@ def generate_derived_reports() -> bool:
         predictions = _generate_predictions(quality, coverage, deps, now)
         predictions_path = PUBLIC_DATA_DIR / 'predictions' / 'predictions_latest.json'
         predictions_path.parent.mkdir(parents=True, exist_ok=True)
+        if archive and predictions_path.exists():
+            archive_path = archive_report(predictions_path, timestamp)
+            if archive_path:
+                archived.append(archive_path)
         predictions_path.write_text(json.dumps(predictions, indent=2))
         logger.info(f"Generated predictions report: {predictions['summary']['total_predictions']} predictions")
 
@@ -326,14 +383,18 @@ def generate_derived_reports() -> bool:
         tools = _generate_tools_report(quality, now)
         tools_path = PUBLIC_DATA_DIR / 'tools' / 'tools_report.json'
         tools_path.parent.mkdir(parents=True, exist_ok=True)
+        if archive and tools_path.exists():
+            archive_path = archive_report(tools_path, timestamp)
+            if archive_path:
+                archived.append(archive_path)
         tools_path.write_text(json.dumps(tools, indent=2))
         logger.info("Generated tools report")
 
-        return True
+        return True, archived
 
     except Exception as e:
         logger.error(f"Failed to generate derived reports: {e}")
-        return False
+        return False, archived
 
 
 def _generate_insights(quality: dict, coverage: dict, deps: dict, timestamp: str) -> dict:
@@ -551,13 +612,15 @@ def regenerate(
             result.duration_seconds = time.time() - start_time
             return result
 
-        # Copy primary reports
-        copied = copy_reports(detection.reports_to_regenerate & PRIMARY_REPORTS)
+        # Copy primary reports (with archiving)
+        copied, archived = copy_reports(detection.reports_to_regenerate & PRIMARY_REPORTS)
         result.reports_regenerated.extend(copied)
+        result.reports_archived.extend(archived)
 
-    # Generate derived reports
+    # Generate derived reports (with archiving)
     if detection.reports_to_regenerate & DERIVED_REPORTS:
-        if not generate_derived_reports():
+        success, archived = generate_derived_reports()
+        if not success:
             result.success = False
             result.errors.append("Derived report generation failed")
         else:
@@ -566,6 +629,7 @@ def regenerate(
                 str(PUBLIC_DATA_DIR / 'predictions' / 'predictions_latest.json'),
                 str(PUBLIC_DATA_DIR / 'tools' / 'tools_report.json'),
             ])
+            result.reports_archived.extend(archived)
 
     result.duration_seconds = time.time() - start_time
     return result
@@ -616,14 +680,19 @@ def main():
     print("=" * 60)
     print(f"Success: {result.success}")
     print(f"Duration: {result.duration_seconds:.2f}s")
-    print(f"Reports regenerated: {len(result.reports_regenerated)}")
 
+    if result.reports_archived:
+        print(f"\nReports archived: {len(result.reports_archived)}")
+        for r in result.reports_archived:
+            print(f"  - {r}")
+
+    print(f"\nReports regenerated: {len(result.reports_regenerated)}")
     if result.reports_regenerated:
         for r in result.reports_regenerated:
             print(f"  - {r}")
 
     if result.errors:
-        print(f"Errors: {len(result.errors)}")
+        print(f"\nErrors: {len(result.errors)}")
         for e in result.errors:
             print(f"  - {e}")
 
