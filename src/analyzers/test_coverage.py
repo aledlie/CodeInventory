@@ -513,15 +513,51 @@ class TestCoverageAnalyzer:
         return language == 'python' and not test_name.startswith('test_')
 
     def _clean_test_name(self, test_name: str) -> Set[str]:
-        """Clean and process test name"""
+        """Clean and process test name to extract searchable keywords.
+
+        Returns multiple variations of the test name to improve matching:
+        - Original lowercased
+        - Cleaned version with common prefixes removed
+        - Individual words extracted from the test name
+        """
+        import re
+
+        results = set()
+
+        # Add original lowercase
+        results.add(test_name.lower())
+
+        # Clean common prefixes/patterns
         clean_name = (test_name
                      .replace('test_', '')
                      .replace('_test', '')
                      .replace('should ', '')
+                     .replace('should_', '')
                      .replace(' ', '_')
                      .lower())
+        results.add(clean_name)
 
-        return {clean_name, test_name.lower()}
+        # Extract individual words (split on spaces, underscores, and camelCase boundaries)
+        # This helps match "useSavedViews" with "saved views" test description
+        words = re.split(r'[\s_\-]+', test_name.lower())
+        for word in words:
+            if len(word) > 2:  # Skip very short words
+                results.add(word)
+
+        return results
+
+    def _split_camel_case(self, name: str) -> List[str]:
+        """Split a camelCase or PascalCase name into individual words.
+
+        Examples:
+            useSavedViews -> ['use', 'saved', 'views']
+            fetchWidgetMetadata -> ['fetch', 'widget', 'metadata']
+            useUpdateNotificationSettings -> ['use', 'update', 'notification', 'settings']
+        """
+        import re
+        # Insert underscore before uppercase letters, then split and lowercase
+        split_name = re.sub(r'([a-z])([A-Z])', r'\1_\2', name)
+        return [word.lower() for word in split_name.split('_') if word]
 
     def analyze_coverage(self) -> None:
         """Analyze test coverage for the source directory"""
@@ -665,9 +701,53 @@ class TestCoverageAnalyzer:
         self.report.total_functions = len(source_functions)
 
     def _is_function_tested(self, func: FunctionInfo, test_functions: Set[str]) -> bool:
-        """Check if a function has tests"""
+        """Check if a function has tests using multiple matching strategies.
+
+        Matching strategies (in order):
+        1. Exact match: function name appears in test name
+        2. Word match: all significant words from function name appear in test names
+        3. Core word match: main words (excluding common prefixes) appear in tests
+
+        Examples that should match:
+        - useSavedViews <-> "should fetch saved views successfully"
+        - useCreateSavedView <-> "useCreateSavedView should create a new saved view"
+        - fetchWidgetMetadata <-> "widget metadata fetching"
+        """
         func_name_lower = func.name.lower()
-        return any(func_name_lower in test_name for test_name in test_functions)
+
+        # Strategy 1: Direct match (original behavior)
+        if any(func_name_lower in test_name for test_name in test_functions):
+            return True
+
+        # Strategy 2: Split camelCase and check if significant words appear in tests
+        func_words = self._split_camel_case(func.name)
+
+        # Filter out common prefixes that don't add meaning
+        common_prefixes = {'use', 'get', 'set', 'is', 'has', 'can', 'do', 'on', 'handle'}
+        significant_words = [w for w in func_words if w not in common_prefixes and len(w) > 2]
+
+        if not significant_words:
+            # If no significant words, use all words except very common ones
+            significant_words = [w for w in func_words if len(w) > 2]
+
+        if not significant_words:
+            return False
+
+        # Check if all significant words appear in any test name
+        # Join test_functions into a single searchable string for efficiency
+        all_tests_text = ' '.join(test_functions)
+
+        # Strategy 2a: All significant words must be present
+        if all(word in all_tests_text for word in significant_words):
+            return True
+
+        # Strategy 2b: For longer function names, require most words (75%+)
+        if len(significant_words) >= 3:
+            matches = sum(1 for word in significant_words if word in all_tests_text)
+            if matches >= len(significant_words) * 0.75:
+                return True
+
+        return False
 
     def _record_function_coverage(self, func: FunctionInfo, is_tested: bool) -> None:
         """Record coverage for a function"""
