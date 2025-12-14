@@ -252,6 +252,18 @@ class TestCoverageAnalyzer:
     """Analyzes test coverage by matching functions with test cases"""
     __test__ = False  # Prevent pytest from collecting this as a test class
 
+    # Class-level test patterns
+    DEFAULT_TEST_PATTERNS = (
+        'tests/',
+        '__tests__/',
+        'test_',
+        '.test.',
+        '.spec.',
+        '_test.py',
+        '_spec.ts',
+        '_spec.js'
+    )
+
     def __init__(self, src_dir: Path, test_dir: Optional[Path] = None):
         """Initialize the test coverage analyzer.
 
@@ -262,18 +274,7 @@ class TestCoverageAnalyzer:
         self.src_dir = src_dir
         self.test_dir = test_dir or src_dir / 'tests'
         self.report = CoverageReport()
-
-        # Common test patterns
-        self.test_patterns = [
-            'tests/',
-            '__tests__/',
-            'test_',
-            '.test.',
-            '.spec.',
-            '_test.py',
-            '_spec.ts',
-            '_spec.js'
-        ]
+        self.test_patterns = list(self.DEFAULT_TEST_PATTERNS)
 
     def _is_test_file(self, file_path: Path) -> bool:
         """Check if a file is a test file based on filename and directory patterns"""

@@ -175,6 +175,12 @@ def _analyze_file_dependencies_worker(file_path: Path) -> List[Dict[str, Any]]:
 class DependencyAnalyzer:
     """Analyzes project dependencies"""
 
+    # Class-level external package indicators
+    DEFAULT_EXTERNAL_INDICATORS = (
+        '@', 'react', 'vue', 'angular', 'express', 'next',
+        'lodash', 'axios', 'moment', 'dayjs'
+    )
+
     def __init__(self, root_dir: Path):
         """Initialize the dependency analyzer.
 
@@ -183,12 +189,7 @@ class DependencyAnalyzer:
         """
         self.root_dir = root_dir
         self.report = DependencyReport()
-
-        # Common external package prefixes
-        self.external_indicators = [
-            '@', 'react', 'vue', 'angular', 'express', 'next',
-            'lodash', 'axios', 'moment', 'dayjs'
-        ]
+        self.external_indicators = list(self.DEFAULT_EXTERNAL_INDICATORS)
 
     def _run_astgrep(self, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern"""

@@ -20,6 +20,9 @@ if not logger.handlers:
 class DashboardGenerator:
     """Generates interactive code analysis dashboard"""
 
+    # Default cache directory name
+    DEFAULT_CACHE_DIR = '.analyzer_cache'
+
     def __init__(self, schemas_path: Path, quality_path: Optional[Path] = None,
                  coverage_path: Optional[Path] = None, dependency_path: Optional[Path] = None,
                  cache_dir: Optional[Path] = None, files_processed: int = 0,
@@ -35,21 +38,27 @@ class DashboardGenerator:
             files_processed: Number of files processed in analysis
             elapsed_time: Time taken for analysis in seconds
         """
+        self._setup_paths(schemas_path, quality_path, coverage_path, dependency_path, cache_dir)
+        self.files_processed = files_processed
+        self.elapsed_time = elapsed_time
+        self._load_all_data()
+
+    def _setup_paths(self, schemas_path: Path, quality_path: Optional[Path],
+                     coverage_path: Optional[Path], dependency_path: Optional[Path],
+                     cache_dir: Optional[Path]) -> None:
+        """Set up all file paths."""
         self.schemas_path = schemas_path
         self.quality_path = quality_path
         self.coverage_path = coverage_path
         self.dependency_path = dependency_path
-        self.cache_dir = cache_dir or Path.cwd() / '.analyzer_cache'
-        self.files_processed = files_processed
-        self.elapsed_time = elapsed_time
+        self.cache_dir = cache_dir or Path.cwd() / self.DEFAULT_CACHE_DIR
 
-        # Load data
-        self.schemas_data = self._load_json(schemas_path)
-        self.quality_data = self._load_json(quality_path) if quality_path else None
-        self.coverage_data = self._load_json(coverage_path) if coverage_path else None
-        self.dependency_data = self._load_json(dependency_path) if dependency_path else None
-
-        # Load performance data
+    def _load_all_data(self) -> None:
+        """Load all JSON data files."""
+        self.schemas_data = self._load_json(self.schemas_path)
+        self.quality_data = self._load_json(self.quality_path) if self.quality_path else None
+        self.coverage_data = self._load_json(self.coverage_path) if self.coverage_path else None
+        self.dependency_data = self._load_json(self.dependency_path) if self.dependency_path else None
         self.performance_data = self._load_performance_data()
 
     def _load_json(self, path: Optional[Path]) -> Dict[str, Any]:
