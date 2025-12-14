@@ -4,6 +4,7 @@
  * Global test configuration and mocks for Vitest
  */
 
+import { vi, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
 // Mock localStorage
