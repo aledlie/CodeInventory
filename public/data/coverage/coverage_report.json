@@ -3,15 +3,183 @@
     "source_directory": ".",
     "test_directory": "tests",
     "total_functions": 792,
-    "tested_functions": 701,
-    "untested_functions": 91,
-    "coverage_percentage": 88.51
+    "tested_functions": 703,
+    "untested_functions": 89,
+    "coverage_percentage": 88.76
   },
   "functions": [
     {
       "name": "main",
       "file_path": "docs/examples/sentry_example.py",
       "line_number": 33,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "needs_regeneration",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "add_trigger",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 90,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_changed_files",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 108,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_staged_files",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "should_trigger_regeneration",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 153,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "detect_changes",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 179,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "run_analysis",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 220,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "archive_report",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 258,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "copy_reports",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 288,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_derived_reports",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 335,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "regenerate",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 558,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "scripts/conditional_regenerate.py",
+      "line_number": 638,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "verify_dependencies",
+      "file_path": "scripts/run_analysis.py",
+      "line_number": 35,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "run_command",
+      "file_path": "scripts/run_analysis.py",
+      "line_number": 225,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "run_all_analysis",
+      "file_path": "scripts/run_analysis.py",
+      "line_number": 507,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_summary_report",
+      "file_path": "scripts/run_analysis.py",
+      "line_number": 682,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "scripts/run_analysis.py",
+      "line_number": 699,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "pytest_runtest_logreport",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 53,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "discover_tests",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 70,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "run_tests",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 126,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "run_coverage_analysis",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_summary_report",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 257,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_json_report",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 269,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "scripts/run_tests.py",
+      "line_number": 337,
       "is_async": false,
       "is_tested": true
     },
@@ -41,14 +209,14 @@
       "file_path": "scripts/enhance_docs.py",
       "line_number": 97,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "enhance_directory",
       "file_path": "scripts/enhance_docs.py",
       "line_number": 146,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generate_report",
@@ -5383,191 +5551,37 @@
       "line_number": 366,
       "is_async": false,
       "is_tested": true
-    },
-    {
-      "name": "needs_regeneration",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 86,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "add_trigger",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 90,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_changed_files",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 108,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_staged_files",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 132,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "should_trigger_regeneration",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 153,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "detect_changes",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 179,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "run_analysis",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 220,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "archive_report",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 258,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "copy_reports",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 288,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_derived_reports",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 335,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "regenerate",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 558,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "scripts/conditional_regenerate.py",
-      "line_number": 638,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "pytest_runtest_logreport",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 53,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "discover_tests",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 70,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "run_tests",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 126,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "run_coverage_analysis",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_summary_report",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 257,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_json_report",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 269,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "scripts/run_tests.py",
-      "line_number": 337,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "verify_dependencies",
-      "file_path": "scripts/run_analysis.py",
-      "line_number": 35,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "run_command",
-      "file_path": "scripts/run_analysis.py",
-      "line_number": 225,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "run_all_analysis",
-      "file_path": "scripts/run_analysis.py",
-      "line_number": 507,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_summary_report",
-      "file_path": "scripts/run_analysis.py",
-      "line_number": 682,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "scripts/run_analysis.py",
-      "line_number": 699,
-      "is_async": false,
-      "is_tested": true
     }
   ],
   "untested_by_file": {
+    "scripts/run_analysis.py": [
+      {
+        "name": "verify_dependencies",
+        "line_number": 35,
+        "is_async": false
+      },
+      {
+        "name": "run_command",
+        "line_number": 225,
+        "is_async": false
+      }
+    ],
+    "scripts/run_tests.py": [
+      {
+        "name": "pytest_runtest_logreport",
+        "line_number": 53,
+        "is_async": false
+      },
+      {
+        "name": "discover_tests",
+        "line_number": 70,
+        "is_async": false
+      }
+    ],
     "scripts/enhance_docs.py": [
       {
         "name": "has_schema_markup",
         "line_number": 68,
-        "is_async": false
-      },
-      {
-        "name": "inject_schema",
-        "line_number": 97,
-        "is_async": false
-      },
-      {
-        "name": "enhance_directory",
-        "line_number": 146,
         "is_async": false
       }
     ],
@@ -6080,30 +6094,6 @@
       {
         "name": "PredictiveTrendsSection",
         "line_number": 182,
-        "is_async": false
-      }
-    ],
-    "scripts/run_tests.py": [
-      {
-        "name": "pytest_runtest_logreport",
-        "line_number": 53,
-        "is_async": false
-      },
-      {
-        "name": "discover_tests",
-        "line_number": 70,
-        "is_async": false
-      }
-    ],
-    "scripts/run_analysis.py": [
-      {
-        "name": "verify_dependencies",
-        "line_number": 35,
-        "is_async": false
-      },
-      {
-        "name": "run_command",
-        "line_number": 225,
         "is_async": false
       }
     ]
