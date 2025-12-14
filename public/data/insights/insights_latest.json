@@ -1,44 +1,22 @@
 {
   "summary": {
-    "total": 3,
+    "total": 2,
     "by_type": {
-      "concern": 1,
       "recommendation": 1,
       "improvement": 1
     },
     "by_severity": {
-      "high": 1,
       "medium": 1,
       "low": 1
     },
-    "unacknowledged": 2,
+    "unacknowledged": 1,
     "overall_confidence": 94,
-    "headline": "Analysis: 56 issues, 25.4% coverage, 0 circular deps",
-    "last_updated": "2025-12-13T20:16:51.886245Z"
+    "headline": "Analysis: 56 issues, 82.0% coverage, 0 circular deps",
+    "last_updated": "2025-12-14T11:57:39.810528Z"
   },
   "insights": [
     {
-      "id": "insight-ae716018",
-      "type": "concern",
-      "severity": "high",
-      "title": "Test Coverage Below Target",
-      "explanation": "Test coverage is at 25.4%, below the recommended 70% minimum.",
-      "confidence": 95,
-      "metrics": [
-        {
-          "name": "Coverage",
-          "current": 25.4,
-          "unit": "%"
-        }
-      ],
-      "recommendations": [
-        "Prioritize adding tests for critical business logic"
-      ],
-      "created_at": "2025-12-13T20:16:51.886245Z",
-      "acknowledged": false
-    },
-    {
-      "id": "insight-7ead8828",
+      "id": "insight-9c269373",
       "type": "recommendation",
       "severity": "medium",
       "title": "Code Quality Issues Detected",
@@ -54,11 +32,11 @@
       "recommendations": [
         "Address warning-level issues in critical paths first"
       ],
-      "created_at": "2025-12-13T20:16:51.886245Z",
+      "created_at": "2025-12-14T11:57:39.810528Z",
       "acknowledged": false
     },
     {
-      "id": "insight-253b20d9",
+      "id": "insight-769805d2",
       "type": "improvement",
       "severity": "low",
       "title": "No Circular Dependencies",
@@ -74,7 +52,7 @@
       "recommendations": [
         "Maintain current architectural discipline"
       ],
-      "created_at": "2025-12-13T20:16:51.886245Z",
+      "created_at": "2025-12-14T11:57:39.810528Z",
       "acknowledged": true
     }
   ]
