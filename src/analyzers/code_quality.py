@@ -81,8 +81,23 @@ class CodeQualityAnalyzer:
             'severity': 'warning',
             'category': 'code_smell',
             'message': 'Function may be too long (consider breaking down)',
-            'suggestion': 'Break down into smaller, focused functions'
+            'suggestion': 'Break down into smaller, focused functions',
+            'check': self._is_long_function
         }
+
+    def _is_long_function(self, code: str, min_lines: int = 50) -> bool:
+        """Check if a function is too long.
+
+        Args:
+            code: The function code snippet
+            min_lines: Minimum lines to be considered long (default: 50)
+
+        Returns:
+            True if the function exceeds the line threshold (should be flagged).
+        """
+        # Count actual lines of code (excluding empty lines)
+        lines = [line for line in code.split('\n') if line.strip()]
+        return len(lines) > min_lines
 
     def _create_missing_docstring_rule(self) -> Dict[str, Any]:
         """Create rule for detecting missing docstrings"""
@@ -434,9 +449,10 @@ class CodeQualityAnalyzer:
     def _should_skip_match(self, match: Dict[str, Any], rule: Dict[str, Any],
                            file_path: Optional[Path] = None) -> bool:
         """Check if a match should be skipped based on additional checks"""
-        # Skip security checks in test files (test credentials are expected)
-        if rule.get('category') == 'security' and file_path:
-            if self._is_test_or_example_file(file_path):
+        # Skip certain rules in test/fixture files (intentional code smells for testing)
+        if file_path and self._is_test_or_example_file(file_path):
+            skip_in_fixtures = {'security', 'best_practice', 'documentation'}
+            if rule.get('category') in skip_in_fixtures:
                 return True
 
         if 'check' not in rule:
