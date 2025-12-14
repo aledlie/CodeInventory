@@ -25,6 +25,22 @@ import type {
   PredictionSummary,
   AnalyticsInsight,
   AnalyticsReport,
+  RiskFactorType,
+  DebtCategory,
+  MetricType,
+  AnalyticsTimeRange,
+  BurndownStatus,
+  HeatmapCell,
+  RiskHeatmapProps,
+  DebtBurndownChartProps,
+  DebtBurndownSummary,
+  CardAction,
+  PredictiveTrendCardProps,
+  ImpactEstimate,
+  EffortEstimate,
+  AnalyticsInsightCardProps,
+  AnalyticsFilters,
+  RiskFactor,
 } from '../analytics';
 
 describe('analytics helper functions', () => {
@@ -432,6 +448,497 @@ describe('analytics type structure validation', () => {
 
       expect(report.metadata.analyzerVersion).toBe('1.0.0');
       expect(report.predictions.quality.confidenceLevel).toBe('medium');
+    });
+  });
+});
+
+describe('additional analytics type structure validation', () => {
+  describe('RiskFactor type', () => {
+    it('should accept valid risk factor with all properties', () => {
+      const factor: RiskFactor = {
+        type: 'complexity',
+        weight: 0.25,
+        value: 75,
+        score: 75,
+        description: 'High cyclomatic complexity detected',
+      };
+
+      expect(factor.type).toBe('complexity');
+      expect(factor.weight).toBeGreaterThan(0);
+      expect(factor.weight).toBeLessThanOrEqual(1);
+    });
+
+    it('should accept risk factor without optional description', () => {
+      const factor: RiskFactor = {
+        type: 'coverage',
+        weight: 0.3,
+        value: 40,
+        score: 60,
+      };
+
+      expect(factor.description).toBeUndefined();
+    });
+
+    it('should accept all valid risk factor types', () => {
+      const types: RiskFactorType[] = ['complexity', 'coverage', 'dependencies', 'age', 'churn'];
+
+      types.forEach((type) => {
+        const factor: RiskFactor = {
+          type,
+          weight: 0.2,
+          value: 50,
+          score: 50,
+        };
+        expect(factor.type).toBe(type);
+      });
+    });
+  });
+
+  describe('HeatmapCell type', () => {
+    it('should accept valid heatmap cell with tooltip', () => {
+      const cell: HeatmapCell = {
+        rowId: 'src/components/Button',
+        rowLabel: 'Button',
+        columnId: 'complexity',
+        columnLabel: 'Complexity',
+        value: 65,
+        riskLevel: 'high',
+        tooltip: 'High complexity: 65/100',
+      };
+
+      expect(cell.rowId).toBe('src/components/Button');
+      expect(cell.riskLevel).toBe('high');
+    });
+
+    it('should accept heatmap cell without optional tooltip', () => {
+      const cell: HeatmapCell = {
+        rowId: 'src/utils',
+        rowLabel: 'Utils',
+        columnId: 'coverage',
+        columnLabel: 'Coverage',
+        value: 30,
+        riskLevel: 'low',
+      };
+
+      expect(cell.tooltip).toBeUndefined();
+    });
+  });
+
+  describe('RiskHeatmapProps type', () => {
+    it('should accept valid props with all options', () => {
+      const props: RiskHeatmapProps = {
+        data: [],
+        maxItems: 15,
+        onItemClick: () => {},
+        groupByDirectory: true,
+        showLegend: true,
+        height: 400,
+        isLoading: false,
+      };
+
+      expect(props.maxItems).toBe(15);
+      expect(props.groupByDirectory).toBe(true);
+    });
+
+    it('should accept minimal required props', () => {
+      const props: RiskHeatmapProps = {
+        data: [],
+      };
+
+      expect(props.data).toEqual([]);
+      expect(props.maxItems).toBeUndefined();
+      expect(props.onItemClick).toBeUndefined();
+    });
+  });
+
+  describe('DebtBurndownChartProps type', () => {
+    it('should accept valid props with projected data', () => {
+      const props: DebtBurndownChartProps = {
+        actualData: [{ timestamp: '2024-01-01', value: 100 }],
+        targetData: [{ timestamp: '2024-01-01', value: 80 }],
+        projectedData: [{ timestamp: '2024-02-01', value: 60 }],
+        timeRange: '90d',
+        height: 300,
+        currentDebt: 100,
+        targetDebt: 50,
+        showStatus: true,
+        isLoading: false,
+      };
+
+      expect(props.timeRange).toBe('90d');
+      expect(props.projectedData).toHaveLength(1);
+    });
+
+    it('should accept props without optional fields', () => {
+      const props: DebtBurndownChartProps = {
+        actualData: [],
+        targetData: [],
+        timeRange: '30d',
+      };
+
+      expect(props.projectedData).toBeUndefined();
+      expect(props.currentDebt).toBeUndefined();
+    });
+  });
+
+  describe('DebtBurndownSummary type', () => {
+    it('should accept valid summary with all statuses', () => {
+      const statuses: BurndownStatus[] = ['ahead', 'on-track', 'behind', 'critical'];
+
+      statuses.forEach((status) => {
+        const summary: DebtBurndownSummary = {
+          currentDebt: 100,
+          targetDebt: 50,
+          status,
+          progressPercent: 50,
+          estimatedDaysToTarget: 30,
+          trend: 'improving',
+          weeklyChangeRate: -5,
+        };
+        expect(summary.status).toBe(status);
+      });
+    });
+
+    it('should accept summary with null estimatedDaysToTarget', () => {
+      const summary: DebtBurndownSummary = {
+        currentDebt: 100,
+        targetDebt: 50,
+        status: 'behind',
+        progressPercent: 25,
+        estimatedDaysToTarget: null,
+        trend: 'declining',
+        weeklyChangeRate: 3,
+      };
+
+      expect(summary.estimatedDaysToTarget).toBeNull();
+    });
+
+    it('should accept all trend types', () => {
+      const trends: Array<'improving' | 'declining' | 'stable'> = ['improving', 'declining', 'stable'];
+
+      trends.forEach((trend) => {
+        const summary: DebtBurndownSummary = {
+          currentDebt: 100,
+          targetDebt: 50,
+          status: 'on-track',
+          progressPercent: 50,
+          estimatedDaysToTarget: 30,
+          trend,
+          weeklyChangeRate: 0,
+        };
+        expect(summary.trend).toBe(trend);
+      });
+    });
+  });
+
+  describe('CardAction type', () => {
+    it('should accept valid card action', () => {
+      const action: CardAction = {
+        label: 'View Details',
+        onClick: () => {},
+        variant: 'primary',
+        disabled: false,
+      };
+
+      expect(action.label).toBe('View Details');
+      expect(action.variant).toBe('primary');
+    });
+
+    it('should accept action without optional disabled', () => {
+      const action: CardAction = {
+        label: 'Dismiss',
+        onClick: () => {},
+        variant: 'secondary',
+      };
+
+      expect(action.disabled).toBeUndefined();
+    });
+  });
+
+  describe('PredictiveTrendCardProps type', () => {
+    it('should accept valid props with all options', () => {
+      const props: PredictiveTrendCardProps = {
+        metric: 'quality',
+        metricLabel: 'Quality Score',
+        currentValue: 82,
+        projectedValue: 90,
+        confidence: 85,
+        confidenceLevel: 'high',
+        timeframe: '90d',
+        insight: 'Quality is improving based on recent trends',
+        actions: [{ label: 'View', onClick: () => {}, variant: 'primary' }],
+        unit: '%',
+        increaseIsGood: true,
+        isLoading: false,
+        goalValue: 95,
+        goalDate: '2024-06-01',
+      };
+
+      expect(props.metric).toBe('quality');
+      expect(props.increaseIsGood).toBe(true);
+    });
+
+    it('should accept all metric types', () => {
+      const metrics: MetricType[] = ['quality', 'coverage', 'issues', 'debt', 'complexity'];
+
+      metrics.forEach((metric) => {
+        const props: PredictiveTrendCardProps = {
+          metric,
+          metricLabel: metric,
+          currentValue: 50,
+          projectedValue: 60,
+          confidence: 70,
+          confidenceLevel: 'medium',
+          timeframe: '30d',
+        };
+        expect(props.metric).toBe(metric);
+      });
+    });
+
+    it('should accept minimal required props', () => {
+      const props: PredictiveTrendCardProps = {
+        metric: 'coverage',
+        metricLabel: 'Test Coverage',
+        currentValue: 70,
+        projectedValue: 80,
+        confidence: 75,
+        confidenceLevel: 'medium',
+        timeframe: '90d',
+      };
+
+      expect(props.insight).toBeUndefined();
+      expect(props.actions).toBeUndefined();
+      expect(props.unit).toBeUndefined();
+    });
+  });
+
+  describe('ImpactEstimate type', () => {
+    it('should accept valid impact with description', () => {
+      const impact: ImpactEstimate = {
+        min: 5,
+        max: 15,
+        unit: '%',
+        description: 'Expected quality improvement',
+      };
+
+      expect(impact.min).toBeLessThanOrEqual(impact.max);
+      expect(impact.unit).toBe('%');
+    });
+
+    it('should accept impact without optional description', () => {
+      const impact: ImpactEstimate = {
+        min: 10,
+        max: 20,
+        unit: 'hours',
+      };
+
+      expect(impact.description).toBeUndefined();
+    });
+  });
+
+  describe('EffortEstimate type', () => {
+    it('should accept valid effort with skills', () => {
+      const effort: EffortEstimate = {
+        hours: 8,
+        difficulty: 'moderate',
+        skills: ['TypeScript', 'React', 'Testing'],
+      };
+
+      expect(effort.difficulty).toBe('moderate');
+      expect(effort.skills).toHaveLength(3);
+    });
+
+    it('should accept effort without optional skills', () => {
+      const effort: EffortEstimate = {
+        hours: 2,
+        difficulty: 'easy',
+      };
+
+      expect(effort.skills).toBeUndefined();
+    });
+
+    it('should accept all difficulty levels', () => {
+      const difficulties: Array<'easy' | 'moderate' | 'complex'> = ['easy', 'moderate', 'complex'];
+
+      difficulties.forEach((difficulty) => {
+        const effort: EffortEstimate = {
+          hours: 4,
+          difficulty,
+        };
+        expect(effort.difficulty).toBe(difficulty);
+      });
+    });
+  });
+
+  describe('AnalyticsInsightCardProps type', () => {
+    it('should accept valid props with all options', () => {
+      const props: AnalyticsInsightCardProps = {
+        id: 'insight-123',
+        priority: 'high',
+        title: 'Improve Test Coverage',
+        description: 'Several modules have low test coverage',
+        affectedFiles: ['src/utils.ts', 'src/helpers.ts'],
+        impact: { min: 5, max: 10, unit: '%' },
+        effort: { hours: 8, difficulty: 'moderate' },
+        category: 'testing',
+        tags: ['coverage', 'quality'],
+        onView: () => {},
+        onDismiss: () => {},
+        isLoading: false,
+        compact: true,
+      };
+
+      expect(props.id).toBe('insight-123');
+      expect(props.compact).toBe(true);
+    });
+
+    it('should accept minimal required props', () => {
+      const props: AnalyticsInsightCardProps = {
+        id: 'insight-456',
+        priority: 'low',
+        title: 'Add Documentation',
+        description: 'Missing JSDoc comments',
+        impact: { min: 1, max: 3, unit: '%' },
+        effort: { hours: 2, difficulty: 'easy' },
+      };
+
+      expect(props.affectedFiles).toBeUndefined();
+      expect(props.category).toBeUndefined();
+      expect(props.tags).toBeUndefined();
+    });
+  });
+
+  describe('AnalyticsFilters type', () => {
+    it('should accept valid filters with all options', () => {
+      const filters: AnalyticsFilters = {
+        riskLevels: ['critical', 'high'],
+        debtCategories: ['complexity', 'coverage'],
+        insightPriorities: ['high', 'medium'],
+        minConfidence: 70,
+        filePattern: 'src/**/*.ts',
+        timeRange: '90d',
+      };
+
+      expect(filters.riskLevels).toHaveLength(2);
+      expect(filters.minConfidence).toBe(70);
+    });
+
+    it('should accept empty filters object', () => {
+      const filters: AnalyticsFilters = {};
+
+      expect(filters.riskLevels).toBeUndefined();
+      expect(filters.debtCategories).toBeUndefined();
+    });
+
+    it('should accept all valid time ranges', () => {
+      const timeRanges: AnalyticsTimeRange[] = ['7d', '30d', '90d', '6mo', '1y', 'all'];
+
+      timeRanges.forEach((timeRange) => {
+        const filters: AnalyticsFilters = { timeRange };
+        expect(filters.timeRange).toBe(timeRange);
+      });
+    });
+
+    it('should accept all valid risk levels', () => {
+      const levels: RiskLevel[] = ['critical', 'high', 'medium', 'low', 'minimal'];
+      const filters: AnalyticsFilters = { riskLevels: levels };
+
+      expect(filters.riskLevels).toHaveLength(5);
+    });
+
+    it('should accept all valid debt categories', () => {
+      const categories: DebtCategory[] = ['complexity', 'coverage', 'documentation', 'dependencies', 'security', 'performance'];
+      const filters: AnalyticsFilters = { debtCategories: categories };
+
+      expect(filters.debtCategories).toHaveLength(6);
+    });
+
+    it('should accept all valid insight priorities', () => {
+      const priorities: InsightPriority[] = ['high', 'medium', 'low'];
+      const filters: AnalyticsFilters = { insightPriorities: priorities };
+
+      expect(filters.insightPriorities).toHaveLength(3);
+    });
+  });
+});
+
+describe('helper function edge cases', () => {
+  describe('getRiskLevelFromScore boundary precision', () => {
+    it('should handle exact boundary values correctly', () => {
+      // Test exact boundaries
+      expect(getRiskLevelFromScore(20)).toBe('low');
+      expect(getRiskLevelFromScore(19.999)).toBe('minimal');
+      expect(getRiskLevelFromScore(40)).toBe('medium');
+      expect(getRiskLevelFromScore(39.999)).toBe('low');
+      expect(getRiskLevelFromScore(60)).toBe('high');
+      expect(getRiskLevelFromScore(59.999)).toBe('medium');
+      expect(getRiskLevelFromScore(80)).toBe('critical');
+      expect(getRiskLevelFromScore(79.999)).toBe('high');
+    });
+
+    it('should handle very small positive values', () => {
+      expect(getRiskLevelFromScore(0.001)).toBe('minimal');
+      expect(getRiskLevelFromScore(0.1)).toBe('minimal');
+    });
+
+    it('should handle very large values', () => {
+      expect(getRiskLevelFromScore(1000)).toBe('critical');
+      expect(getRiskLevelFromScore(Number.MAX_SAFE_INTEGER)).toBe('critical');
+    });
+  });
+
+  describe('getConfidenceLevelFromScore boundary precision', () => {
+    it('should handle exact boundary values correctly', () => {
+      expect(getConfidenceLevelFromScore(50)).toBe('medium');
+      expect(getConfidenceLevelFromScore(49.999)).toBe('low');
+      expect(getConfidenceLevelFromScore(80)).toBe('high');
+      expect(getConfidenceLevelFromScore(79.999)).toBe('medium');
+    });
+  });
+
+  describe('formatHours precision and edge cases', () => {
+    it('should handle fractional minutes correctly', () => {
+      expect(formatHours(0.008333)).toBe('0m'); // ~30 seconds rounds to 0
+      expect(formatHours(0.0167)).toBe('1m'); // ~1 minute
+      expect(formatHours(0.0333)).toBe('2m'); // ~2 minutes
+    });
+
+    it('should handle values at hour/day boundary', () => {
+      expect(formatHours(0.99)).toBe('59m');
+      expect(formatHours(1.0)).toBe('1.0h');
+      expect(formatHours(23.99)).toBe('24.0h');
+      expect(formatHours(24)).toBe('3d');
+    });
+
+    it('should handle large values', () => {
+      expect(formatHours(80)).toBe('10d');
+      expect(formatHours(160)).toBe('20d');
+      expect(formatHours(800)).toBe('100d');
+    });
+
+    it('should handle remainder hours correctly', () => {
+      // 24.5 hours: days = floor(24.5/8) = 3, remainder = 24.5 % 8 = 0.5, rounds to 1h
+      expect(formatHours(24.5)).toBe('3d 1h');
+      expect(formatHours(25)).toBe('3d 1h');
+      expect(formatHours(31)).toBe('3d 7h');
+      expect(formatHours(32)).toBe('4d'); // Exactly 4 days
+    });
+  });
+
+  describe('formatTimeframe with various inputs', () => {
+    it('should handle numeric-like strings', () => {
+      expect(formatTimeframe('123')).toBe('123');
+      expect(formatTimeframe('0')).toBe('0');
+    });
+
+    it('should handle whitespace', () => {
+      expect(formatTimeframe(' 7d ')).toBe(' 7d '); // Not trimmed
+      expect(formatTimeframe('7d ')).toBe('7d ');
+    });
+
+    it('should be case sensitive', () => {
+      expect(formatTimeframe('7D')).toBe('7D'); // Not matched
+      expect(formatTimeframe('7d')).toBe('7 days');
     });
   });
 });
