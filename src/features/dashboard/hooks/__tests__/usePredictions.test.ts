@@ -330,7 +330,7 @@ function createTestQueryClient() {
   });
 }
 
-function createWrapper(queryClient: QueryClient) {
+function createWrapper(queryClient: QueryClient): React.FC<{ children: ReactNode }> {
   return function Wrapper({ children }: { children: ReactNode }) {
     return createElement(
       QueryClientProvider,
