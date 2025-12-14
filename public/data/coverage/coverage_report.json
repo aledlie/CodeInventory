@@ -3,9 +3,9 @@
     "source_directory": "src",
     "test_directory": "src/tests",
     "total_functions": 760,
-    "tested_functions": 328,
-    "untested_functions": 432,
-    "coverage_percentage": 43.16
+    "tested_functions": 340,
+    "untested_functions": 420,
+    "coverage_percentage": 44.74
   },
   "functions": [
     {
@@ -3765,7 +3765,7 @@
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 65,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "fetchIssues",
@@ -3779,28 +3779,28 @@
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 97,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "fetchSprintGoals",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 113,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "fetchComments",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 129,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "assignIssue",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 145,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "updateIssueStatus",
@@ -3814,49 +3814,49 @@
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 176,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "markActivityAsRead",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 200,
       "is_async": true,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generateMockActivities",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 206,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generateMockIssues",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 262,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generateMockTeamMembers",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 326,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generateMockGoals",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 359,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "generateMockComments",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 412,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "transformDataPoint",
@@ -7047,68 +7047,6 @@
       {
         "name": "generateMockInsights",
         "line_number": 431,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/api/collaborationApi.ts": [
-      {
-        "name": "fetchActivities",
-        "line_number": 65,
-        "is_async": true
-      },
-      {
-        "name": "fetchTeamMembers",
-        "line_number": 97,
-        "is_async": true
-      },
-      {
-        "name": "fetchSprintGoals",
-        "line_number": 113,
-        "is_async": true
-      },
-      {
-        "name": "fetchComments",
-        "line_number": 129,
-        "is_async": true
-      },
-      {
-        "name": "assignIssue",
-        "line_number": 145,
-        "is_async": true
-      },
-      {
-        "name": "addComment",
-        "line_number": 176,
-        "is_async": true
-      },
-      {
-        "name": "markActivityAsRead",
-        "line_number": 200,
-        "is_async": true
-      },
-      {
-        "name": "generateMockActivities",
-        "line_number": 206,
-        "is_async": false
-      },
-      {
-        "name": "generateMockIssues",
-        "line_number": 262,
-        "is_async": false
-      },
-      {
-        "name": "generateMockTeamMembers",
-        "line_number": 326,
-        "is_async": false
-      },
-      {
-        "name": "generateMockGoals",
-        "line_number": 359,
-        "is_async": false
-      },
-      {
-        "name": "generateMockComments",
-        "line_number": 412,
         "is_async": false
       }
     ],
