@@ -132,7 +132,7 @@ jobs:
       uses: ./.github/actions/setup-ast-grep
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Python dependencies
       run: |
@@ -189,7 +189,7 @@ jobs:
         cache: 'npm'
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Playwright browsers (Chromium only)
       run: npx playwright install chromium --with-deps
@@ -222,7 +222,7 @@ jobs:
         cache: 'npm'
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Playwright browsers (Firefox & WebKit)
       run: |
@@ -269,7 +269,7 @@ jobs:
       uses: ./.github/actions/setup-ast-grep
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Python dependencies
       run: |
@@ -311,7 +311,7 @@ jobs:
       uses: ./.github/actions/setup-ast-grep
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Python dependencies
       run: |
@@ -375,7 +375,7 @@ jobs:
       uses: ./.github/actions/setup-ast-grep
 
     - name: Install Node.js dependencies
-      run: npm ci --omit=optional
+      run: npm ci
 
     - name: Install Python dependencies
       run: |
