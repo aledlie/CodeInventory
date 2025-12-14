@@ -5,6 +5,7 @@ Unit tests for analyzer_optimizer.py
 Tests for the shared parallel processing and caching utilities used by all analyzers.
 """
 
+import hashlib
 import json
 import os
 import shutil
@@ -67,6 +68,11 @@ def str_key_func(x: Any) -> str:
 def hash_with_prefix(x: Any) -> str:
     """Generate hash with prefix (picklable function)."""
     return f'hash_{x}'
+
+
+def identity_func(x: Any) -> Any:
+    """Return input unchanged (picklable function)."""
+    return x
 
 
 # ============================================================================
@@ -859,6 +865,628 @@ class TestAnalyzerCacheIntegration(unittest.TestCase):
         # Verify state
         self.assertNotIn('file1.py', analyzer.cache.metadata.entries)
         self.assertIn('file2.py', analyzer.cache.metadata.entries)
+
+
+# ============================================================================
+# Tqdm Fallback Class Tests
+# ============================================================================
+
+class TestTqdmFallbackClass(unittest.TestCase):
+    """Tests for the tqdm fallback class implementation.
+
+    Note: These tests verify behavior that works with both the real tqdm
+    library (when installed) and our fallback implementation.
+    """
+
+    def test_tqdm_init_with_iterable(self):
+        """Test tqdm initialization with iterable."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        items = [1, 2, 3]
+        pbar = tqdm_class(items, total=3)
+
+        self.assertEqual(pbar.total, 3)
+
+    def test_tqdm_init_with_total(self):
+        """Test tqdm initialization with total parameter."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        pbar = tqdm_class(total=10)
+
+        self.assertEqual(pbar.total, 10)
+
+    def test_tqdm_iter_with_iterable(self):
+        """Test tqdm iteration."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        items = [1, 2, 3]
+        pbar = tqdm_class(items)
+
+        result = list(pbar)
+        self.assertEqual(result, [1, 2, 3])
+
+    @unittest.skipIf(TQDM_AVAILABLE, "Skipping fallback-specific test when tqdm is installed")
+    def test_fallback_iter_without_iterable(self):
+        """Test fallback tqdm iteration without iterable (fallback only)."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        pbar = tqdm_class()
+        result = list(pbar)
+
+        self.assertEqual(result, [])
+
+    def test_tqdm_context_manager(self):
+        """Test tqdm as context manager."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        with tqdm_class(total=5) as pbar:
+            self.assertIsNotNone(pbar)
+            pbar.update(1)
+
+    def test_tqdm_update(self):
+        """Test tqdm update method."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        pbar = tqdm_class(total=10)
+
+        pbar.update(3)
+        # Both real tqdm and fallback should increment n
+        self.assertGreaterEqual(pbar.n, 3)
+
+    def test_tqdm_set_description(self):
+        """Test tqdm set_description method."""
+        from src.analyzers.analyzer_optimizer import tqdm as tqdm_class
+
+        pbar = tqdm_class(total=10)
+
+        # Should not raise exception
+        pbar.set_description("Processing")
+        pbar.set_description("")
+
+
+# ============================================================================
+# Additional AnalyzerCache Tests
+# ============================================================================
+
+class TestAnalyzerCacheExceptionHandling(unittest.TestCase):
+    """Tests for AnalyzerCache exception handling."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.temp_dir = tempfile.mkdtemp()
+        self.cache_dir = Path(self.temp_dir)
+
+    def tearDown(self):
+        """Clean up test fixtures."""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_calculate_hash_exception_returns_empty(self):
+        """Test calculate_hash returns empty string on exception."""
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+
+        # Create an object that can't be hashed properly
+        class UnhashableObject:
+            def __str__(self):
+                raise ValueError("Cannot convert to string")
+
+        # The hash should handle this gracefully
+        result = cache.calculate_hash(UnhashableObject())
+
+        # Should return empty string on error
+        self.assertEqual(result, "")
+
+    def test_save_cache_with_write_error(self):
+        """Test save_cache handles write errors gracefully."""
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+        cache.update_cache('key1', 'hash1', {'data': 1})
+
+        # Make cache file read-only to trigger write error
+        cache.cache_file.touch()
+        cache.cache_file.chmod(0o444)
+
+        try:
+            # Should not raise exception
+            cache.save_cache()
+        finally:
+            # Restore permissions for cleanup
+            cache.cache_file.chmod(0o644)
+
+    def test_load_cache_with_missing_fields(self):
+        """Test loading cache with missing fields in JSON."""
+        cache_file = self.cache_dir / f'{TEST_ANALYZER_NAME}_cache.json'
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+        # Write JSON with minimal fields
+        with open(cache_file, 'w') as f:
+            json.dump({'entries': {}}, f)
+
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+
+        # Should use defaults for missing fields
+        self.assertEqual(cache.metadata.version, '1.0')
+        self.assertEqual(cache.metadata.analyzer_name, TEST_ANALYZER_NAME)
+
+    def test_load_cache_with_corrupt_entries(self):
+        """Test loading cache with corrupt entry data."""
+        cache_file = self.cache_dir / f'{TEST_ANALYZER_NAME}_cache.json'
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+        # Write JSON with invalid entry (missing required fields)
+        corrupt_data = {
+            'version': '1.0',
+            'analyzer_name': TEST_ANALYZER_NAME,
+            'entries': {
+                'bad_entry': {'key': 'bad_entry'}  # Missing hash, timestamp, result
+            }
+        }
+        with open(cache_file, 'w') as f:
+            json.dump(corrupt_data, f)
+
+        # Should handle gracefully
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+
+        # Falls back to empty cache on error
+        self.assertIsNotNone(cache.metadata)
+
+
+# ============================================================================
+# Additional ParallelAnalyzer Processing Tests
+# ============================================================================
+
+def failing_processor(x: int) -> int:
+    """A processor that raises an exception (picklable function)."""
+    if x == 3:
+        raise ValueError(f"Cannot process {x}")
+    return x * 2
+
+
+def slow_processor(x: int) -> int:
+    """A processor that is slow (picklable function)."""
+    time.sleep(0.01)
+    return x * 2
+
+
+class TestParallelAnalyzerProcessingEdgeCases(unittest.TestCase):
+    """Additional tests for ParallelAnalyzer.process_items_parallel edge cases."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.temp_dir = tempfile.mkdtemp()
+        self.cache_dir = Path(self.temp_dir)
+
+    def tearDown(self):
+        """Clean up test fixtures."""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_process_items_with_exception_in_processor(self):
+        """Test processing handles exceptions in processor gracefully."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=2,
+            use_cache=False,
+            cache_dir=self.cache_dir
+        )
+
+        items = [1, 2, 3, 4, 5]  # Item 3 will fail
+
+        results = analyzer.process_items_parallel(
+            items,
+            failing_processor,
+            str_key_func,
+            description='Test with failures'
+        )
+
+        # Should get results for non-failing items
+        result_items = [r[0] for r in results]
+        self.assertIn(1, result_items)
+        self.assertIn(2, result_items)
+        self.assertIn(4, result_items)
+        self.assertIn(5, result_items)
+
+    def test_process_items_without_hash_func(self):
+        """Test processing without hash_func (no caching of individual results)."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=2,
+            use_cache=True,  # Cache enabled but no hash_func
+            cache_dir=self.cache_dir
+        )
+
+        items = [1, 2, 3]
+
+        results = analyzer.process_items_parallel(
+            items,
+            double_value,
+            str_key_func,
+            hash_func=None,  # No hash function
+            description='Test without hash'
+        )
+
+        # All items processed (no caching without hash_func)
+        self.assertEqual(len(results), 3)
+
+    def test_process_items_with_long_item_names(self):
+        """Test processing truncates long item names in progress bar."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=2,
+            use_cache=False,
+            cache_dir=self.cache_dir
+        )
+
+        # Create items with very long string representation
+        items = [f"very_long_item_name_that_exceeds_fifty_characters_{i}" for i in range(3)]
+
+        results = analyzer.process_items_parallel(
+            items,
+            identity_func,  # Use module-level picklable function
+            str_key_func,
+            description='Test long names'
+        )
+
+        # Should complete without error
+        self.assertEqual(len(results), 3)
+
+    def test_process_items_single_worker(self):
+        """Test processing with single worker."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=1,
+            use_cache=False,
+            cache_dir=self.cache_dir
+        )
+
+        items = [1, 2, 3, 4, 5]
+
+        results = analyzer.process_items_parallel(
+            items,
+            double_value,
+            str_key_func
+        )
+
+        self.assertEqual(len(results), 5)
+        result_values = sorted([r[1] for r in results])
+        self.assertEqual(result_values, [2, 4, 6, 8, 10])
+
+    def test_process_items_updates_cache_on_success(self):
+        """Test that cache is updated for successful processing."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=2,
+            use_cache=True,
+            cache_dir=self.cache_dir
+        )
+
+        items = [1, 2, 3]
+
+        analyzer.process_items_parallel(
+            items,
+            double_value,
+            str_key_func,
+            hash_func=hash_with_prefix,
+            skip_cached=False  # Process all items
+        )
+
+        # Verify cache was updated
+        for item in items:
+            key = str_key_func(item)
+            self.assertIn(key, analyzer.cache.metadata.entries)
+
+    def test_process_items_skip_cached_items(self):
+        """Test that cached items are skipped on second run."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=2,
+            use_cache=True,
+            cache_dir=self.cache_dir
+        )
+
+        items = [1, 2, 3]
+
+        # First run
+        results1 = analyzer.process_items_parallel(
+            items,
+            double_value,
+            str_key_func,
+            hash_func=hash_with_prefix,
+            skip_cached=True
+        )
+
+        # Second run - items should be from cache
+        results2 = analyzer.process_items_parallel(
+            items,
+            double_value,
+            str_key_func,
+            hash_func=hash_with_prefix,
+            skip_cached=True
+        )
+
+        # Both should have same number of results
+        self.assertEqual(len(results1), len(results2))
+
+        # Results should be equivalent
+        values1 = sorted([r[1] for r in results1])
+        values2 = sorted([r[1] for r in results2])
+        self.assertEqual(values1, values2)
+
+
+# ============================================================================
+# Additional Integration Tests
+# ============================================================================
+
+class TestAnalyzerCacheVersioning(unittest.TestCase):
+    """Tests for cache versioning behavior."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.temp_dir = tempfile.mkdtemp()
+        self.cache_dir = Path(self.temp_dir)
+
+    def tearDown(self):
+        """Clean up test fixtures."""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_cache_entry_includes_analyzer_version(self):
+        """Test that cache entries include analyzer version."""
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+        cache.update_cache('test_key', 'test_hash', {'data': 1})
+
+        entry = cache.metadata.entries['test_key']
+        self.assertEqual(entry.analyzer_version, '1.0')
+
+    def test_cache_metadata_includes_version(self):
+        """Test that cache metadata includes version."""
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+
+        self.assertEqual(cache.metadata.version, '1.0')
+
+    def test_saved_cache_includes_version_info(self):
+        """Test that saved cache file includes version info."""
+        cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
+        cache.update_cache('test_key', 'test_hash', {'data': 1})
+        cache.save_cache()
+
+        # Read saved file directly
+        with open(cache.cache_file, 'r') as f:
+            data = json.load(f)
+
+        self.assertEqual(data['version'], '1.0')
+        self.assertIn('analyzer_version', data['entries']['test_key'])
+
+
+class TestParallelAnalyzerLogging(unittest.TestCase):
+    """Tests for ParallelAnalyzer logging behavior."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.temp_dir = tempfile.mkdtemp()
+        self.cache_dir = Path(self.temp_dir)
+
+    def tearDown(self):
+        """Clean up test fixtures."""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    @patch('src.analyzers.analyzer_optimizer.logger')
+    def test_initialization_logs_info(self, mock_logger):
+        """Test that initialization logs info messages."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            max_workers=4,
+            use_cache=True,
+            cache_dir=self.cache_dir
+        )
+
+        # Should have logged initialization info
+        self.assertTrue(mock_logger.info.called)
+
+    @patch('src.analyzers.analyzer_optimizer.logger')
+    def test_cache_clear_logs_info(self, mock_logger):
+        """Test that cache clearing logs info."""
+        analyzer = ParallelAnalyzer(
+            TEST_ANALYZER_NAME,
+            use_cache=True,
+            cache_dir=self.cache_dir
+        )
+
+        analyzer.clear_cache()
+
+        # Should have logged cache clearing
+        self.assertTrue(mock_logger.info.called)
+
+
+class TestAnalysisCacheEquality(unittest.TestCase):
+    """Tests for AnalysisCache dataclass behavior."""
+
+    def test_analysis_cache_equality(self):
+        """Test that two identical AnalysisCache instances are equal."""
+        cache1 = AnalysisCache(
+            key='test_key',
+            hash=TEST_CONTENT_HASH,
+            timestamp=TEST_TIMESTAMP,
+            result=TEST_RESULT,
+            analyzer_version=TEST_CACHE_VERSION
+        )
+        cache2 = AnalysisCache(
+            key='test_key',
+            hash=TEST_CONTENT_HASH,
+            timestamp=TEST_TIMESTAMP,
+            result=TEST_RESULT,
+            analyzer_version=TEST_CACHE_VERSION
+        )
+
+        self.assertEqual(cache1, cache2)
+
+    def test_analysis_cache_inequality(self):
+        """Test that different AnalysisCache instances are not equal."""
+        cache1 = AnalysisCache(
+            key='key1',
+            hash=TEST_CONTENT_HASH,
+            timestamp=TEST_TIMESTAMP,
+            result=TEST_RESULT
+        )
+        cache2 = AnalysisCache(
+            key='key2',
+            hash=TEST_CONTENT_HASH,
+            timestamp=TEST_TIMESTAMP,
+            result=TEST_RESULT
+        )
+
+        self.assertNotEqual(cache1, cache2)
+
+
+class TestCacheMetadataPostInit(unittest.TestCase):
+    """Tests for CacheMetadata __post_init__ behavior."""
+
+    def test_post_init_creates_empty_dict(self):
+        """Test __post_init__ creates empty dict when entries is None."""
+        metadata = CacheMetadata()
+        self.assertIsNotNone(metadata.entries)
+        self.assertEqual(metadata.entries, {})
+
+    def test_post_init_preserves_existing_entries(self):
+        """Test __post_init__ preserves existing entries."""
+        entry = AnalysisCache(
+            key='test_key',
+            hash=TEST_CONTENT_HASH,
+            timestamp=TEST_TIMESTAMP,
+            result=TEST_RESULT
+        )
+        existing = {'test_key': entry}
+
+        metadata = CacheMetadata(entries=existing)
+
+        self.assertEqual(metadata.entries, existing)
+        self.assertIn('test_key', metadata.entries)
+
+
+class TestGetFileContentHashEdgeCases(unittest.TestCase):
+    """Edge case tests for get_file_content_hash function."""
+
+    def setUp(self):
+        """Set up test fixtures."""
+        self.temp_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        """Clean up test fixtures."""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_hash_empty_file(self):
+        """Test hashing empty file."""
+        file_path = Path(self.temp_dir) / 'empty.txt'
+        file_path.write_bytes(b'')
+
+        hash_result = get_file_content_hash(file_path)
+
+        # SHA-256 of empty string
+        expected = hashlib.sha256(b'').hexdigest()
+        self.assertEqual(hash_result, expected)
+
+    def test_hash_large_file(self):
+        """Test hashing larger file."""
+        file_path = Path(self.temp_dir) / 'large.txt'
+        # Write 1MB of data
+        large_content = b'x' * (1024 * 1024)
+        file_path.write_bytes(large_content)
+
+        hash_result = get_file_content_hash(file_path)
+
+        self.assertEqual(len(hash_result), 64)
+
+    def test_hash_binary_file(self):
+        """Test hashing binary file."""
+        file_path = Path(self.temp_dir) / 'binary.bin'
+        binary_content = bytes(range(256))
+        file_path.write_bytes(binary_content)
+
+        hash_result = get_file_content_hash(file_path)
+
+        self.assertEqual(len(hash_result), 64)
+
+    def test_hash_file_with_permission_error(self):
+        """Test hashing file with permission error."""
+        file_path = Path(self.temp_dir) / 'no_read.txt'
+        file_path.write_bytes(b'content')
+        file_path.chmod(0o000)
+
+        try:
+            hash_result = get_file_content_hash(file_path)
+            # Should return empty string on error
+            self.assertEqual(hash_result, '')
+        finally:
+            # Restore permissions for cleanup
+            file_path.chmod(0o644)
+
+
+class TestBatchItemsByAttributeEdgeCases(unittest.TestCase):
+    """Edge case tests for batch_items_by_attribute function."""
+
+    def test_batch_with_none_attribute(self):
+        """Test batching with None attribute values."""
+        items = [
+            {'type': None, 'value': 1},
+            {'type': None, 'value': 2},
+            {'type': 'a', 'value': 3},
+        ]
+
+        batches = batch_items_by_attribute(
+            items,
+            lambda x: x['type'],
+            max_batch_size=10
+        )
+
+        total_items = sum(len(b) for b in batches)
+        self.assertEqual(total_items, 3)
+
+    def test_batch_with_complex_attribute(self):
+        """Test batching with complex attribute values."""
+        items = [
+            {'type': ('a', 1), 'value': 1},
+            {'type': ('a', 1), 'value': 2},
+            {'type': ('b', 2), 'value': 3},
+        ]
+
+        batches = batch_items_by_attribute(
+            items,
+            lambda x: x['type'],
+            max_batch_size=10
+        )
+
+        total_items = sum(len(b) for b in batches)
+        self.assertEqual(total_items, 3)
+
+    def test_batch_max_size_one(self):
+        """Test batching with max_batch_size of 1."""
+        items = [1, 2, 3, 4, 5]
+
+        batches = batch_items_by_attribute(
+            items,
+            lambda x: x % 2,
+            max_batch_size=1
+        )
+
+        # Each item should be in its own batch
+        self.assertEqual(len(batches), 5)
+        for batch in batches:
+            self.assertEqual(len(batch), 1)
+
+    def test_batch_preserves_order_within_groups(self):
+        """Test that batch preserves order within attribute groups."""
+        items = [
+            {'type': 'a', 'order': 1},
+            {'type': 'a', 'order': 2},
+            {'type': 'a', 'order': 3},
+        ]
+
+        batches = batch_items_by_attribute(
+            items,
+            lambda x: x['type'],
+            max_batch_size=10
+        )
+
+        # All should be in one batch, in order
+        self.assertEqual(len(batches), 1)
+        orders = [item['order'] for item in batches[0]]
+        self.assertEqual(orders, [1, 2, 3])
 
 
 if __name__ == '__main__':
