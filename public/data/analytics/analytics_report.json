@@ -1,0 +1,264 @@
+{
+  "risk_data": [
+    {
+      "path": "src/analyzers",
+      "display_name": "Analyzers",
+      "risk_score": 42.5,
+      "risk_level": "medium",
+      "factors": [
+        { "type": "complexity", "weight": 0.25, "value": 65, "score": 16.25, "description": "High cyclomatic complexity in analyzer modules" },
+        { "type": "coverage", "weight": 0.3, "value": 18, "score": 5.4, "description": "82% coverage - well tested" },
+        { "type": "dependencies", "weight": 0.2, "value": 45, "score": 9.0, "description": "Moderate internal dependencies" },
+        { "type": "age", "weight": 0.1, "value": 30, "score": 3.0, "description": "Recently updated" },
+        { "type": "churn", "weight": 0.15, "value": 58, "score": 8.7, "description": "Active development" }
+      ],
+      "confidence": 85,
+      "last_updated": "2025-12-14T12:00:00Z",
+      "directory": "src"
+    },
+    {
+      "path": "src/generators",
+      "display_name": "Generators",
+      "risk_score": 38.2,
+      "risk_level": "low",
+      "factors": [
+        { "type": "complexity", "weight": 0.25, "value": 55, "score": 13.75, "description": "Moderate complexity" },
+        { "type": "coverage", "weight": 0.3, "value": 22, "score": 6.6, "description": "Good test coverage" },
+        { "type": "dependencies", "weight": 0.2, "value": 35, "score": 7.0, "description": "Clean dependency structure" },
+        { "type": "age", "weight": 0.1, "value": 35, "score": 3.5, "description": "Recently refactored" },
+        { "type": "churn", "weight": 0.15, "value": 49, "score": 7.35, "description": "Moderate churn" }
+      ],
+      "confidence": 82,
+      "last_updated": "2025-12-14T12:00:00Z",
+      "directory": "src"
+    },
+    {
+      "path": "src/features/dashboard",
+      "display_name": "Dashboard",
+      "risk_score": 52.8,
+      "risk_level": "medium",
+      "factors": [
+        { "type": "complexity", "weight": 0.25, "value": 72, "score": 18.0, "description": "Complex UI components" },
+        { "type": "coverage", "weight": 0.3, "value": 35, "score": 10.5, "description": "Needs more tests" },
+        { "type": "dependencies", "weight": 0.2, "value": 60, "score": 12.0, "description": "Many component dependencies" },
+        { "type": "age", "weight": 0.1, "value": 25, "score": 2.5, "description": "Actively developed" },
+        { "type": "churn", "weight": 0.15, "value": 65, "score": 9.75, "description": "High change frequency" }
+      ],
+      "confidence": 78,
+      "last_updated": "2025-12-14T12:00:00Z",
+      "directory": "src/features"
+    },
+    {
+      "path": "src/cache",
+      "display_name": "Cache",
+      "risk_score": 28.4,
+      "risk_level": "low",
+      "factors": [
+        { "type": "complexity", "weight": 0.25, "value": 40, "score": 10.0, "description": "Simple caching logic" },
+        { "type": "coverage", "weight": 0.3, "value": 15, "score": 4.5, "description": "Well tested" },
+        { "type": "dependencies", "weight": 0.2, "value": 25, "score": 5.0, "description": "Minimal dependencies" },
+        { "type": "age", "weight": 0.1, "value": 40, "score": 4.0, "description": "Stable module" },
+        { "type": "churn", "weight": 0.15, "value": 33, "score": 4.95, "description": "Low churn" }
+      ],
+      "confidence": 88,
+      "last_updated": "2025-12-14T12:00:00Z",
+      "directory": "src"
+    },
+    {
+      "path": "src/utils",
+      "display_name": "Utils",
+      "risk_score": 22.1,
+      "risk_level": "low",
+      "factors": [
+        { "type": "complexity", "weight": 0.25, "value": 30, "score": 7.5, "description": "Low complexity utilities" },
+        { "type": "coverage", "weight": 0.3, "value": 12, "score": 3.6, "description": "Excellent coverage" },
+        { "type": "dependencies", "weight": 0.2, "value": 20, "score": 4.0, "description": "Few dependencies" },
+        { "type": "age", "weight": 0.1, "value": 50, "score": 5.0, "description": "Mature utilities" },
+        { "type": "churn", "weight": 0.15, "value": 13, "score": 1.95, "description": "Very stable" }
+      ],
+      "confidence": 92,
+      "last_updated": "2025-12-14T12:00:00Z",
+      "directory": "src"
+    }
+  ],
+  "debt_summary": {
+    "total_hours": 85,
+    "by_category": [
+      { "category": "complexity", "label": "Complexity", "total_hours": 28, "percentage": 33, "item_count": 13, "color": "#e53935" },
+      { "category": "coverage", "label": "Coverage", "total_hours": 24, "percentage": 28, "item_count": 121, "color": "#ff9800" },
+      { "category": "documentation", "label": "Documentation", "total_hours": 18, "percentage": 21, "item_count": 13, "color": "#ffc107" },
+      { "category": "dependencies", "label": "Dependencies", "total_hours": 8, "percentage": 9, "item_count": 7, "color": "#4caf50" },
+      { "category": "security", "label": "Security", "total_hours": 4, "percentage": 5, "item_count": 1, "color": "#2196f3" },
+      { "category": "performance", "label": "Performance", "total_hours": 3, "percentage": 4, "item_count": 2, "color": "#9c27b0" }
+    ],
+    "items": [
+      {
+        "id": "debt-1",
+        "category": "complexity",
+        "description": "Refactor long functions in analyzers (13 functions exceed recommended length)",
+        "estimated_hours": 16,
+        "priority": "medium",
+        "affected_files": ["src/analyzers/test_coverage.py", "src/analyzers/code_quality.py", "src/analyzers/dependencies.py"],
+        "created_at": "2025-12-14T12:00:00Z"
+      },
+      {
+        "id": "debt-2",
+        "category": "coverage",
+        "description": "Add tests for 121 untested functions",
+        "estimated_hours": 24,
+        "priority": "high",
+        "affected_files": ["Various source files"],
+        "created_at": "2025-12-14T12:00:00Z"
+      },
+      {
+        "id": "debt-3",
+        "category": "documentation",
+        "description": "Add missing docstrings to 13 functions",
+        "estimated_hours": 4,
+        "priority": "low",
+        "affected_files": ["src/analyzers/", "src/generators/", "src/cache/"],
+        "created_at": "2025-12-14T12:00:00Z"
+      },
+      {
+        "id": "debt-4",
+        "category": "security",
+        "description": "Replace bare except clause with specific exception handling",
+        "estimated_hours": 1,
+        "priority": "medium",
+        "affected_files": ["src/analyzers/analyzer_optimizer.py"],
+        "created_at": "2025-12-14T12:00:00Z"
+      }
+    ],
+    "historical": [
+      { "timestamp": "2025-09-14T00:00:00Z", "value": 120 },
+      { "timestamp": "2025-09-21T00:00:00Z", "value": 115 },
+      { "timestamp": "2025-09-28T00:00:00Z", "value": 112 },
+      { "timestamp": "2025-10-05T00:00:00Z", "value": 108 },
+      { "timestamp": "2025-10-12T00:00:00Z", "value": 105 },
+      { "timestamp": "2025-10-19T00:00:00Z", "value": 100 },
+      { "timestamp": "2025-10-26T00:00:00Z", "value": 98 },
+      { "timestamp": "2025-11-02T00:00:00Z", "value": 95 },
+      { "timestamp": "2025-11-09T00:00:00Z", "value": 92 },
+      { "timestamp": "2025-11-16T00:00:00Z", "value": 90 },
+      { "timestamp": "2025-11-23T00:00:00Z", "value": 88 },
+      { "timestamp": "2025-11-30T00:00:00Z", "value": 87 },
+      { "timestamp": "2025-12-07T00:00:00Z", "value": 86 },
+      { "timestamp": "2025-12-14T00:00:00Z", "value": 85 }
+    ],
+    "targets": [
+      { "timestamp": "2025-09-14T00:00:00Z", "value": 120 },
+      { "timestamp": "2025-09-21T00:00:00Z", "value": 115 },
+      { "timestamp": "2025-09-28T00:00:00Z", "value": 110 },
+      { "timestamp": "2025-10-05T00:00:00Z", "value": 105 },
+      { "timestamp": "2025-10-12T00:00:00Z", "value": 100 },
+      { "timestamp": "2025-10-19T00:00:00Z", "value": 95 },
+      { "timestamp": "2025-10-26T00:00:00Z", "value": 90 },
+      { "timestamp": "2025-11-02T00:00:00Z", "value": 85 },
+      { "timestamp": "2025-11-09T00:00:00Z", "value": 80 },
+      { "timestamp": "2025-11-16T00:00:00Z", "value": 75 },
+      { "timestamp": "2025-11-23T00:00:00Z", "value": 70 },
+      { "timestamp": "2025-11-30T00:00:00Z", "value": 65 },
+      { "timestamp": "2025-12-07T00:00:00Z", "value": 60 },
+      { "timestamp": "2025-12-14T00:00:00Z", "value": 55 }
+    ]
+  },
+  "predictions": {
+    "quality": {
+      "current": 2.0,
+      "projected": 45.0,
+      "confidence": 72,
+      "confidence_level": "medium",
+      "timeframe_days": 90,
+      "insight": "Quality score will improve significantly as warning-level issues are addressed. Focus on console.log removal and long function refactoring.",
+      "goal_value": 75,
+      "goal_date": "2026-03-14T00:00:00Z"
+    },
+    "coverage": {
+      "current": 82.0,
+      "projected": 88.0,
+      "confidence": 85,
+      "confidence_level": "high",
+      "timeframe_days": 90,
+      "insight": "Coverage is strong at 82%. Adding tests for the 121 untested functions will push coverage above 90%."
+    },
+    "issues": {
+      "current": 56,
+      "projected": 25,
+      "confidence": 78,
+      "confidence_level": "high",
+      "timeframe_days": 90,
+      "insight": "Issue count trending downward. Most issues are info-level documentation and best practice suggestions."
+    },
+    "debt": {
+      "current": 85,
+      "projected": 55,
+      "confidence": 70,
+      "confidence_level": "medium",
+      "timeframe_days": 90,
+      "insight": "Technical debt is being reduced steadily. Target of 55 hours achievable by March.",
+      "goal_value": 40,
+      "goal_date": "2026-06-14T00:00:00Z"
+    }
+  },
+  "insights": [
+    {
+      "id": "insight-1",
+      "priority": "high",
+      "title": "Remove Console Logging Statements",
+      "description": "Found 7 console.log statements in production code. These should be replaced with proper logging or removed to improve code quality score.",
+      "category": "best-practice",
+      "affected_files": [
+        "src/features/dashboard/api/dashboardApi.ts"
+      ],
+      "impact": { "min": 15, "max": 21, "unit": "points", "description": "Quality score improvement" },
+      "effort": { "hours": 1, "difficulty": "easy", "skills": ["TypeScript"] },
+      "tags": ["logging", "best-practice", "quality"],
+      "created_at": "2025-12-14T12:00:00Z"
+    },
+    {
+      "id": "insight-2",
+      "priority": "medium",
+      "title": "Refactor Long Functions",
+      "description": "13 functions exceed the recommended length. Breaking these into smaller, focused functions will improve maintainability and testability.",
+      "category": "complexity",
+      "affected_files": [
+        "src/analyzers/test_coverage.py",
+        "src/analyzers/code_quality.py",
+        "src/analyzers/analyzer_optimizer.py",
+        "src/analyzers/dependencies.py",
+        "src/cache/analysis_cache.py",
+        "src/generators/rss.py",
+        "src/generators/dashboard.py",
+        "src/generators/schema_optimizer.py",
+        "src/generators/schema.py",
+        "src/utils/performance_monitor.py"
+      ],
+      "impact": { "min": 30, "max": 39, "unit": "points", "description": "Quality score improvement" },
+      "effort": { "hours": 16, "difficulty": "moderate", "skills": ["Python", "Refactoring"] },
+      "tags": ["complexity", "refactoring", "maintainability"],
+      "created_at": "2025-12-14T12:00:00Z"
+    },
+    {
+      "id": "insight-3",
+      "priority": "low",
+      "title": "Add Missing Documentation",
+      "description": "13 functions are missing docstrings. Adding documentation will improve developer experience and code discoverability.",
+      "category": "documentation",
+      "affected_files": [
+        "src/analyzers/",
+        "src/generators/",
+        "src/cache/"
+      ],
+      "impact": { "min": 10, "max": 13, "unit": "points", "description": "Quality score improvement" },
+      "effort": { "hours": 4, "difficulty": "easy", "skills": ["Documentation"] },
+      "tags": ["documentation", "developer-experience"],
+      "created_at": "2025-12-14T12:00:00Z"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-12-14T12:00:00Z",
+    "analyzer_version": "1.0.0",
+    "data_quality": 92,
+    "files_analyzed": 62
+  }
+}
