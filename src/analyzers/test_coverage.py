@@ -85,7 +85,16 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
                 'def $NAME($$$)',
                 'async def $NAME($$$)'
             ]
-        elif file_path.suffix in ['.ts', '.tsx']:
+        elif file_path.suffix == '.tsx':
+            # ast-grep requires 'tsx' for JSX files, not 'typescript'
+            language = 'tsx'
+            patterns = [
+                'function $NAME($$$)',
+                'const $NAME = ($$$) =>',
+                'export function $NAME($$$)',
+                'async function $NAME($$$)'
+            ]
+        elif file_path.suffix == '.ts':
             language = 'typescript'
             patterns = [
                 'function $NAME($$$)',
@@ -93,7 +102,15 @@ def _analyze_file_worker(file_path: Path) -> List[Dict[str, Any]]:
                 'export function $NAME($$$)',
                 'async function $NAME($$$)'
             ]
-        elif file_path.suffix in ['.js', '.jsx']:
+        elif file_path.suffix == '.jsx':
+            # ast-grep requires 'jsx' for JSX files, not 'javascript'
+            language = 'jsx'
+            patterns = [
+                'function $NAME($$$)',
+                'const $NAME = ($$$) =>',
+                'export function $NAME($$$)'
+            ]
+        elif file_path.suffix == '.js':
             language = 'javascript'
             patterns = [
                 'function $NAME($$$)',
@@ -151,7 +168,7 @@ def _extract_functions_regex(file_path: Path, language: str) -> List[Dict[str, A
                     })
                     seen_names.add(func_name)
 
-        elif language in ['typescript', 'javascript']:
+        elif language in ['typescript', 'javascript', 'tsx', 'jsx']:
             # Match JS/TS function definitions
             patterns = [
                 # Regular functions: function name(
@@ -314,12 +331,22 @@ class TestCoverageAnalyzer:
         return functions
 
     def _get_language_patterns(self, file_path: Path) -> Tuple[Optional[str], Optional[List[str]]]:
-        """Get language and patterns for file type"""
+        """Get language and patterns for file type.
+
+        Note: ast-grep requires 'tsx' for .tsx files and 'jsx' for .jsx files,
+        not 'typescript' or 'javascript'.
+        """
         if file_path.suffix == '.py':
             return 'python', self._get_python_patterns()
-        elif file_path.suffix in ['.ts', '.tsx']:
+        elif file_path.suffix == '.tsx':
+            # ast-grep requires 'tsx' for JSX files
+            return 'tsx', self._get_typescript_patterns()
+        elif file_path.suffix == '.ts':
             return 'typescript', self._get_typescript_patterns()
-        elif file_path.suffix in ['.js', '.jsx']:
+        elif file_path.suffix == '.jsx':
+            # ast-grep requires 'jsx' for JSX files
+            return 'jsx', self._get_javascript_patterns()
+        elif file_path.suffix == '.js':
             return 'javascript', self._get_javascript_patterns()
         return None, None
 
@@ -463,12 +490,20 @@ class TestCoverageAnalyzer:
         return test_names
 
     def _get_file_language(self, file_path: Path) -> Optional[str]:
-        """Determine language from file extension"""
+        """Determine language from file extension.
+
+        Note: ast-grep requires 'tsx' for .tsx files and 'jsx' for .jsx files,
+        not 'typescript' or 'javascript'.
+        """
         if file_path.suffix == '.py':
             return 'python'
-        elif file_path.suffix in ['.ts', '.tsx']:
+        elif file_path.suffix == '.tsx':
+            return 'tsx'
+        elif file_path.suffix == '.ts':
             return 'typescript'
-        elif file_path.suffix in ['.js', '.jsx']:
+        elif file_path.suffix == '.jsx':
+            return 'jsx'
+        elif file_path.suffix == '.js':
             return 'javascript'
         return None
 
@@ -477,7 +512,9 @@ class TestCoverageAnalyzer:
         patterns = {
             'python': ['def $NAME($$$): $$$'],
             'javascript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)'],
-            'typescript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)']
+            'jsx': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)'],
+            'typescript': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)'],
+            'tsx': ['it("$NAME", $$$)', 'test("$NAME", $$$)', 'describe("$NAME", $$$)']
         }
         return patterns.get(language, [])
 
