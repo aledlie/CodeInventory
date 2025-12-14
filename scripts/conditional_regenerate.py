@@ -674,27 +674,27 @@ def main():
         since=args.since
     )
 
-    # Print summary
-    print("\n" + "=" * 60)
-    print("REGENERATION SUMMARY")
-    print("=" * 60)
-    print(f"Success: {result.success}")
-    print(f"Duration: {result.duration_seconds:.2f}s")
+    # Log summary
+    logger.info("\n" + "=" * 60)
+    logger.info("REGENERATION SUMMARY")
+    logger.info("=" * 60)
+    logger.info(f"Success: {result.success}")
+    logger.info(f"Duration: {result.duration_seconds:.2f}s")
 
     if result.reports_archived:
-        print(f"\nReports archived: {len(result.reports_archived)}")
+        logger.info(f"\nReports archived: {len(result.reports_archived)}")
         for r in result.reports_archived:
-            print(f"  - {r}")
+            logger.info(f"  - {r}")
 
-    print(f"\nReports regenerated: {len(result.reports_regenerated)}")
+    logger.info(f"\nReports regenerated: {len(result.reports_regenerated)}")
     if result.reports_regenerated:
         for r in result.reports_regenerated:
-            print(f"  - {r}")
+            logger.info(f"  - {r}")
 
     if result.errors:
-        print(f"\nErrors: {len(result.errors)}")
+        logger.info(f"\nErrors: {len(result.errors)}")
         for e in result.errors:
-            print(f"  - {e}")
+            logger.info(f"  - {e}")
 
     sys.exit(0 if result.success else 1)
 
