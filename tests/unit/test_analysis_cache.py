@@ -8,6 +8,7 @@ analysis support and resume capability.
 
 import pytest
 import sys
+import subprocess
 import tempfile
 import shutil
 import json
@@ -774,6 +775,211 @@ class TestCheckpointManagerEdgeCases:
         stats = manager2.get_checkpoint_stats()
         assert stats['completed_steps'] == 2
         assert stats['completion_percent'] == 50.0
+
+
+class TestAnalysisCacheSaveErrorHandling:
+    """Test AnalysisCache save_cache error handling"""
+
+    @pytest.fixture
+    def temp_dir(self):
+        """Create temporary directory for testing"""
+        temp_dir = tempfile.mkdtemp()
+        yield Path(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+    @patch('builtins.open', side_effect=IOError("Permission denied"))
+    @patch('src.cache.analysis_cache.AnalysisCache._get_current_commit')
+    @patch('src.cache.analysis_cache.AnalysisCache._load_cache')
+    def test_save_cache_handles_io_error(self, mock_load, mock_commit, mock_open, temp_dir):
+        """Test that save_cache handles IOError gracefully"""
+        mock_commit.return_value = 'abc123'
+        mock_load.return_value = {
+            'last_run': None,
+            'last_commit': None,
+            'root_dir': str(temp_dir),
+            'analyzed_files': {},
+            'metadata': {'total_files': 0, 'cache_hits': 0, 'cache_misses': 0}
+        }
+
+        cache = AnalysisCache(temp_dir)
+        # Should not raise - errors are logged
+        cache.save_cache()
+
+
+class TestAnalysisCacheGitExceptionHandling:
+    """Test AnalysisCache git-related exception handling"""
+
+    @pytest.fixture
+    def temp_dir(self):
+        """Create temporary directory for testing"""
+        temp_dir = tempfile.mkdtemp()
+        yield Path(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+    @patch('subprocess.run')
+    def test_get_current_commit_handles_timeout(self, mock_run, temp_dir):
+        """Test _get_current_commit handles TimeoutExpired"""
+        mock_run.side_effect = subprocess.TimeoutExpired(cmd='git', timeout=5)
+
+        cache = AnalysisCache(temp_dir)
+        result = cache._get_current_commit()
+
+        assert result is None
+
+    @patch('subprocess.run')
+    def test_get_current_commit_handles_file_not_found(self, mock_run, temp_dir):
+        """Test _get_current_commit handles FileNotFoundError (git not installed)"""
+        mock_run.side_effect = FileNotFoundError("git not found")
+
+        cache = AnalysisCache(temp_dir)
+        result = cache._get_current_commit()
+
+        assert result is None
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_commit_git_diff_failure(self, mock_run, temp_dir):
+        """Test get_changed_files_since_commit handles git diff failure"""
+        mock_run.return_value = MagicMock(
+            returncode=1,
+            stderr='fatal: bad revision'
+        )
+
+        cache = AnalysisCache(temp_dir)
+        result = cache.get_changed_files_since_commit('nonexistent')
+
+        assert result == set()
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_commit_timeout(self, mock_run, temp_dir):
+        """Test get_changed_files_since_commit handles TimeoutExpired"""
+        mock_run.side_effect = subprocess.TimeoutExpired(cmd='git', timeout=30)
+
+        cache = AnalysisCache(temp_dir)
+        result = cache.get_changed_files_since_commit('abc123')
+
+        assert result == set()
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_commit_file_not_found(self, mock_run, temp_dir):
+        """Test get_changed_files_since_commit handles FileNotFoundError"""
+        mock_run.side_effect = FileNotFoundError("git not found")
+
+        cache = AnalysisCache(temp_dir)
+        result = cache.get_changed_files_since_commit('abc123')
+
+        assert result == set()
+
+
+class TestAnalysisCacheGetChangedFilesEdgeCases:
+    """Test AnalysisCache get_changed_files_since_last_run edge cases"""
+
+    @pytest.fixture
+    def temp_dir(self):
+        """Create temporary directory for testing"""
+        temp_dir = tempfile.mkdtemp()
+        yield Path(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_last_run_no_git_repo(self, mock_run, temp_dir):
+        """Test returns None when current commit cannot be determined"""
+        # First call returns last commit, second returns None for current
+        mock_run.return_value = MagicMock(
+            returncode=128,  # Not a git repo
+            stdout=''
+        )
+
+        cache = AnalysisCache(temp_dir)
+        cache.cache_data['last_commit'] = 'abc123'
+
+        result = cache.get_changed_files_since_last_run()
+
+        assert result is None
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_last_run_with_uncommitted_changes(self, mock_run, temp_dir):
+        """Test returns uncommitted changes when at same commit"""
+        # Create test files
+        file1 = temp_dir / 'modified.py'
+        file1.write_text('content')
+
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout='abc123\n'),  # get current commit
+            MagicMock(returncode=0, stdout='modified.py\n')  # git diff --name-only
+        ]
+
+        cache = AnalysisCache(temp_dir)
+        cache.cache_data['last_commit'] = 'abc123'
+
+        result = cache.get_changed_files_since_last_run()
+
+        assert result is not None
+        assert file1 in result
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_last_run_working_dir_check_failure(self, mock_run, temp_dir):
+        """Test handles failure when checking working directory changes"""
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout='abc123\n'),  # get current commit
+            subprocess.TimeoutExpired(cmd='git', timeout=30)  # git diff fails
+        ]
+
+        cache = AnalysisCache(temp_dir)
+        cache.cache_data['last_commit'] = 'abc123'
+
+        result = cache.get_changed_files_since_last_run()
+
+        assert result is None
+
+    @patch('subprocess.run')
+    def test_get_changed_files_since_last_run_filters_deleted_uncommitted(self, mock_run, temp_dir):
+        """Test filters out deleted files from uncommitted changes"""
+        # Only create one file (simulating the other was deleted)
+        file1 = temp_dir / 'exists.py'
+        file1.write_text('content')
+
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout='abc123\n'),  # get current commit
+            MagicMock(returncode=0, stdout='exists.py\ndeleted.py\n')  # git diff
+        ]
+
+        cache = AnalysisCache(temp_dir)
+        cache.cache_data['last_commit'] = 'abc123'
+
+        result = cache.get_changed_files_since_last_run()
+
+        assert result is not None
+        assert len(result) == 1
+        assert file1 in result
+
+
+class TestCheckpointManagerSaveErrorHandling:
+    """Test CheckpointManager save_checkpoint error handling"""
+
+    @pytest.fixture
+    def temp_dir(self):
+        """Create temporary directory for testing"""
+        temp_dir = tempfile.mkdtemp()
+        yield Path(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+    @patch('builtins.open', side_effect=IOError("Permission denied"))
+    @patch('src.cache.analysis_cache.CheckpointManager._load_checkpoint')
+    def test_save_checkpoint_handles_io_error(self, mock_load, mock_open, temp_dir):
+        """Test that save_checkpoint handles IOError gracefully"""
+        mock_load.return_value = {
+            'timestamp': None,
+            'root_dir': str(temp_dir),
+            'completed': [],
+            'in_progress': None,
+            'pending': [],
+            'results': {},
+            'metadata': {'total_steps': 0, 'completed_steps': 0}
+        }
+
+        manager = CheckpointManager(temp_dir)
+        # Should not raise - errors are logged
+        manager.save_checkpoint()
 
 
 if __name__ == '__main__':
