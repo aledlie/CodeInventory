@@ -54,8 +54,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
-    "@rollup/rollup-darwin-arm64": "^4.53.3",
-    "@rollup/rollup-linux-x64-gnu": "^4.53.3",
     "@tanstack/router-cli": "^1.93.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
