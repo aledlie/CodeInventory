@@ -32,7 +32,7 @@ export function ModularityDistributionChart({
   ].map(score => ({
     score: score as ModularityScore,
     count: distribution[score as ModularityScore] || 0,
-    percentage: ((distribution[score as ModularityScore] || 0) / total) * 100
+    percentage: total > 0 ? ((distribution[score as ModularityScore] || 0) / total) * 100 : 0
   }));
 
   return (

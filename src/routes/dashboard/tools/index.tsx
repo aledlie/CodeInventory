@@ -84,9 +84,9 @@ function ToolsOverviewPageContent() {
   }, [report.utility_modules, searchQuery, sortBy, modularityFilter, typeFilter]);
 
   const avgExtractionPercentage = Math.round(stats.avgExtractionPotential * 100);
-  const highModularPercentage = Math.round(
-    (stats.modularityDistribution.highly_modular / stats.totalModules) * 100
-  );
+  const highModularPercentage = stats.totalModules > 0
+    ? Math.round((stats.modularityDistribution.highly_modular / stats.totalModules) * 100)
+    : 0;
 
   return (
     <DashboardLayout currentPath="/dashboard/tools" onNavigate={(path) => navigate({ to: path })}>
