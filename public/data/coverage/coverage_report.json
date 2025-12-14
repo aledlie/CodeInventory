@@ -3,9 +3,9 @@
     "source_directory": "src",
     "test_directory": "src/tests",
     "total_functions": 760,
-    "tested_functions": 340,
-    "untested_functions": 420,
-    "coverage_percentage": 44.74
+    "tested_functions": 353,
+    "untested_functions": 407,
+    "coverage_percentage": 46.4
   },
   "functions": [
     {
@@ -34,7 +34,7 @@
       "file_path": "src/analyzers/identify_tools.py",
       "line_number": 917,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "analyze_directory",
@@ -62,14 +62,14 @@
       "file_path": "src/analyzers/identify_tools.py",
       "line_number": 1222,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "pct",
       "file_path": "src/analyzers/identify_tools.py",
       "line_number": 1255,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "main",
@@ -125,70 +125,70 @@
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 52,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_cache",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 137,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "calculate_hash",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 169,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "is_cached",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 192,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_cached_result",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 202,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "update_cache",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 208,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "clear_cache",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 217,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "process_items_parallel",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 256,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "invalidate_cache_for_items",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 375,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_file_content_hash",
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 394,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_file_key",
@@ -202,7 +202,7 @@
       "file_path": "src/analyzers/analyzer_optimizer.py",
       "line_number": 409,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "is_external",
@@ -5349,16 +5349,6 @@
       {
         "name": "analyze_directory",
         "line_number": 925,
-        "is_async": false
-      },
-      {
-        "name": "save_report_html",
-        "line_number": 1222,
-        "is_async": false
-      },
-      {
-        "name": "pct",
-        "line_number": 1255,
         "is_async": false
       }
     ],
