@@ -26,6 +26,11 @@ class DocumentationEnhancer:
     """Enhances documentation with schema.org markup"""
 
     def __init__(self, root_dir: Path):
+        """Initialize the documentation enhancer.
+
+        Args:
+            root_dir: Root directory containing documentation to enhance
+        """
         self.root_dir = root_dir
         self.enhanced_count = 0
         self.skipped_count = 0
@@ -230,6 +235,7 @@ class DocumentationEnhancer:
         return '\n'.join(lines)
 
 def main():
+    """CLI entry point for the documentation enhancement pipeline."""
     import argparse
 
     parser = argparse.ArgumentParser(description='Documentation Enhancement Pipeline')

@@ -24,6 +24,11 @@ class TestRunner:
     """Runs all tests and generates comprehensive coverage report"""
 
     def __init__(self, coverage_enabled=True):
+        """Initialize the test runner.
+
+        Args:
+            coverage_enabled: Whether to enable coverage reporting. Defaults to True.
+        """
         self.coverage_enabled = coverage_enabled
         # Script is now in scripts/, so go up one level to find tests
         self.test_dir = Path(__file__).parent.parent / 'tests'
@@ -44,13 +49,17 @@ class TestRunner:
 
         # Collect test results
         class ResultCollector:
+            """Pytest plugin to collect test results."""
+
             def __init__(self):
+                """Initialize result counters."""
                 self.passed = 0
                 self.failed = 0
                 self.errors = 0
                 self.skipped = 0
 
             def pytest_runtest_logreport(self, report):
+                """Pytest hook to collect test results after each test."""
                 if report.when == 'call':
                     if report.passed:
                         self.passed += 1
@@ -335,6 +344,7 @@ def _run_test_pipeline(runner, args):
     return success
 
 def main():
+    """CLI entry point for running the test suite."""
     # Configure logging for CLI output
     logging.basicConfig(
         level=logging.INFO,

@@ -115,6 +115,18 @@ class AnalysisRunner:
         since: Optional[str] = None,
         resume: bool = False
     ):
+        """Initialize the analysis runner.
+
+        Args:
+            root_dir: Root directory to analyze
+            output_dir: Directory for output reports. Defaults to root_dir/analysis_reports
+            timeouts: Custom timeout values for each analysis step
+            repositories: List of repository paths to analyze
+            incremental: Run incremental analysis on changed files only
+            full: Force full analysis even with incremental flag
+            since: Git commit hash to compare against for incremental analysis
+            resume: Resume from last checkpoint if available
+        """
         self.root_dir = root_dir
         self.output_dir = output_dir or root_dir / 'analysis_reports'
         self.output_dir.mkdir(exist_ok=True)
@@ -697,6 +709,7 @@ class AnalysisRunner:
         self._print_completion_stats()
 
 def main():
+    """CLI entry point for running code analysis."""
     # Configure logging for CLI output
     logging.basicConfig(
         level=logging.INFO,
