@@ -340,7 +340,7 @@ class ParallelAnalyzer:
                                 if len(item_name) > 50:
                                     item_name = item_name[:47] + "..."
                                 pbar.set_description(f"{pbar_desc} - {item_name}")
-                            except:
+                            except Exception:
                                 pass
 
                         except Exception as e:
