@@ -812,3 +812,345 @@ describe('Integration', () => {
     expect(screen.getByTestId('widget-count')).toHaveTextContent('0');
   });
 });
+
+// ============================================================================
+// a11yProps Function Tests
+// ============================================================================
+
+describe('a11yProps', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    setupMocks();
+  });
+
+  it('should generate correct id for tab index 0', () => {
+    renderWithProviders(<SettingsPage />);
+
+    const firstTab = screen.getByRole('tab', { name: /Widget Library/i });
+    expect(firstTab).toHaveAttribute('id', 'settings-tab-0');
+  });
+
+  it('should generate correct id for tab index 1', () => {
+    renderWithProviders(<SettingsPage />);
+
+    const secondTab = screen.getByRole('tab', { name: /Saved Views/i });
+    expect(secondTab).toHaveAttribute('id', 'settings-tab-1');
+  });
+
+  it('should generate correct id for tab index 2', () => {
+    renderWithProviders(<SettingsPage />);
+
+    const thirdTab = screen.getByRole('tab', { name: /Notifications/i });
+    expect(thirdTab).toHaveAttribute('id', 'settings-tab-2');
+  });
+
+  it('should generate correct id for tab index 3', () => {
+    renderWithProviders(<SettingsPage />);
+
+    const fourthTab = screen.getByRole('tab', { name: /Appearance/i });
+    expect(fourthTab).toHaveAttribute('id', 'settings-tab-3');
+  });
+
+  it('should generate correct aria-controls for each tab', () => {
+    renderWithProviders(<SettingsPage />);
+
+    const tabs = screen.getAllByRole('tab');
+
+    expect(tabs[0]).toHaveAttribute('aria-controls', 'settings-tabpanel-0');
+    expect(tabs[1]).toHaveAttribute('aria-controls', 'settings-tabpanel-1');
+    expect(tabs[2]).toHaveAttribute('aria-controls', 'settings-tabpanel-2');
+    expect(tabs[3]).toHaveAttribute('aria-controls', 'settings-tabpanel-3');
+  });
+});
+
+// ============================================================================
+// handleTabChange Function Tests
+// ============================================================================
+
+describe('handleTabChange', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    setupMocks();
+  });
+
+  it('should change active tab from 0 to 1 when Saved Views clicked', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    // Initial state - Widget Library (tab 0) is selected
+    expect(screen.getByRole('tab', { name: /Widget Library/i })).toHaveAttribute('aria-selected', 'true');
+
+    // Click Saved Views (tab 1)
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Saved Views should now be selected
+    expect(screen.getByRole('tab', { name: /Saved Views/i })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: /Widget Library/i })).toHaveAttribute('aria-selected', 'false');
+  });
+
+  it('should change active tab from 0 to 2 when Notifications clicked', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    await user.click(screen.getByRole('tab', { name: /Notifications/i }));
+
+    expect(screen.getByRole('tab', { name: /Notifications/i })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: /Widget Library/i })).toHaveAttribute('aria-selected', 'false');
+  });
+
+  it('should change active tab from 0 to 3 when Appearance clicked', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    await user.click(screen.getByRole('tab', { name: /Appearance/i }));
+
+    expect(screen.getByRole('tab', { name: /Appearance/i })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: /Widget Library/i })).toHaveAttribute('aria-selected', 'false');
+  });
+
+  it('should update tab panel visibility when tab changes', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    // Initial panel is visible
+    const initialPanel = document.getElementById('settings-tabpanel-0');
+    expect(initialPanel).not.toHaveAttribute('hidden');
+
+    // Switch to tab 2
+    await user.click(screen.getByRole('tab', { name: /Notifications/i }));
+
+    // Initial panel should now be hidden
+    expect(initialPanel).toHaveAttribute('hidden');
+    // New panel should be visible
+    const newPanel = document.getElementById('settings-tabpanel-2');
+    expect(newPanel).not.toHaveAttribute('hidden');
+  });
+
+  it('should allow switching back to original tab', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+    expect(screen.getByRole('tab', { name: /Saved Views/i })).toHaveAttribute('aria-selected', 'true');
+
+    // Switch back to Widget Library
+    await user.click(screen.getByRole('tab', { name: /Widget Library/i }));
+    expect(screen.getByRole('tab', { name: /Widget Library/i })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: /Saved Views/i })).toHaveAttribute('aria-selected', 'false');
+  });
+});
+
+// ============================================================================
+// handleLayoutChange Function Tests
+// ============================================================================
+
+describe('handleLayoutChange', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    setupMocks();
+  });
+
+  it('should pass onLayoutChange callback to DashboardEditor', async () => {
+    const user = userEvent.setup();
+    const { DashboardEditor } = await import('../personalization');
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify DashboardEditor was called with onLayoutChange prop
+    expect(vi.mocked(DashboardEditor)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onLayoutChange: expect.any(Function),
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should provide layout to DashboardEditor', async () => {
+    const user = userEvent.setup();
+    const { DashboardEditor } = await import('../personalization');
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify DashboardEditor was called with layout prop
+    expect(vi.mocked(DashboardEditor)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        layout: expect.objectContaining({
+          id: 'default',
+        }),
+      }),
+      expect.anything()
+    );
+  });
+});
+
+// ============================================================================
+// handleCancel Function Tests
+// ============================================================================
+
+describe('handleCancel', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    setupMocks();
+  });
+
+  it('should pass onCancel callback to DashboardEditor', async () => {
+    const user = userEvent.setup();
+    const { DashboardEditor } = await import('../personalization');
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify DashboardEditor was called with onCancel prop
+    expect(vi.mocked(DashboardEditor)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onCancel: expect.any(Function),
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should render editor in view mode initially', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Editor mode should start as view
+    expect(screen.getByTestId('editor-mode')).toHaveTextContent('view');
+  });
+});
+
+// ============================================================================
+// handleModeChange Function Tests
+// ============================================================================
+
+describe('handleModeChange', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    setupMocks();
+  });
+
+  it('should pass onModeChange callback to DashboardEditor', async () => {
+    const user = userEvent.setup();
+    const { DashboardEditor } = await import('../personalization');
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify DashboardEditor was called with onModeChange prop
+    expect(vi.mocked(DashboardEditor)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onModeChange: expect.any(Function),
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should pass mode prop to DashboardEditor', async () => {
+    const user = userEvent.setup();
+    const { DashboardEditor } = await import('../personalization');
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify DashboardEditor was called with mode prop set to view initially
+    expect(vi.mocked(DashboardEditor)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mode: 'view',
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should display initial mode as view in editor', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Mode should be view
+    expect(screen.getByTestId('editor-mode')).toHaveTextContent('view');
+  });
+});
+
+// ============================================================================
+// handleRenameView Function Tests
+// ============================================================================
+
+describe('handleRenameView', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should pass onRenameView callback to SavedViewsDropdown', async () => {
+    const user = userEvent.setup();
+    const { SavedViewsDropdown } = await import('../personalization');
+    setupMocks();
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify the mock was called with the onRenameView prop
+    expect(vi.mocked(SavedViewsDropdown)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onRenameView: expect.any(Function),
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should receive views array in SavedViewsDropdown', async () => {
+    const user = userEvent.setup();
+    const { SavedViewsDropdown } = await import('../personalization');
+    setupMocks();
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Verify the mock was called with views array
+    expect(vi.mocked(SavedViewsDropdown)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        views: expect.arrayContaining([
+          expect.objectContaining({ id: 'view-1' }),
+        ]),
+      }),
+      expect.anything()
+    );
+  });
+
+  it('should display correct views count in dropdown', async () => {
+    const user = userEvent.setup();
+    setupMocks({
+      savedViewsManager: {
+        views: [mockSavedView, { ...mockSavedView, id: 'view-2', name: 'View 2' }],
+      },
+    });
+
+    renderWithProviders(<SettingsPage />);
+
+    // Switch to Saved Views tab
+    await user.click(screen.getByRole('tab', { name: /Saved Views/i }));
+
+    // Should show 2 views
+    expect(screen.getByTestId('views-count')).toHaveTextContent('2');
+  });
+});
