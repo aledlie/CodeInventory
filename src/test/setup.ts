@@ -59,7 +59,7 @@ class IntersectionObserverMock {
 window.IntersectionObserver = IntersectionObserverMock;
 
 // Mock fetch
-global.fetch = vi.fn();
+globalThis.fetch = vi.fn();
 
 // Clean up after each test
 afterEach(() => {
