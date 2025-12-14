@@ -115,43 +115,57 @@ class AnalysisRunner:
         since: Optional[str] = None,
         resume: bool = False
     ):
+        """Initialize the analysis runner.
+
+        Args:
+            root_dir: Root directory to analyze
+            output_dir: Directory for output reports. Defaults to root_dir/analysis_reports
+            timeouts: Custom timeout values for each analysis step
+            repositories: List of repository paths to analyze
+            incremental: Run incremental analysis on changed files only
+            full: Force full analysis even with incremental flag
+            since: Git commit hash to compare against for incremental analysis
+            resume: Resume from last checkpoint if available
+        """
+        self._setup_directories(root_dir, output_dir)
+        self._initialize_tracking()
+        self._setup_timeouts(timeouts)
+        self._setup_analysis_mode(repositories, incremental, full, since, resume, root_dir)
+
+    def _setup_directories(self, root_dir, output_dir):
+        """Set up directory structure"""
         self.root_dir = root_dir
         self.output_dir = output_dir or root_dir / 'analysis_reports'
         self.output_dir.mkdir(exist_ok=True)
 
-        # Create logs directory for error capture
         self.logs_dir = self.output_dir / 'logs'
         self.logs_dir.mkdir(exist_ok=True)
 
+    def _initialize_tracking(self):
+        """Initialize tracking variables"""
         self.timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.results = {}
-
-        # Track timing and file counts for dashboard
         self.start_time = None
         self.end_time = None
         self.total_files_processed = 0
 
-        # Merge custom timeouts with defaults
+    def _setup_timeouts(self, timeouts):
+        """Set up timeout configuration"""
         self.timeouts = DEFAULT_TIMEOUTS.copy()
         if timeouts:
             self.timeouts.update(timeouts)
 
-        # Store repository filter
+    def _setup_analysis_mode(self, repositories, incremental, full, since, resume, root_dir):
+        """Set up analysis mode and cache managers"""
         self.repositories = repositories
-
-        # Initialize cache and checkpoint managers
         self.incremental = incremental
         self.full = full
         self.since = since
         self.resume = resume
 
-        # Initialize cache for incremental analysis
         self.cache = AnalysisCache(root_dir) if (incremental or since) and not full else None
-
-        # Initialize checkpoint manager for resume capability
         self.checkpoint = CheckpointManager(root_dir) if resume or not full else None
 
-        # Track analysis steps for checkpointing
         self.analysis_steps = [
             'schema_generation',
             'quality_analysis',
@@ -697,12 +711,31 @@ class AnalysisRunner:
         self._print_completion_stats()
 
 def main():
-    # Configure logging for CLI output
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(message)s'  # Keep simple format for CLI tools
-    )
+    """CLI entry point for running code analysis."""
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
+    args = _parse_cli_arguments()
+    _verify_environment(args)
+    root_dir, output_dir = _parse_directories(args)
+    repositories = _parse_repositories(args)
+    timeouts = _parse_timeouts(args)
+    _handle_cleanup(args, root_dir)
+    _validate_arguments(args)
 
+    runner = AnalysisRunner(
+        root_dir,
+        output_dir,
+        timeouts=timeouts,
+        repositories=repositories,
+        incremental=args.incremental,
+        full=args.full,
+        since=args.since,
+        resume=args.resume
+    )
+    runner.run_all_analysis()
+
+
+def _parse_cli_arguments():
+    """Parse command line arguments"""
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -739,109 +772,87 @@ Advanced:
   %(prog)s --root /path/to/code --clear-checkpoint --clear-cache
         """
     )
-    parser.add_argument(
-        '--root',
-        default='/Users/alyshialedlie/code',
-        help='Root directory to analyze (default: /Users/alyshialedlie/code)'
-    )
-    parser.add_argument(
-        '--output-dir',
-        help='Output directory for reports (default: ROOT/analysis_reports)'
-    )
-    parser.add_argument(
-        '--timeout',
-        type=int,
-        help='Override default timeout for all analyses (in seconds)'
-    )
-    parser.add_argument(
-        '--repositories',
-        help='Comma-separated list of repository names to analyze (default: all)'
-    )
-    parser.add_argument(
-        '--skip-dependency-check',
-        action='store_true',
-        help='Skip dependency verification (not recommended)'
-    )
-    parser.add_argument(
-        '--incremental',
-        action='store_true',
-        help='Run incremental analysis (only analyze changed files since last run)'
-    )
-    parser.add_argument(
-        '--full',
-        action='store_true',
-        help='Force full analysis (ignore cache, default behavior)'
-    )
-    parser.add_argument(
-        '--since',
-        type=str,
-        metavar='COMMIT',
-        help='Analyze changes since specific git commit (e.g., HEAD~5, abc123)'
-    )
-    parser.add_argument(
-        '--resume',
-        action='store_true',
-        help='Resume from last checkpoint if analysis was interrupted'
-    )
-    parser.add_argument(
-        '--clear-cache',
-        action='store_true',
-        help='Clear analysis cache before running'
-    )
-    parser.add_argument(
-        '--clear-checkpoint',
-        action='store_true',
-        help='Clear checkpoint before running (start fresh)'
-    )
+    _add_cli_arguments(parser)
+    return parser.parse_args()
 
-    args = parser.parse_args()
 
-    # Verify dependencies unless explicitly skipped
+def _add_cli_arguments(parser):
+    """Add arguments to parser"""
+    parser.add_argument('--root', default='/Users/alyshialedlie/code',
+                       help='Root directory to analyze (default: /Users/alyshialedlie/code)')
+    parser.add_argument('--output-dir', help='Output directory for reports (default: ROOT/analysis_reports)')
+    parser.add_argument('--timeout', type=int, help='Override default timeout for all analyses (in seconds)')
+    parser.add_argument('--repositories', help='Comma-separated list of repository names to analyze (default: all)')
+    parser.add_argument('--skip-dependency-check', action='store_true',
+                       help='Skip dependency verification (not recommended)')
+    parser.add_argument('--incremental', action='store_true',
+                       help='Run incremental analysis (only analyze changed files since last run)')
+    parser.add_argument('--full', action='store_true', help='Force full analysis (ignore cache, default behavior)')
+    parser.add_argument('--since', type=str, metavar='COMMIT',
+                       help='Analyze changes since specific git commit (e.g., HEAD~5, abc123)')
+    parser.add_argument('--resume', action='store_true',
+                       help='Resume from last checkpoint if analysis was interrupted')
+    parser.add_argument('--clear-cache', action='store_true', help='Clear analysis cache before running')
+    parser.add_argument('--clear-checkpoint', action='store_true', help='Clear checkpoint before running (start fresh)')
+
+
+def _verify_environment(args):
+    """Verify dependencies and environment"""
     if not args.skip_dependency_check:
         if not verify_dependencies():
             logger.error("Dependency check failed. Fix issues or use --skip-dependency-check to bypass.")
             sys.exit(1)
 
-    root_dir = Path(args.root)
-    output_dir = Path(args.output_dir) if args.output_dir else None
-
-    # Parse repository filter
-    repositories = None
-    if args.repositories:
-        repositories = [r.strip() for r in args.repositories.split(',')]
-
-    # Build custom timeouts if specified
-    timeouts = None
-    if args.timeout:
-        timeouts = {key: args.timeout for key in DEFAULT_TIMEOUTS.keys()}
-
-    # Verify this script is being run from the Inventory project
     script_dir = Path(__file__).parent.parent.resolve()
     if not (script_dir / 'src' / 'analyzers').exists():
         logger.error(f"Error: This script must be run from the Inventory project directory")
         logger.error(f"Script location: {script_dir}")
         sys.exit(1)
 
-    # Verify root directory exists
+
+def _parse_directories(args):
+    """Parse and validate directories"""
+    root_dir = Path(args.root)
+    output_dir = Path(args.output_dir) if args.output_dir else None
+
     if not root_dir.exists():
         logger.error(f"Error: Target directory not found at {root_dir}")
         sys.exit(1)
 
-    # Handle cache clearing
+    return root_dir, output_dir
+
+
+def _parse_repositories(args):
+    """Parse repository filter"""
+    if args.repositories:
+        return [r.strip() for r in args.repositories.split(',')]
+    return None
+
+
+def _parse_timeouts(args):
+    """Parse timeout configuration"""
+    if args.timeout:
+        return {key: args.timeout for key in DEFAULT_TIMEOUTS.keys()}
+    return None
+
+
+def _handle_cleanup(args, root_dir):
+    """Handle cache and checkpoint cleanup"""
     if args.clear_cache:
         cache_file = root_dir / '.analysis-cache.json'
         if cache_file.exists():
             cache_file.unlink()
             logger.info("🗑️  Cache cleared")
 
-    # Handle checkpoint clearing
     if args.clear_checkpoint:
         checkpoint_file = root_dir / '.analysis-checkpoint.json'
         if checkpoint_file.exists():
             checkpoint_file.unlink()
             logger.info("🗑️  Checkpoint cleared")
 
-    # Validate conflicting arguments
+
+def _validate_arguments(args):
+    """Validate argument combinations"""
     if args.full and args.incremental:
         logger.error("❌ Error: --full and --incremental cannot be used together")
         sys.exit(1)
@@ -849,18 +860,6 @@ Advanced:
     if args.full and args.since:
         logger.error("❌ Error: --full and --since cannot be used together")
         sys.exit(1)
-
-    runner = AnalysisRunner(
-        root_dir,
-        output_dir,
-        timeouts=timeouts,
-        repositories=repositories,
-        incremental=args.incremental,
-        full=args.full,
-        since=args.since,
-        resume=args.resume
-    )
-    runner.run_all_analysis()
 
 if __name__ == '__main__':
     main()

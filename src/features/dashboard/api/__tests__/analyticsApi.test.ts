@@ -489,6 +489,299 @@ describe('analyticsApi', () => {
     });
   });
 
+  describe('transform function edge cases', () => {
+    it('should handle risk factor with optional description', async () => {
+      const mockRawReport = {
+        risk_data: [
+          {
+            path: 'src/test.ts',
+            display_name: 'Test',
+            risk_score: 50,
+            risk_level: 'medium',
+            factors: [
+              { type: 'complexity', weight: 0.25, value: 50, score: 50 },
+              { type: 'coverage', weight: 0.3, value: 40, score: 40, description: 'Low test coverage' },
+            ],
+            confidence: 85,
+            last_updated: '2024-01-15T10:00:00Z',
+          },
+        ],
+        debt_summary: {
+          total_hours: 0,
+          by_category: [],
+          items: [],
+          historical: [],
+          targets: [],
+        },
+        predictions: {
+          quality: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          coverage: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          issues: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          debt: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+        },
+        insights: [],
+        metadata: {
+          generated_at: '2024-01-15T12:00:00Z',
+          analyzer_version: '1.0.0',
+          data_quality: 90,
+          files_analyzed: 100,
+        },
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(mockRawReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      expect(result.riskData[0].factors[0].description).toBeUndefined();
+      expect(result.riskData[0].factors[1].description).toBe('Low test coverage');
+    });
+
+    it('should handle prediction with optional goal fields', async () => {
+      const mockRawReport = {
+        risk_data: [],
+        debt_summary: {
+          total_hours: 0,
+          by_category: [],
+          items: [],
+          historical: [],
+          targets: [],
+        },
+        predictions: {
+          quality: {
+            current: 82,
+            projected: 88,
+            confidence: 80,
+            confidence_level: 'high',
+            timeframe_days: 90,
+            insight: 'Improving',
+            goal_value: 90,
+            goal_date: '2024-06-01T00:00:00Z',
+          },
+          coverage: {
+            current: 70,
+            projected: 78,
+            confidence: 75,
+            confidence_level: 'medium',
+            timeframe_days: 90,
+            insight: 'Steady',
+            // No goal_value or goal_date
+          },
+          issues: {
+            current: 20,
+            projected: 15,
+            confidence: 65,
+            confidence_level: 'medium',
+            timeframe_days: 90,
+            insight: 'Decreasing',
+          },
+          debt: {
+            current: 100,
+            projected: 75,
+            confidence: 70,
+            confidence_level: 'medium',
+            timeframe_days: 90,
+            insight: 'Reducing',
+          },
+        },
+        insights: [],
+        metadata: {
+          generated_at: '2024-01-15T12:00:00Z',
+          analyzer_version: '1.0.0',
+          data_quality: 90,
+          files_analyzed: 100,
+        },
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(mockRawReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      expect(result.predictions.quality.goalValue).toBe(90);
+      expect(result.predictions.quality.goalDate).toBe('2024-06-01T00:00:00Z');
+      expect(result.predictions.coverage.goalValue).toBeUndefined();
+      expect(result.predictions.coverage.goalDate).toBeUndefined();
+    });
+
+    it('should handle insight with optional dismissed_at and skills', async () => {
+      const mockRawReport = {
+        risk_data: [],
+        debt_summary: {
+          total_hours: 0,
+          by_category: [],
+          items: [],
+          historical: [],
+          targets: [],
+        },
+        predictions: {
+          quality: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          coverage: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          issues: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          debt: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+        },
+        insights: [
+          {
+            id: 'insight-1',
+            priority: 'high',
+            title: 'Fix TypeScript errors',
+            description: 'Multiple type errors found',
+            category: 'code-quality',
+            affected_files: ['src/test.ts'],
+            impact: { min: 5, max: 10, unit: '%' },
+            effort: { hours: 4, difficulty: 'moderate' },
+            tags: ['typescript'],
+            created_at: '2024-01-15T10:00:00Z',
+            dismissed_at: '2024-01-16T10:00:00Z',
+          },
+          {
+            id: 'insight-2',
+            priority: 'medium',
+            title: 'Add documentation',
+            description: 'Missing JSDoc comments',
+            category: 'documentation',
+            affected_files: ['src/api.ts'],
+            impact: { min: 1, max: 3, unit: '%', description: 'DX improvement' },
+            effort: { hours: 2, difficulty: 'easy', skills: ['Documentation', 'JSDoc'] },
+            tags: ['docs'],
+            created_at: '2024-01-15T10:00:00Z',
+          },
+        ],
+        metadata: {
+          generated_at: '2024-01-15T12:00:00Z',
+          analyzer_version: '1.0.0',
+          data_quality: 90,
+          files_analyzed: 100,
+        },
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(mockRawReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      expect(result.insights[0].dismissedAt).toBe('2024-01-16T10:00:00Z');
+      expect(result.insights[0].effort.skills).toBeUndefined();
+      expect(result.insights[0].impact.description).toBeUndefined();
+
+      expect(result.insights[1].dismissedAt).toBeUndefined();
+      expect(result.insights[1].effort.skills).toEqual(['Documentation', 'JSDoc']);
+      expect(result.insights[1].impact.description).toBe('DX improvement');
+    });
+
+    it('should handle risk data with optional directory field', async () => {
+      const mockRawReport = {
+        risk_data: [
+          {
+            path: 'src/components/Button.tsx',
+            display_name: 'Button',
+            risk_score: 30,
+            risk_level: 'low',
+            factors: [],
+            confidence: 90,
+            last_updated: '2024-01-15T10:00:00Z',
+            directory: 'src/components',
+          },
+          {
+            path: 'utils.ts',
+            display_name: 'Utils',
+            risk_score: 20,
+            risk_level: 'minimal',
+            factors: [],
+            confidence: 85,
+            last_updated: '2024-01-15T10:00:00Z',
+            // No directory field
+          },
+        ],
+        debt_summary: {
+          total_hours: 0,
+          by_category: [],
+          items: [],
+          historical: [],
+          targets: [],
+        },
+        predictions: {
+          quality: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          coverage: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          issues: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          debt: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+        },
+        insights: [],
+        metadata: {
+          generated_at: '2024-01-15T12:00:00Z',
+          analyzer_version: '1.0.0',
+          data_quality: 90,
+          files_analyzed: 100,
+        },
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(mockRawReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      expect(result.riskData[0].directory).toBe('src/components');
+      expect(result.riskData[1].directory).toBeUndefined();
+    });
+
+    it('should handle time series data with optional label', async () => {
+      const mockRawReport = {
+        risk_data: [],
+        debt_summary: {
+          total_hours: 100,
+          by_category: [],
+          items: [],
+          historical: [
+            { timestamp: '2024-01-01T00:00:00Z', value: 120, label: 'Week 1' },
+            { timestamp: '2024-01-08T00:00:00Z', value: 110 },
+            { timestamp: '2024-01-15T00:00:00Z', value: 100, label: 'Current' },
+          ],
+          targets: [
+            { timestamp: '2024-01-01T00:00:00Z', value: 100 },
+          ],
+        },
+        predictions: {
+          quality: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          coverage: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          issues: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+          debt: { current: 0, projected: 0, confidence: 0, confidence_level: 'low', timeframe_days: 90, insight: '' },
+        },
+        insights: [],
+        metadata: {
+          generated_at: '2024-01-15T12:00:00Z',
+          analyzer_version: '1.0.0',
+          data_quality: 90,
+          files_analyzed: 100,
+        },
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(mockRawReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      expect(result.debtSummary.historical[0].label).toBe('Week 1');
+      expect(result.debtSummary.historical[1].label).toBeUndefined();
+      expect(result.debtSummary.historical[2].label).toBe('Current');
+      expect(result.debtSummary.targets[0].label).toBeUndefined();
+    });
+  });
+
   describe('validation edge cases', () => {
     it('should reject report with null value', async () => {
       vi.mocked(fetch).mockResolvedValueOnce({
@@ -542,6 +835,137 @@ describe('analyticsApi', () => {
 
       // Should return mock data due to invalid structure
       expect(result.metadata.analyzerVersion).toBe('1.0.0-mock');
+    });
+
+    it('should handle report with non-array insights', async () => {
+      const invalidReport = {
+        risk_data: [],
+        debt_summary: {},
+        predictions: {},
+        insights: 'not an array',
+        metadata: {},
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(invalidReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      // Should return mock data due to invalid structure
+      expect(result.metadata.analyzerVersion).toBe('1.0.0-mock');
+    });
+
+    it('should handle report with missing debt_summary', async () => {
+      const invalidReport = {
+        risk_data: [],
+        predictions: {},
+        insights: [],
+        metadata: {},
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(invalidReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      // Should return mock data due to invalid structure
+      expect(result.metadata.analyzerVersion).toBe('1.0.0-mock');
+    });
+
+    it('should handle report with missing predictions', async () => {
+      const invalidReport = {
+        risk_data: [],
+        debt_summary: {},
+        insights: [],
+        metadata: {},
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(invalidReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      // Should return mock data due to invalid structure
+      expect(result.metadata.analyzerVersion).toBe('1.0.0-mock');
+    });
+
+    it('should handle report with missing metadata', async () => {
+      const invalidReport = {
+        risk_data: [],
+        debt_summary: {},
+        predictions: {},
+        insights: [],
+      };
+
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(JSON.stringify(invalidReport)),
+      } as Response);
+
+      const result = await analyticsApi.loadAnalyticsReport('/data');
+
+      // Should return mock data due to invalid structure
+      expect(result.metadata.analyzerVersion).toBe('1.0.0-mock');
+    });
+  });
+
+  describe('API methods calling loadAnalyticsReport', () => {
+    it('loadRiskData should call loadAnalyticsReport with correct path', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      } as Response);
+
+      await analyticsApi.loadRiskData('/custom/data/path');
+
+      expect(fetch).toHaveBeenCalledWith('/custom/data/path/analytics/analytics_report.json');
+    });
+
+    it('loadDebtSummary should call loadAnalyticsReport with correct path', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      } as Response);
+
+      await analyticsApi.loadDebtSummary('/another/path');
+
+      expect(fetch).toHaveBeenCalledWith('/another/path/analytics/analytics_report.json');
+    });
+
+    it('loadPredictions should call loadAnalyticsReport with correct path', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      } as Response);
+
+      await analyticsApi.loadPredictions('/predictions/path');
+
+      expect(fetch).toHaveBeenCalledWith('/predictions/path/analytics/analytics_report.json');
+    });
+
+    it('loadInsights should call loadAnalyticsReport with correct path', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      } as Response);
+
+      await analyticsApi.loadInsights('/insights/path');
+
+      expect(fetch).toHaveBeenCalledWith('/insights/path/analytics/analytics_report.json');
     });
   });
 });

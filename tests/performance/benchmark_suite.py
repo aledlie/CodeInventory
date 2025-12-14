@@ -6,6 +6,7 @@ Measures performance improvements from parallel processing and caching.
 Generates performance reports comparing optimized vs baseline performance.
 """
 
+import logging
 import pytest
 import sys
 import time
@@ -13,6 +14,13 @@ import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Any
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(message)s'  # Simple format for benchmark output
+)
+logger = logging.getLogger(__name__)
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -46,6 +54,7 @@ class PerformanceBenchmark:
     """Performance benchmarking utilities"""
 
     def __init__(self):
+        """Initialize the benchmark suite with empty results."""
         self.results: List[BenchmarkResult] = []
         self.src_dir = Path(__file__).parent.parent.parent / 'src'
         self.test_dir = Path(__file__).parent.parent
@@ -192,37 +201,37 @@ class PerformanceBenchmark:
         """Run complete benchmark suite"""
         import datetime
 
-        print("\n" + "="*80)
-        print("PERFORMANCE BENCHMARK SUITE")
-        print("="*80 + "\n")
+        logger.info("\n" + "="*80)
+        logger.info("PERFORMANCE BENCHMARK SUITE")
+        logger.info("="*80 + "\n")
 
         # Test Coverage Benchmarks
-        print("Running Test Coverage Benchmarks...")
+        logger.info("Running Test Coverage Benchmarks...")
         tc_seq = self.benchmark_test_coverage_sequential()
-        print(f"  Sequential: {tc_seq.duration_ms:.0f}ms")
+        logger.info(f"  Sequential: {tc_seq.duration_ms:.0f}ms")
 
         tc_par = self.benchmark_test_coverage_parallel_no_cache(workers=4)
-        print(f"  Parallel (4 workers, no cache): {tc_par.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, no cache): {tc_par.duration_ms:.0f}ms")
 
         tc_cache1 = self.benchmark_test_coverage_parallel_with_cache_first_run(workers=4)
-        print(f"  Parallel (4 workers, cache first run): {tc_cache1.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, cache first run): {tc_cache1.duration_ms:.0f}ms")
 
         tc_cache2 = self.benchmark_test_coverage_parallel_with_cache_second_run(workers=4)
-        print(f"  Parallel (4 workers, cache second run): {tc_cache2.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, cache second run): {tc_cache2.duration_ms:.0f}ms")
 
         # Dependencies Benchmarks
-        print("\nRunning Dependencies Benchmarks...")
+        logger.info("\nRunning Dependencies Benchmarks...")
         dep_seq = self.benchmark_dependencies_sequential()
-        print(f"  Sequential: {dep_seq.duration_ms:.0f}ms")
+        logger.info(f"  Sequential: {dep_seq.duration_ms:.0f}ms")
 
         dep_par = self.benchmark_dependencies_parallel_no_cache(workers=4)
-        print(f"  Parallel (4 workers, no cache): {dep_par.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, no cache): {dep_par.duration_ms:.0f}ms")
 
         dep_cache1 = self.benchmark_dependencies_parallel_with_cache_first_run(workers=4)
-        print(f"  Parallel (4 workers, cache first run): {dep_cache1.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, cache first run): {dep_cache1.duration_ms:.0f}ms")
 
         dep_cache2 = self.benchmark_dependencies_parallel_with_cache_second_run(workers=4)
-        print(f"  Parallel (4 workers, cache second run): {dep_cache2.duration_ms:.0f}ms")
+        logger.info(f"  Parallel (4 workers, cache second run): {dep_cache2.duration_ms:.0f}ms")
 
         # Calculate speedup ratios
         speedup_ratios = {
@@ -264,23 +273,23 @@ class PerformanceBenchmark:
 
     def print_summary(self, report: BenchmarkReport):
         """Print benchmark summary"""
-        print("\n" + "="*80)
-        print("PERFORMANCE SUMMARY")
-        print("="*80 + "\n")
+        logger.info("\n" + "="*80)
+        logger.info("PERFORMANCE SUMMARY")
+        logger.info("="*80 + "\n")
 
-        print("Test Coverage Analyzer:")
-        print(f"  Baseline (sequential):    {report.summary['test_coverage']['baseline_ms']:.0f}ms")
-        print(f"  Optimized (parallel+cache): {report.summary['test_coverage']['optimized_ms']:.0f}ms")
-        print(f"  Speedup:                   {report.summary['test_coverage']['speedup']:.2f}x")
-        print(f"  Improvement:               {report.summary['test_coverage']['improvement_percent']:.1f}%")
+        logger.info("Test Coverage Analyzer:")
+        logger.info(f"  Baseline (sequential):    {report.summary['test_coverage']['baseline_ms']:.0f}ms")
+        logger.info(f"  Optimized (parallel+cache): {report.summary['test_coverage']['optimized_ms']:.0f}ms")
+        logger.info(f"  Speedup:                   {report.summary['test_coverage']['speedup']:.2f}x")
+        logger.info(f"  Improvement:               {report.summary['test_coverage']['improvement_percent']:.1f}%")
 
-        print("\nDependency Analyzer:")
-        print(f"  Baseline (sequential):    {report.summary['dependencies']['baseline_ms']:.0f}ms")
-        print(f"  Optimized (parallel+cache): {report.summary['dependencies']['optimized_ms']:.0f}ms")
-        print(f"  Speedup:                   {report.summary['dependencies']['speedup']:.2f}x")
-        print(f"  Improvement:               {report.summary['dependencies']['improvement_percent']:.1f}%")
+        logger.info("\nDependency Analyzer:")
+        logger.info(f"  Baseline (sequential):    {report.summary['dependencies']['baseline_ms']:.0f}ms")
+        logger.info(f"  Optimized (parallel+cache): {report.summary['dependencies']['optimized_ms']:.0f}ms")
+        logger.info(f"  Speedup:                   {report.summary['dependencies']['speedup']:.2f}x")
+        logger.info(f"  Improvement:               {report.summary['dependencies']['improvement_percent']:.1f}%")
 
-        print("\n" + "="*80)
+        logger.info("\n" + "="*80)
 
     def save_report(self, report: BenchmarkReport, output_path: Path):
         """Save benchmark report to JSON file"""
@@ -294,7 +303,7 @@ class PerformanceBenchmark:
         with open(output_path, 'w') as f:
             json.dump(report_dict, f, indent=2)
 
-        print(f"\n✅ Benchmark report saved to {output_path}")
+        logger.info(f"\n✅ Benchmark report saved to {output_path}")
 
 
 # Pytest integration

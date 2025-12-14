@@ -637,6 +637,19 @@ def regenerate(
 
 def main():
     """CLI entry point."""
+    args = _parse_arguments()
+    _configure_logging(args)
+    result = regenerate(
+        dry_run=args.dry_run,
+        force=args.force,
+        since=args.since
+    )
+    _log_summary(result)
+    sys.exit(0 if result.success else 1)
+
+
+def _parse_arguments():
+    """Parse CLI arguments"""
     parser = argparse.ArgumentParser(
         description='Conditional Dashboard Data Regeneration',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -662,41 +675,37 @@ def main():
         action='store_true',
         help='Enable verbose output'
     )
+    return parser.parse_args()
 
-    args = parser.parse_args()
 
+def _configure_logging(args):
+    """Configure logging based on verbose flag"""
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    result = regenerate(
-        dry_run=args.dry_run,
-        force=args.force,
-        since=args.since
-    )
 
-    # Print summary
-    print("\n" + "=" * 60)
-    print("REGENERATION SUMMARY")
-    print("=" * 60)
-    print(f"Success: {result.success}")
-    print(f"Duration: {result.duration_seconds:.2f}s")
+def _log_summary(result):
+    """Log regeneration summary"""
+    logger.info("\n" + "=" * 60)
+    logger.info("REGENERATION SUMMARY")
+    logger.info("=" * 60)
+    logger.info(f"Success: {result.success}")
+    logger.info(f"Duration: {result.duration_seconds:.2f}s")
 
     if result.reports_archived:
-        print(f"\nReports archived: {len(result.reports_archived)}")
+        logger.info(f"\nReports archived: {len(result.reports_archived)}")
         for r in result.reports_archived:
-            print(f"  - {r}")
+            logger.info(f"  - {r}")
 
-    print(f"\nReports regenerated: {len(result.reports_regenerated)}")
+    logger.info(f"\nReports regenerated: {len(result.reports_regenerated)}")
     if result.reports_regenerated:
         for r in result.reports_regenerated:
-            print(f"  - {r}")
+            logger.info(f"  - {r}")
 
     if result.errors:
-        print(f"\nErrors: {len(result.errors)}")
+        logger.info(f"\nErrors: {len(result.errors)}")
         for e in result.errors:
-            print(f"  - {e}")
-
-    sys.exit(0 if result.success else 1)
+            logger.info(f"  - {e}")
 
 
 if __name__ == '__main__':

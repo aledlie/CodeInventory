@@ -701,6 +701,203 @@ describe('predictionsApi', () => {
     });
   });
 
+  describe('simplified report format', () => {
+    it('should detect and transform simplified report format', async () => {
+      const simplifiedReport = {
+        summary: {
+          total_predictions: 3,
+          total_risks: 2,
+          overall_health: 'good',
+          confidence_avg: 75,
+          last_updated: '2024-01-15T10:00:00Z',
+        },
+        predictions: [
+          {
+            id: 'pred-1',
+            type: 'quality',
+            title: 'Quality Score',
+            prediction: 'Improving',
+            confidence: 80,
+            current_value: 82,
+            predicted_value: 90,
+            created_at: '2024-01-15T10:00:00Z',
+          },
+          {
+            id: 'pred-2',
+            type: 'coverage',
+            title: 'Test Coverage',
+            prediction: 'Stable',
+            confidence: 70,
+            current_value: 72,
+            predicted_value: 80,
+            created_at: '2024-01-15T10:00:00Z',
+          },
+        ],
+        risks: [],
+        scenarios: [],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(simplifiedReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      expect(result!.analyzerVersion).toBe('simplified-1.0');
+      expect(result!.generatedAt).toBe('2024-01-15T10:00:00Z');
+      expect(result!.summary.totalRisks).toBe(2);
+      expect(result!.summary.averageConfidence).toBe(75);
+      expect(result!.summary.trendDirection).toBe('improving');
+    });
+
+    it('should create placeholder predictions from simplified format', async () => {
+      const simplifiedReport = {
+        summary: {
+          total_predictions: 1,
+          total_risks: 0,
+          overall_health: 'good',
+          confidence_avg: 80,
+          last_updated: '2024-01-15T10:00:00Z',
+        },
+        predictions: [
+          {
+            id: 'pred-1',
+            type: 'quality',
+            title: 'Quality Score',
+            prediction: 'Improving',
+            confidence: 85,
+            current_value: 82,
+            predicted_value: 95,
+            created_at: '2024-01-15T10:00:00Z',
+          },
+        ],
+        risks: [],
+        scenarios: [],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(simplifiedReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      // Check quality prediction is created with goal from simplified data
+      expect(result!.qualityPrediction.metric).toBe('quality');
+      expect(result!.qualityPrediction.metricLabel).toBe('Quality Score');
+      expect(result!.qualityPrediction.confidence).toBe(85);
+      expect(result!.qualityPrediction.goals).toHaveLength(1);
+      expect(result!.qualityPrediction.goals![0].value).toBe(95);
+
+      // Check placeholder predictions for other metrics
+      expect(result!.coveragePrediction.metric).toBe('coverage');
+      expect(result!.issuesPrediction.metric).toBe('issues');
+    });
+
+    it('should set trendDirection to stable for non-good health', async () => {
+      const simplifiedReport = {
+        summary: {
+          total_predictions: 0,
+          total_risks: 5,
+          overall_health: 'warning',
+          confidence_avg: 60,
+          last_updated: '2024-01-15T10:00:00Z',
+        },
+        predictions: [],
+        risks: [],
+        scenarios: [],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(simplifiedReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      expect(result!.summary.trendDirection).toBe('stable');
+    });
+
+    it('should create placeholder scenarios from simplified format', async () => {
+      const simplifiedReport = {
+        summary: {
+          total_predictions: 0,
+          total_risks: 0,
+          overall_health: 'good',
+          confidence_avg: 75,
+          last_updated: '2024-01-15T10:00:00Z',
+        },
+        predictions: [],
+        risks: [],
+        scenarios: [],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(simplifiedReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      expect(result!.scenarios.current.scenario.name).toBe('Current Pace');
+      expect(result!.scenarios.accelerated.scenario.name).toBe('Accelerated');
+      expect(result!.scenarios.relaxed.scenario.name).toBe('Relaxed');
+
+      // Check placeholder scenario values
+      expect(result!.scenarios.current.projectedQuality).toBe(80);
+      expect(result!.scenarios.current.projectedCoverage).toBe(70);
+    });
+
+    it('should prefer full format over simplified when both are valid', async () => {
+      // A report that could technically match simplified but is actually full format
+      const fullReport = createRawPredictionsReport();
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(fullReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      // Should use full format transformer, not simplified
+      expect(result!.analyzerVersion).toBe('1.0.0');
+      expect(result!.risks).toHaveLength(3);
+    });
+
+    it('should handle simplified report with empty predictions array', async () => {
+      const simplifiedReport = {
+        summary: {
+          total_predictions: 0,
+          total_risks: 0,
+          overall_health: 'good',
+          confidence_avg: 0,
+          last_updated: '2024-01-15T10:00:00Z',
+        },
+        predictions: [],
+        risks: [],
+        scenarios: [],
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(simplifiedReport),
+      });
+
+      const result = await predictionsApi.loadPredictionsReport('/data');
+
+      expect(result).not.toBeNull();
+      // Should create placeholder predictions with default values
+      expect(result!.qualityPrediction.confidence).toBe(0);
+      expect(result!.qualityPrediction.goals).toEqual([]);
+      expect(result!.risks).toEqual([]);
+    });
+  });
+
   describe('edge cases', () => {
     it('should handle empty risks array', async () => {
       const rawReport = createRawPredictionsReport({ risks: [] });

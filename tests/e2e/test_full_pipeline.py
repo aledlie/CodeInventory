@@ -24,19 +24,24 @@ class TestFullPipeline(unittest.TestCase):
 
     def setUp(self):
         """Set up test project structure"""
+        self._create_directories()
+        self._create_python_files()
+        self._create_typescript_files()
+
+    def _create_directories(self):
+        """Create test directory structure"""
         self.temp_dir = tempfile.mkdtemp()
         self.project_dir = Path(self.temp_dir) / "test_project"
         self.project_dir.mkdir()
 
-        # Create src directory
         self.src_dir = self.project_dir / "src"
         self.src_dir.mkdir()
 
-        # Create tests directory
         self.tests_dir = self.project_dir / "tests"
         self.tests_dir.mkdir()
 
-        # Create sample Python file
+    def _create_python_files(self):
+        """Create sample Python files"""
         (self.src_dir / "calculator.py").write_text("""
 '''Calculator module'''
 
@@ -62,7 +67,6 @@ class Calculator:
         return a / b
 """)
 
-        # Create test file
         (self.tests_dir / "test_calculator.py").write_text("""
 '''Tests for calculator'''
 
@@ -76,7 +80,8 @@ def test_calculator_divide():
     assert calc.divide(10, 2) == 5
 """)
 
-        # Create TypeScript file
+    def _create_typescript_files(self):
+        """Create sample TypeScript files"""
         (self.src_dir / "utils.ts").write_text("""
 export interface User {
     id: number;

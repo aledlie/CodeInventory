@@ -45,7 +45,12 @@ class TestSaveReportHtml(unittest.TestCase):
 
     def _setup_sample_report(self):
         """Set up a sample report with test data."""
-        # Add sample modularity counts
+        self._set_modularity_counts()
+        self._add_sample_candidates()
+        self._add_sample_modules()
+
+    def _set_modularity_counts(self):
+        """Set modularity count values"""
         self.identifier.report.highly_modular_count = 5
         self.identifier.report.modular_count = 10
         self.identifier.report.semi_modular_count = 3
@@ -54,7 +59,8 @@ class TestSaveReportHtml(unittest.TestCase):
         self.identifier.report.total_functions = 50
         self.identifier.report.total_classes = 15
 
-        # Add sample tool candidates
+    def _add_sample_candidates(self):
+        """Add sample tool candidates to report"""
         self.identifier.report.tool_candidates = [
             ToolCandidate(
                 name='format_date',
@@ -84,7 +90,8 @@ class TestSaveReportHtml(unittest.TestCase):
             ),
         ]
 
-        # Add sample utility modules
+    def _add_sample_modules(self):
+        """Add sample utility modules to report"""
         self.identifier.report.modules = [
             ModuleInfo(
                 file_path='/src/utils/helpers.py',

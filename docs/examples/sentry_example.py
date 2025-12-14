@@ -32,12 +32,25 @@ logger = get_logger(__name__)
 
 def main():
     """Main example function"""
+    _print_header()
+    sentry_initialized = _initialize_sentry()
+    _demo_log_levels()
+    _demo_exception_logging()
+    _demo_performance_logging()
+    _demo_breadcrumbs()
+    _print_completion_message(sentry_initialized)
+
+
+def _print_header():
+    """Print example header"""
     logger.info("="*60)
     logger.info("Sentry Integration Example")
     logger.info("="*60)
     logger.info("")
 
-    # Initialize Sentry (reads SENTRY_DSN and SENTRY_ENVIRONMENT from Doppler)
+
+def _initialize_sentry():
+    """Initialize Sentry and log status"""
     sentry_initialized = init_sentry()
 
     if sentry_initialized:
@@ -50,26 +63,31 @@ def main():
         logger.warning("   Make sure to run with Doppler:")
         logger.warning("   doppler run --project integrity-studio --config dev -- python3 examples/sentry_example.py")
 
+    return sentry_initialized
+
+
+def _demo_log_levels():
+    """Demonstrate different log levels"""
     logger.info("")
     logger.info("="*60)
     logger.info("Testing Different Log Levels")
     logger.info("="*60)
     logger.info("")
 
-    # Test different log levels
     logger.debug("🔍 DEBUG: Detailed diagnostic information")
     logger.info("ℹ️  INFO: General informational message")
     logger.warning("⚠️  WARNING: Warning message for recoverable issue")
 
+
+def _demo_exception_logging():
+    """Demonstrate exception logging with context"""
     logger.info("")
     logger.info("="*60)
     logger.info("Testing Exception Logging with Context")
     logger.info("="*60)
     logger.info("")
 
-    # Demonstrate exception logging with context
     try:
-        # Intentional error for demonstration
         result = 10 / 0
     except ZeroDivisionError as e:
         log_exception(
@@ -84,15 +102,17 @@ def main():
         )
         logger.info("Exception logged with context and sent to Sentry")
 
+
+def _demo_performance_logging():
+    """Demonstrate performance metric logging"""
     logger.info("")
     logger.info("="*60)
     logger.info("Testing Performance Metric Logging")
     logger.info("="*60)
     logger.info("")
 
-    # Demonstrate performance logging
     start = time.time()
-    time.sleep(0.5)  # Simulate work
+    time.sleep(0.5)
     duration_ms = (time.time() - start) * 1000
 
     log_performance_metric(
@@ -106,21 +126,24 @@ def main():
         }
     )
 
+
+def _demo_breadcrumbs():
+    """Demonstrate Sentry breadcrumbs"""
     logger.info("")
     logger.info("="*60)
     logger.info("Testing Breadcrumbs (Sentry Context)")
     logger.info("="*60)
     logger.info("")
 
-    # These INFO logs will be captured as breadcrumbs
     logger.info("Step 1: Initialize data processing")
     logger.info("Step 2: Load data from source")
     logger.info("Step 3: Transform data")
     logger.info("Step 4: Validate results")
-
-    # If an error occurs here, Sentry will include all the breadcrumbs above
     logger.info("✅ All steps completed successfully")
 
+
+def _print_completion_message(sentry_initialized):
+    """Print completion message and next steps"""
     logger.info("")
     logger.info("="*60)
     logger.info("Example Complete")

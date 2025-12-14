@@ -91,12 +91,12 @@ class TestSchemaCache(unittest.TestCase):
     """Test SchemaCache class"""
 
     def setUp(self):
-        """Set up test fixtures"""
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir) / ".schema_cache"
 
     def tearDown(self):
-        """Clean up test fixtures"""
+        """Clean up test fixtures."""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -382,12 +382,12 @@ class TestParallelSchemaProcessor(unittest.TestCase):
     """Test ParallelSchemaProcessor class"""
 
     def setUp(self):
-        """Set up test fixtures"""
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir) / ".schema_cache"
 
     def tearDown(self):
-        """Clean up test fixtures"""
+        """Clean up test fixtures."""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -441,6 +441,7 @@ class TestParallelSchemaProcessor(unittest.TestCase):
         )
 
         def dummy_processor(path):
+            """Process a single path for testing."""
             return {'path': str(path)}
 
         results = processor.process_files_parallel([], dummy_processor)
@@ -707,12 +708,12 @@ class TestSchemaCacheEdgeCases(unittest.TestCase):
     """Test edge cases in SchemaCache"""
 
     def setUp(self):
-        """Set up test fixtures"""
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir) / ".schema_cache"
 
     def tearDown(self):
-        """Clean up test fixtures"""
+        """Clean up test fixtures."""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -773,12 +774,12 @@ class TestParallelSchemaProcessorCacheIntegration(unittest.TestCase):
     """Integration tests for ParallelSchemaProcessor with cache"""
 
     def setUp(self):
-        """Set up test fixtures"""
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir) / ".schema_cache"
 
     def tearDown(self):
-        """Clean up test fixtures"""
+        """Clean up test fixtures."""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 

@@ -10,15 +10,26 @@ import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
+/**
+ * Simple logger for CLI output
+ */
+const logger = {
+  info: (msg) => process.stdout.write(`${msg}\n`),
+  error: (msg) => process.stderr.write(`${msg}\n`),
+  success: (msg) => process.stdout.write(`✅ ${msg}\n`),
+  fail: (msg) => process.stdout.write(`❌ ${msg}\n`),
+  separator: () => process.stdout.write('================================================================================\n'),
+};
+
 const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
 const projectRoot = process.cwd();
 
-console.log('================================================================================');
-console.log('Code Inventory - Environment Verification');
-console.log('================================================================================');
-console.log(`Environment: ${isCI ? 'CI' : 'Local Development'}`);
-console.log(`Project Root: ${projectRoot}`);
-console.log('');
+logger.separator();
+logger.info('Code Inventory - Environment Verification');
+logger.separator();
+logger.info(`Environment: ${isCI ? 'CI' : 'Local Development'}`);
+logger.info(`Project Root: ${projectRoot}`);
+logger.info('');
 
 let hasErrors = false;
 let pythonCmd = 'python3';  // Will be updated if venv is found
@@ -26,18 +37,18 @@ let pythonCmd = 'python3';  // Will be updated if venv is found
 // Check Node.js
 try {
   const nodeVersion = process.version;
-  console.log(`✅ Node.js ${nodeVersion}`);
+  logger.success(`Node.js ${nodeVersion}`);
 } catch (e) {
-  console.log('❌ Node.js not found');
+  logger.fail('Node.js not found');
   hasErrors = true;
 }
 
 // Check Python
 try {
   const pythonVersion = execSync('python3 --version', { encoding: 'utf-8' }).trim();
-  console.log(`✅ ${pythonVersion}`);
+  logger.success(pythonVersion);
 } catch (e) {
-  console.log('❌ Python3 not found');
+  logger.fail('Python3 not found');
   hasErrors = true;
 }
 
@@ -54,7 +65,7 @@ for (const venv of [venvPython, venvPythonAlt]) {
     try {
       const importCmd = requiredPackages.map(p => `import ${p}`).join('; ');
       execSync(`"${venv}" -c "${importCmd}"`, { stdio: 'ignore' });
-      console.log(`✅ Python packages (venv: ${venv})`);
+      logger.success(`Python packages (venv: ${venv})`);
       pythonPackagesOk = true;
       pythonCmd = `"${venv}"`;  // Use this venv for subsequent checks
       break;
@@ -69,7 +80,7 @@ if (!pythonPackagesOk) {
   try {
     const importCmd = requiredPackages.map(p => `import ${p}`).join('; ');
     execSync(`python3 -c "${importCmd}"`, { stdio: 'ignore' });
-    console.log(`✅ Python packages (${isCI ? 'CI global' : 'system'})`);
+    logger.success(`Python packages (${isCI ? 'CI global' : 'system'})`);
     pythonPackagesOk = true;
   } catch {
     // Python packages not found
@@ -77,8 +88,8 @@ if (!pythonPackagesOk) {
 }
 
 if (!pythonPackagesOk) {
-  console.log(`❌ Python packages not found (${requiredPackages.join(', ')})`);
-  console.log(isCI
+  logger.fail(`Python packages not found (${requiredPackages.join(', ')})`);
+  logger.info(isCI
     ? '   Run: pip install -r requirements.txt'
     : '   Run: python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt'
   );
@@ -102,7 +113,7 @@ for (const loc of astGrepLocations) {
       timeout: 5000,
       stdio: ['pipe', 'pipe', 'ignore']
     }).trim();
-    console.log(`✅ ast-grep ${version} (${loc})`);
+    logger.success(`ast-grep ${version} (${loc})`);
     astGrepFound = true;
     break;
   } catch {
@@ -111,10 +122,10 @@ for (const loc of astGrepLocations) {
 }
 
 if (!astGrepFound) {
-  console.log('❌ ast-grep not found');
-  console.log('   Install with one of:');
-  console.log('   - brew install ast-grep (macOS)');
-  console.log('   - cargo install ast-grep (cross-platform)');
+  logger.fail('ast-grep not found');
+  logger.info('   Install with one of:');
+  logger.info('   - brew install ast-grep (macOS)');
+  logger.info('   - cargo install ast-grep (cross-platform)');
   hasErrors = true;
 }
 
@@ -124,10 +135,10 @@ try {
     encoding: 'utf-8',
     stdio: ['pipe', 'pipe', 'ignore']
   }).split('\n')[0];
-  console.log(`✅ ${pytestVersion}`);
+  logger.success(pytestVersion);
 } catch (e) {
-  console.log('❌ pytest not found');
-  console.log('   Run: pip install pytest pytest-cov');
+  logger.fail('pytest not found');
+  logger.info('   Run: pip install pytest pytest-cov');
   hasErrors = true;
 }
 
@@ -137,10 +148,10 @@ try {
     encoding: 'utf-8',
     stdio: ['pipe', 'pipe', 'ignore']
   }).trim();
-  console.log(`✅ ${coverageVersion}`);
+  logger.success(coverageVersion);
 } catch (e) {
-  console.log('❌ coverage not found');
-  console.log('   Run: pip install coverage');
+  logger.fail('coverage not found');
+  logger.info('   Run: pip install coverage');
   hasErrors = true;
 }
 
@@ -150,29 +161,29 @@ try {
     encoding: 'utf-8',
     stdio: ['pipe', 'pipe', 'ignore']
   }).trim();
-  console.log(`✅ ${pydanticVersion}`);
+  logger.success(pydanticVersion);
 } catch (e) {
-  console.log('❌ pydantic not found');
-  console.log('   Run: pip install pydantic');
+  logger.fail('pydantic not found');
+  logger.info('   Run: pip install pydantic');
   hasErrors = true;
 }
 
-console.log('');
-console.log('================================================================================');
+logger.info('');
+logger.separator();
 
 if (hasErrors) {
-  console.log('❌ Some checks failed. Please install missing dependencies.');
-  console.log('');
-  console.log('Quick setup commands:');
+  logger.fail('Some checks failed. Please install missing dependencies.');
+  logger.info('');
+  logger.info('Quick setup commands:');
   if (isCI) {
-    console.log('  npm ci');
-    console.log('  pip install -r requirements.txt');
+    logger.info('  npm ci');
+    logger.info('  pip install -r requirements.txt');
   } else {
-    console.log('  npm install');
-    console.log('  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt');
+    logger.info('  npm install');
+    logger.info('  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt');
   }
   process.exit(1);
 } else {
-  console.log('✅ All checks passed! Environment is ready.');
+  logger.success('All checks passed! Environment is ready.');
   process.exit(0);
 }

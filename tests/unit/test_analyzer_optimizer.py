@@ -966,7 +966,10 @@ class TestAnalyzerCacheExceptionHandling(unittest.TestCase):
 
         # Create an object that can't be hashed properly
         class UnhashableObject:
+            """Test object that raises exception on string conversion."""
+
             def __str__(self):
+                """Raise an error to simulate unhashable object."""
                 raise ValueError("Cannot convert to string")
 
         # The hash should handle this gracefully
