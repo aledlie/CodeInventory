@@ -3,9 +3,9 @@
     "source_directory": "src",
     "test_directory": "src/tests",
     "total_functions": 760,
-    "tested_functions": 372,
-    "untested_functions": 388,
-    "coverage_percentage": 48.9
+    "tested_functions": 382,
+    "untested_functions": 378,
+    "coverage_percentage": 50.3
   },
   "functions": [
     {
@@ -1259,14 +1259,14 @@
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 117,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "WidgetPalette",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 327,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "DashboardEditor",
@@ -1280,49 +1280,49 @@
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 149,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleMenuClose",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 154,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleResize",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 158,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleDragStart",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 472,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleDragEnd",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 477,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleUndo",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 509,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleRedo",
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 519,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "handleAddWidget",
@@ -1343,7 +1343,7 @@
       "file_path": "src/features/dashboard/components/personalization/DashboardEditor.tsx",
       "line_number": 566,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "ThemePreviewCard",
@@ -5773,58 +5773,6 @@
       {
         "name": "MobileMenu",
         "line_number": 108,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/personalization/DashboardEditor.tsx": [
-      {
-        "name": "SortableWidget",
-        "line_number": 117,
-        "is_async": false
-      },
-      {
-        "name": "WidgetPalette",
-        "line_number": 327,
-        "is_async": false
-      },
-      {
-        "name": "handleMenuOpen",
-        "line_number": 149,
-        "is_async": false
-      },
-      {
-        "name": "handleMenuClose",
-        "line_number": 154,
-        "is_async": false
-      },
-      {
-        "name": "handleResize",
-        "line_number": 158,
-        "is_async": false
-      },
-      {
-        "name": "handleDragStart",
-        "line_number": 472,
-        "is_async": false
-      },
-      {
-        "name": "handleDragEnd",
-        "line_number": 477,
-        "is_async": false
-      },
-      {
-        "name": "handleUndo",
-        "line_number": 509,
-        "is_async": false
-      },
-      {
-        "name": "handleRedo",
-        "line_number": 519,
-        "is_async": false
-      },
-      {
-        "name": "handleResizeWidget",
-        "line_number": 566,
         "is_async": false
       }
     ],
