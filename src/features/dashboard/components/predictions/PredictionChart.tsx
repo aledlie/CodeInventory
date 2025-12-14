@@ -83,6 +83,11 @@ export function PredictionChart({
   const chartData = useMemo(() => {
     if (!data) return null;
 
+    // Handle empty data case
+    if (data.historical.length === 0 && data.predicted.length === 0) {
+      return null;
+    }
+
     const historicalLabels = data.historical.map((d) => formatDate(d.date));
     const predictedLabels = data.predicted.map((d) => formatDate(d.date));
 
@@ -96,11 +101,16 @@ export function PredictionChart({
     ];
 
     // Predicted values (fill null for historical period, connect at last historical point)
-    const predictedValues = [
-      ...Array(data.historical.length - 1).fill(null),
-      data.historical[data.historical.length - 1]?.value, // Connection point
-      ...data.predicted.map((d) => d.value),
-    ];
+    const lastHistoricalValue = data.historical.length > 0
+      ? data.historical[data.historical.length - 1]?.value
+      : null;
+    const predictedValues = data.historical.length > 0
+      ? [
+          ...Array(data.historical.length - 1).fill(null),
+          lastHistoricalValue, // Connection point
+          ...data.predicted.map((d) => d.value),
+        ]
+      : data.predicted.map((d) => d.value);
 
     const datasets = [
       {
@@ -224,14 +234,16 @@ export function PredictionChart({
     );
   }
 
+  const totalDataPoints = data.historical.length + data.predicted.length;
+
   return (
     <Box sx={{ height, position: 'relative' }}>
       {/* "Today" marker - vertical line indicating current date */}
-      {data.historical.length > 0 && (
+      {data.historical.length > 0 && totalDataPoints > 0 && (
         <Box
           sx={{
             position: 'absolute',
-            left: `${(data.historical.length / (data.historical.length + data.predicted.length)) * 100}%`,
+            left: `${(data.historical.length / totalDataPoints) * 100}%`,
             top: 0,
             bottom: 30,
             width: '1px',

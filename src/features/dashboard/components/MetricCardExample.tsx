@@ -20,6 +20,7 @@ import {
   Error as ErrorIcon,
 } from '@mui/icons-material';
 import { MetricCard } from './MetricCard';
+import { logger } from '../helpers/logger';
 
 /**
  * MetricCard Example Showcase
@@ -32,7 +33,7 @@ export function MetricCardExample() {
 
   const handleCardClick = (cardName: string) => {
     setClickedCard(cardName);
-    console.log(`Card clicked: ${cardName}`);
+    logger.info('MetricCardExample', `Card clicked: ${cardName}`);
     // In a real app, this would navigate or show details
   };
 

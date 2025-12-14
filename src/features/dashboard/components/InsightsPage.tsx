@@ -41,6 +41,7 @@ import {
   useRegenerateInsights,
 } from '../hooks/useInsights';
 import type { AIInsight, InsightsSortConfig } from '../types';
+import { logger } from '../helpers/logger';
 
 /**
  * Props for InsightsPage
@@ -294,7 +295,7 @@ function InsightsPageContent({ dataPath = '/data' }: InsightsPageProps) {
               key={insight.id}
               insight={insight}
               onAcknowledge={handleAcknowledge}
-              onViewDetails={(id) => console.log('View details:', id)}
+              onViewDetails={(id) => logger.info('InsightsPage', 'View details', { id })}
               isLoading={isAcknowledging}
             />
           ))}

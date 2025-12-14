@@ -11,6 +11,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Box, AppBar, Toolbar, Typography } from '@mui/material';
 import { Sidebar, MobileMenuButton } from './index';
+import { logger } from '../helpers/logger';
 
 /**
  * Example Dashboard Layout with Navigation
@@ -39,7 +40,7 @@ export function NavigationExample({ children }: { children?: ReactNode }) {
 
   // For demonstration - in production, use TanStack Router
   const handleNavigate = (path: string) => {
-    console.log('Navigating to:', path);
+    logger.info('NavigationExample', 'Navigating to', { path });
     setCurrentPath(path);
     // In production: navigate(path) from TanStack Router
   };

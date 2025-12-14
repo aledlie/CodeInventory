@@ -15,6 +15,7 @@ import type {
   RegenerateResponse,
   MetricSnapshot,
 } from '../types';
+import { logger } from '../helpers/logger';
 
 // ============================================================================
 // Raw Python Output Types
@@ -80,10 +81,10 @@ function transformMetricSnapshot(raw: RawMetricSnapshot): MetricSnapshot {
   return {
     name: raw.name,
     current: raw.current,
-    previous: raw.previous,
-    change: raw.change,
-    changePercent: raw.change_percent,
-    trend: raw.trend as 'up' | 'down' | 'stable',
+    previous: raw.previous ?? raw.current,
+    change: raw.change ?? 0,
+    changePercent: raw.change_percent ?? 0,
+    trend: (raw.trend as 'up' | 'down' | 'stable') ?? 'stable',
     unit: raw.unit,
   };
 }
@@ -96,8 +97,8 @@ function transformInsight(raw: RawInsight): AIInsight {
     title: raw.title,
     explanation: raw.explanation,
     confidence: raw.confidence,
-    metrics: raw.metrics.map(transformMetricSnapshot),
-    affectedFiles: raw.affected_files.map((f) => ({
+    metrics: (raw.metrics ?? []).map(transformMetricSnapshot),
+    affectedFiles: (raw.affected_files ?? []).map((f) => ({
       path: f.path,
       line: f.line,
       snippet: f.snippet,
@@ -105,12 +106,12 @@ function transformInsight(raw: RawInsight): AIInsight {
       percentage: f.percentage,
       previousPercentage: f.previous_percentage,
     })),
-    recommendations: raw.recommendations,
+    recommendations: raw.recommendations ?? [],
     createdAt: raw.created_at,
     acknowledgedAt: raw.acknowledged_at,
     acknowledgedBy: raw.acknowledged_by,
     category: raw.category,
-    tags: raw.tags,
+    tags: raw.tags ?? [],
   };
 }
 
@@ -125,10 +126,10 @@ function transformInsightsReport(raw: RawInsightsReport): InsightsReport {
       headline: raw.summary.headline,
       lastUpdated: raw.summary.last_updated,
     },
-    insights: raw.insights.map(transformInsight),
-    keyMetrics: raw.key_metrics.map(transformMetricSnapshot),
-    analyzerVersion: raw.analyzer_version,
-    generatedAt: raw.generated_at,
+    insights: (raw.insights ?? []).map(transformInsight),
+    keyMetrics: (raw.key_metrics ?? []).map(transformMetricSnapshot),
+    analyzerVersion: raw.analyzer_version ?? 'unknown',
+    generatedAt: raw.generated_at ?? new Date().toISOString(),
   };
 }
 
@@ -213,7 +214,7 @@ export const insightsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[insightsApi] Insights report not found at ${path}`);
+          logger.warn('insightsApi', `Insights report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -226,10 +227,10 @@ export const insightsApi = {
       }
 
       const data = transformInsightsReport(rawData);
-      console.log(`[insightsApi] Loaded insights report: ${data.summary.total} insights`);
+      logger.info('insightsApi', `Loaded insights report: ${data.summary.total} insights`);
       return data;
     } catch (error) {
-      console.error(`[insightsApi] Error loading insights report from ${path}:`, error);
+      logger.error('insightsApi', `Error loading insights report from ${path}`, error instanceof Error ? error : undefined);
       throw error;
     }
   },
@@ -297,7 +298,7 @@ export const insightsApi = {
     userId: string
   ): Promise<AcknowledgeResponse> {
     // Placeholder - in production, this would POST to a backend
-    console.log(`[insightsApi] Acknowledging insight ${insightId} by user ${userId}`);
+    logger.info('insightsApi', `Acknowledging insight ${insightId} by user ${userId}`);
 
     return {
       success: true,
@@ -328,7 +329,7 @@ export const insightsApi = {
    */
   async regenerateInsights(): Promise<RegenerateResponse> {
     // Placeholder - in production, this would trigger analysis
-    console.log('[insightsApi] Regenerating insights...');
+    logger.info('insightsApi', 'Regenerating insights...');
 
     return {
       success: true,

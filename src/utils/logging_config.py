@@ -283,8 +283,8 @@ def log_exception(logger: logging.Logger, error: Exception, context: Optional[Di
     )
 
     # Send to Sentry if available
-    if SENTRY_AVAILABLE and sentry_sdk.Hub.current.client:
-        with sentry_sdk.push_scope() as scope:
+    if SENTRY_AVAILABLE and sentry_sdk.get_client().is_active():
+        with sentry_sdk.isolation_scope() as scope:
             # Add context to Sentry event
             if context:
                 for key, value in context.items():
@@ -324,7 +324,7 @@ def log_performance_metric(
     logger.info(msg)
 
     # Send to Sentry as a performance transaction if available
-    if SENTRY_AVAILABLE and sentry_sdk.Hub.current.client:
+    if SENTRY_AVAILABLE and sentry_sdk.get_client().is_active():
         with sentry_sdk.start_transaction(op=operation, name=operation) as transaction:
             transaction.set_measurement(operation, duration_ms, "millisecond")
             if metadata:

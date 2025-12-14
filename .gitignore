@@ -87,11 +87,9 @@ env/
 ENV/
 
 # Analysis outputs (temporary)
-test_results.json
-test_results.txt
+test_results/
 analysis_reports/
 outputs/
-coverage.json
 
 # Generated schemas and reports (DO NOT COMMIT)
 schemas.json
@@ -125,3 +123,6 @@ repomix-output.xml
 # Phase 3: Analysis cache and checkpoint files
 .analysis-cache.json
 .analysis-checkpoint.json
+
+# Report archives (timestamped historical data - kept locally only)
+public/data/archive/

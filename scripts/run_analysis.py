@@ -205,18 +205,20 @@ class AnalysisRunner:
             logger.info(f"✅ {description} completed successfully")
             if result.stdout:
                 # Show first 20 lines of output
-                lines = result.stdout.split('\n')[:20]
-                logger.info('\n'.join(lines))
-                if len(result.stdout.split('\n')) > 20:
-                    logger.info(f"... ({len(result.stdout.split('\n')) - 20} more lines)")
+                stdout_lines = result.stdout.split('\n')
+                logger.info('\n'.join(stdout_lines[:20]))
+                if len(stdout_lines) > 20:
+                    remaining = len(stdout_lines) - 20
+                    logger.info(f"... ({remaining} more lines)")
         else:
             logger.error(f"❌ {description} failed (exit code: {result.returncode})")
             if result.stderr:
                 # Show first 10 lines of error
-                lines = result.stderr.split('\n')[:10]
-                logger.error('\n'.join(lines))
-                if len(result.stderr.split('\n')) > 10:
-                    logger.error(f"... (see full log: {self.logs_dir / f'{name}_{self.timestamp}.log'})")
+                stderr_lines = result.stderr.split('\n')
+                logger.error('\n'.join(stderr_lines[:10]))
+                if len(stderr_lines) > 10:
+                    log_file = self.logs_dir / f'{name}_{self.timestamp}.log'
+                    logger.error(f"... (see full log: {log_file})")
 
         return result.returncode == 0
 
@@ -619,10 +621,11 @@ class AnalysisRunner:
                     lines.append("")
                     lines.append("**Error Output (first 5 lines):**")
                     lines.append("```")
-                    error_lines = result['stderr'].split('\n')[:5]
-                    lines.extend(error_lines)
-                    if len(result['stderr'].split('\n')) > 5:
-                        lines.append(f"... ({len(result['stderr'].split('\n')) - 5} more lines in log file)")
+                    stderr_lines = result['stderr'].split('\n')
+                    lines.extend(stderr_lines[:5])
+                    if len(stderr_lines) > 5:
+                        remaining = len(stderr_lines) - 5
+                        lines.append(f"... ({remaining} more lines in log file)")
                     lines.append("```")
 
                 lines.append("")

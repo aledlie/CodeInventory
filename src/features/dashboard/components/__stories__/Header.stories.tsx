@@ -17,6 +17,7 @@ import { action } from '@storybook/addon-actions';
 import { ThemeProvider } from '@mui/material/styles';
 import { dashboardTheme } from '../../../../theme/dashboardTheme';
 import { Header } from '../Header';
+import { logger } from '../../helpers/logger';
 
 // Wrapper component to provide theme
 const ThemedHeader = (props: any) => (
@@ -146,11 +147,11 @@ export const Interactive: Story = {
   args: {
     lastGenerated: new Date(),
     onSettingsClick: () => {
-      console.log('Settings clicked');
+      logger.info('Header.stories', 'Settings clicked');
       alert('Settings clicked! Check console for details.');
     },
     onExportClick: () => {
-      console.log('Export clicked');
+      logger.info('Header.stories', 'Export clicked');
       alert('Export clicked! Check console for details.');
     },
   },

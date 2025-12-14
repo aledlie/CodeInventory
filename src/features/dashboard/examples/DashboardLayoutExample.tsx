@@ -12,6 +12,7 @@
 import { useState } from 'react';
 import { Typography, Card, CardContent, Grid } from '@mui/material';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { logger } from '../helpers/logger';
 
 /**
  * Example Dashboard Page Component
@@ -28,7 +29,7 @@ export function DashboardLayoutExample() {
    * In a real app, this would use React Router's navigate()
    */
   const handleNavigate = (path: string) => {
-    console.log('Navigating to:', path);
+    logger.info('DashboardLayoutExample', 'Navigating to', { path });
     setCurrentPath(path);
   };
 
@@ -36,7 +37,7 @@ export function DashboardLayoutExample() {
    * Handle settings click
    */
   const handleSettingsClick = () => {
-    console.log('Settings clicked');
+    logger.info('DashboardLayoutExample', 'Settings clicked');
     // Open settings modal/page
   };
 
@@ -44,7 +45,7 @@ export function DashboardLayoutExample() {
    * Handle export click
    */
   const handleExportClick = () => {
-    console.log('Export clicked');
+    logger.info('DashboardLayoutExample', 'Export clicked');
     // Trigger export functionality
   };
 

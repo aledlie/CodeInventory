@@ -16,6 +16,7 @@ import type {
   PredictionFactor,
   GoalMarker,
 } from '../types';
+import { logger } from '../helpers/logger';
 
 // ============================================================================
 // Raw Python Output Types
@@ -230,8 +231,47 @@ function transformPredictionsReport(raw: RawPredictionsReport): PredictionsRepor
 }
 
 // ============================================================================
+// Simplified Report Types (from conditional_regenerate.py)
+// ============================================================================
+
+interface SimplifiedPredictionsReport {
+  summary: {
+    total_predictions: number;
+    total_risks: number;
+    overall_health: string;
+    confidence_avg: number;
+    last_updated: string;
+  };
+  predictions: Array<{
+    id: string;
+    type: string;
+    title: string;
+    prediction: string;
+    confidence: number;
+    current_value: number;
+    predicted_value: number;
+    created_at: string;
+  }>;
+  risks: Array<unknown>;
+  scenarios: Array<unknown>;
+}
+
+// ============================================================================
 // Validation Functions
 // ============================================================================
+
+function isSimplifiedReport(data: unknown): data is SimplifiedPredictionsReport {
+  if (typeof data !== 'object' || data === null) {
+    return false;
+  }
+  const report = data as Record<string, unknown>;
+  return (
+    typeof report.summary === 'object' &&
+    report.summary !== null &&
+    'total_predictions' in (report.summary as Record<string, unknown>) &&
+    Array.isArray(report.predictions)
+  );
+}
 
 function validateRawPredictionsReport(data: unknown): data is RawPredictionsReport {
   if (typeof data !== 'object' || data === null) {
@@ -246,6 +286,70 @@ function validateRawPredictionsReport(data: unknown): data is RawPredictionsRepo
     typeof report.scenarios === 'object' &&
     typeof report.summary === 'object'
   );
+}
+
+/**
+ * Transform simplified report format to full PredictionsReport
+ */
+function transformSimplifiedReport(raw: SimplifiedPredictionsReport): PredictionsReport {
+  // Create placeholder prediction data structure
+  const createPlaceholderPrediction = (type: string): PredictionData => {
+    const pred = raw.predictions.find(p => p.type === type);
+    return {
+      metric: type,
+      metricLabel: pred?.title ?? type,
+      historical: [],
+      predicted: [],
+      confidenceBands: { lower: [], upper: [] },
+      confidence: pred?.confidence ?? 0,
+      horizon: 90,
+      methodology: 'linear-regression',
+      factors: [],
+      goals: pred ? [{
+        value: pred.predicted_value,
+        label: 'Target',
+        achievable: true,
+        confidence: pred.confidence,
+      }] : [],
+      unit: type === 'coverage' ? '%' : 'issues',
+      min: 0,
+      max: 100,
+    };
+  };
+
+  const createPlaceholderScenario = (name: string): ScenarioResult => ({
+    scenario: {
+      name,
+      coverageGrowthRate: 0.5,
+      issueResolutionRate: 0.1,
+      newIssuesRate: 0.05,
+      dependencyUpdateRate: 0.02,
+    },
+    prediction: createPlaceholderPrediction('quality'),
+    projectedQuality: 80,
+    projectedCoverage: 70,
+  });
+
+  return {
+    qualityPrediction: createPlaceholderPrediction('quality'),
+    coveragePrediction: createPlaceholderPrediction('coverage'),
+    issuesPrediction: createPlaceholderPrediction('issues'),
+    risks: [],
+    scenarios: {
+      current: createPlaceholderScenario('Current Pace'),
+      accelerated: createPlaceholderScenario('Accelerated'),
+      relaxed: createPlaceholderScenario('Relaxed'),
+    },
+    summary: {
+      totalRisks: raw.summary.total_risks,
+      criticalRisks: 0,
+      highRisks: 0,
+      averageConfidence: raw.summary.confidence_avg,
+      trendDirection: raw.summary.overall_health === 'good' ? 'improving' : 'stable',
+    },
+    generatedAt: raw.summary.last_updated,
+    analyzerVersion: 'simplified-1.0',
+  };
 }
 
 // ============================================================================
@@ -299,7 +403,7 @@ export const predictionsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[predictionsApi] Predictions report not found at ${path}`);
+          logger.warn('predictionsApi', `Predictions report not found at ${path}`);
           return null;
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -307,15 +411,23 @@ export const predictionsApi = {
 
       const rawData = await response.json();
 
+      // Check for simplified format first (from conditional_regenerate.py)
+      if (isSimplifiedReport(rawData)) {
+        const data = transformSimplifiedReport(rawData);
+        logger.info('predictionsApi', `Loaded simplified predictions report: ${rawData.predictions.length} predictions`);
+        return data;
+      }
+
+      // Try full format
       if (!validateRawPredictionsReport(rawData)) {
         throw new Error('Predictions report has invalid structure');
       }
 
       const data = transformPredictionsReport(rawData);
-      console.log(`[predictionsApi] Loaded predictions report: ${data.risks.length} risks`);
+      logger.info('predictionsApi', `Loaded predictions report: ${data.risks.length} risks`);
       return data;
     } catch (error) {
-      console.error(`[predictionsApi] Error loading predictions report from ${path}:`, error);
+      logger.error('predictionsApi', `Error loading predictions report from ${path}`, error instanceof Error ? error : undefined);
       throw error;
     }
   },
@@ -413,7 +525,7 @@ export const predictionsApi = {
     scenario: ScenarioConfig
   ): Promise<ScenarioResult | null> {
     // Placeholder - in production, this would call the analyzer
-    console.log('[predictionsApi] Calculating custom scenario:', scenario);
+    logger.info('predictionsApi', 'Calculating custom scenario', { scenario });
 
     const report = await this.loadPredictionsReport(dataPath);
     if (!report) {

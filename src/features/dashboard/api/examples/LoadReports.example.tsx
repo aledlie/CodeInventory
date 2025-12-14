@@ -8,6 +8,7 @@
 import { useState, useEffect } from 'react';
 import { dashboardApi } from '../dashboardApi';
 import type { PythonAnalyzerData, ReportLoadError } from '../../types';
+import { logger } from '../../helpers/logger';
 
 /**
  * Simple loading state component
@@ -155,7 +156,7 @@ export function LoadReportsExample() {
         setData(result.data);
         setErrors(result.errors);
       } catch (error) {
-        console.error('Fatal error loading reports:', error);
+        logger.error('LoadReportsExample', 'Fatal error loading reports', error instanceof Error ? error : undefined);
         // This would be a network error or catastrophic failure
         setErrors([
           {
@@ -215,7 +216,7 @@ export function LoadReportsWithCustomPath({ outputsPath }: { outputsPath: string
         const result = await dashboardApi.loadAllReports(outputsPath);
         setData(result.data);
       } catch (error) {
-        console.error('Error loading reports:', error);
+        logger.error('LoadReportsWithCustomPath', 'Error loading reports', error instanceof Error ? error : undefined);
       } finally {
         setLoading(false);
       }
@@ -253,7 +254,7 @@ export function LoadIndividualReportsExample() {
         const report = await dashboardApi.loadQualityReport('./outputs');
         setQuality(report);
       } catch (error) {
-        console.error('Error loading quality report:', error);
+        logger.error('LoadIndividualReportsExample', 'Error loading quality report', error instanceof Error ? error : undefined);
       } finally {
         setLoading(false);
       }

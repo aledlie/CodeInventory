@@ -15,6 +15,7 @@ import type {
   IssueStatus,
   User,
 } from '../types';
+import { logger } from '../helpers/logger';
 
 const API_BASE = '/data/collaboration';
 
@@ -146,7 +147,7 @@ export async function assignIssue(
   userId: string
 ): Promise<Issue> {
   // In production, this would be a POST request
-  console.log(`Assigning issue ${issueId} to user ${userId}`);
+  logger.info('collaborationApi', `Assigning issue ${issueId} to user ${userId}`);
   // Return mock updated issue
   const issues = await fetchIssues();
   const issue = issues.find((i) => i.id === issueId);
@@ -162,7 +163,7 @@ export async function updateIssueStatus(
   status: IssueStatus
 ): Promise<Issue> {
   // In production, this would be a PATCH request
-  console.log(`Updating issue ${issueId} status to ${status}`);
+  logger.info('collaborationApi', `Updating issue ${issueId} status to ${status}`);
   const issues = await fetchIssues();
   const issue = issues.find((i) => i.id === issueId);
   if (!issue) throw new Error('Issue not found');
@@ -178,7 +179,7 @@ export async function addComment(
   parentId?: string
 ): Promise<Comment> {
   // In production, this would be a POST request
-  console.log(`Adding comment to issue ${issueId}`, { text, parentId });
+  logger.info('collaborationApi', `Adding comment to issue ${issueId}`, { text, parentId });
   return {
     id: `comment-${Date.now()}`,
     issueId,
@@ -198,7 +199,7 @@ export async function addComment(
  */
 export async function markActivityAsRead(activityId: string): Promise<void> {
   // In production, this would be a PATCH request
-  console.log(`Marking activity ${activityId} as read`);
+  logger.info('collaborationApi', `Marking activity ${activityId} as read`);
 }
 
 // Mock data generators

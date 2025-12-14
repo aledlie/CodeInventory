@@ -70,6 +70,26 @@ python3 scripts/run_tests.py --integration-only # Integration only
 | ast-grep not found | `brew install ast-grep` |
 | Dashboard no data | Copy reports to `public/data/` |
 | TypeScript errors | `npx tsc --noEmit` |
+| CI fails with `EBADPLATFORM` for rollup/esbuild | See "Platform-Specific Dependencies" below |
+
+### Platform-Specific Dependencies
+
+**DO NOT** add platform-specific packages like `@rollup/rollup-darwin-arm64` to `package.json`. These cause CI failures:
+
+```
+npm error code EBADPLATFORM
+npm error notsup Unsupported platform for @rollup/rollup-darwin-arm64
+```
+
+**Why**: CI runs on Linux (x64), but darwin-arm64 packages only work on macOS.
+
+**Solution**: Let bundlers (Rollup, esbuild, SWC) manage their own native bindings. They install the correct platform package automatically via their own `optionalDependencies`.
+
+**If this error appears**:
+1. Check `package.json` for explicit platform packages (`@rollup/rollup-*`, `@esbuild/*`, `@swc/core-*`)
+2. Remove them from `dependencies`/`devDependencies`
+3. Run `npm install` to update lockfile
+4. Commit and push
 
 ## ast-grep Meta Variables
 

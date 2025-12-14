@@ -9,6 +9,7 @@ import {
   AlertTitle,
 } from '@mui/material';
 import { ErrorOutline, Refresh } from '@mui/icons-material';
+import { logger } from '../../features/dashboard/helpers/logger';
 
 /**
  * ErrorBoundary Props
@@ -96,10 +97,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
    * Log error details when component catches an error
    */
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log error to console in development
-    if (import.meta.env.DEV) {
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
-    }
+    // Log error to structured logger
+    logger.error('ErrorBoundary', 'ErrorBoundary caught an error', error, { errorInfo });
 
     // Update state with error info
     this.setState({

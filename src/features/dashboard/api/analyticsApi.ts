@@ -20,6 +20,7 @@ import type {
   PredictionSummary,
   AnalyticsInsight,
 } from '../types/analytics';
+import { logger } from '../helpers/logger';
 
 // ============================================================================
 // Raw Report Types (from Python analyzer)
@@ -517,7 +518,7 @@ export const analyticsApi = {
       const response = await fetch(path);
       if (!response.ok) {
         if (response.status === 404) {
-          console.warn(`[analyticsApi] Analytics report not found at ${path}, using mock data`);
+          logger.warn('analyticsApi', 'Analytics report not found, using mock data', { path });
           return generateMockAnalyticsReport();
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -527,17 +528,18 @@ export const analyticsApi = {
       const rawData = JSON.parse(text) as unknown;
 
       if (!validateAnalyticsReport(rawData)) {
-        console.warn('[analyticsApi] Analytics report has invalid structure, using mock data');
+        logger.warn('analyticsApi', 'Analytics report has invalid structure, using mock data');
         return generateMockAnalyticsReport();
       }
 
       const data = transformAnalyticsReport(rawData);
-      console.log(
-        `[analyticsApi] Loaded analytics report: ${data.riskData.length} risk items, ${data.insights.length} insights`
+      logger.info(
+        'analyticsApi',
+        `Loaded analytics report: ${data.riskData.length} risk items, ${data.insights.length} insights`
       );
       return data;
     } catch (error) {
-      console.warn(`[analyticsApi] Error loading analytics report:`, error);
+      logger.warn('analyticsApi', 'Error loading analytics report', { error });
       return generateMockAnalyticsReport();
     }
   },
@@ -579,7 +581,7 @@ export const analyticsApi = {
    */
   async dismissInsight(insightId: string): Promise<{ success: boolean }> {
     // In a real implementation, this would call a backend API
-    console.log(`[analyticsApi] Dismissing insight: ${insightId}`);
+    logger.info('analyticsApi', `Dismissing insight: ${insightId}`);
     return { success: true };
   },
 };

@@ -177,7 +177,7 @@ class TestRunner:
         logger.info(f"\n✅ HTML coverage report: {html_dir}/index.html")
 
         # Generate JSON report
-        json_file = Path(__file__).parent.parent / 'coverage.json'
+        json_file = Path(__file__).parent.parent / 'test_results' / 'coverage.json'
         cov.json_report(outfile=str(json_file))
 
     def run_coverage_analysis(self):
@@ -249,7 +249,8 @@ class TestRunner:
 
     def _save_summary_report(self, report: str):
         """Save summary report to file"""
-        report_file = Path(__file__).parent.parent / 'test_results.txt'
+        report_file = Path(__file__).parent.parent / 'test_results' / 'test_results.txt'
+        report_file.parent.mkdir(parents=True, exist_ok=True)
         with open(report_file, 'w') as f:
             f.write(report)
 
@@ -274,7 +275,7 @@ class TestRunner:
             'coverage_enabled': self.coverage_enabled
         }
 
-        report_file = Path(__file__).parent.parent / 'test_results.json'
+        report_file = Path(__file__).parent.parent / 'test_results' / 'test_results.json'
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
 
