@@ -1,12 +1,15 @@
 {
   "summary": {
     "total_files_scanned": 269,
-    "total_issues": 7,
+    "total_issues": 53,
     "issues_by_severity": {
-      "warning": 7
+      "warning": 46,
+      "info": 7
     },
     "issues_by_category": {
-      "code_smell": 7
+      "code_smell": 7,
+      "best_practice": 44,
+      "documentation": 2
     }
   },
   "issues": [
@@ -29,6 +32,46 @@
       "line_number": 45,
       "code_snippet": "def _setup_sample_report(self):\n        \"\"\"Set up a sample report with test data.\"\"\"\n        # Add s",
       "suggestion": "Break down into smaller, focused functions"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "tests/fixtures/sample.ts",
+      "line_number": 35,
+      "code_snippet": "console.log('Debug mode')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "info",
+      "category": "documentation",
+      "rule_id": "missing-docstring",
+      "message": "Function missing docstring",
+      "file_path": "tests/fixtures/sample.py",
+      "line_number": 12,
+      "code_snippet": "def process_data(data):\n    # TODO: Implement this\n    print(\"Processing data\")\n    return data",
+      "suggestion": "Add docstring describing purpose, args, and return value"
+    },
+    {
+      "severity": "info",
+      "category": "documentation",
+      "rule_id": "missing-docstring",
+      "message": "Function missing docstring",
+      "file_path": "tests/fixtures/sample.py",
+      "line_number": 20,
+      "code_snippet": "def __init__(self, config):\n        self.config = config",
+      "suggestion": "Add docstring describing purpose, args, and return value"
+    },
+    {
+      "severity": "info",
+      "category": "best_practice",
+      "rule_id": "print-statement",
+      "message": "Using print() instead of logging",
+      "file_path": "tests/fixtures/sample.py",
+      "line_number": 14,
+      "code_snippet": "print(\"Processing data\")",
+      "suggestion": "Consider using logging module for better control"
     },
     {
       "severity": "warning",
@@ -79,6 +122,426 @@
       "line_number": 710,
       "code_snippet": "def main():\n    \"\"\"CLI entry point for running code analysis.\"\"\"\n    # Configure logging for CLI out",
       "suggestion": "Break down into smaller, focused functions"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 15,
+      "code_snippet": "console.log('================================================================================')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 16,
+      "code_snippet": "console.log('Code Inventory - Environment Verification')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 17,
+      "code_snippet": "console.log('================================================================================')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 18,
+      "code_snippet": "console.log(`Environment: ${isCI ? 'CI' : 'Local Development'}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 19,
+      "code_snippet": "console.log(`Project Root: ${projectRoot}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 20,
+      "code_snippet": "console.log('')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 28,
+      "code_snippet": "console.log(`\u2705 Node.js ${nodeVersion}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 30,
+      "code_snippet": "console.log('\u274c Node.js not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 37,
+      "code_snippet": "console.log(`\u2705 ${pythonVersion}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 39,
+      "code_snippet": "console.log('\u274c Python3 not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 56,
+      "code_snippet": "console.log(`\u2705 Python packages (venv: ${venv})`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 71,
+      "code_snippet": "console.log(`\u2705 Python packages (${isCI ? 'CI global' : 'system'})`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 79,
+      "code_snippet": "console.log(`\u274c Python packages not found (${requiredPackages.join(', ')})`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 80,
+      "code_snippet": "console.log(isCI\n    ? '   Run: pip install -r requirements.txt'\n    : '   Run: python3 -m venv .ven",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 104,
+      "code_snippet": "console.log(`\u2705 ast-grep ${version} (${loc})`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 113,
+      "code_snippet": "console.log('\u274c ast-grep not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 114,
+      "code_snippet": "console.log('   Install with one of:')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 115,
+      "code_snippet": "console.log('   - brew install ast-grep (macOS)')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 116,
+      "code_snippet": "console.log('   - cargo install ast-grep (cross-platform)')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 126,
+      "code_snippet": "console.log(`\u2705 ${pytestVersion}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 128,
+      "code_snippet": "console.log('\u274c pytest not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 129,
+      "code_snippet": "console.log('   Run: pip install pytest pytest-cov')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 139,
+      "code_snippet": "console.log(`\u2705 ${coverageVersion}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 141,
+      "code_snippet": "console.log('\u274c coverage not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 142,
+      "code_snippet": "console.log('   Run: pip install coverage')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 152,
+      "code_snippet": "console.log(`\u2705 ${pydanticVersion}`)",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 154,
+      "code_snippet": "console.log('\u274c pydantic not found')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 155,
+      "code_snippet": "console.log('   Run: pip install pydantic')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 159,
+      "code_snippet": "console.log('')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 160,
+      "code_snippet": "console.log('================================================================================')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 163,
+      "code_snippet": "console.log('\u274c Some checks failed. Please install missing dependencies.')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 164,
+      "code_snippet": "console.log('')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 165,
+      "code_snippet": "console.log('Quick setup commands:')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 167,
+      "code_snippet": "console.log('  npm ci')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 168,
+      "code_snippet": "console.log('  pip install -r requirements.txt')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 170,
+      "code_snippet": "console.log('  npm install')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 171,
+      "code_snippet": "console.log('  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "warning",
+      "category": "best_practice",
+      "rule_id": "console-log",
+      "message": "console.log() statement found",
+      "file_path": "scripts/verify-environment.js",
+      "line_number": 175,
+      "code_snippet": "console.log('\u2705 All checks passed! Environment is ready.')",
+      "suggestion": "Remove debug logs or use proper logging library"
+    },
+    {
+      "severity": "info",
+      "category": "best_practice",
+      "rule_id": "no-explicit-return-type",
+      "message": "Function missing explicit return type",
+      "file_path": "src/features/dashboard/hooks/__tests__/usePersonalization.test.ts",
+      "line_number": 212,
+      "code_snippet": "function Wrapper({ children }: { children: ReactNode }) {\n    return createElement(QueryClientProvid",
+      "suggestion": "Add return type annotation for better type safety"
+    },
+    {
+      "severity": "info",
+      "category": "best_practice",
+      "rule_id": "no-explicit-return-type",
+      "message": "Function missing explicit return type",
+      "file_path": "src/features/dashboard/hooks/__tests__/usePredictions.test.ts",
+      "line_number": 333,
+      "code_snippet": "function Wrapper({ children }: { children: ReactNode }) {\n    return createElement(\n      QueryClien",
+      "suggestion": "Add return type annotation for better type safety"
+    },
+    {
+      "severity": "info",
+      "category": "best_practice",
+      "rule_id": "no-explicit-return-type",
+      "message": "Function missing explicit return type",
+      "file_path": "src/features/dashboard/hooks/__tests__/useInsights.test.ts",
+      "line_number": 205,
+      "code_snippet": "function Wrapper({ children }: { children: ReactNode }) {\n    return createElement(\n      QueryClien",
+      "suggestion": "Add return type annotation for better type safety"
+    },
+    {
+      "severity": "info",
+      "category": "best_practice",
+      "rule_id": "no-explicit-return-type",
+      "message": "Function missing explicit return type",
+      "file_path": "src/features/dashboard/hooks/__tests__/useAnalytics.test.ts",
+      "line_number": 305,
+      "code_snippet": "function Wrapper({ children }: { children: ReactNode }) {\n    return createElement(QueryClientProvid",
+      "suggestion": "Add return type annotation for better type safety"
     }
   ]
 }

@@ -379,7 +379,7 @@ class AnalysisRunner:
         quality_output = quality_dir / f'quality_report_{self.timestamp}.json'
         quality_text = quality_dir / f'quality_report_{self.timestamp}.txt'
 
-        return self.run_command(
+        result = self.run_command(
             'quality_analysis',
             [
                 'python3', '-m', 'src.analyzers.code_quality',
@@ -389,6 +389,17 @@ class AnalysisRunner:
             ],
             'Code Quality Analysis'
         )
+
+        # Copy timestamped reports to base filenames for conditional_regenerate.py
+        if result and quality_output.exists():
+            base_json = quality_dir / 'quality_report.json'
+            base_text = quality_dir / 'quality_report.txt'
+            shutil.copy2(quality_output, base_json)
+            if quality_text.exists():
+                shutil.copy2(quality_text, base_text)
+            logger.info(f"Copied quality reports to base filenames")
+
+        return result
 
     def _run_coverage_analysis(self):
         """Run test coverage analysis"""
@@ -415,11 +426,22 @@ class AnalysisRunner:
         if test_dir.exists():
             cmd.extend(['--test-dir', str(test_dir)])
 
-        return self.run_command(
+        result = self.run_command(
             'coverage_analysis',
             cmd,
             'Test Coverage Analysis'
         )
+
+        # Copy timestamped reports to base filenames for conditional_regenerate.py
+        if result and coverage_output.exists():
+            base_json = coverage_dir / 'coverage_report.json'
+            base_text = coverage_dir / 'coverage_report.txt'
+            shutil.copy2(coverage_output, base_json)
+            if coverage_text.exists():
+                shutil.copy2(coverage_text, base_text)
+            logger.info(f"Copied coverage reports to base filenames")
+
+        return result
 
     def _run_dependency_analysis(self):
         """Run dependency analysis"""
@@ -428,7 +450,7 @@ class AnalysisRunner:
         dependency_output = dependency_dir / f'dependency_report_{self.timestamp}.json'
         dependency_text = dependency_dir / f'dependency_report_{self.timestamp}.txt'
 
-        return self.run_command(
+        result = self.run_command(
             'dependency_analysis',
             [
                 'python3', '-m', 'src.analyzers.dependencies',
@@ -439,6 +461,17 @@ class AnalysisRunner:
             ],
             'Dependency Analysis'
         )
+
+        # Copy timestamped reports to base filenames for conditional_regenerate.py
+        if result and dependency_output.exists():
+            base_json = dependency_dir / 'dependency_report.json'
+            base_text = dependency_dir / 'dependency_report.txt'
+            shutil.copy2(dependency_output, base_json)
+            if dependency_text.exists():
+                shutil.copy2(dependency_text, base_text)
+            logger.info(f"Copied dependency reports to base filenames")
+
+        return result
 
     def _generate_dashboard(self):
         """Generate interactive dashboard"""
