@@ -36,7 +36,6 @@
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
     "@posthog/ai": "^6.5.0",
-    "@rollup/rollup-darwin-arm64": "^4.53.3",
     "@tanstack/react-query": "^5.62.11",
     "@tanstack/react-query-devtools": "^5.62.11",
     "@tanstack/react-router": "^1.93.0",
@@ -52,6 +51,9 @@
     "react-error-boundary": "^6.0.0",
     "simple-statistics": "^7.8.8",
     "zustand": "^4.5.7"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.53.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
