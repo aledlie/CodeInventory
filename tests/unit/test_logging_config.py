@@ -496,9 +496,9 @@ class TestLogException(unittest.TestCase):
     @patch('src.utils.logging_config.sentry_sdk')
     def test_sends_to_sentry_when_available(self, mock_sentry_sdk):
         """Test that log_exception sends to Sentry when available."""
-        mock_hub = MagicMock()
-        mock_hub.client = MagicMock()
-        mock_sentry_sdk.Hub.current = mock_hub
+        mock_client = MagicMock()
+        mock_client.is_active.return_value = True
+        mock_sentry_sdk.get_client.return_value = mock_client
 
         error = ValueError("Test error")
         log_exception(self.logger, error)
@@ -509,12 +509,12 @@ class TestLogException(unittest.TestCase):
     @patch('src.utils.logging_config.sentry_sdk')
     def test_adds_context_to_sentry_scope(self, mock_sentry_sdk):
         """Test that log_exception adds context to Sentry scope."""
-        mock_hub = MagicMock()
-        mock_hub.client = MagicMock()
-        mock_sentry_sdk.Hub.current = mock_hub
+        mock_client = MagicMock()
+        mock_client.is_active.return_value = True
+        mock_sentry_sdk.get_client.return_value = mock_client
         mock_scope = MagicMock()
-        mock_sentry_sdk.push_scope.return_value.__enter__ = MagicMock(return_value=mock_scope)
-        mock_sentry_sdk.push_scope.return_value.__exit__ = MagicMock(return_value=False)
+        mock_sentry_sdk.isolation_scope.return_value.__enter__ = MagicMock(return_value=mock_scope)
+        mock_sentry_sdk.isolation_scope.return_value.__exit__ = MagicMock(return_value=False)
 
         error = ValueError("Test error")
         context = {'key': 'value'}
@@ -583,9 +583,9 @@ class TestLogPerformanceMetric(unittest.TestCase):
     @patch('src.utils.logging_config.sentry_sdk')
     def test_creates_sentry_transaction_when_available(self, mock_sentry_sdk):
         """Test that log_performance_metric creates Sentry transaction."""
-        mock_hub = MagicMock()
-        mock_hub.client = MagicMock()
-        mock_sentry_sdk.Hub.current = mock_hub
+        mock_client = MagicMock()
+        mock_client.is_active.return_value = True
+        mock_sentry_sdk.get_client.return_value = mock_client
         mock_transaction = MagicMock()
         mock_sentry_sdk.start_transaction.return_value.__enter__ = MagicMock(return_value=mock_transaction)
         mock_sentry_sdk.start_transaction.return_value.__exit__ = MagicMock(return_value=False)
@@ -602,9 +602,9 @@ class TestLogPerformanceMetric(unittest.TestCase):
     @patch('src.utils.logging_config.sentry_sdk')
     def test_sets_measurement_on_sentry_transaction(self, mock_sentry_sdk):
         """Test that log_performance_metric sets measurement on Sentry transaction."""
-        mock_hub = MagicMock()
-        mock_hub.client = MagicMock()
-        mock_sentry_sdk.Hub.current = mock_hub
+        mock_client = MagicMock()
+        mock_client.is_active.return_value = True
+        mock_sentry_sdk.get_client.return_value = mock_client
         mock_transaction = MagicMock()
         mock_sentry_sdk.start_transaction.return_value.__enter__ = MagicMock(return_value=mock_transaction)
         mock_sentry_sdk.start_transaction.return_value.__exit__ = MagicMock(return_value=False)
@@ -625,9 +625,9 @@ class TestLogPerformanceMetric(unittest.TestCase):
     @patch('src.utils.logging_config.sentry_sdk')
     def test_sets_tags_from_metadata(self, mock_sentry_sdk):
         """Test that log_performance_metric sets tags from metadata."""
-        mock_hub = MagicMock()
-        mock_hub.client = MagicMock()
-        mock_sentry_sdk.Hub.current = mock_hub
+        mock_client = MagicMock()
+        mock_client.is_active.return_value = True
+        mock_sentry_sdk.get_client.return_value = mock_client
         mock_transaction = MagicMock()
         mock_sentry_sdk.start_transaction.return_value.__enter__ = MagicMock(return_value=mock_transaction)
         mock_sentry_sdk.start_transaction.return_value.__exit__ = MagicMock(return_value=False)
