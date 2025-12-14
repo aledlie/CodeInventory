@@ -195,12 +195,14 @@ class TestAnalyzerCache(unittest.TestCase):
     """Tests for AnalyzerCache class."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
         self.cache = AnalyzerCache(TEST_ANALYZER_NAME, self.cache_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -355,11 +357,13 @@ class TestParallelAnalyzer(unittest.TestCase):
     """Tests for ParallelAnalyzer class."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -493,11 +497,13 @@ class TestParallelAnalyzerProcessing(unittest.TestCase):
     """Tests for ParallelAnalyzer.process_items_parallel method."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -611,10 +617,12 @@ class TestGetFileContentHash(unittest.TestCase):
     """Tests for get_file_content_hash function."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -803,11 +811,13 @@ class TestAnalyzerCacheIntegration(unittest.TestCase):
     """Integration tests for AnalyzerCache with ParallelAnalyzer."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -952,11 +962,13 @@ class TestAnalyzerCacheExceptionHandling(unittest.TestCase):
     """Tests for AnalyzerCache exception handling."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -966,7 +978,10 @@ class TestAnalyzerCacheExceptionHandling(unittest.TestCase):
 
         # Create an object that can't be hashed properly
         class UnhashableObject:
+            """Test object that raises exception on string conversion."""
+
             def __str__(self):
+                """Raise an error to simulate unhashable object."""
                 raise ValueError("Cannot convert to string")
 
         # The hash should handle this gracefully
@@ -1050,11 +1065,13 @@ class TestParallelAnalyzerProcessingEdgeCases(unittest.TestCase):
     """Additional tests for ParallelAnalyzer.process_items_parallel edge cases."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -1218,11 +1235,13 @@ class TestAnalyzerCacheVersioning(unittest.TestCase):
     """Tests for cache versioning behavior."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -1258,11 +1277,13 @@ class TestParallelAnalyzerLogging(unittest.TestCase):
     """Tests for ParallelAnalyzer logging behavior."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.cache_dir = Path(self.temp_dir)
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
@@ -1363,10 +1384,12 @@ class TestGetFileContentHashEdgeCases(unittest.TestCase):
     """Edge case tests for get_file_content_hash function."""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 

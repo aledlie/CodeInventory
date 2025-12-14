@@ -56,11 +56,13 @@ class TestDependencyAnalyzer(unittest.TestCase):
     """Test DependencyAnalyzer class"""
 
     def setUp(self):
+       """Set up test fixtures."""
         """Set up test fixtures"""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+       """Clean up test fixtures."""
         """Clean up test fixtures"""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
@@ -252,10 +254,12 @@ class TestExternalPackageDetection(unittest.TestCase):
     """Test external package detection with various patterns"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_scoped_packages(self):
@@ -312,10 +316,12 @@ class TestExtractPackageName(unittest.TestCase):
     """Test _extract_package_name helper method"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_extract_from_single_format(self):
@@ -367,10 +373,12 @@ class TestCreateDependencyFromMatch(unittest.TestCase):
     """Test _create_dependency_from_match method"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_create_dependency_with_all_fields(self):
@@ -436,10 +444,12 @@ class TestReportGenerationMethods(unittest.TestCase):
     """Test report generation helper methods"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_generate_report_header(self):
@@ -563,10 +573,12 @@ class TestCircularDependencySection(unittest.TestCase):
     """Test circular dependency report section"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_generate_circular_deps_section_empty(self):
@@ -606,10 +618,12 @@ class TestTopFilesSection(unittest.TestCase):
     """Test top files by dependency count section"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_get_top_files(self):
@@ -651,10 +665,12 @@ class TestJSONReportBuilding(unittest.TestCase):
     """Test JSON report building methods"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_build_summary_json(self):
@@ -723,10 +739,12 @@ class TestCircularDependencyDetection(unittest.TestCase):
     """Extended tests for circular dependency detection"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_no_circular_dependencies(self):
@@ -797,10 +815,12 @@ class TestDFSCircularDependencyAlgorithm(unittest.TestCase):
     """
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_dfs_single_node_no_edges(self):
@@ -1124,10 +1144,12 @@ class TestAnalyzeFileByExtension(unittest.TestCase):
     """Test analyze_file with different file extensions"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_analyze_unsupported_file(self):
@@ -1166,10 +1188,12 @@ class TestAnalyzeDirectoryWithSkipDirs(unittest.TestCase):
     """Test analyze_directory with skip directories"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_skip_node_modules(self):
@@ -1230,10 +1254,12 @@ class TestAnalyzeFileDependencyTracking(unittest.TestCase):
     """Test that analyze_file correctly updates report counters"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1264,10 +1290,12 @@ class TestProcessImportMethods(unittest.TestCase):
     """Test the import processing methods"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1330,9 +1358,11 @@ class TestWorkerFunction(unittest.TestCase):
     """Test the worker function for parallel processing"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1386,10 +1416,12 @@ class TestPythonImportPatterns(unittest.TestCase):
     """Test Python-specific import pattern processing"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1439,10 +1471,12 @@ class TestCreatePythonDependency(unittest.TestCase):
     """Test _create_python_dependency method"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_create_python_dependency_success(self):
@@ -1474,10 +1508,12 @@ class TestWriteJsonFile(unittest.TestCase):
     """Test _write_json_file method"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_write_json_file(self):
@@ -1500,10 +1536,12 @@ class TestOptimizedDirectoryAnalysis(unittest.TestCase):
     """Test analyze_directory_optimized method"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_optimized_falls_back_without_parallel(self):
@@ -1581,9 +1619,11 @@ class TestCLIHelpers(unittest.TestCase):
     """Test CLI-related helper functions"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_init_dependency_analyzer(self):
@@ -1615,10 +1655,12 @@ class TestRunAstgrepMethod(unittest.TestCase):
     """Test _run_astgrep method edge cases"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_run_astgrep_empty_output(self):
@@ -1654,10 +1696,12 @@ class TestAnalyzeTypescriptJavaScript(unittest.TestCase):
     """Test TypeScript and JavaScript import analysis"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1699,10 +1743,12 @@ class TestDependencyGraphBuilding(unittest.TestCase):
     """Test dependency graph building during file analysis"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     @unittest.skipUnless(is_astgrep_available(), "ast-grep is not installed")
@@ -1739,10 +1785,12 @@ class TestFullReportGeneration(unittest.TestCase):
     """Test complete report generation with all sections"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_full_report_with_all_data(self):
@@ -1791,10 +1839,12 @@ class TestEdgeCases(unittest.TestCase):
     """Test edge cases and boundary conditions"""
 
     def setUp(self):
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
+        """Clean up test fixtures."""
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_empty_file(self):
