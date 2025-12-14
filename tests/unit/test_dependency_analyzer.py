@@ -787,6 +787,339 @@ class TestCircularDependencyDetection(unittest.TestCase):
         self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
 
 
+class TestDFSCircularDependencyAlgorithm(unittest.TestCase):
+    """Comprehensive tests for the DFS algorithm used in circular dependency detection.
+
+    The dfs function within find_circular_dependencies uses a recursive DFS with:
+    - visited: Set of all nodes that have been fully processed
+    - rec_stack: Set of nodes in the current recursion path (for cycle detection)
+    - path: List of nodes in the current path (for cycle reconstruction)
+    """
+
+    def setUp(self):
+        self.temp_dir = tempfile.mkdtemp()
+        self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
+
+    def tearDown(self):
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    def test_dfs_single_node_no_edges(self):
+        """Test DFS with single node and no edges"""
+        self.analyzer.report.dependency_graph = {
+            'single.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_linear_chain_no_cycle(self):
+        """Test DFS with linear chain (a -> b -> c -> d)"""
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'c.py'},
+            'c.py': {'d.py'},
+            'd.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_simple_three_node_cycle(self):
+        """Test DFS with simple 3-node cycle (a -> b -> c -> a)"""
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'c.py'},
+            'c.py': {'a.py'}
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 1)
+        cycle = self.analyzer.report.circular_dependencies[0]
+        # Cycle should contain a, b, c and end with a
+        self.assertIn('a.py', cycle)
+        self.assertIn('b.py', cycle)
+        self.assertIn('c.py', cycle)
+        self.assertEqual(cycle[0], cycle[-1])  # Cycle starts and ends with same node
+
+    def test_dfs_diamond_with_cycle(self):
+        """Test DFS with diamond pattern containing cycle
+
+            a
+           / \\
+          b   c
+           \\ /
+            d -> a  (creates cycle)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py', 'c.py'},
+            'b.py': {'d.py'},
+            'c.py': {'d.py'},
+            'd.py': {'a.py'}
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertGreater(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_diamond_without_cycle(self):
+        """Test DFS with diamond pattern without cycle
+
+            a
+           / \\
+          b   c
+           \\ /
+            d  (no back edge)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py', 'c.py'},
+            'b.py': {'d.py'},
+            'c.py': {'d.py'},
+            'd.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_nested_cycles(self):
+        """Test DFS with nested cycles (cycle within cycle)
+
+        a -> b -> c -> b (inner cycle)
+             \\-> d -> a (outer cycle)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'c.py', 'd.py'},
+            'c.py': {'b.py'},  # Inner cycle: b -> c -> b
+            'd.py': {'a.py'}   # Outer cycle: a -> b -> d -> a
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        # Should detect at least one cycle
+        self.assertGreater(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_disconnected_components_with_cycle(self):
+        """Test DFS with disconnected graph components, one with cycle"""
+        self.analyzer.report.dependency_graph = {
+            # Component 1: no cycle
+            'a.py': {'b.py'},
+            'b.py': set(),
+            # Component 2: has cycle
+            'x.py': {'y.py'},
+            'y.py': {'x.py'}
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertGreater(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_disconnected_components_no_cycle(self):
+        """Test DFS with multiple disconnected components, none with cycles"""
+        self.analyzer.report.dependency_graph = {
+            # Component 1
+            'a.py': {'b.py'},
+            'b.py': set(),
+            # Component 2
+            'x.py': {'y.py'},
+            'y.py': {'z.py'},
+            'z.py': set(),
+            # Component 3 (single node)
+            'solo.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_long_cycle(self):
+        """Test DFS with long cycle (5+ nodes)"""
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'c.py'},
+            'c.py': {'d.py'},
+            'd.py': {'e.py'},
+            'e.py': {'f.py'},
+            'f.py': {'a.py'}  # Creates 6-node cycle
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 1)
+        cycle = self.analyzer.report.circular_dependencies[0]
+        # All nodes should be in cycle
+        for node in ['a.py', 'b.py', 'c.py', 'd.py', 'e.py', 'f.py']:
+            self.assertIn(node, cycle)
+
+    def test_dfs_multiple_edges_from_node(self):
+        """Test DFS when node has multiple outgoing edges"""
+        self.analyzer.report.dependency_graph = {
+            'hub.py': {'a.py', 'b.py', 'c.py', 'd.py'},
+            'a.py': set(),
+            'b.py': set(),
+            'c.py': set(),
+            'd.py': {'hub.py'}  # Only d creates a cycle
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertGreater(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_cycle_not_from_start_node(self):
+        """Test DFS where cycle doesn't include the start node of traversal
+
+        a -> b -> c -> d -> b (cycle is b->c->d->b, not including a)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'c.py'},
+            'c.py': {'d.py'},
+            'd.py': {'b.py'}  # Cycle back to b, not a
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 1)
+        cycle = self.analyzer.report.circular_dependencies[0]
+        # Cycle should be b->c->d->b
+        self.assertIn('b.py', cycle)
+        self.assertIn('c.py', cycle)
+        self.assertIn('d.py', cycle)
+        # 'a.py' should NOT be in the cycle
+        self.assertNotIn('a.py', cycle)
+
+    def test_dfs_cycle_reconstruction_correctness(self):
+        """Test that the cycle is correctly reconstructed from the path"""
+        self.analyzer.report.dependency_graph = {
+            'x.py': {'y.py'},
+            'y.py': {'z.py'},
+            'z.py': {'y.py'}  # Cycle is y->z->y
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 1)
+        cycle = self.analyzer.report.circular_dependencies[0]
+        # First and last element should be the same (complete cycle)
+        self.assertEqual(cycle[0], cycle[-1])
+        # Should be exactly y->z->y
+        self.assertEqual(len(cycle), 3)
+
+    def test_dfs_does_not_add_duplicate_cycles(self):
+        """Test that the same cycle is not added multiple times"""
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py'},
+            'b.py': {'a.py'}
+        }
+
+        # Run multiple times
+        self.analyzer.find_circular_dependencies()
+        first_count = len(self.analyzer.report.circular_dependencies)
+
+        # Reset and run again
+        self.analyzer.report.circular_dependencies = []
+        self.analyzer.find_circular_dependencies()
+        second_count = len(self.analyzer.report.circular_dependencies)
+
+        self.assertEqual(first_count, second_count)
+
+    def test_dfs_handles_node_with_no_dependencies(self):
+        """Test DFS correctly handles nodes that have no dependencies in the graph"""
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'orphan.py'},  # orphan.py not in graph keys
+            'b.py': set()
+        }
+
+        # Should not raise exception
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_complex_graph_with_multiple_paths(self):
+        """Test DFS with complex graph having multiple paths between nodes
+
+              a
+             /|\\
+            b c d
+            |X|/
+            e-f
+             \\|
+              g -> a (creates multiple potential cycles)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py', 'c.py', 'd.py'},
+            'b.py': {'e.py', 'f.py'},
+            'c.py': {'e.py', 'f.py'},
+            'd.py': {'f.py'},
+            'e.py': {'g.py'},
+            'f.py': {'g.py'},
+            'g.py': {'a.py'}  # Creates cycle back to a
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        # Should detect at least one cycle
+        self.assertGreater(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_path_copy_prevents_mutation(self):
+        """Test that path.copy() in DFS prevents path mutation across branches"""
+        # This tests the path.copy() behavior - each branch should have independent path
+        self.analyzer.report.dependency_graph = {
+            'root.py': {'branch1.py', 'branch2.py'},
+            'branch1.py': {'leaf1.py'},
+            'branch2.py': {'leaf2.py'},
+            'leaf1.py': set(),
+            'leaf2.py': set()
+        }
+
+        # Should complete without error and find no cycles
+        self.analyzer.find_circular_dependencies()
+
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_rec_stack_properly_maintained(self):
+        """Test that rec_stack is properly maintained (node removed after processing)
+
+        This tests that after a node is fully processed, it's removed from rec_stack
+        so it can be visited again from different paths without falsely detecting cycles.
+
+        Graph:
+            a -> b -> d
+            a -> c -> d
+        (d is visited twice but from different paths, not a cycle)
+        """
+        self.analyzer.report.dependency_graph = {
+            'a.py': {'b.py', 'c.py'},
+            'b.py': {'d.py'},
+            'c.py': {'d.py'},
+            'd.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        # Should not detect false cycle
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+    def test_dfs_visited_prevents_reprocessing(self):
+        """Test that visited set prevents reprocessing fully explored nodes"""
+        # Create graph where same subgraph is reachable from multiple entry points
+        self.analyzer.report.dependency_graph = {
+            'entry1.py': {'shared.py'},
+            'entry2.py': {'shared.py'},
+            'shared.py': {'a.py', 'b.py'},
+            'a.py': set(),
+            'b.py': set()
+        }
+
+        self.analyzer.find_circular_dependencies()
+
+        # Should complete without issues and find no cycles
+        self.assertEqual(len(self.analyzer.report.circular_dependencies), 0)
+
+
 class TestAnalyzeFileByExtension(unittest.TestCase):
     """Test analyze_file with different file extensions"""
 
