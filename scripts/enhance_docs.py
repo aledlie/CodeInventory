@@ -5,6 +5,7 @@ Documentation Enhancement Pipeline - Automatically adds schema.org markup to doc
 
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Dict, Any, List
 import subprocess
@@ -133,7 +134,7 @@ class DocumentationEnhancer:
     def _get_readme_files(self, directory: Path, skip_dirs: set) -> List[Path]:
         """Get all README files in directory tree"""
         readme_files = []
-        for root, dirs, files in directory.walk():
+        for root, dirs, files in os.walk(directory):
             # Skip excluded directories
             dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith('.')]
 
