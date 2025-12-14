@@ -19,8 +19,13 @@ class TestDashboardGenerator(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures"""
         self.temp_dir = tempfile.mkdtemp()
+        self._create_sample_schemas()
+        self._create_sample_quality_report()
+        self._create_sample_coverage_report()
+        self._create_sample_dependency_report()
 
-        # Create sample schemas file
+    def _create_sample_schemas(self):
+        """Create sample schemas file"""
         self.schemas_file = Path(self.temp_dir) / "schemas.json"
         with open(self.schemas_file, 'w') as f:
             json.dump({
@@ -38,7 +43,8 @@ class TestDashboardGenerator(unittest.TestCase):
                 }
             }, f)
 
-        # Create sample quality report
+    def _create_sample_quality_report(self):
+        """Create sample quality report"""
         self.quality_file = Path(self.temp_dir) / "quality.json"
         with open(self.quality_file, 'w') as f:
             json.dump({
@@ -53,7 +59,8 @@ class TestDashboardGenerator(unittest.TestCase):
                 }
             }, f)
 
-        # Create sample coverage report
+    def _create_sample_coverage_report(self):
+        """Create sample coverage report"""
         self.coverage_file = Path(self.temp_dir) / "coverage.json"
         with open(self.coverage_file, 'w') as f:
             json.dump({
@@ -64,7 +71,8 @@ class TestDashboardGenerator(unittest.TestCase):
                 }
             }, f)
 
-        # Create sample dependency report
+    def _create_sample_dependency_report(self):
+        """Create sample dependency report"""
         self.dependency_file = Path(self.temp_dir) / "dependency.json"
         with open(self.dependency_file, 'w') as f:
             json.dump({

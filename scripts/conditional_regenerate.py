@@ -637,6 +637,19 @@ def regenerate(
 
 def main():
     """CLI entry point."""
+    args = _parse_arguments()
+    _configure_logging(args)
+    result = regenerate(
+        dry_run=args.dry_run,
+        force=args.force,
+        since=args.since
+    )
+    _log_summary(result)
+    sys.exit(0 if result.success else 1)
+
+
+def _parse_arguments():
+    """Parse CLI arguments"""
     parser = argparse.ArgumentParser(
         description='Conditional Dashboard Data Regeneration',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -662,19 +675,17 @@ def main():
         action='store_true',
         help='Enable verbose output'
     )
+    return parser.parse_args()
 
-    args = parser.parse_args()
 
+def _configure_logging(args):
+    """Configure logging based on verbose flag"""
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    result = regenerate(
-        dry_run=args.dry_run,
-        force=args.force,
-        since=args.since
-    )
 
-    # Log summary
+def _log_summary(result):
+    """Log regeneration summary"""
     logger.info("\n" + "=" * 60)
     logger.info("REGENERATION SUMMARY")
     logger.info("=" * 60)
@@ -695,8 +706,6 @@ def main():
         logger.info(f"\nErrors: {len(result.errors)}")
         for e in result.errors:
             logger.info(f"  - {e}")
-
-    sys.exit(0 if result.success else 1)
 
 
 if __name__ == '__main__':
