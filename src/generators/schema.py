@@ -364,6 +364,12 @@ class SchemaOrgGenerator:
 class EnhancedSchemaGenerator:
     """Generates Schema.org structured data for codebases with parallel processing support."""
 
+    # Class-level defaults
+    DEFAULT_SKIP_DIRS = frozenset({
+        '.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
+        '_site', '.venv', 'venv', 'env', '.cache', 'coverage'
+    })
+
     def __init__(self, root_path: str, use_astgrep: bool = True, use_parallel: bool = False, use_cache: bool = False, max_workers: Optional[int] = None):
         """Initialize the enhanced schema generator.
 
@@ -376,28 +382,41 @@ class EnhancedSchemaGenerator:
         """
         self.root_path = Path(root_path)
         self.schemas: Dict[str, DirectorySchema] = {}
-        self.skip_dirs = {'.git', 'node_modules', '__pycache__', '.next', 'dist', 'build',
-                         '_site', '.venv', 'venv', 'env', '.cache', 'coverage'}
+        self.skip_dirs = set(self.DEFAULT_SKIP_DIRS)
+        self._max_workers = max_workers
+
+        self._initialize_astgrep(use_astgrep)
+        self._initialize_parallel_processor(use_parallel, use_cache)
+        self._log_initialization_status()
+
+    def _initialize_astgrep(self, use_astgrep: bool) -> None:
+        """Initialize ast-grep availability."""
         self.use_astgrep = use_astgrep and AstGrepHelper.check_available()
+
+    def _initialize_parallel_processor(self, use_parallel: bool, use_cache: bool) -> None:
+        """Initialize parallel processor if enabled."""
         self.use_parallel = use_parallel
         self.use_cache = use_cache
-
-        # Initialize parallel processor if enabled
         self.parallel_processor = None
-        if use_parallel or use_cache:
-            try:
-                from src.generators.schema_optimizer import ParallelSchemaProcessor
-                cache_dir = self.root_path / '.schema_cache'
-                self.parallel_processor = ParallelSchemaProcessor(
-                    max_workers=max_workers,
-                    use_cache=use_cache,
-                    cache_dir=cache_dir
-                )
-            except ImportError as e:
-                logger.warning(f"⚠️  Could not load schema optimizer: {e}")
-                self.use_parallel = False
-                self.use_cache = False
 
+        if not (use_parallel or use_cache):
+            return
+
+        try:
+            from src.generators.schema_optimizer import ParallelSchemaProcessor
+            cache_dir = self.root_path / '.schema_cache'
+            self.parallel_processor = ParallelSchemaProcessor(
+                max_workers=self._max_workers,
+                use_cache=use_cache,
+                cache_dir=cache_dir
+            )
+        except ImportError as e:
+            logger.warning(f"⚠️  Could not load schema optimizer: {e}")
+            self.use_parallel = False
+            self.use_cache = False
+
+    def _log_initialization_status(self) -> None:
+        """Log initialization status messages."""
         if not self.use_astgrep:
             logger.warning("⚠️  ast-grep not available - falling back to regex for TypeScript/JavaScript")
             logger.warning("   Install with: brew install ast-grep")

@@ -54,8 +54,10 @@ class CodeQualityAnalyzer:
         """
         self.root_path = root_path
         self.report = QualityReport()
+        self._initialize_rules()
 
-        # Define quality rules
+    def _initialize_rules(self) -> None:
+        """Initialize quality rules for all supported languages."""
         self.python_rules = self._get_python_rules()
         self.typescript_rules = self._get_typescript_rules()
 

@@ -81,16 +81,23 @@ class CacheMetadata:
 class SchemaCache:
     """Cache manager for schema generation"""
 
+    # Default cache file name
+    DEFAULT_CACHE_FILENAME = 'schema_cache.json'
+
     def __init__(self, cache_dir: Path):
         """Initialize the schema cache.
 
         Args:
             cache_dir: Directory to store cache files
         """
+        self._setup_cache_directory(cache_dir)
+        self.metadata = self._load_cache()
+
+    def _setup_cache_directory(self, cache_dir: Path) -> None:
+        """Set up cache directory and file paths."""
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self.cache_file = self.cache_dir / 'schema_cache.json'
-        self.metadata = self._load_cache()
+        self.cache_file = self.cache_dir / self.DEFAULT_CACHE_FILENAME
 
     def _load_cache(self) -> CacheMetadata:
         """Load cache from disk"""
@@ -255,6 +262,10 @@ class SchemaCache:
 
 class ParallelSchemaProcessor:
     """Process files in parallel for schema generation"""
+
+    # Default cache directory name
+    DEFAULT_CACHE_DIR = '.schema_cache'
+
     def __init__(self, max_workers: Optional[int] = None, use_cache: bool = True, cache_dir: Optional[Path] = None):
         """
         Initialize parallel processor
@@ -264,18 +275,26 @@ class ParallelSchemaProcessor:
             use_cache: Whether to use caching
             cache_dir: Directory for cache files (default: .schema_cache)
         """
-        cpu_count = os.cpu_count() or 1
-        self.max_workers = max_workers or max(1, cpu_count - 1)
+        self.max_workers = self._calculate_max_workers(max_workers)
         self.use_cache = use_cache
+        self.cache = self._initialize_cache(cache_dir) if use_cache else None
+        self._log_initialization()
 
-        if cache_dir is None:
-            cache_dir = Path.cwd() / '.schema_cache'
+    def _calculate_max_workers(self, max_workers: Optional[int]) -> int:
+        """Calculate the number of worker processes."""
+        cpu_count = os.cpu_count() or 1
+        return max_workers or max(1, cpu_count - 1)
 
-        self.cache = SchemaCache(cache_dir) if use_cache else None
+    def _initialize_cache(self, cache_dir: Optional[Path]) -> SchemaCache:
+        """Initialize the schema cache."""
+        resolved_cache_dir = cache_dir or Path.cwd() / self.DEFAULT_CACHE_DIR
+        return SchemaCache(resolved_cache_dir)
 
+    def _log_initialization(self) -> None:
+        """Log initialization status."""
         logger.info(f"🚀 Parallel processor initialized")
         logger.info(f"   Workers: {self.max_workers}")
-        logger.info(f"   Cache enabled: {use_cache}")
+        logger.info(f"   Cache enabled: {self.use_cache}")
 
     def process_files_parallel(
         self,

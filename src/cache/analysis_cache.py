@@ -45,6 +45,10 @@ class AnalysisCache:
         }
     }
     """
+
+    # Default cache file name
+    DEFAULT_CACHE_FILENAME = '.analysis-cache.json'
+
     def __init__(self, root_dir: Path, cache_file: Optional[Path] = None):
         """
         Initialize analysis cache
@@ -54,7 +58,7 @@ class AnalysisCache:
             cache_file: Path to cache file (default: root_dir/.analysis-cache.json)
         """
         self.root_dir = root_dir
-        self.cache_file = cache_file or (root_dir / '.analysis-cache.json')
+        self.cache_file = cache_file or (root_dir / self.DEFAULT_CACHE_FILENAME)
         self.cache_data = self._load_cache()
 
     def _load_cache(self) -> Dict[str, Any]:
@@ -325,6 +329,10 @@ class CheckpointManager:
         }
     }
     """
+
+    # Default checkpoint file name
+    DEFAULT_CHECKPOINT_FILENAME = '.analysis-checkpoint.json'
+
     def __init__(self, root_dir: Path, checkpoint_file: Optional[Path] = None):
         """
         Initialize checkpoint manager
@@ -334,7 +342,7 @@ class CheckpointManager:
             checkpoint_file: Path to checkpoint file (default: root_dir/.analysis-checkpoint.json)
         """
         self.root_dir = root_dir
-        self.checkpoint_file = checkpoint_file or (root_dir / '.analysis-checkpoint.json')
+        self.checkpoint_file = checkpoint_file or (root_dir / self.DEFAULT_CHECKPOINT_FILENAME)
         self.checkpoint_data = self._load_checkpoint()
 
     def _load_checkpoint(self) -> Dict[str, Any]:

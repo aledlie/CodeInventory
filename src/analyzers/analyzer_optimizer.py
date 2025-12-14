@@ -86,6 +86,7 @@ class CacheMetadata:
 
 class AnalyzerCache:
     """Generic cache manager for any analyzer"""
+
     def __init__(self, analyzer_name: str, cache_dir: Path):
         """
         Initialize cache for a specific analyzer
@@ -95,10 +96,14 @@ class AnalyzerCache:
             cache_dir: Directory to store cache files
         """
         self.analyzer_name = analyzer_name
+        self._setup_cache_directory(cache_dir)
+        self.metadata = self._load_cache()
+
+    def _setup_cache_directory(self, cache_dir: Path) -> None:
+        """Set up cache directory and file paths."""
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self.cache_file = self.cache_dir / f'{analyzer_name}_cache.json'
-        self.metadata = self._load_cache()
+        self.cache_file = self.cache_dir / f'{self.analyzer_name}_cache.json'
 
     def _load_cache(self) -> CacheMetadata:
         """Load cache from disk"""
@@ -223,6 +228,10 @@ class AnalyzerCache:
 
 class ParallelAnalyzer:
     """Generic parallel processor for any analyzer"""
+
+    # Default cache directory name
+    DEFAULT_CACHE_DIR = '.analyzer_cache'
+
     def __init__(
         self,
         analyzer_name: str,
@@ -240,18 +249,26 @@ class ParallelAnalyzer:
             cache_dir: Directory for cache files (default: .analyzer_cache)
         """
         self.analyzer_name = analyzer_name
-        cpu_count = os.cpu_count() or 1
-        self.max_workers = max_workers or max(1, cpu_count - 1)
+        self.max_workers = self._calculate_max_workers(max_workers)
         self.use_cache = use_cache
+        self.cache = self._initialize_cache(cache_dir) if use_cache else None
+        self._log_initialization()
 
-        if cache_dir is None:
-            cache_dir = Path.cwd() / '.analyzer_cache'
+    def _calculate_max_workers(self, max_workers: Optional[int]) -> int:
+        """Calculate the number of worker processes."""
+        cpu_count = os.cpu_count() or 1
+        return max_workers or max(1, cpu_count - 1)
 
-        self.cache = AnalyzerCache(analyzer_name, cache_dir) if use_cache else None
+    def _initialize_cache(self, cache_dir: Optional[Path]) -> AnalyzerCache:
+        """Initialize the cache manager."""
+        resolved_cache_dir = cache_dir or Path.cwd() / self.DEFAULT_CACHE_DIR
+        return AnalyzerCache(self.analyzer_name, resolved_cache_dir)
 
-        logger.info(f"🚀 Parallel {analyzer_name} initialized")
+    def _log_initialization(self) -> None:
+        """Log initialization status."""
+        logger.info(f"🚀 Parallel {self.analyzer_name} initialized")
         logger.info(f"   Workers: {self.max_workers}")
-        logger.info(f"   Cache enabled: {use_cache}")
+        logger.info(f"   Cache enabled: {self.use_cache}")
 
     def process_items_parallel(
         self,
