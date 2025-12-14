@@ -81,10 +81,10 @@ function transformMetricSnapshot(raw: RawMetricSnapshot): MetricSnapshot {
   return {
     name: raw.name,
     current: raw.current,
-    previous: raw.previous,
-    change: raw.change,
-    changePercent: raw.change_percent,
-    trend: raw.trend as 'up' | 'down' | 'stable',
+    previous: raw.previous ?? raw.current,
+    change: raw.change ?? 0,
+    changePercent: raw.change_percent ?? 0,
+    trend: (raw.trend as 'up' | 'down' | 'stable') ?? 'stable',
     unit: raw.unit,
   };
 }
@@ -97,8 +97,8 @@ function transformInsight(raw: RawInsight): AIInsight {
     title: raw.title,
     explanation: raw.explanation,
     confidence: raw.confidence,
-    metrics: raw.metrics.map(transformMetricSnapshot),
-    affectedFiles: raw.affected_files.map((f) => ({
+    metrics: (raw.metrics ?? []).map(transformMetricSnapshot),
+    affectedFiles: (raw.affected_files ?? []).map((f) => ({
       path: f.path,
       line: f.line,
       snippet: f.snippet,
@@ -106,12 +106,12 @@ function transformInsight(raw: RawInsight): AIInsight {
       percentage: f.percentage,
       previousPercentage: f.previous_percentage,
     })),
-    recommendations: raw.recommendations,
+    recommendations: raw.recommendations ?? [],
     createdAt: raw.created_at,
     acknowledgedAt: raw.acknowledged_at,
     acknowledgedBy: raw.acknowledged_by,
     category: raw.category,
-    tags: raw.tags,
+    tags: raw.tags ?? [],
   };
 }
 
@@ -126,10 +126,10 @@ function transformInsightsReport(raw: RawInsightsReport): InsightsReport {
       headline: raw.summary.headline,
       lastUpdated: raw.summary.last_updated,
     },
-    insights: raw.insights.map(transformInsight),
-    keyMetrics: raw.key_metrics.map(transformMetricSnapshot),
-    analyzerVersion: raw.analyzer_version,
-    generatedAt: raw.generated_at,
+    insights: (raw.insights ?? []).map(transformInsight),
+    keyMetrics: (raw.key_metrics ?? []).map(transformMetricSnapshot),
+    analyzerVersion: raw.analyzer_version ?? 'unknown',
+    generatedAt: raw.generated_at ?? new Date().toISOString(),
   };
 }
 
