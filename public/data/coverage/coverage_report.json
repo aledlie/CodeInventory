@@ -3,9 +3,9 @@
     "source_directory": "src",
     "test_directory": "tests",
     "total_functions": 760,
-    "tested_functions": 703,
-    "untested_functions": 57,
-    "coverage_percentage": 92.5
+    "tested_functions": 707,
+    "untested_functions": 53,
+    "coverage_percentage": 93.03
   },
   "functions": [
     {
@@ -2092,7 +2092,7 @@
       "file_path": "src/features/dashboard/components/visualizations/BuilderCanvas.tsx",
       "line_number": 100,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "BuilderCanvas",
@@ -4689,7 +4689,7 @@
       "file_path": "src/utils/logging_config.py",
       "line_number": 70,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "setup_logging",
@@ -4717,7 +4717,7 @@
       "file_path": "src/utils/logging_config.py",
       "line_number": 297,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "load_cache_statistics",
@@ -4738,7 +4738,7 @@
       "file_path": "src/utils/performance_monitor.py",
       "line_number": 91,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_report",
@@ -5479,13 +5479,6 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/visualizations/BuilderCanvas.tsx": [
-      {
-        "name": "generateSampleData",
-        "line_number": 100,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/notifications/NotificationCenter.tsx": [
       {
         "name": "NotificationCenter",
@@ -5645,25 +5638,8 @@
     ],
     "src/utils/logging_config.py": [
       {
-        "name": "init_sentry",
-        "line_number": 70,
-        "is_async": false
-      },
-      {
         "name": "setup_logging",
         "line_number": 145,
-        "is_async": false
-      },
-      {
-        "name": "log_performance_metric",
-        "line_number": 297,
-        "is_async": false
-      }
-    ],
-    "src/utils/performance_monitor.py": [
-      {
-        "name": "analyze_performance",
-        "line_number": 91,
         "is_async": false
       }
     ],
