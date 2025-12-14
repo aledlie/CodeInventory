@@ -56,14 +56,12 @@ class TestDependencyAnalyzer(unittest.TestCase):
     """Test DependencyAnalyzer class"""
 
     def setUp(self):
-       """Set up test fixtures."""
-        """Set up test fixtures"""
+        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.analyzer = DependencyAnalyzer(Path(self.temp_dir))
 
     def tearDown(self):
-       """Clean up test fixtures."""
-        """Clean up test fixtures"""
+        """Clean up test fixtures."""
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
