@@ -3,9 +3,9 @@
     "source_directory": "src",
     "test_directory": "src/tests",
     "total_functions": 760,
-    "tested_functions": 353,
-    "untested_functions": 407,
-    "coverage_percentage": 46.4
+    "tested_functions": 372,
+    "untested_functions": 388,
+    "coverage_percentage": 48.9
   },
   "functions": [
     {
@@ -300,133 +300,133 @@
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 86,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_changed_files_since_commit",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 116,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_changed_files_since_last_run",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 154,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "is_file_cached",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 209,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_cached_result",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 236,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "update_file_cache",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 255,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "clear_cache",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 273,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_cache_stats",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 291,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "save_checkpoint",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 365,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "initialize_steps",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 380,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "mark_step_in_progress",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 395,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "mark_step_completed",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 408,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "is_step_completed",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 428,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_pending_steps",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 440,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_completed_steps",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 445,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_step_result",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 450,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "has_checkpoint",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 463,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "clear_checkpoint",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 470,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "get_checkpoint_stats",
       "file_path": "src/cache/analysis_cache.py",
       "line_number": 490,
       "is_async": false,
-      "is_tested": false
+      "is_tested": true
     },
     {
       "name": "getRiskLevelFromScore",
@@ -5465,103 +5465,6 @@
       {
         "name": "dfs",
         "line_number": 535,
-        "is_async": false
-      }
-    ],
-    "src/cache/analysis_cache.py": [
-      {
-        "name": "save_cache",
-        "line_number": 86,
-        "is_async": false
-      },
-      {
-        "name": "get_changed_files_since_commit",
-        "line_number": 116,
-        "is_async": false
-      },
-      {
-        "name": "get_changed_files_since_last_run",
-        "line_number": 154,
-        "is_async": false
-      },
-      {
-        "name": "is_file_cached",
-        "line_number": 209,
-        "is_async": false
-      },
-      {
-        "name": "get_cached_result",
-        "line_number": 236,
-        "is_async": false
-      },
-      {
-        "name": "update_file_cache",
-        "line_number": 255,
-        "is_async": false
-      },
-      {
-        "name": "clear_cache",
-        "line_number": 273,
-        "is_async": false
-      },
-      {
-        "name": "get_cache_stats",
-        "line_number": 291,
-        "is_async": false
-      },
-      {
-        "name": "save_checkpoint",
-        "line_number": 365,
-        "is_async": false
-      },
-      {
-        "name": "initialize_steps",
-        "line_number": 380,
-        "is_async": false
-      },
-      {
-        "name": "mark_step_in_progress",
-        "line_number": 395,
-        "is_async": false
-      },
-      {
-        "name": "mark_step_completed",
-        "line_number": 408,
-        "is_async": false
-      },
-      {
-        "name": "is_step_completed",
-        "line_number": 428,
-        "is_async": false
-      },
-      {
-        "name": "get_pending_steps",
-        "line_number": 440,
-        "is_async": false
-      },
-      {
-        "name": "get_completed_steps",
-        "line_number": 445,
-        "is_async": false
-      },
-      {
-        "name": "get_step_result",
-        "line_number": 450,
-        "is_async": false
-      },
-      {
-        "name": "has_checkpoint",
-        "line_number": 463,
-        "is_async": false
-      },
-      {
-        "name": "clear_checkpoint",
-        "line_number": 470,
-        "is_async": false
-      },
-      {
-        "name": "get_checkpoint_stats",
-        "line_number": 490,
         "is_async": false
       }
     ],
