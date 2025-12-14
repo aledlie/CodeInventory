@@ -952,6 +952,26 @@ class TestAnalysisCacheGetChangedFilesEdgeCases:
         assert len(result) == 1
         assert file1 in result
 
+    @patch('subprocess.run')
+    def test_get_changed_files_since_last_run_different_commits(self, mock_run, temp_dir):
+        """Test calls get_changed_files_since_commit when commits differ"""
+        # Create test file
+        file1 = temp_dir / 'changed.py'
+        file1.write_text('content')
+
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout='def456\n'),  # get current commit (different)
+            MagicMock(returncode=0, stdout='changed.py\n')  # git diff between commits
+        ]
+
+        cache = AnalysisCache(temp_dir)
+        cache.cache_data['last_commit'] = 'abc123'  # Previous commit
+
+        result = cache.get_changed_files_since_last_run()
+
+        assert result is not None
+        assert file1 in result
+
 
 class TestCheckpointManagerSaveErrorHandling:
     """Test CheckpointManager save_checkpoint error handling"""
