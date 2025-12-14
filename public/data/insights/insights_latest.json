@@ -14,11 +14,11 @@
     "unacknowledged": 2,
     "overall_confidence": 94,
     "headline": "Analysis: 56 issues, 25.4% coverage, 0 circular deps",
-    "last_updated": "2025-12-10T23:13:04.812152Z"
+    "last_updated": "2025-12-13T20:16:51.886245Z"
   },
   "insights": [
     {
-      "id": "insight-af5679b7",
+      "id": "insight-ae716018",
       "type": "concern",
       "severity": "high",
       "title": "Test Coverage Below Target",
@@ -34,11 +34,11 @@
       "recommendations": [
         "Prioritize adding tests for critical business logic"
       ],
-      "created_at": "2025-12-10T23:13:04.812152Z",
+      "created_at": "2025-12-13T20:16:51.886245Z",
       "acknowledged": false
     },
     {
-      "id": "insight-25ac6d7e",
+      "id": "insight-7ead8828",
       "type": "recommendation",
       "severity": "medium",
       "title": "Code Quality Issues Detected",
@@ -54,11 +54,11 @@
       "recommendations": [
         "Address warning-level issues in critical paths first"
       ],
-      "created_at": "2025-12-10T23:13:04.812152Z",
+      "created_at": "2025-12-13T20:16:51.886245Z",
       "acknowledged": false
     },
     {
-      "id": "insight-d81f5840",
+      "id": "insight-253b20d9",
       "type": "improvement",
       "severity": "low",
       "title": "No Circular Dependencies",
@@ -74,7 +74,7 @@
       "recommendations": [
         "Maintain current architectural discipline"
       ],
-      "created_at": "2025-12-10T23:13:04.812152Z",
+      "created_at": "2025-12-13T20:16:51.886245Z",
       "acknowledged": true
     }
   ]

@@ -358,20 +358,28 @@ class TestCoverageAnalyzer:
         ]
 
     def _get_typescript_patterns(self) -> List[str]:
-        """Get TypeScript function patterns - simpler patterns to match all variants"""
+        """Get TypeScript function patterns.
+
+        Note: Using simpler patterns without ($$$) because ast-grep doesn't
+        match TypeScript's complex parameter syntax (destructuring, type annotations)
+        with the $$$  metavariable.
+        """
         return [
-            'function $NAME($$$)',
-            'const $NAME = ($$$) =>',
-            'export function $NAME($$$)',
-            'async function $NAME($$$)'
+            'function $NAME',
+            'const $NAME =',
+            'export function $NAME',
+            'async function $NAME'
         ]
 
     def _get_javascript_patterns(self) -> List[str]:
-        """Get JavaScript function patterns - simpler patterns to match all variants"""
+        """Get JavaScript function patterns.
+
+        Note: Using simpler patterns without ($$$) for consistency with TypeScript.
+        """
         return [
-            'function $NAME($$$)',
-            'const $NAME = ($$$) =>',
-            'export function $NAME($$$)'
+            'function $NAME',
+            'const $NAME =',
+            'export function $NAME'
         ]
 
     def _find_functions_with_pattern(self, file_path: Path, pattern: str,
