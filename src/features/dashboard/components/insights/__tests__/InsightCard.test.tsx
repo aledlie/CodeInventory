@@ -292,7 +292,9 @@ describe('InsightCard Expand/Collapse', () => {
   it('should show affected files count', () => {
     renderWithTheme(<InsightCard insight={mockInsight} />);
 
-    expect(screen.getByText('6 affected files')).toBeInTheDocument();
+    // The component uses a template string that renders as separate text nodes
+    // Use regex to match the text content
+    expect(screen.getByText(/6 affected files/)).toBeInTheDocument();
   });
 
   it('should show recommendations count', () => {
