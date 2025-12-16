@@ -86,6 +86,20 @@
         "is_external": false
       }
     ],
+    "src/utils/__init__.py": [
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      }
+    ],
     "src/utils/performance_monitor.py": [
       {
         "package": "json",
@@ -139,20 +153,6 @@
         "package": "src.utils.logging_config",
         "import_type": "static",
         "line_number": 16,
-        "is_external": false
-      }
-    ],
-    "src/utils/__init__.py": [
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 3,
         "is_external": false
       }
     ],
