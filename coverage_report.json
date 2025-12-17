@@ -2123,6 +2123,62 @@
       "is_tested": true
     },
     {
+      "name": "calculateQualityScore",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 51,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateHealthStatus",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 78,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateDashboardMetrics",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 119,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidQualityReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 158,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidCoverageReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 180,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isValidDependencyReport",
+      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
+      "line_number": 201,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "shouldLog",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatMessage",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 33,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "useDashboardMetrics",
       "file_path": "src/features/dashboard/helpers/usage-example.tsx",
       "line_number": 22,
@@ -2177,62 +2233,6 @@
       "line_number": 265,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "shouldLog",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatMessage",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 33,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateQualityScore",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 51,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateHealthStatus",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 78,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateDashboardMetrics",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 119,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidQualityReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 158,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidCoverageReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 180,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isValidDependencyReport",
-      "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
-      "line_number": 201,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "DashboardLayoutExample",
@@ -3033,34 +3033,6 @@
       "is_tested": true
     },
     {
-      "name": "SeverityBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CategoryBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueRow",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 246,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CodeQualityPage",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 505,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "Header",
       "file_path": "src/features/dashboard/components/Header.tsx",
       "line_number": 93,
@@ -3103,6 +3075,34 @@
       "is_tested": true
     },
     {
+      "name": "SeverityBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CategoryBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueRow",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CodeQualityPage",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 505,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "DashboardLayout",
       "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
       "line_number": 94,
@@ -3113,6 +3113,34 @@
       "name": "handleMobileDrawerClose",
       "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
       "line_number": 110,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "InsightsCategoryTabs",
+      "file_path": "src/features/dashboard/components/insights/InsightsCategoryTabs.tsx",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleChange",
+      "file_path": "src/features/dashboard/components/insights/InsightsCategoryTabs.tsx",
+      "line_number": 103,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "MetricCardExample",
+      "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleCardClick",
+      "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
+      "line_number": 34,
       "is_async": false,
       "is_tested": true
     },
@@ -3162,34 +3190,6 @@
       "name": "handleCustomDatesChange",
       "file_path": "src/features/dashboard/components/ComparisonPage.tsx",
       "line_number": 358,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "MetricCardExample",
-      "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleCardClick",
-      "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
-      "line_number": 34,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "InsightsCategoryTabs",
-      "file_path": "src/features/dashboard/components/insights/InsightsCategoryTabs.tsx",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleChange",
-      "file_path": "src/features/dashboard/components/insights/InsightsCategoryTabs.tsx",
-      "line_number": 103,
       "is_async": false,
       "is_tested": true
     },
@@ -4972,97 +4972,6 @@
       "is_tested": true
     },
     {
-      "name": "PredictiveDashboard",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "usePredictionsReport",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 37,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QualityForecast",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 56,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "usePrediction",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 62,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CriticalRisks",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useRisks",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 90,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ScenarioComparator",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 110,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "useScenarios",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 122,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "usePredictionsSummary",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 137,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ScenarioBuilder",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 153,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useUpdateScenario",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useRiskCounts",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 193,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useAllPredictions",
-      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
-      "line_number": 221,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "useNotifications",
       "file_path": "src/features/dashboard/hooks/useNotifications.ts",
       "line_number": 27,
@@ -5150,6 +5059,97 @@
       "name": "useAlertTriggersManager",
       "file_path": "src/features/dashboard/hooks/useNotifications.ts",
       "line_number": 205,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "PredictiveDashboard",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "usePredictionsReport",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 37,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QualityForecast",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 56,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "usePrediction",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 62,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CriticalRisks",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useRisks",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 90,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ScenarioComparator",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "useScenarios",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "usePredictionsSummary",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ScenarioBuilder",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 153,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useUpdateScenario",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 169,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useRiskCounts",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 193,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useAllPredictions",
+      "file_path": "src/features/dashboard/hooks/usePredictions.ts",
+      "line_number": 221,
       "is_async": false,
       "is_tested": true
     },
@@ -5527,6 +5527,13 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/hooks/useNotifications.ts": [
+      {
+        "name": "useNotificationCenter",
+        "line_number": 183,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/hooks/usePredictions.ts": [
       {
         "name": "QualityForecast",
@@ -5536,13 +5543,6 @@
       {
         "name": "ScenarioComparator",
         "line_number": 110,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/hooks/useNotifications.ts": [
-      {
-        "name": "useNotificationCenter",
-        "line_number": 183,
         "is_async": false
       }
     ],
