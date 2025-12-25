@@ -26,6 +26,15 @@ from dataclasses import dataclass, field
 from collections import defaultdict
 from enum import Enum
 
+# Import preprocessing module (optional, for preprocessing feature)
+try:
+    from .preprocessing import PreprocessingConfig, PreprocessingPipeline
+    PREPROCESSING_AVAILABLE = True
+except ImportError:
+    PREPROCESSING_AVAILABLE = False
+    PreprocessingConfig = None  # type: ignore
+    PreprocessingPipeline = None  # type: ignore
+
 # Configure logging
 logger = logging.getLogger(__name__)
 if not logger.handlers:
@@ -157,14 +166,26 @@ UTILITY_PATTERNS = [
 class ToolIdentifier:
     """Identifies standalone, modular functionality in codebases"""
 
-    def __init__(self, root_dir: Path):
+    def __init__(
+        self,
+        root_dir: Path,
+        preprocessing_config: Optional['PreprocessingConfig'] = None
+    ):
         """Initialize the tool identifier.
 
         Args:
             root_dir: Root directory of the codebase to analyze
+            preprocessing_config: Optional preprocessing configuration.
+                If provided, enables data preprocessing before report output.
         """
         self.root_dir = root_dir
         self.report = ToolIdentificationReport()
+
+        # Initialize preprocessing pipeline if configured
+        self.preprocessor: Optional['PreprocessingPipeline'] = None
+        if preprocessing_config and PREPROCESSING_AVAILABLE:
+            self.preprocessor = PreprocessingPipeline(preprocessing_config)
+            logger.info("Preprocessing pipeline enabled")
 
     def _run_astgrep(self, file_path: Path, pattern: str, language: str) -> List[Dict[str, Any]]:
         """Run ast-grep pattern against a file"""
@@ -1213,8 +1234,21 @@ class ToolIdentifier:
         ]
 
     def save_report_json(self, output_path: Path) -> None:
-        """Save report as JSON"""
+        """Save report as JSON, with optional preprocessing."""
         data = self._build_report_json()
+
+        # Apply preprocessing if enabled
+        if self.preprocessor:
+            logger.info("Applying preprocessing pipeline...")
+            result = self.preprocessor.process(data)
+            if result.success:
+                data = result.data
+                logger.info(result.summary)
+            else:
+                logger.warning(
+                    f"Preprocessing failed: {result.errors}. Using raw data."
+                )
+
         with open(output_path, 'w') as f:
             json.dump(data, f, indent=2, default=str)
         logger.info(f"Tool identification report saved to {output_path}")
@@ -1973,13 +2007,47 @@ def _parse_args() -> argparse.Namespace:
         default=0.7,
         help='Minimum extraction potential to report (0.0-1.0, default: 0.7)'
     )
+    parser.add_argument(
+        '--preprocess',
+        action='store_true',
+        help='Enable data preprocessing pipeline (cleaning, deduplication, optimization)'
+    )
+    parser.add_argument(
+        '--preprocess-config',
+        type=str,
+        metavar='FILE',
+        help='Path to preprocessing configuration JSON file'
+    )
     return parser.parse_args()
 
 
 def _run_analysis(args: argparse.Namespace) -> None:
     """Run the tool identification analysis"""
     path = Path(args.path)
-    identifier = ToolIdentifier(path)
+
+    # Set up preprocessing configuration if requested
+    preprocessing_config = None
+    if args.preprocess or args.preprocess_config:
+        if not PREPROCESSING_AVAILABLE:
+            logger.error(
+                "Preprocessing requested but preprocessing module not available. "
+                "Please check your installation."
+            )
+            return
+
+        if args.preprocess_config:
+            config_path = Path(args.preprocess_config)
+            if not config_path.exists():
+                logger.error(f"Preprocessing config file not found: {config_path}")
+                return
+            preprocessing_config = PreprocessingConfig.from_file(config_path)
+            logger.info(f"Loaded preprocessing config from {config_path}")
+        else:
+            # Use default preprocessing config
+            preprocessing_config = PreprocessingConfig()
+            logger.info("Using default preprocessing configuration")
+
+    identifier = ToolIdentifier(path, preprocessing_config=preprocessing_config)
 
     _print_header(path)
 

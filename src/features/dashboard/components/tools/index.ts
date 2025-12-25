@@ -15,3 +15,8 @@ export { DependencyGraph } from './DependencyGraph';
 export { DependencyBreakdown } from './DependencyBreakdown';
 export { ToolCandidateCard } from './ToolCandidateCard';
 export { CodePreview } from './CodePreview';
+
+// Preprocessing-enhanced components
+export { ToolSearchInput } from './ToolSearchInput';
+export { ToolsFilterToolbarEnhanced } from './ToolsFilterToolbarEnhanced';
+export { PrecomputedChart, PrecomputedChartsGrid } from './PrecomputedChart';
