@@ -1,0 +1,34 @@
+{
+  "$comment": "Dashboard-optimized config - focuses on pre-computing indexes and charts",
+
+  "cleaning": {
+    "enabled": true,
+    "normalize_paths": true,
+    "normalize_names": true,
+    "clean_meta_variables": true
+  },
+
+  "transformation": {
+    "enabled": true,
+    "detect_patterns": true,
+    "calculate_complexity": true,
+    "resolve_dependencies": false,
+    "min_pattern_confidence": 0.6,
+    "max_patterns_per_candidate": 10
+  },
+
+  "deduplication": {
+    "enabled": true,
+    "threshold": 0.90,
+    "group_similar": false,
+    "keep_representative": true
+  },
+
+  "dashboard": {
+    "enabled": true,
+    "build_indexes": true,
+    "build_search_index": true,
+    "precompute_charts": true,
+    "page_size": 25
+  }
+}
