@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/preprocessing-config.schema.json",
+  "$comment": "Full preprocessing configuration with all options enabled",
+
+  "cleaning": {
+    "enabled": true,
+    "normalize_paths": true,
+    "normalize_names": true,
+    "clean_meta_variables": true
+  },
+
+  "transformation": {
+    "enabled": true,
+    "detect_patterns": true,
+    "calculate_complexity": true,
+    "resolve_dependencies": true,
+    "min_pattern_confidence": 0.7,
+    "max_patterns_per_candidate": 5,
+    "project_modules": []
+  },
+
+  "deduplication": {
+    "enabled": true,
+    "threshold": 0.85,
+    "group_similar": true,
+    "keep_representative": true
+  },
+
+  "dashboard": {
+    "enabled": true,
+    "build_indexes": true,
+    "build_search_index": true,
+    "precompute_charts": true,
+    "page_size": 20
+  }
+}

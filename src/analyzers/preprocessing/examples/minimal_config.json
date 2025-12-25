@@ -1,0 +1,22 @@
+{
+  "$comment": "Minimal preprocessing - only path normalization",
+
+  "cleaning": {
+    "enabled": true,
+    "normalize_paths": true,
+    "normalize_names": false,
+    "clean_meta_variables": false
+  },
+
+  "transformation": {
+    "enabled": false
+  },
+
+  "deduplication": {
+    "enabled": false
+  },
+
+  "dashboard": {
+    "enabled": false
+  }
+}
