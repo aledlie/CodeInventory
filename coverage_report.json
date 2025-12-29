@@ -1045,6 +1045,41 @@
       "is_tested": true
     },
     {
+      "name": "analyze_file",
+      "file_path": "src/analyzers/code_quality.py",
+      "line_number": 417,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "analyze_directory",
+      "file_path": "src/analyzers/code_quality.py",
+      "line_number": 513,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_report_text",
+      "file_path": "src/analyzers/code_quality.py",
+      "line_number": 559,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_report_json",
+      "file_path": "src/analyzers/code_quality.py",
+      "line_number": 656,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/analyzers/code_quality.py",
+      "line_number": 700,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "summary",
       "file_path": "src/analyzers/preprocessing/pipeline.py",
       "line_number": 30,
@@ -1083,41 +1118,6 @@
       "name": "process",
       "file_path": "src/analyzers/preprocessing/pipeline.py",
       "line_number": 141,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_file",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 417,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "analyze_directory",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 513,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generate_report_text",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 559,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_report_json",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 656,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/analyzers/code_quality.py",
-      "line_number": 700,
       "is_async": false,
       "is_tested": true
     },
@@ -2284,34 +2284,6 @@
       "is_tested": true
     },
     {
-      "name": "escapeCsvValue",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatExportDate",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "downloadFile",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "exportToPdf",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 316,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "transformRiskData",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 133,
@@ -2441,6 +2413,76 @@
       "name": "formatMetricName",
       "file_path": "src/features/dashboard/api/trendsApi.ts",
       "line_number": 167,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "escapeCsvValue",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatExportDate",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "downloadFile",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "exportToPdf",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 316,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 127,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 148,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 169,
       "is_async": false,
       "is_tested": true
     },
@@ -2581,48 +2623,6 @@
       "name": "getDefaultLayout",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 607,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 76,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 86,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 127,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 148,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 169,
       "is_async": false,
       "is_tested": true
     },
@@ -3600,27 +3600,6 @@
       "is_tested": true
     },
     {
-      "name": "HeaderExample",
-      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
-      "line_number": 19,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSettingsClick",
-      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
-      "line_number": 39,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleExportClick",
-      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
-      "line_number": 47,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
       "name": "getMetricStatus",
       "file_path": "src/features/dashboard/components/Dashboard.tsx",
       "line_number": 73,
@@ -3639,6 +3618,27 @@
       "file_path": "src/features/dashboard/components/Dashboard.tsx",
       "line_number": 133,
       "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "HeaderExample",
+      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
+      "line_number": 19,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "src/features/dashboard/components/HeaderExample.tsx",
+      "line_number": 47,
+      "is_async": true,
       "is_tested": true
     },
     {
