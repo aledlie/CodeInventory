@@ -1997,6 +1997,48 @@
       "is_tested": true
     },
     {
+      "name": "loadSnapshot",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 14,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "generateMockSnapshot",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 30,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateDiff",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 69,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "compareSnapshots",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 85,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "getAvailableSnapshots",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 119,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "random",
+      "file_path": "src/features/dashboard/api/comparisonApi.ts",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "isRawToolsReport",
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 35,
@@ -2127,48 +2169,6 @@
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 397,
       "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "loadSnapshot",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 14,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "generateMockSnapshot",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 30,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateDiff",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 69,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "compareSnapshots",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 85,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "getAvailableSnapshots",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 119,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "random",
-      "file_path": "src/features/dashboard/api/comparisonApi.ts",
-      "line_number": 32,
-      "is_async": false,
       "is_tested": false
     },
     {
@@ -2375,6 +2375,34 @@
       "is_tested": true
     },
     {
+      "name": "escapeCsvValue",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatExportDate",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "downloadFile",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "exportToPdf",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 316,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "loadHistoryManifest",
       "file_path": "src/features/dashboard/api/trendsApi.ts",
       "line_number": 13,
@@ -2413,76 +2441,6 @@
       "name": "formatMetricName",
       "file_path": "src/features/dashboard/api/trendsApi.ts",
       "line_number": 167,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "escapeCsvValue",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatExportDate",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "downloadFile",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "exportToPdf",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 316,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 76,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 86,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 127,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 148,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 169,
       "is_async": false,
       "is_tested": true
     },
@@ -2623,6 +2581,48 @@
       "name": "getDefaultLayout",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 607,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 127,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 148,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 169,
       "is_async": false,
       "is_tested": true
     },
@@ -2816,20 +2816,6 @@
       "is_tested": false
     },
     {
-      "name": "shouldLog",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatMessage",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 33,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "calculateQualityScore",
       "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
       "line_number": 51,
@@ -2868,6 +2854,20 @@
       "name": "isValidDependencyReport",
       "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
       "line_number": 201,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "shouldLog",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatMessage",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 33,
       "is_async": false,
       "is_tested": true
     },
@@ -3481,34 +3481,6 @@
       "is_tested": true
     },
     {
-      "name": "CircularDependencyCard",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 60,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencyStats",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 272,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "FileDependencyRow",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 452,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependenciesPage",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 594,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "DashboardSkeleton",
       "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
       "line_number": 62,
@@ -3600,23 +3572,30 @@
       "is_tested": true
     },
     {
-      "name": "getMetricStatus",
-      "file_path": "src/features/dashboard/components/Dashboard.tsx",
-      "line_number": 73,
+      "name": "CircularDependencyCard",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 60,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "formatNumber",
-      "file_path": "src/features/dashboard/components/Dashboard.tsx",
-      "line_number": 112,
+      "name": "DependencyStats",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 272,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "Dashboard",
-      "file_path": "src/features/dashboard/components/Dashboard.tsx",
-      "line_number": 133,
+      "name": "FileDependencyRow",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 452,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependenciesPage",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 594,
       "is_async": false,
       "is_tested": true
     },
@@ -3639,6 +3618,27 @@
       "file_path": "src/features/dashboard/components/HeaderExample.tsx",
       "line_number": 47,
       "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "getMetricStatus",
+      "file_path": "src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 73,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatNumber",
+      "file_path": "src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "Dashboard",
+      "file_path": "src/features/dashboard/components/Dashboard.tsx",
+      "line_number": 133,
+      "is_async": false,
       "is_tested": true
     },
     {
@@ -4230,48 +4230,6 @@
       "is_tested": true
     },
     {
-      "name": "ExportButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 103,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QuickPdfExportButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 376,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleClick",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 128,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleClose",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 132,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleCloseNotification",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 172,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderButton",
-      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
-      "line_number": 177,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "WidgetNotificationCard",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 72,
@@ -4338,6 +4296,48 @@
       "name": "handleWidgetNotificationChange",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 311,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ExportButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 103,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QuickPdfExportButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 376,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleClick",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 128,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleClose",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleCloseNotification",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 172,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderButton",
+      "file_path": "src/features/dashboard/components/export/ExportButton.tsx",
+      "line_number": 177,
       "is_async": false,
       "is_tested": true
     },
@@ -4482,20 +4482,6 @@
       "is_tested": true
     },
     {
-      "name": "getExtractionColor",
-      "file_path": "src/features/dashboard/components/tools/ExtractionPotentialBar.tsx",
-      "line_number": 9,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "ExtractionPotentialBar",
-      "file_path": "src/features/dashboard/components/tools/ExtractionPotentialBar.tsx",
-      "line_number": 15,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "CodePreview",
       "file_path": "src/features/dashboard/components/tools/CodePreview.tsx",
       "line_number": 13,
@@ -4508,6 +4494,20 @@
       "line_number": 24,
       "is_async": true,
       "is_tested": true
+    },
+    {
+      "name": "getExtractionColor",
+      "file_path": "src/features/dashboard/components/tools/ExtractionPotentialBar.tsx",
+      "line_number": 9,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "ExtractionPotentialBar",
+      "file_path": "src/features/dashboard/components/tools/ExtractionPotentialBar.tsx",
+      "line_number": 15,
+      "is_async": false,
+      "is_tested": false
     },
     {
       "name": "ToolSearchInput",
@@ -6142,6 +6142,13 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/api/comparisonApi.ts": [
+      {
+        "name": "random",
+        "line_number": 32,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/api/toolsApi.ts": [
       {
         "name": "fetchPaginatedCandidates",
@@ -6152,13 +6159,6 @@
         "name": "fetchPreprocessedStatistics",
         "line_number": 397,
         "is_async": true
-      }
-    ],
-    "src/features/dashboard/api/comparisonApi.ts": [
-      {
-        "name": "random",
-        "line_number": 32,
-        "is_async": false
       }
     ],
     "src/features/dashboard/api/trendsApi.ts": [
