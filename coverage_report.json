@@ -79,27 +79,6 @@
       "is_tested": true
     },
     {
-      "name": "generate_html",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_dashboard",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 709,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "main",
-      "file_path": "src/generators/dashboard.py",
-      "line_number": 719,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "convert_git_url_to_https",
       "file_path": "src/generators/schema.py",
       "line_number": 30,
@@ -264,6 +243,27 @@
       "name": "main",
       "file_path": "src/generators/rss.py",
       "line_number": 276,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generate_html",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_dashboard",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 709,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "main",
+      "file_path": "src/generators/dashboard.py",
+      "line_number": 719,
       "is_async": false,
       "is_tested": true
     },
@@ -1003,27 +1003,6 @@
       "is_tested": true
     },
     {
-      "name": "TrendsContent",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 32,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TrendsLoadingSkeleton",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 76,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TrendsPage",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 96,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "CoverageGauge",
       "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
       "line_number": 61,
@@ -1055,6 +1034,27 @@
       "name": "getColor",
       "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
       "line_number": 67,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TrendsContent",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TrendsLoadingSkeleton",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TrendsPage",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 96,
       "is_async": false,
       "is_tested": true
     },
@@ -1766,48 +1766,6 @@
       "is_tested": true
     },
     {
-      "name": "ViewDialog",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DeleteDialog",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "SavedViewsDropdown",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 184,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSubmit",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 68,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleClose",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 79,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleClick",
-      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
-      "line_number": 206,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "WidgetNotificationCard",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 72,
@@ -1874,6 +1832,48 @@
       "name": "handleWidgetNotificationChange",
       "file_path": "src/features/dashboard/components/personalization/NotificationPreferences.tsx",
       "line_number": 311,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ViewDialog",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DeleteDialog",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "SavedViewsDropdown",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 184,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSubmit",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 68,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleClose",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 79,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleClick",
+      "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
+      "line_number": 206,
       "is_async": false,
       "is_tested": true
     },
@@ -2774,90 +2774,6 @@
       "is_tested": true
     },
     {
-      "name": "transformDataPoint",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 123,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionFactor",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 130,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformGoalMarker",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionData",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 149,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformRisk",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 170,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformScenarioConfig",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 188,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformScenarioResult",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 199,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionsReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 210,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isSimplifiedReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 263,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawPredictionsReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 276,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformSimplifiedReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 294,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "filterRisks",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 359,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "createUser",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 25,
@@ -2966,6 +2882,90 @@
       "name": "generateMockComments",
       "file_path": "src/features/dashboard/api/collaborationApi.ts",
       "line_number": 412,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformDataPoint",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 123,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionFactor",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 130,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformGoalMarker",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionData",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 149,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformRisk",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 170,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformScenarioConfig",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 188,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformScenarioResult",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 199,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionsReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 210,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isSimplifiedReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 263,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawPredictionsReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 276,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformSimplifiedReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 294,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "filterRisks",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 359,
       "is_async": false,
       "is_tested": true
     },
@@ -3229,34 +3229,6 @@
       "is_tested": true
     },
     {
-      "name": "generateId",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 23,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "getStoredVisualizations",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 30,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "saveToStorage",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 45,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "createDefaultConfig",
-      "file_path": "src/features/dashboard/api/visualizationApi.ts",
-      "line_number": 57,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "createDefaultWidgetConfig",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 190,
@@ -3393,6 +3365,34 @@
       "name": "getDefaultLayout",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 607,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generateId",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 23,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "getStoredVisualizations",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 30,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "saveToStorage",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 45,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "createDefaultConfig",
+      "file_path": "src/features/dashboard/api/visualizationApi.ts",
+      "line_number": 57,
       "is_async": false,
       "is_tested": true
     },
@@ -4622,6 +4622,41 @@
       "is_tested": true
     },
     {
+      "name": "DashboardLayoutExample",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 20,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleNavigate",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderContent",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "findNextAvailablePosition",
       "file_path": "src/features/dashboard/stores/dashboardStore.ts",
       "line_number": 475,
@@ -4674,41 +4709,6 @@
       "name": "selectActiveWidgetIds",
       "file_path": "src/features/dashboard/stores/dashboardStore.ts",
       "line_number": 563,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DashboardLayoutExample",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 20,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleNavigate",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSettingsClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 39,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleExportClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderContent",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 55,
       "is_async": false,
       "is_tested": true
     },
@@ -6071,20 +6071,6 @@
       "is_tested": true
     },
     {
-      "name": "ToolsOverviewPageContent",
-      "file_path": "src/routes/dashboard/tools/index.tsx",
-      "line_number": 27,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ToolsOverviewPage",
-      "file_path": "src/routes/dashboard/tools/index.tsx",
-      "line_number": 168,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "ModuleDetailPageContent",
       "file_path": "src/routes/dashboard/tools/$moduleId.tsx",
       "line_number": 42,
@@ -6102,6 +6088,20 @@
       "name": "handleCandidateClick",
       "file_path": "src/routes/dashboard/tools/$moduleId.tsx",
       "line_number": 62,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolsOverviewPageContent",
+      "file_path": "src/routes/dashboard/tools/index.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolsOverviewPage",
+      "file_path": "src/routes/dashboard/tools/index.tsx",
+      "line_number": 168,
       "is_async": false,
       "is_tested": true
     },
