@@ -1442,26 +1442,6 @@
         "is_external": false
       }
     ],
-    "src/analyzers/preprocessing/utils/similarity.py": [
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "difflib",
-        "import_type": "static",
-        "line_number": 6,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      }
-    ],
     "src/analyzers/preprocessing/utils/indexing.py": [
       {
         "package": "re",
@@ -1479,6 +1459,26 @@
         "package": "typing",
         "import_type": "static",
         "line_number": 6,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/preprocessing/utils/similarity.py": [
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "difflib",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 7,
         "is_external": false
       }
     ]
