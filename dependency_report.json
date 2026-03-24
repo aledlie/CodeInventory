@@ -72,6 +72,68 @@
         "is_external": false
       }
     ],
+    "src/generators/rss.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "logging",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "subprocess",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": "xml.etree.ElementTree as ET",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "argparse",
+        "import_type": "static",
+        "line_number": 276,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "datetime",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "xml.dom",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "xml.etree.ElementTree",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      }
+    ],
     "src/generators/schema.py": [
       {
         "package": "os",
@@ -185,68 +247,6 @@
         "package": "functools",
         "import_type": "static",
         "line_number": 858,
-        "is_external": false
-      }
-    ],
-    "src/generators/rss.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "logging",
-        "import_type": "static",
-        "line_number": 6,
-        "is_external": false
-      },
-      {
-        "package": "subprocess",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": "xml.etree.ElementTree as ET",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "argparse",
-        "import_type": "static",
-        "line_number": 276,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "datetime",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "xml.dom",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "xml.etree.ElementTree",
-        "import_type": "static",
-        "line_number": 11,
         "is_external": false
       }
     ],
@@ -1074,6 +1074,32 @@
         "is_external": false
       }
     ],
+    "src/analyzers/preprocessing/config.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 4,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      }
+    ],
     "src/analyzers/preprocessing/stages/base.py": [
       {
         "package": "time",
@@ -1103,64 +1129,6 @@
         "package": "typing",
         "import_type": "static",
         "line_number": 3,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/preprocessing/config.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 4,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/preprocessing/stages/__init__.py": [
-      {
-        "package": ".base",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".cleaning",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".transformation",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      },
-      {
-        "package": ".deduplication",
-        "import_type": "static",
-        "line_number": 15,
-        "is_external": false
-      },
-      {
-        "package": ".optimization",
-        "import_type": "static",
-        "line_number": 23,
         "is_external": false
       }
     ],
@@ -1238,6 +1206,38 @@
         "is_external": false
       }
     ],
+    "src/analyzers/preprocessing/stages/__init__.py": [
+      {
+        "package": ".base",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": ".cleaning",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".transformation",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      },
+      {
+        "package": ".deduplication",
+        "import_type": "static",
+        "line_number": 15,
+        "is_external": false
+      },
+      {
+        "package": ".optimization",
+        "import_type": "static",
+        "line_number": 23,
+        "is_external": false
+      }
+    ],
     "src/analyzers/preprocessing/stages/optimization.py": [
       {
         "package": "dataclasses",
@@ -1308,44 +1308,6 @@
         "is_external": false
       }
     ],
-    "src/analyzers/preprocessing/stages/transformation.py": [
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "enum",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 10,
-        "is_external": false
-      },
-      {
-        "package": ".base",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "..config",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      }
-    ],
     "src/analyzers/preprocessing/stages/deduplication.py": [
       {
         "package": "hashlib",
@@ -1387,6 +1349,44 @@
         "package": "..utils.similarity",
         "import_type": "static",
         "line_number": 14,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/preprocessing/stages/transformation.py": [
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "enum",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 10,
+        "is_external": false
+      },
+      {
+        "package": ".base",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "..config",
+        "import_type": "static",
+        "line_number": 13,
         "is_external": false
       }
     ],
