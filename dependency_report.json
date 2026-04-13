@@ -412,6 +412,20 @@
         "is_external": false
       }
     ],
+    "src/utils/__init__.py": [
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      }
+    ],
     "src/utils/logging_config.py": [
       {
         "package": "logging",
@@ -474,20 +488,6 @@
         "is_external": false
       }
     ],
-    "src/utils/__init__.py": [
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      }
-    ],
     "src/validators/__init__.py": [
       {
         "package": ".schema",
@@ -534,14 +534,6 @@
         "is_external": false
       }
     ],
-    "src/cache/__init__.py": [
-      {
-        "package": ".analysis_cache",
-        "import_type": "static",
-        "line_number": 4,
-        "is_external": false
-      }
-    ],
     "src/cache/analysis_cache.py": [
       {
         "package": "json",
@@ -583,6 +575,14 @@
         "package": "typing",
         "import_type": "static",
         "line_number": 17,
+        "is_external": false
+      }
+    ],
+    "src/cache/__init__.py": [
+      {
+        "package": ".analysis_cache",
+        "import_type": "static",
+        "line_number": 4,
         "is_external": false
       }
     ],
@@ -844,6 +844,38 @@
         "is_external": false
       }
     ],
+    "src/analyzers/__init__.py": [
+      {
+        "package": ".code_quality",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": ".dependencies",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".test_coverage",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      },
+      {
+        "package": ".identify_tools",
+        "import_type": "static",
+        "line_number": 4,
+        "is_external": false
+      },
+      {
+        "package": ".preprocessing",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      }
+    ],
     "src/analyzers/dependencies.py": [
       {
         "package": "argparse",
@@ -921,38 +953,6 @@
         "package": "src.analyzers.analyzer_optimizer",
         "import_type": "static",
         "line_number": 806,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/__init__.py": [
-      {
-        "package": ".code_quality",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".dependencies",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".test_coverage",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      },
-      {
-        "package": ".identify_tools",
-        "import_type": "static",
-        "line_number": 4,
-        "is_external": false
-      },
-      {
-        "package": ".preprocessing",
-        "import_type": "static",
-        "line_number": 7,
         "is_external": false
       }
     ],
@@ -1174,26 +1174,6 @@
         "is_external": false
       }
     ],
-    "src/analyzers/preprocessing/utils/similarity.py": [
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "difflib",
-        "import_type": "static",
-        "line_number": 6,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      }
-    ],
     "src/analyzers/preprocessing/utils/path_utils.py": [
       {
         "package": "os",
@@ -1223,6 +1203,26 @@
         "package": "..config",
         "import_type": "static",
         "line_number": 6,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/preprocessing/utils/similarity.py": [
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "difflib",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 7,
         "is_external": false
       }
     ],
@@ -1412,6 +1412,38 @@
         "is_external": false
       }
     ],
+    "src/analyzers/preprocessing/stages/optimization.py": [
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 8,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 9,
+        "is_external": false
+      },
+      {
+        "package": ".base",
+        "import_type": "static",
+        "line_number": 11,
+        "is_external": false
+      },
+      {
+        "package": "..config",
+        "import_type": "static",
+        "line_number": 12,
+        "is_external": false
+      },
+      {
+        "package": "..utils.indexing",
+        "import_type": "static",
+        "line_number": 13,
+        "is_external": false
+      }
+    ],
     "src/analyzers/preprocessing/stages/transformation.py": [
       {
         "package": "re",
@@ -1445,38 +1477,6 @@
       },
       {
         "package": "..config",
-        "import_type": "static",
-        "line_number": 13,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/preprocessing/stages/optimization.py": [
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 8,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 9,
-        "is_external": false
-      },
-      {
-        "package": ".base",
-        "import_type": "static",
-        "line_number": 11,
-        "is_external": false
-      },
-      {
-        "package": "..config",
-        "import_type": "static",
-        "line_number": 12,
-        "is_external": false
-      },
-      {
-        "package": "..utils.indexing",
         "import_type": "static",
         "line_number": 13,
         "is_external": false
