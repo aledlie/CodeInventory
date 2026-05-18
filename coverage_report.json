@@ -72,13 +72,6 @@
       "is_tested": true
     },
     {
-      "name": "ReportsPage",
-      "file_path": "src/features/dashboard/components/ReportsPage.tsx",
-      "line_number": 112,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "TabPanel",
       "file_path": "src/features/dashboard/components/SettingsPage.tsx",
       "line_number": 52,
@@ -219,6 +212,13 @@
       "is_tested": true
     },
     {
+      "name": "ReportsPage",
+      "file_path": "src/features/dashboard/components/ReportsPage.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "calculateHealthStatus",
       "file_path": "src/features/dashboard/components/HealthSummary.tsx",
       "line_number": 56,
@@ -268,34 +268,6 @@
       "is_tested": true
     },
     {
-      "name": "CircularDependencyCard",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 60,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencyStats",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 272,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "FileDependencyRow",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 452,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependenciesPage",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 594,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "MetricCard",
       "file_path": "src/features/dashboard/components/MetricCard.tsx",
       "line_number": 103,
@@ -321,6 +293,34 @@
       "file_path": "src/features/dashboard/components/HeaderExample.tsx",
       "line_number": 47,
       "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "CircularDependencyCard",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 60,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencyStats",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 272,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "FileDependencyRow",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 452,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependenciesPage",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 594,
+      "is_async": false,
       "is_tested": true
     },
     {
@@ -429,6 +429,48 @@
       "is_tested": true
     },
     {
+      "name": "GraphContent",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 26,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "GraphLoadingSkeleton",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 87,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencyGraphPage",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "updateDimensions",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 45,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleNodeSelect",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 60,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleGraphLoad",
+      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
+      "line_number": 108,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "getDatesFromPreset",
       "file_path": "src/features/dashboard/components/ComparisonPage.tsx",
       "line_number": 44,
@@ -474,48 +516,6 @@
       "name": "handleCustomDatesChange",
       "file_path": "src/features/dashboard/components/ComparisonPage.tsx",
       "line_number": 358,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "GraphContent",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 26,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "GraphLoadingSkeleton",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 87,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencyGraphPage",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "updateDimensions",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 45,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleNodeSelect",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 60,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleGraphLoad",
-      "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
-      "line_number": 108,
       "is_async": false,
       "is_tested": true
     },
@@ -653,34 +653,6 @@
       "is_tested": true
     },
     {
-      "name": "SeverityBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CategoryBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueRow",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 246,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CodeQualityPage",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 505,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "TrendsContent",
       "file_path": "src/features/dashboard/components/TrendsPage.tsx",
       "line_number": 32,
@@ -726,6 +698,34 @@
       "name": "handleNavigate",
       "file_path": "src/features/dashboard/components/NavigationExample.tsx",
       "line_number": 42,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "SeverityBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CategoryBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueRow",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CodeQualityPage",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 505,
       "is_async": false,
       "is_tested": true
     },
@@ -1290,6 +1290,13 @@
       "is_tested": true
     },
     {
+      "name": "NodeDetailPanel",
+      "file_path": "src/features/dashboard/components/graph/NodeDetailPanel.tsx",
+      "line_number": 52,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "DependencyGraphCanvas",
       "file_path": "src/features/dashboard/components/graph/DependencyGraphCanvas.tsx",
       "line_number": 31,
@@ -1302,13 +1309,6 @@
       "line_number": 57,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "NodeDetailPanel",
-      "file_path": "src/features/dashboard/components/graph/NodeDetailPanel.tsx",
-      "line_number": 52,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "getTrendIcon",
@@ -1598,6 +1598,20 @@
       "is_tested": true
     },
     {
+      "name": "BuilderSidebar",
+      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
+      "line_number": 82,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSectionChange",
+      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
+      "line_number": 96,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "generateLabels",
       "file_path": "src/features/dashboard/components/visualizations/BuilderCanvas.tsx",
       "line_number": 77,
@@ -1622,20 +1636,6 @@
       "name": "renderChart",
       "file_path": "src/features/dashboard/components/visualizations/BuilderCanvas.tsx",
       "line_number": 203,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "BuilderSidebar",
-      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
-      "line_number": 82,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSectionChange",
-      "file_path": "src/features/dashboard/components/visualizations/BuilderSidebar.tsx",
-      "line_number": 96,
       "is_async": false,
       "is_tested": true
     },
@@ -2494,6 +2494,34 @@
       "is_tested": true
     },
     {
+      "name": "escapeCsvValue",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatExportDate",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "downloadFile",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 146,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "exportToPdf",
+      "file_path": "src/features/dashboard/api/exportApi.ts",
+      "line_number": 316,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "isRawToolsReport",
       "file_path": "src/features/dashboard/api/toolsApi.ts",
       "line_number": 35,
@@ -2625,34 +2653,6 @@
       "line_number": 397,
       "is_async": true,
       "is_tested": false
-    },
-    {
-      "name": "escapeCsvValue",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatExportDate",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "downloadFile",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 146,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "exportToPdf",
-      "file_path": "src/features/dashboard/api/exportApi.ts",
-      "line_number": 316,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "loadHistoryManifest",
@@ -3922,104 +3922,6 @@
       "is_tested": true
     },
     {
-      "name": "useSavedVisualizations",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 18,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useCreateVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 41,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useSaveVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 67,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useDeleteVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 90,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useDuplicateVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 109,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useExportVisualization",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 137,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useAvailableMetrics",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 147,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useAvailableChartTypes",
-      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
-      "line_number": 154,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DashboardPage",
-      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
-      "line_number": 16,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useDashboardData",
-      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
-      "line_number": 22,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useQualityReport",
-      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
-      "line_number": 39,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useCoverageReport",
-      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
-      "line_number": 56,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "useDependencyReport",
-      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
-      "line_number": 73,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "AnalyticsPage",
       "file_path": "src/features/dashboard/hooks/useAnalytics.ts",
       "line_number": 12,
@@ -4125,6 +4027,69 @@
       "is_tested": true
     },
     {
+      "name": "useSavedVisualizations",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 18,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useCreateVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 41,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useSaveVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 67,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useDeleteVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 90,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useDuplicateVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 109,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useExportVisualization",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useAvailableMetrics",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 147,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useAvailableChartTypes",
+      "file_path": "src/features/dashboard/hooks/useVisualization.ts",
+      "line_number": 154,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "DashboardPage",
       "file_path": "src/features/dashboard/hooks/index.ts",
       "line_number": 13,
@@ -4139,30 +4104,37 @@
       "is_tested": true
     },
     {
-      "name": "DashboardLoader",
-      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
-      "line_number": 35,
+      "name": "DashboardPage",
+      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 16,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "DashboardErrorFallback",
-      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
-      "line_number": 63,
+      "name": "useDashboardData",
+      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 22,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "BasicDashboardExample",
-      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
-      "line_number": 141,
+      "name": "useQualityReport",
+      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 39,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "CustomPathDashboardExample",
-      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
-      "line_number": 158,
+      "name": "useCoverageReport",
+      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 56,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "useDependencyReport",
+      "file_path": "src/features/dashboard/hooks/useDashboardData.ts",
+      "line_number": 73,
       "is_async": false,
       "is_tested": true
     },
@@ -4321,37 +4293,30 @@
       "is_tested": true
     },
     {
-      "name": "DashboardLayoutExample",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 20,
+      "name": "DashboardLoader",
+      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 35,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "handleNavigate",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 31,
+      "name": "DashboardErrorFallback",
+      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 63,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "handleSettingsClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 39,
+      "name": "BasicDashboardExample",
+      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 141,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "handleExportClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderContent",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 55,
+      "name": "CustomPathDashboardExample",
+      "file_path": "src/features/dashboard/examples/DashboardExample.tsx",
+      "line_number": 158,
       "is_async": false,
       "is_tested": true
     },
@@ -4492,6 +4457,41 @@
       "name": "handleMouseEnter",
       "file_path": "src/features/dashboard/examples/HooksUsage.example.tsx",
       "line_number": 124,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DashboardLayoutExample",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 20,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleNavigate",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderContent",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 55,
       "is_async": false,
       "is_tested": true
     },
@@ -4685,97 +4685,6 @@
       "is_tested": true
     },
     {
-      "name": "update",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 44,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "set_description",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "save_cache",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 136,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_file_hash",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 166,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "is_file_cached",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 178,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_cached_schema",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 204,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "update_cache",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 211,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_git_commit",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 221,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_changed_files_since_commit",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 240,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "process_files_parallel",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 299,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "invalidate_cache_for_files",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 399,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "clear_cache",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 411,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "batch_files_by_directory",
-      "file_path": "src/generators/schema_optimizer.py",
-      "line_number": 421,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "convert_git_url_to_https",
       "file_path": "src/generators/schema.py",
       "line_number": 30,
@@ -4909,23 +4818,100 @@
       "is_tested": true
     },
     {
+      "name": "update",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 44,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "set_description",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "save_cache",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 136,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_file_hash",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 166,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "is_file_cached",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 178,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_cached_schema",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 204,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "update_cache",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 211,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_git_commit",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 221,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_changed_files_since_commit",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 240,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process_files_parallel",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 299,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "invalidate_cache_for_files",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 399,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "clear_cache",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 411,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "batch_files_by_directory",
+      "file_path": "src/generators/schema_optimizer.py",
+      "line_number": 421,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "SuspenseLoader",
       "file_path": "src/components/SuspenseLoader/SuspenseLoader.tsx",
       "line_number": 22,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ToolsOverviewPageContent",
-      "file_path": "src/routes/dashboard/tools/index.tsx",
-      "line_number": 27,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ToolsOverviewPage",
-      "file_path": "src/routes/dashboard/tools/index.tsx",
-      "line_number": 168,
       "is_async": false,
       "is_tested": true
     },
@@ -5021,6 +5007,20 @@
       "is_tested": true
     },
     {
+      "name": "ToolsOverviewPageContent",
+      "file_path": "src/routes/dashboard/tools/index.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolsOverviewPage",
+      "file_path": "src/routes/dashboard/tools/index.tsx",
+      "line_number": 168,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "ModuleDetailPageContent",
       "file_path": "src/routes/dashboard/tools/$moduleId.tsx",
       "line_number": 42,
@@ -5038,6 +5038,20 @@
       "name": "handleCandidateClick",
       "file_path": "src/routes/dashboard/tools/$moduleId.tsx",
       "line_number": 62,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CandidateDetailPageContent",
+      "file_path": "src/routes/dashboard/tools/candidate/$candidateName.tsx",
+      "line_number": 42,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CandidateDetailPage",
+      "file_path": "src/routes/dashboard/tools/candidate/$candidateName.tsx",
+      "line_number": 427,
       "is_async": false,
       "is_tested": true
     },
@@ -5122,20 +5136,6 @@
       "name": "main",
       "file_path": "src/utils/git_operations.py",
       "line_number": 78,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CandidateDetailPageContent",
-      "file_path": "src/routes/dashboard/tools/candidate/$candidateName.tsx",
-      "line_number": 42,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CandidateDetailPage",
-      "file_path": "src/routes/dashboard/tools/candidate/$candidateName.tsx",
-      "line_number": 427,
       "is_async": false,
       "is_tested": true
     },
@@ -5763,83 +5763,6 @@
       "is_tested": true
     },
     {
-      "name": "detect_convention",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "normalize",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 88,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_convention_stats",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 204,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "clean",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 248,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "clean_dict",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 262,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "clean_list",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 283,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "has_meta_variables",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 304,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "extract_meta_variables",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 317,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "name",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 355,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validate_input",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 359,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "process",
-      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
-      "line_number": 386,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "to_dict",
       "file_path": "src/analyzers/preprocessing/stages/deduplication.py",
       "line_number": 29,
@@ -5913,6 +5836,83 @@
       "name": "process",
       "file_path": "src/analyzers/preprocessing/stages/deduplication.py",
       "line_number": 487,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "detect_convention",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 55,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "normalize",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 88,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_convention_stats",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 204,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "clean",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 248,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "clean_dict",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 262,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "clean_list",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 283,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "has_meta_variables",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 304,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extract_meta_variables",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 317,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "name",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 355,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_input",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 359,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process",
+      "file_path": "src/analyzers/preprocessing/stages/cleaning.py",
+      "line_number": 386,
       "is_async": false,
       "is_tested": true
     },
