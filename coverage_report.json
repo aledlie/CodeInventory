@@ -1206,6 +1206,118 @@
       "is_tested": true
     },
     {
+      "name": "fetchNotifications",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 27,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "fetchNotificationStats",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 59,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "fetchAlertTriggers",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 76,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "fetchNotificationPreferences",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 93,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "markNotificationAsRead",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 110,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "markAllNotificationsAsRead",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 138,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "dismissNotification",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 154,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "createAlertTrigger",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 169,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "updateAlertTrigger",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 191,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "deleteAlertTrigger",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 217,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "updateNotificationPreferences",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 226,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "applyFilters",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 240,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateStats",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 271,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generateMockNotifications",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 294,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generateDefaultTriggers",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 360,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "generateDefaultPreferences",
+      "file_path": "src/features/dashboard/api/notificationsApi.ts",
+      "line_number": 412,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "createDefaultWidgetConfig",
       "file_path": "src/features/dashboard/api/personalizationApi.ts",
       "line_number": 190,
@@ -1346,118 +1458,6 @@
       "is_tested": true
     },
     {
-      "name": "fetchNotifications",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 27,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "fetchNotificationStats",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 59,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "fetchAlertTriggers",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 76,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "fetchNotificationPreferences",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 93,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "markNotificationAsRead",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 110,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "markAllNotificationsAsRead",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 138,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "dismissNotification",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 154,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "createAlertTrigger",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 169,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "updateAlertTrigger",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 191,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "deleteAlertTrigger",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 217,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "updateNotificationPreferences",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 226,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "applyFilters",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 240,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateStats",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 271,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generateMockNotifications",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 294,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generateDefaultTriggers",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 360,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "generateDefaultPreferences",
-      "file_path": "src/features/dashboard/api/notificationsApi.ts",
-      "line_number": 412,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "escapeCsvValue",
       "file_path": "src/features/dashboard/api/exportApi.ts",
       "line_number": 100,
@@ -1524,41 +1524,6 @@
       "name": "generateMockGraph",
       "file_path": "src/features/dashboard/api/graphApi.ts",
       "line_number": 265,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformMetricSnapshot",
-      "file_path": "src/features/dashboard/api/insightsApi.ts",
-      "line_number": 80,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformInsight",
-      "file_path": "src/features/dashboard/api/insightsApi.ts",
-      "line_number": 92,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformInsightsReport",
-      "file_path": "src/features/dashboard/api/insightsApi.ts",
-      "line_number": 118,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawInsightsReport",
-      "file_path": "src/features/dashboard/api/insightsApi.ts",
-      "line_number": 140,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "filterInsights",
-      "file_path": "src/features/dashboard/api/insightsApi.ts",
-      "line_number": 161,
       "is_async": false,
       "is_tested": true
     },
@@ -1694,6 +1659,41 @@
       "line_number": 397,
       "is_async": true,
       "is_tested": false
+    },
+    {
+      "name": "transformMetricSnapshot",
+      "file_path": "src/features/dashboard/api/insightsApi.ts",
+      "line_number": 80,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformInsight",
+      "file_path": "src/features/dashboard/api/insightsApi.ts",
+      "line_number": 92,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformInsightsReport",
+      "file_path": "src/features/dashboard/api/insightsApi.ts",
+      "line_number": 118,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawInsightsReport",
+      "file_path": "src/features/dashboard/api/insightsApi.ts",
+      "line_number": 140,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "filterInsights",
+      "file_path": "src/features/dashboard/api/insightsApi.ts",
+      "line_number": 161,
+      "is_async": false,
+      "is_tested": true
     },
     {
       "name": "generateId",
@@ -1871,76 +1871,6 @@
       "is_tested": true
     },
     {
-      "name": "LoadingSpinner",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 16,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ErrorDisplay",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 27,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QualitySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CoverageSummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 110,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 143,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadReports",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 149,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsWithCustomPath",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 209,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadIndividualReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 247,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadQuality",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 252,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
       "name": "transformDataPoint",
       "file_path": "src/features/dashboard/api/predictionsApi.ts",
       "line_number": 123,
@@ -2022,6 +1952,76 @@
       "file_path": "src/features/dashboard/api/predictionsApi.ts",
       "line_number": 359,
       "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadingSpinner",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 16,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ErrorDisplay",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QualitySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CoverageSummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 143,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadReports",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 149,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsWithCustomPath",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 209,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadIndividualReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 247,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadQuality",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 252,
+      "is_async": true,
       "is_tested": true
     },
     {
@@ -3390,6 +3390,34 @@
       "is_tested": true
     },
     {
+      "name": "CircularDependencyCard",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 60,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencyStats",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 272,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "FileDependencyRow",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 452,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependenciesPage",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 594,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "TabPanel",
       "file_path": "src/features/dashboard/components/SettingsPage.tsx",
       "line_number": 52,
@@ -3530,30 +3558,16 @@
       "is_tested": true
     },
     {
-      "name": "CircularDependencyCard",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 60,
+      "name": "DashboardLayout",
+      "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
+      "line_number": 94,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "DependencyStats",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 272,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "FileDependencyRow",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 452,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependenciesPage",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 594,
+      "name": "handleMobileDrawerClose",
+      "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
+      "line_number": 110,
       "is_async": false,
       "is_tested": true
     },
@@ -3600,16 +3614,44 @@
       "is_tested": true
     },
     {
-      "name": "DashboardLayout",
-      "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
-      "line_number": 94,
+      "name": "Header",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 93,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "handleMobileDrawerClose",
-      "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
-      "line_number": 110,
+      "name": "handleMenuToggle",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 105,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderActionButtons",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderMobileDrawer",
+      "file_path": "src/features/dashboard/components/Header.tsx",
+      "line_number": 172,
       "is_async": false,
       "is_tested": true
     },
@@ -3659,48 +3701,6 @@
       "name": "handleRefresh",
       "file_path": "src/features/dashboard/components/InsightsPage.tsx",
       "line_number": 188,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "Header",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 93,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleMenuToggle",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 105,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSettingsClick",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 112,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleExportClick",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 122,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderActionButtons",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 132,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderMobileDrawer",
-      "file_path": "src/features/dashboard/components/Header.tsx",
-      "line_number": 172,
       "is_async": false,
       "is_tested": true
     },
@@ -3873,34 +3873,6 @@
       "is_tested": true
     },
     {
-      "name": "SeverityBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CategoryBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueRow",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 246,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CodeQualityPage",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 505,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "DateRangeSelector",
       "file_path": "src/features/dashboard/components/comparison/DateRangeSelector.tsx",
       "line_number": 39,
@@ -3953,6 +3925,34 @@
       "name": "ComparisonCard",
       "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
       "line_number": 67,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "SeverityBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CategoryBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueRow",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CodeQualityPage",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 505,
       "is_async": false,
       "is_tested": true
     },
@@ -4230,48 +4230,6 @@
       "is_tested": true
     },
     {
-      "name": "formatRelativeTime",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "NotificationSkeleton",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 118,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "NotificationItem",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "StatsSummary",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 245,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "NotificationCenter",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 281,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "NotificationCenterWithSuspense",
-      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
-      "line_number": 429,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "TriggerDialog",
       "file_path": "src/features/dashboard/components/notifications/AlertConfigurator.tsx",
       "line_number": 145,
@@ -4324,6 +4282,48 @@
       "name": "handleDelete",
       "file_path": "src/features/dashboard/components/notifications/AlertConfigurator.tsx",
       "line_number": 407,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatRelativeTime",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "NotificationSkeleton",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 118,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "NotificationItem",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "StatsSummary",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 245,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "NotificationCenter",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 281,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "NotificationCenterWithSuspense",
+      "file_path": "src/features/dashboard/components/notifications/NotificationCenter.tsx",
+      "line_number": 429,
       "is_async": false,
       "is_tested": true
     },
@@ -4734,6 +4734,41 @@
       "is_tested": false
     },
     {
+      "name": "AssignDialog",
+      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
+      "line_number": 107,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TeamMemberWorkloadCard",
+      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
+      "line_number": 215,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueListItem",
+      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
+      "line_number": 284,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueAssignments",
+      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
+      "line_number": 400,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "handleAssign",
+      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
+      "line_number": 123,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "ThemedHeader",
       "file_path": "src/features/dashboard/components/__stories__/Header.stories.tsx",
       "line_number": 23,
@@ -4779,41 +4814,6 @@
       "name": "AnalyticsInsightCard",
       "file_path": "src/features/dashboard/components/analytics/AnalyticsInsightCard.tsx",
       "line_number": 197,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "AssignDialog",
-      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
-      "line_number": 107,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TeamMemberWorkloadCard",
-      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
-      "line_number": 215,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueListItem",
-      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
-      "line_number": 284,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueAssignments",
-      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
-      "line_number": 400,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "handleAssign",
-      "file_path": "src/features/dashboard/components/collaboration/IssueAssignments.tsx",
-      "line_number": 123,
       "is_async": false,
       "is_tested": true
     },
@@ -5224,6 +5224,20 @@
       "is_tested": false
     },
     {
+      "name": "categorizeDepencies",
+      "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
+      "name": "DependencyBreakdown",
+      "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
+      "line_number": 46,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "PrecomputedChart",
       "file_path": "src/features/dashboard/components/tools/PrecomputedChart.tsx",
       "line_number": 17,
@@ -5250,20 +5264,6 @@
       "line_number": 224,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "categorizeDepencies",
-      "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
-      "name": "DependencyBreakdown",
-      "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
-      "line_number": 46,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "ToolsFilterToolbarEnhanced",
@@ -6237,17 +6237,17 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/notifications/NotificationCenter.tsx": [
-      {
-        "name": "NotificationCenter",
-        "line_number": 281,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/notifications/AlertConfigurator.tsx": [
       {
         "name": "AlertConfigurator",
         "line_number": 376,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/components/notifications/NotificationCenter.tsx": [
+      {
+        "name": "NotificationCenter",
+        "line_number": 281,
         "is_async": false
       }
     ],
@@ -6284,17 +6284,17 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/__stories__/Header.stories.tsx": [
-      {
-        "name": "ThemedHeader",
-        "line_number": 23,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/collaboration/IssueAssignments.tsx": [
       {
         "name": "IssueAssignments",
         "line_number": 400,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/components/__stories__/Header.stories.tsx": [
+      {
+        "name": "ThemedHeader",
+        "line_number": 23,
         "is_async": false
       }
     ],
@@ -6331,6 +6331,13 @@
         "is_async": false
       }
     ],
+    "src/features/dashboard/components/tools/DependencyBreakdown.tsx": [
+      {
+        "name": "categorizeDepencies",
+        "line_number": 31,
+        "is_async": false
+      }
+    ],
     "src/features/dashboard/components/tools/PrecomputedChart.tsx": [
       {
         "name": "PrecomputedChart",
@@ -6345,13 +6352,6 @@
       {
         "name": "PrecomputedChartsGrid",
         "line_number": 224,
-        "is_async": false
-      }
-    ],
-    "src/features/dashboard/components/tools/DependencyBreakdown.tsx": [
-      {
-        "name": "categorizeDepencies",
-        "line_number": 31,
         "is_async": false
       }
     ]
