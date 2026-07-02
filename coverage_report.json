@@ -464,48 +464,6 @@
       "is_tested": true
     },
     {
-      "name": "loadHistoryManifest",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 13,
-      "is_async": true,
-      "is_tested": false
-    },
-    {
-      "name": "generateMockManifest",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 32,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "filterRunsByChartTimeRange",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculateTrendSummary",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "extractMetricValues",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatMetricName",
-      "file_path": "src/features/dashboard/api/trendsApi.ts",
-      "line_number": 167,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "generateReportContent",
       "file_path": "src/features/dashboard/api/reportsApi.ts",
       "line_number": 75,
@@ -565,6 +523,48 @@
       "name": "markdownToHtml",
       "file_path": "src/features/dashboard/api/reportsApi.ts",
       "line_number": 284,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadHistoryManifest",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 13,
+      "is_async": true,
+      "is_tested": false
+    },
+    {
+      "name": "generateMockManifest",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "filterRunsByChartTimeRange",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculateTrendSummary",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "extractMetricValues",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatMetricName",
+      "file_path": "src/features/dashboard/api/trendsApi.ts",
+      "line_number": 167,
       "is_async": false,
       "is_tested": true
     },
@@ -926,76 +926,6 @@
       "is_tested": true
     },
     {
-      "name": "LoadingSpinner",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 16,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ErrorDisplay",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 27,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QualitySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CoverageSummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 110,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 143,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadReports",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 149,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsWithCustomPath",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 209,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadIndividualReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 247,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadQuality",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 252,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
       "name": "fetchNotifications",
       "file_path": "src/features/dashboard/api/notificationsApi.ts",
       "line_number": 27,
@@ -1129,6 +1059,76 @@
       "is_tested": true
     },
     {
+      "name": "LoadingSpinner",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 16,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ErrorDisplay",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QualitySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CoverageSummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 143,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadReports",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 149,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsWithCustomPath",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 209,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadIndividualReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 247,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadQuality",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 252,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
       "name": "MetricCardExample",
       "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
       "line_number": 31,
@@ -1234,6 +1234,27 @@
       "is_tested": true
     },
     {
+      "name": "TrendsContent",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 32,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TrendsLoadingSkeleton",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TrendsPage",
+      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
+      "line_number": 96,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "DashboardSkeleton",
       "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
       "line_number": 62,
@@ -1283,27 +1304,6 @@
       "is_tested": true
     },
     {
-      "name": "TrendsContent",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 32,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TrendsLoadingSkeleton",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 76,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TrendsPage",
-      "file_path": "src/features/dashboard/components/TrendsPage.tsx",
-      "line_number": 96,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "DashboardLayout",
       "file_path": "src/features/dashboard/components/DashboardLayout.tsx",
       "line_number": 94,
@@ -1346,6 +1346,34 @@
       "is_tested": true
     },
     {
+      "name": "SeverityBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CategoryBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueRow",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CodeQualityPage",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 505,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "GraphContent",
       "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
       "line_number": 26,
@@ -1384,34 +1412,6 @@
       "name": "handleGraphLoad",
       "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
       "line_number": 108,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "SeverityBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CategoryBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueRow",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 246,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CodeQualityPage",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 505,
       "is_async": false,
       "is_tested": true
     },
@@ -1465,6 +1465,20 @@
       "is_tested": true
     },
     {
+      "name": "MobileMenu",
+      "file_path": "src/features/dashboard/components/MobileMenu.tsx",
+      "line_number": 108,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleChange",
+      "file_path": "src/features/dashboard/components/MobileMenu.tsx",
+      "line_number": 141,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "getDatesFromPreset",
       "file_path": "src/features/dashboard/components/ComparisonPage.tsx",
       "line_number": 44,
@@ -1510,20 +1524,6 @@
       "name": "handleCustomDatesChange",
       "file_path": "src/features/dashboard/components/ComparisonPage.tsx",
       "line_number": 358,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "MobileMenu",
-      "file_path": "src/features/dashboard/components/MobileMenu.tsx",
-      "line_number": 108,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleChange",
-      "file_path": "src/features/dashboard/components/MobileMenu.tsx",
-      "line_number": 141,
       "is_async": false,
       "is_tested": true
     },
@@ -1801,13 +1801,6 @@
       "is_tested": true
     },
     {
-      "name": "ThemedHeader",
-      "file_path": "src/features/dashboard/components/__stories__/Header.stories.tsx",
-      "line_number": 23,
-      "is_async": false,
-      "is_tested": false
-    },
-    {
       "name": "getTrendIcon",
       "file_path": "src/features/dashboard/components/comparison/ComparisonCard.tsx",
       "line_number": 29,
@@ -1827,6 +1820,13 @@
       "line_number": 67,
       "is_async": false,
       "is_tested": true
+    },
+    {
+      "name": "ThemedHeader",
+      "file_path": "src/features/dashboard/components/__stories__/Header.stories.tsx",
+      "line_number": 23,
+      "is_async": false,
+      "is_tested": false
     },
     {
       "name": "DateRangeSelector",
@@ -2970,27 +2970,6 @@
       "is_tested": true
     },
     {
-      "name": "WidgetCard",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "WidgetCardSkeleton",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 270,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "WidgetLibrary",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 295,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "ToolsFilterToolbar",
       "file_path": "src/features/dashboard/components/tools/ToolsFilterToolbar.tsx",
       "line_number": 27,
@@ -3026,6 +3005,13 @@
       "is_tested": true
     },
     {
+      "name": "DependencyCard",
+      "file_path": "src/features/dashboard/components/tools/DependencyCard.tsx",
+      "line_number": 21,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "categorizeDepencies",
       "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
       "line_number": 31,
@@ -3040,16 +3026,23 @@
       "is_tested": true
     },
     {
-      "name": "DependencyCard",
-      "file_path": "src/features/dashboard/components/tools/DependencyCard.tsx",
-      "line_number": 21,
+      "name": "WidgetCard",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 100,
       "is_async": false,
       "is_tested": true
     },
     {
-      "name": "ToolsFilterToolbarEnhanced",
-      "file_path": "src/features/dashboard/components/tools/ToolsFilterToolbarEnhanced.tsx",
-      "line_number": 39,
+      "name": "WidgetCardSkeleton",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 270,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "WidgetLibrary",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 295,
       "is_async": false,
       "is_tested": true
     },
@@ -3064,6 +3057,13 @@
       "name": "ModularityChip",
       "file_path": "src/features/dashboard/components/tools/ModularityChip.tsx",
       "line_number": 28,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolsFilterToolbarEnhanced",
+      "file_path": "src/features/dashboard/components/tools/ToolsFilterToolbarEnhanced.tsx",
+      "line_number": 39,
       "is_async": false,
       "is_tested": true
     },
@@ -3173,6 +3173,20 @@
       "is_tested": true
     },
     {
+      "name": "shouldLog",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 29,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "formatMessage",
+      "file_path": "src/features/dashboard/helpers/logger.ts",
+      "line_number": 33,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "calculateQualityScore",
       "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
       "line_number": 51,
@@ -3211,20 +3225,6 @@
       "name": "isValidDependencyReport",
       "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
       "line_number": 201,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "shouldLog",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 29,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "formatMessage",
-      "file_path": "src/features/dashboard/helpers/logger.ts",
-      "line_number": 33,
       "is_async": false,
       "is_tested": true
     },
@@ -4293,41 +4293,6 @@
       "is_tested": true
     },
     {
-      "name": "DashboardLayoutExample",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 20,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleNavigate",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 31,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleSettingsClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 39,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "handleExportClick",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "renderContent",
-      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
-      "line_number": 55,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "DashboardApp",
       "file_path": "src/features/dashboard/examples/HooksUsage.example.tsx",
       "line_number": 23,
@@ -4464,6 +4429,41 @@
       "name": "handleMouseEnter",
       "file_path": "src/features/dashboard/examples/HooksUsage.example.tsx",
       "line_number": 124,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DashboardLayoutExample",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 20,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleNavigate",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 31,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleSettingsClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 39,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "handleExportClick",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "renderContent",
+      "file_path": "src/features/dashboard/examples/DashboardLayoutExample.tsx",
+      "line_number": 55,
       "is_async": false,
       "is_tested": true
     },
@@ -5084,69 +5084,6 @@
       "is_tested": true
     },
     {
-      "name": "from_file",
-      "file_path": "src/analyzers/preprocessing/config.py",
-      "line_number": 72,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "from_dict",
-      "file_path": "src/analyzers/preprocessing/config.py",
-      "line_number": 79,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "to_dict",
-      "file_path": "src/analyzers/preprocessing/config.py",
-      "line_number": 132,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "summary",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 30,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "add_stage",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 93,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "remove_stage",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 106,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "get_stage",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 122,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "stage_names",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 137,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "process",
-      "file_path": "src/analyzers/preprocessing/pipeline.py",
-      "line_number": 141,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "analyze_python_file",
       "file_path": "src/analyzers/identify_tools.py",
       "line_number": 298,
@@ -5206,6 +5143,69 @@
       "name": "main",
       "file_path": "src/analyzers/identify_tools.py",
       "line_number": 1977,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "from_file",
+      "file_path": "src/analyzers/preprocessing/config.py",
+      "line_number": 72,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "from_dict",
+      "file_path": "src/analyzers/preprocessing/config.py",
+      "line_number": 79,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "to_dict",
+      "file_path": "src/analyzers/preprocessing/config.py",
+      "line_number": 132,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "summary",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 30,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "add_stage",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 93,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "remove_stage",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 106,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "get_stage",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 122,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "stage_names",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 137,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process",
+      "file_path": "src/analyzers/preprocessing/pipeline.py",
+      "line_number": 141,
       "is_async": false,
       "is_tested": true
     },
