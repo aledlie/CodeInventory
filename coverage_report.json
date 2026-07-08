@@ -191,48 +191,6 @@
       "is_tested": true
     },
     {
-      "name": "transformQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 76,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 86,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 97,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawQualityReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 127,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawCoverageReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 148,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawDependencyReport",
-      "file_path": "src/features/dashboard/api/dashboardApi.ts",
-      "line_number": 169,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "transformRiskData",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 133,
@@ -320,6 +278,48 @@
       "name": "generateMockAnalyticsReport",
       "file_path": "src/features/dashboard/api/analyticsApi.ts",
       "line_number": 485,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 76,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 86,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 97,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawQualityReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 127,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawCoverageReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 148,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawDependencyReport",
+      "file_path": "src/features/dashboard/api/dashboardApi.ts",
+      "line_number": 169,
       "is_async": false,
       "is_tested": true
     },
@@ -842,6 +842,160 @@
       "is_tested": true
     },
     {
+      "name": "transformDataPoint",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 123,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionFactor",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 130,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformGoalMarker",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 139,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionData",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 149,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformRisk",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 170,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformScenarioConfig",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 188,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformScenarioResult",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 199,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformPredictionsReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 210,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "isSimplifiedReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 263,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validateRawPredictionsReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 276,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "transformSimplifiedReport",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 294,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "filterRisks",
+      "file_path": "src/features/dashboard/api/predictionsApi.ts",
+      "line_number": 359,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadingSpinner",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 16,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ErrorDisplay",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "QualitySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 47,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CoverageSummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 84,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencySummary",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 110,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 143,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadReports",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 149,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
+      "name": "LoadReportsWithCustomPath",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 209,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "LoadIndividualReportsExample",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 247,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "loadQuality",
+      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
+      "line_number": 252,
+      "is_async": true,
+      "is_tested": true
+    },
+    {
       "name": "fetchNotifications",
       "file_path": "src/features/dashboard/api/notificationsApi.ts",
       "line_number": 27,
@@ -954,90 +1108,6 @@
       "is_tested": true
     },
     {
-      "name": "transformDataPoint",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 123,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionFactor",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 130,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformGoalMarker",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 139,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionData",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 149,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformRisk",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 170,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformScenarioConfig",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 188,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformScenarioResult",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 199,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformPredictionsReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 210,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "isSimplifiedReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 263,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validateRawPredictionsReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 276,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "transformSimplifiedReport",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 294,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "filterRisks",
-      "file_path": "src/features/dashboard/api/predictionsApi.ts",
-      "line_number": 359,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "HeaderExample",
       "file_path": "src/features/dashboard/components/HeaderExample.tsx",
       "line_number": 19,
@@ -1059,76 +1129,6 @@
       "is_tested": true
     },
     {
-      "name": "LoadingSpinner",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 16,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ErrorDisplay",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 27,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "QualitySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 47,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CoverageSummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 84,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencySummary",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 110,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 143,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadReports",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 149,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "LoadReportsWithCustomPath",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 209,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "LoadIndividualReportsExample",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 247,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "loadQuality",
-      "file_path": "src/features/dashboard/api/examples/LoadReports.example.tsx",
-      "line_number": 252,
-      "is_async": true,
-      "is_tested": true
-    },
-    {
       "name": "MetricCardExample",
       "file_path": "src/features/dashboard/components/MetricCardExample.tsx",
       "line_number": 31,
@@ -1146,41 +1146,6 @@
       "name": "MetricCard",
       "file_path": "src/features/dashboard/components/MetricCard.tsx",
       "line_number": 103,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CoverageGauge",
-      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
-      "line_number": 61,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ActionCard",
-      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
-      "line_number": 184,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "FunctionRow",
-      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
-      "line_number": 295,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "TestCoveragePage",
-      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
-      "line_number": 432,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "getColor",
-      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
-      "line_number": 67,
       "is_async": false,
       "is_tested": true
     },
@@ -1234,6 +1199,41 @@
       "is_tested": true
     },
     {
+      "name": "CoverageGauge",
+      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
+      "line_number": 61,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ActionCard",
+      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
+      "line_number": 184,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "FunctionRow",
+      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
+      "line_number": 295,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "TestCoveragePage",
+      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
+      "line_number": 432,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "getColor",
+      "file_path": "src/features/dashboard/components/TestCoveragePage.tsx",
+      "line_number": 67,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "DashboardSkeleton",
       "file_path": "src/features/dashboard/components/PredictiveDashboard.tsx",
       "line_number": 62,
@@ -1276,6 +1276,13 @@
       "is_tested": true
     },
     {
+      "name": "ReportsPage",
+      "file_path": "src/features/dashboard/components/ReportsPage.tsx",
+      "line_number": 112,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "TrendsContent",
       "file_path": "src/features/dashboard/components/TrendsPage.tsx",
       "line_number": 32,
@@ -1293,13 +1300,6 @@
       "name": "TrendsPage",
       "file_path": "src/features/dashboard/components/TrendsPage.tsx",
       "line_number": 96,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "ReportsPage",
-      "file_path": "src/features/dashboard/components/ReportsPage.tsx",
-      "line_number": 112,
       "is_async": false,
       "is_tested": true
     },
@@ -1346,34 +1346,6 @@
       "is_tested": true
     },
     {
-      "name": "SeverityBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 101,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CategoryBreakdown",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 183,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "IssueRow",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 246,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "CodeQualityPage",
-      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
-      "line_number": 505,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "GraphContent",
       "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
       "line_number": 26,
@@ -1412,6 +1384,34 @@
       "name": "handleGraphLoad",
       "file_path": "src/features/dashboard/components/DependencyGraphPage.tsx",
       "line_number": 108,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "SeverityBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 101,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CategoryBreakdown",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 183,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "IssueRow",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 246,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "CodeQualityPage",
+      "file_path": "src/features/dashboard/components/CodeQualityPage.tsx",
+      "line_number": 505,
       "is_async": false,
       "is_tested": true
     },
@@ -1689,6 +1689,34 @@
       "is_tested": true
     },
     {
+      "name": "CircularDependencyCard",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 60,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependencyStats",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 272,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "FileDependencyRow",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 452,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "DependenciesPage",
+      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
+      "line_number": 594,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "Sidebar",
       "file_path": "src/features/dashboard/components/Sidebar.tsx",
       "line_number": 156,
@@ -1773,32 +1801,11 @@
       "is_tested": true
     },
     {
-      "name": "CircularDependencyCard",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 60,
+      "name": "ThemedHeader",
+      "file_path": "src/features/dashboard/components/__stories__/Header.stories.tsx",
+      "line_number": 23,
       "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependencyStats",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 272,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "FileDependencyRow",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 452,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "DependenciesPage",
-      "file_path": "src/features/dashboard/components/DependenciesPage.tsx",
-      "line_number": 594,
-      "is_async": false,
-      "is_tested": true
+      "is_tested": false
     },
     {
       "name": "getTrendIcon",
@@ -1820,13 +1827,6 @@
       "line_number": 67,
       "is_async": false,
       "is_tested": true
-    },
-    {
-      "name": "ThemedHeader",
-      "file_path": "src/features/dashboard/components/__stories__/Header.stories.tsx",
-      "line_number": 23,
-      "is_async": false,
-      "is_tested": false
     },
     {
       "name": "DateRangeSelector",
@@ -2928,27 +2928,6 @@
       "is_tested": true
     },
     {
-      "name": "WidgetCard",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 100,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "WidgetCardSkeleton",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 270,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "WidgetLibrary",
-      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
-      "line_number": 295,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "ViewDialog",
       "file_path": "src/features/dashboard/components/personalization/SavedViewsDropdown.tsx",
       "line_number": 55,
@@ -2991,6 +2970,34 @@
       "is_tested": true
     },
     {
+      "name": "WidgetCard",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 100,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "WidgetCardSkeleton",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 270,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "WidgetLibrary",
+      "file_path": "src/features/dashboard/components/personalization/WidgetLibrary.tsx",
+      "line_number": 295,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolsFilterToolbar",
+      "file_path": "src/features/dashboard/components/tools/ToolsFilterToolbar.tsx",
+      "line_number": 27,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "CodePreview",
       "file_path": "src/features/dashboard/components/tools/CodePreview.tsx",
       "line_number": 13,
@@ -3002,13 +3009,6 @@
       "file_path": "src/features/dashboard/components/tools/CodePreview.tsx",
       "line_number": 24,
       "is_async": true,
-      "is_tested": true
-    },
-    {
-      "name": "ToolsFilterToolbar",
-      "file_path": "src/features/dashboard/components/tools/ToolsFilterToolbar.tsx",
-      "line_number": 27,
-      "is_async": false,
       "is_tested": true
     },
     {
@@ -3033,6 +3033,13 @@
       "is_tested": true
     },
     {
+      "name": "ExtractionComplexityChip",
+      "file_path": "src/features/dashboard/components/tools/ExtractionComplexityChip.tsx",
+      "line_number": 28,
+      "is_async": false,
+      "is_tested": false
+    },
+    {
       "name": "categorizeDepencies",
       "file_path": "src/features/dashboard/components/tools/DependencyBreakdown.tsx",
       "line_number": 31,
@@ -3045,13 +3052,6 @@
       "line_number": 46,
       "is_async": false,
       "is_tested": true
-    },
-    {
-      "name": "ExtractionComplexityChip",
-      "file_path": "src/features/dashboard/components/tools/ExtractionComplexityChip.tsx",
-      "line_number": 28,
-      "is_async": false,
-      "is_tested": false
     },
     {
       "name": "ModularityChip",
@@ -3124,20 +3124,6 @@
       "is_tested": false
     },
     {
-      "name": "ToolSearchInput",
-      "file_path": "src/features/dashboard/components/tools/ToolSearchInput.tsx",
-      "line_number": 33,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "getIcon",
-      "file_path": "src/features/dashboard/components/tools/ToolSearchInput.tsx",
-      "line_number": 56,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "getGaugeColor",
       "file_path": "src/features/dashboard/components/tools/ExtractionGauge.tsx",
       "line_number": 8,
@@ -3152,6 +3138,20 @@
       "is_tested": false
     },
     {
+      "name": "ToolSearchInput",
+      "file_path": "src/features/dashboard/components/tools/ToolSearchInput.tsx",
+      "line_number": 33,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "getIcon",
+      "file_path": "src/features/dashboard/components/tools/ToolSearchInput.tsx",
+      "line_number": 56,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
       "name": "getExtractionColor",
       "file_path": "src/features/dashboard/components/tools/ExtractionPotentialBar.tsx",
       "line_number": 9,
@@ -3164,13 +3164,6 @@
       "line_number": 15,
       "is_async": false,
       "is_tested": false
-    },
-    {
-      "name": "ToolCandidateCard",
-      "file_path": "src/features/dashboard/components/tools/ToolCandidateCard.tsx",
-      "line_number": 12,
-      "is_async": false,
-      "is_tested": true
     },
     {
       "name": "calculateQualityScore",
@@ -3211,6 +3204,13 @@
       "name": "isValidDependencyReport",
       "file_path": "src/features/dashboard/helpers/calculateMetrics.ts",
       "line_number": 201,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "ToolCandidateCard",
+      "file_path": "src/features/dashboard/components/tools/ToolCandidateCard.tsx",
+      "line_number": 12,
       "is_async": false,
       "is_tested": true
     },
@@ -5602,55 +5602,6 @@
       "is_tested": true
     },
     {
-      "name": "to_dict",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 43,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "resolve",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 116,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "detect",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 437,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "calculate",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 585,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "name",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 733,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "validate_input",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 737,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
-      "name": "process",
-      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
-      "line_number": 764,
-      "is_async": false,
-      "is_tested": true
-    },
-    {
       "name": "ok",
       "file_path": "src/analyzers/preprocessing/stages/base.py",
       "line_number": 25,
@@ -5703,6 +5654,55 @@
       "name": "skip",
       "file_path": "src/analyzers/preprocessing/stages/base.py",
       "line_number": 155,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "to_dict",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 43,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "resolve",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 116,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "detect",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 437,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "calculate",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 585,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "name",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 733,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "validate_input",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 737,
+      "is_async": false,
+      "is_tested": true
+    },
+    {
+      "name": "process",
+      "file_path": "src/analyzers/preprocessing/stages/transformation.py",
+      "line_number": 764,
       "is_async": false,
       "is_tested": true
     },
@@ -6222,17 +6222,17 @@
         "is_async": false
       }
     ],
-    "src/features/dashboard/components/tools/DependencyBreakdown.tsx": [
-      {
-        "name": "categorizeDepencies",
-        "line_number": 31,
-        "is_async": false
-      }
-    ],
     "src/features/dashboard/components/tools/ExtractionComplexityChip.tsx": [
       {
         "name": "ExtractionComplexityChip",
         "line_number": 28,
+        "is_async": false
+      }
+    ],
+    "src/features/dashboard/components/tools/DependencyBreakdown.tsx": [
+      {
+        "name": "categorizeDepencies",
+        "line_number": 31,
         "is_async": false
       }
     ],
