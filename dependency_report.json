@@ -390,6 +390,32 @@
         "is_external": false
       }
     ],
+    "src/analyzers/preprocessing/config.py": [
+      {
+        "package": "json",
+        "import_type": "static",
+        "line_number": 4,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": "pathlib",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 3,
+        "is_external": false
+      }
+    ],
     "src/analyzers/preprocessing/pipeline.py": [
       {
         "package": "logging",
@@ -452,32 +478,6 @@
         "is_external": false
       }
     ],
-    "src/analyzers/preprocessing/config.py": [
-      {
-        "package": "json",
-        "import_type": "static",
-        "line_number": 4,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": "pathlib",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 3,
-        "is_external": false
-      }
-    ],
     "src/analyzers/preprocessing/__init__.py": [
       {
         "package": ".config",
@@ -519,26 +519,6 @@
         "package": ".utils.indexing",
         "import_type": "static",
         "line_number": 19,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/preprocessing/utils/indexing.py": [
-      {
-        "package": "re",
-        "import_type": "static",
-        "line_number": 7,
-        "is_external": false
-      },
-      {
-        "package": "dataclasses",
-        "import_type": "static",
-        "line_number": 5,
-        "is_external": false
-      },
-      {
-        "package": "typing",
-        "import_type": "static",
-        "line_number": 6,
         "is_external": false
       }
     ],
@@ -616,6 +596,26 @@
         "is_external": false
       }
     ],
+    "src/analyzers/preprocessing/utils/indexing.py": [
+      {
+        "package": "re",
+        "import_type": "static",
+        "line_number": 7,
+        "is_external": false
+      },
+      {
+        "package": "dataclasses",
+        "import_type": "static",
+        "line_number": 5,
+        "is_external": false
+      },
+      {
+        "package": "typing",
+        "import_type": "static",
+        "line_number": 6,
+        "is_external": false
+      }
+    ],
     "src/analyzers/preprocessing/utils/similarity.py": [
       {
         "package": "dataclasses",
@@ -633,26 +633,6 @@
         "package": "typing",
         "import_type": "static",
         "line_number": 7,
-        "is_external": false
-      }
-    ],
-    "src/analyzers/preprocessing/utils/__init__.py": [
-      {
-        "package": ".path_utils",
-        "import_type": "static",
-        "line_number": 1,
-        "is_external": false
-      },
-      {
-        "package": ".similarity",
-        "import_type": "static",
-        "line_number": 2,
-        "is_external": false
-      },
-      {
-        "package": ".indexing",
-        "import_type": "static",
-        "line_number": 9,
         "is_external": false
       }
     ],
@@ -685,6 +665,26 @@
         "package": "..config",
         "import_type": "static",
         "line_number": 6,
+        "is_external": false
+      }
+    ],
+    "src/analyzers/preprocessing/utils/__init__.py": [
+      {
+        "package": ".path_utils",
+        "import_type": "static",
+        "line_number": 1,
+        "is_external": false
+      },
+      {
+        "package": ".similarity",
+        "import_type": "static",
+        "line_number": 2,
+        "is_external": false
+      },
+      {
+        "package": ".indexing",
+        "import_type": "static",
+        "line_number": 9,
         "is_external": false
       }
     ],
